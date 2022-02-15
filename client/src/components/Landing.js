@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchPosts } from "../actions";
+import { fetchPosts, createUser } from "../actions";
 
 class Landing extends React.Component {
   componentDidMount() {

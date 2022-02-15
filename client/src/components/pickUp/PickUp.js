@@ -1,11 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
-class PickUp extends React.Component {
+import PickupForm from "./PickupForm";
+
+class Pickup extends React.Component {
   render() {
-    return <div>aaang</div>;
+    return <PickupForm />;
   }
 }
 
-export default PickUp;
+export default Pickup;
