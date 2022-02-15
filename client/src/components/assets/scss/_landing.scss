@@ -1,0 +1,30 @@
+.landing__container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.landing__container__welcome {
+  width: 100%;
+
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-items: center;
+  row-gap: 1rem;
+}
+.landing__container__buttons {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  margin-top: 5rem;
+  & button {
+    width: 70%;
+  }
+}

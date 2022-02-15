@@ -1,0 +1,10 @@
+button {
+  border: 1px solid $primary-color;
+  background-color: white;
+  padding: 2rem;
+}
+
+.button--large {
+  @extend button;
+  padding: 1.5rem 2rem;
+}

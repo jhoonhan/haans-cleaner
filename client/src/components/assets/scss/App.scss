@@ -1,0 +1,36 @@
+$primary-color: #707070;
+
+@import "landing";
+@import "base";
+
+html {
+  color: $primary-color;
+}
+
+.container {
+  position: relative;
+
+  width: 414px;
+  height: 896px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin: 1rem auto;
+  border: 1px solid red;
+}
+
+h1 {
+  font-size: 7rem;
+}
+h2 {
+  font-size: 3rem;
+}
+h3 {
+  font-size: 1.6rem;
+}
+p {
+  font-size: 1.6rem;
+}
