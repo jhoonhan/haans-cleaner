@@ -6,30 +6,80 @@ import { Field, reduxForm } from "redux-form";
 
 import GoogleButton from "../GoogleButton";
 
-const SignInPageTwo = ({ auth, user }) => {
-  console.log({ auth, user });
+const SignInPageTwo = (props) => {
+  // console.log(auth.userProfile);
+  const { handleSubmit } = props;
 
+  const onFinalSubmit = (formValue) => {
+    // console.log({ ...formValue, clothes });
+    // console.log(this.props.clothes);
+    const combined = { ...formValue, googleId: props.auth.userProfile.FW };
+    console.log(combined);
+    props.createUser(combined);
+  };
+
+  const renderInput = ({ input }) => {
+    return (
+      <React.Fragment>
+        <input onChange={input.onChange} value={input.value} type="text" />
+      </React.Fragment>
+    );
+  };
   return (
-    <form className="form__form">
+    <form onSubmit={handleSubmit(onFinalSubmit)} className="form__form">
       <GoogleButton />
       <div className="form__form__row">
-        <label>Name</label>
-        <Field name="name" type="text" component="input" label="name" />
+        <label>First Name</label>
+        <Field
+          name="firstName"
+          type="text"
+          component={renderInput}
+          label="firstName"
+        />
       </div>
       <div className="form__form__row">
-        <label>Address</label>
-        <Field name="address" type="text" component="input" label="name" />
+        <label>Last Name</label>
+        <Field
+          name="lastName"
+          type="text"
+          component={renderInput}
+          label="lastName"
+        />
+      </div>
+      <div className="form__form__row">
+        <label>Email</label>
+        <Field
+          name="email"
+          type="number"
+          component={renderInput}
+          label="email"
+        />
       </div>
       <div className="form__form__row">
         <label>Phone Number</label>
-        <Field name="phone" type="text" component="input" label="name" />
+        <Field
+          name="phone"
+          type="number"
+          component={renderInput}
+          label="phone"
+        />
       </div>
+
+      <button type="submit">Create Account</button>
     </form>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { auth: state.auth, user: state.user };
+  return {
+    initialValues: {
+      firstName: state.auth.userProfile.VX,
+      lastName: state.auth.userProfile.iW,
+      email: state.auth.userProfile.tv,
+    },
+    auth: state.auth,
+    user: state.user,
+  };
 };
 
 const wrappedForm = reduxForm({
@@ -39,4 +89,4 @@ const wrappedForm = reduxForm({
   // validate,
 })(SignInPageTwo);
 
-export default connect(mapStateToProps)(wrappedForm);
+export default connect(mapStateToProps, { createUser })(wrappedForm);

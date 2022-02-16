@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchPosts, createUser } from "../actions";
 
 import SignIn from "./singin/SingIn";
 
@@ -42,5 +41,5 @@ const mapStateToProps = ({ user, orders }) => {
   return { user, orders };
 };
 
-export default connect(mapStateToProps, { fetchPosts })(Landing);
+export default connect(mapStateToProps)(Landing);
 //

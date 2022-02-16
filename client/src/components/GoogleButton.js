@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleAuth from "./apis/GoogleAuth";
+import GoogleAuth from "../apis/GoogleAuth";
 
 const GoogleButton = () => {
   return (

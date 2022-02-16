@@ -9,7 +9,6 @@ import GoogleButton from "../GoogleButton";
 import SignInPageTwo from "./SignInPageTwo";
 
 const renderInitalSignUp = () => {
-  console.log();
   return (
     <React.Fragment>
       <div>No more early morning stops!</div>
@@ -23,7 +22,6 @@ const renderNext = () => {
 };
 
 const SignIn = ({ auth, user }) => {
-  console.log({ auth, user });
   return (
     <div className="signIn__container">
       {!auth.isSignedIn ? renderInitalSignUp() : <SignInPageTwo />}

@@ -1,5 +1,11 @@
 {
-  "user": [],
+  "users": [
+    {
+      "firstName": "Joe",
+      "lastName": "Han",
+      "googleId": "112981141048784001090"
+    }
+  ],
   "orders": [
     {
       "address": "1234",
@@ -100,6 +106,30 @@
       },
       "userId": "123jdie929da9d29",
       "id": 9
+    },
+    {
+      "name": "Database Reconstruction",
+      "address": "dsadsa",
+      "phone": "2312312",
+      "date": "3213213",
+      "deliveryNote": "3123",
+      "clothes": {
+        "sweater": 1,
+        "coat": 1,
+        "skirt": 3,
+        "jacket": 1,
+        "pants": 1,
+        "other": 1
+      },
+      "userId": "123jdie929da9d29",
+      "id": 10
+    },
+    {
+      "firstName": "Joe",
+      "lastName": "Han",
+      "email": "jhoon.han2@gmail.com",
+      "googleId": "112981141048784001090",
+      "id": 11
     }
   ]
 }
