@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Field, reduxForm } from "redux-form";
 import validate from "./validate";
 
 const PickupFormFirstPage = (props) => {
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
+
   const { handleSubmit, lastPage } = props;
 
   const renderField = ({ input, label, type, meta: { touched, error } }) => {

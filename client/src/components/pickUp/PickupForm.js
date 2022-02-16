@@ -14,6 +14,10 @@ class PickupForm extends React.Component {
       page: 1,
     };
   }
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   nextPage() {
     this.setState({ page: this.state.page + 1 });
   }

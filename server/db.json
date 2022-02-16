@@ -48,6 +48,38 @@
     {
       "userId": "123jdie929da9d29",
       "id": 6
+    },
+    {
+      "name": "Minseo Cha",
+      "address": "2835 Bond st, London, 9294",
+      "phone": "895512145",
+      "date": "2/22/2020",
+      "note": "I wanna live in london...",
+      "deliveryNote": "Get here as soon as possilbe you bitch",
+      "clothes": {
+        "coat": 4,
+        "jacket": 2,
+        "pants": 1,
+        "top": 1,
+        "skirt": 3,
+        "other": 1
+      },
+      "userId": "123jdie929da9d29",
+      "id": 7
+    },
+    {
+      "clothes": {
+        "sweater": 1,
+        "top": 1,
+        "pants": 1,
+        "jacket": 1,
+        "skirt": 1,
+        "coat": 1,
+        "dress": 1,
+        "other": 1
+      },
+      "userId": "123jdie929da9d29",
+      "id": 8
     }
   ]
 }

@@ -78,3 +78,7 @@ button {
 .border-bottom--divider {
   border-bottom: 1px solid $divider-color;
 }
+
+.selected {
+  border: 1px solid $secondary-color !important;
+}

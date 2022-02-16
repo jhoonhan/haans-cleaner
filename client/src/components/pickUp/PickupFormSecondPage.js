@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { Field, reduxForm } from "redux-form";
@@ -8,19 +8,25 @@ const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false;
 
 const PickupFormSecondPage = (props) => {
-  const renderInput = (formProps) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const renderInput = ({ input }) => {
+    const style = input.value > 0 ? "selected" : "";
+
     return (
-      <div className="pickup__clothes">
+      <div className={`pickup__clothes ${style}`}>
         <div
           className="pickup__clothes__selector"
-          onClick={() => formProps.input.onChange(+formProps.input.value + 1)}
+          onClick={() => input.onChange(+input.value + 1)}
         >
-          {formProps.input.name}
+          {input.name}
         </div>
         <input
           className="pickup__clothes__edit"
-          onChange={formProps.input.onChange}
-          value={+formProps.input.value}
+          onChange={input.onChange}
+          value={+input.value}
           type="number"
         />
       </div>

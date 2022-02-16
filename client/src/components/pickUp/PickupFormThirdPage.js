@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { createOrder } from "../actions";
@@ -6,6 +6,10 @@ import validate from "./validate";
 import price from "../price";
 
 class PickupFormThirdPage extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   convertToArray = (data) => {
     return Object.entries(data).map(([key, value]) => {
       const obj = {};
@@ -40,7 +44,8 @@ class PickupFormThirdPage extends React.Component {
     this.props.createOrder(combined);
   };
   renderInfo() {
-    console.log(this.props.pickup);
+    if (!this.props.pickup) return null;
+
     const { address, name } = this.props.pickup;
     return (
       <React.Fragment>
