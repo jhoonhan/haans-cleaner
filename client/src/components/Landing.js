@@ -29,3 +29,4 @@ const mapStateToProps = ({ posts }) => {
 };
 
 export default connect(mapStateToProps, { fetchPosts })(Landing);
+//
