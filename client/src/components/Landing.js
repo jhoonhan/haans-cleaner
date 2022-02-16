@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchPosts, createUser } from "../actions";
 
+import SignIn from "./SingIn";
+
 class Landing extends React.Component {
   componentDidMount() {
-    this.props.fetchPosts();
+    // this.props.fetchPosts();
+    console.log(this.props);
   }
-  render() {
+
+  renderHome() {
     return (
       <div className="landing__container">
         <div className="landing__container__welcome">
@@ -24,10 +28,19 @@ class Landing extends React.Component {
       </div>
     );
   }
+
+  render() {
+    return (
+      <React.Fragment>
+        {/* {this.renderHome()} */}
+        {this.props.user[0] ? this.renderHome() : <SignIn />}
+      </React.Fragment>
+    );
+  }
 }
 
-const mapStateToProps = ({ posts }) => {
-  return { posts };
+const mapStateToProps = ({ user, orders }) => {
+  return { user, orders };
 };
 
 export default connect(mapStateToProps, { fetchPosts })(Landing);
