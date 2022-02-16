@@ -1,6 +1,8 @@
 import { formValues } from "redux-form";
 import server from "../apis/server";
 import {
+  SIGN_IN,
+  SIGN_OUT,
   FETCH_ORDER,
   FETCH_ORDERS,
   CREATE_ORDER,
@@ -13,9 +15,10 @@ import {
   DELETE_USER,
 } from "./types";
 
-export const fetchUser = () => {
+export const signIn = (status) => {
+  const type = status ? SIGN_IN : SIGN_OUT;
   return {
-    type: FETCH_USER,
+    type,
   };
 };
 
@@ -49,4 +52,10 @@ export const deleteOrder = (id) => async (dispatch) => {
   await server.put(`/order/${id}`);
 
   dispatch({ type: DELETE_ORDER, payload: id });
+};
+
+export const fetchUser = () => {
+  return {
+    type: FETCH_USER,
+  };
 };
