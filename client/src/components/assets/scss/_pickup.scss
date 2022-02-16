@@ -1,7 +1,7 @@
 .pickup {
   & input {
-    border: 1px solid red;
-    background-color: red;
+    border: 1px solid $secondary-color;
+    background-color: $secondary-color;
     outline: none;
   }
 }
@@ -55,7 +55,7 @@
   align-items: center;
   row-gap: 2rem;
 
-  border: 1px solid red;
+  border: 1px solid $secondary-color;
 
   & label {
     color: $primary-color;
