@@ -7,7 +7,7 @@ import orderReducer from "./orderReducer";
 
 export default combineReducers({
   auth: authReducer,
-  users: userReducer,
+  user: userReducer,
   orders: orderReducer,
   form: formReducer,
 });

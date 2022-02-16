@@ -16,7 +16,9 @@ class Landing extends React.Component {
           <h3>It's a great day to wear a skirt</h3>
         </div>
         <div className="landing__container__buttons">
-          <Link to={`/pickup`}>Request for Pick-up</Link>
+          <Link className="button" to={`/pickup`}>
+            Request for Pick-up
+          </Link>
           <button>Order</button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 {
+  "user": [],
   "orders": [
     {
       "address": "1234",
@@ -80,6 +81,25 @@
       },
       "userId": "123jdie929da9d29",
       "id": 8
+    },
+    {
+      "name": "Lingxi Zhao",
+      "address": "1123 Chicago Downtown, Chicago, IL 28282",
+      "phone": "312121515",
+      "date": "2/22/22",
+      "note": "1234",
+      "clothes": {
+        "coat": 1,
+        "sweater": 1,
+        "jacket": 1,
+        "pants": 1,
+        "top": 1,
+        "skirt": 1,
+        "other": 1,
+        "dress": 1
+      },
+      "userId": "123jdie929da9d29",
+      "id": 9
     }
   ]
 }

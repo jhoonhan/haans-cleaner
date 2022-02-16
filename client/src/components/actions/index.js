@@ -1,4 +1,5 @@
 import { formValues } from "redux-form";
+import history from "../../history";
 import server from "../apis/server";
 import {
   SIGN_IN,
@@ -15,6 +16,7 @@ import {
   DELETE_USER,
 } from "./types";
 
+//////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {
   const type = isSignedIn ? SIGN_IN : SIGN_OUT;
   return {
@@ -22,7 +24,24 @@ export const signIn = ({ isSignedIn, userProfile }) => {
     payload: userProfile,
   };
 };
+export const fetchUser = () => {
+  return {
+    type: FETCH_USER,
+  };
+};
+export const createUser = (formValues) => async (dispatch, getState) => {
+  // const {userId} = getState().auth;
+  // const res = await server.post("/Users", {...formValues, userId});
+  const res = await server.post("/Users", { ...formValues });
 
+  dispatch({ type: CREATE_USER, payload: res.data });
+  history.push("/");
+};
+
+//
+//
+//
+//////////////////// ORDER
 export const fetchOrder = (id) => async (dispatch) => {
   const res = await server.get(`/order/${id}`);
 
@@ -41,6 +60,7 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
   const res = await server.post("/orders", { ...formValues });
 
   dispatch({ type: CREATE_ORDER, payload: res.data });
+  history.push("/");
 };
 
 export const editOrder = (id, formValues) => async (dispatch) => {
@@ -53,10 +73,4 @@ export const deleteOrder = (id) => async (dispatch) => {
   await server.put(`/order/${id}`);
 
   dispatch({ type: DELETE_ORDER, payload: id });
-};
-
-export const fetchUser = () => {
-  return {
-    type: FETCH_USER,
-  };
 };

@@ -42,6 +42,9 @@ button {
     border: 1px solid $secondary-color;
   }
 }
+.button {
+  @extend button;
+}
 
 .button--large {
   @extend button;

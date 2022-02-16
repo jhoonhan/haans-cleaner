@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import history from "../history";
 
 import "./assets/scss/App.scss";
 
@@ -11,10 +12,10 @@ const App = () => {
   return (
     <div className="container">
       {/* <GoogleAuth /> */}
-      <BrowserRouter>
+      <Router history={history}>
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />
-      </BrowserRouter>
+      </Router>
     </div>
   );
 };
