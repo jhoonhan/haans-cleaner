@@ -21,7 +21,7 @@ const PickupFormFirstPage = (props) => {
     const textArea = <textarea {...input} placeholder={label} type={type} />;
 
     return (
-      <div className="pickup__form__row">
+      <div className="form__form__row">
         <label>{label[0].toUpperCase() + label.substring(1)}</label>
         <div>
           {label === "note" ? textArea : inputArea}
@@ -32,8 +32,8 @@ const PickupFormFirstPage = (props) => {
   };
 
   return (
-    <form className="pickup__form" onSubmit={handleSubmit}>
-      <div className="pickup__form__row">
+    <form className="form__form" onSubmit={handleSubmit}>
+      <div className="form__form__row">
         <h2>Order Information</h2>
       </div>
       <Field name="name" type="text" component={renderField} label="name" />
@@ -51,7 +51,7 @@ const PickupFormFirstPage = (props) => {
       />
       <Field name="date" type="text" component={renderField} label="date" />
       <Field name="note" type="text" component={renderField} label="note" />
-      <div className="pickup__button-holder--vertical">
+      <div className="form__button-holder--vertical">
         <button type="submit" className="next">
           Count clothes (optional)
         </button>

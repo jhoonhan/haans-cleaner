@@ -16,15 +16,15 @@ const PickupFormSecondPage = (props) => {
     const style = input.value > 0 ? "selected" : "";
 
     return (
-      <div className={`pickup__clothes ${style}`}>
+      <div className={`form__clothes ${style}`}>
         <div
-          className="pickup__clothes__selector"
+          className="form__clothes__selector"
           onClick={() => input.onChange(+input.value + 1)}
         >
           {input.name}
         </div>
         <input
-          className="pickup__clothes__edit"
+          className="form__clothes__edit"
           onChange={input.onChange}
           value={+input.value}
           type="number"
@@ -34,12 +34,12 @@ const PickupFormSecondPage = (props) => {
   };
   const { handleSubmit, previousPage, reset } = props;
   return (
-    <form onSubmit={handleSubmit} className="pickup__form">
-      <div className="pickup__reset-form" onClick={reset}>
+    <form onSubmit={handleSubmit} className="form__form">
+      <div className="form__reset-form" onClick={reset}>
         reset
       </div>
       <label>Count your clothes</label>
-      <div className="pickup__selector">
+      <div className="form__selector">
         <Field name="top" component={renderInput} />
         <Field name="pants" component={renderInput} />
         <Field name="sweater" component={renderInput} />
@@ -50,7 +50,7 @@ const PickupFormSecondPage = (props) => {
         <Field name="other" component={renderInput} />
         <Field name="error" component={renderError} />
       </div>
-      <div className="pickup__button-holder--horizontal fixed">
+      <div className="form__button-holder--horizontal fixed">
         <button type="button" className="previous" onClick={previousPage}>
           Previous
         </button>

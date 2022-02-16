@@ -7,7 +7,8 @@ $dev100vh: 896px;
 @import "landing";
 @import "base";
 @import "pickup";
-@import "signin";
+@import "signIn";
+@import "google";
 
 html {
   color: $primary-color;

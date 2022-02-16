@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchPosts, createUser } from "../actions";
 
-import SignIn from "./SingIn";
+import SignIn from "./singin/SingIn";
 
 class Landing extends React.Component {
   componentDidMount() {
     // this.props.fetchPosts();
-    console.log(this.props);
   }
 
   renderHome() {

@@ -35,10 +35,12 @@ class GoogleAuth extends React.Component {
       return null;
     }
     if (this.props.isSignedIn) {
-      return <div onClick={() => this.onSignInClick(false)}>signed In</div>;
+      return <div onClick={() => this.onSignInClick(false)}>Signed In</div>;
     }
     if (!this.props.isSignedIn) {
-      return <div onClick={() => this.onSignInClick(true)}>signed Off</div>;
+      return (
+        <div onClick={() => this.onSignInClick(true)}>Sign in with Google</div>
+      );
     }
   }
   render() {

@@ -16,7 +16,7 @@
   padding: 4rem 0;
 }
 
-.pickup__form {
+.form__form {
   width: calc(100% - 4rem);
   display: grid;
   // grid-template-rows: repeat(auto);
@@ -34,23 +34,23 @@
   }
 }
 
-.pickup__button-holder {
+.form__button-holder {
   width: 100%;
 
   display: grid;
 }
-.pickup__button-holder--vertical {
-  @extend .pickup__button-holder;
+.form__button-holder--vertical {
+  @extend .form__button-holder;
   grid-template-rows: auto auto;
   gap: 2rem;
 }
-.pickup__button-holder--horizontal {
-  @extend .pickup__button-holder;
+.form__button-holder--horizontal {
+  @extend .form__button-holder;
   grid-template-columns: 1fr 1fr;
   column-gap: 2rem;
 }
 
-.pickup__selector {
+.form__selector {
   width: 100%;
 
   display: grid;
@@ -62,7 +62,7 @@
   box-sizing: border-box;
 }
 
-.pickup__clothes {
+.form__clothes {
   width: 100%;
   aspect-ratio: 1 / 1;
 
@@ -73,18 +73,18 @@
   box-sizing: border-box;
   border: 1px solid black;
 }
-.pickup__clothes__selector {
+.form__clothes__selector {
   width: 100%;
   box-sizing: border-box;
 }
-.pickup__clothes__edit {
+.form__clothes__edit {
   width: calc(100% - 10px);
   padding: 0;
   margin-bottom: 5px;
   text-align: center;
 }
 
-.pickup__form__row {
+.form__form__row {
   width: 100%;
 
   display: flex;
@@ -93,23 +93,23 @@
   padding: 0rem 0;
 }
 
-.pickup__form__order-count {
+.form__form__order-count {
   display: grid;
   grid-template-rows: auto;
   row-gap: 1rem;
   box-sizing: border-box;
 }
-.pickup__form__order-count__row {
+.form__form__order-count__row {
   display: grid;
   grid-template-columns: 20vw 1fr 1fr;
   justify-items: end;
   align-items: center;
 }
-.pickup__form__order-detail {
+.form__form__order-detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.pickup__form__order-total {
+.form__form__order-total {
   width: 100%;
   display: grid;
   grid-template-columns: auto auto;
@@ -117,10 +117,10 @@
   justify-content: end;
   column-gap: 1.5rem;
 }
-.pickup__form__order-date {
+.form__form__order-date {
   display: grid;
   grid-template-rows: auto auto;
 }
-.pickup__form__info {
+.form__form__info {
   text-align: right;
 }

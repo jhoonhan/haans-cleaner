@@ -65,8 +65,8 @@ class PickupFormThirdPage extends React.Component {
       <React.Fragment>
         {clothes.map((cloth) => {
           return (
-            <div key={cloth.type} className="pickup__form__order-count__row">
-              <div className="pickup__clothes">{cloth.type}</div>
+            <div key={cloth.type} className="form__form__order-count__row">
+              <div className="form__clothes">{cloth.type}</div>
               <div>
                 <p>
                   ${price[cloth.type]} x {cloth.count}
@@ -133,36 +133,34 @@ class PickupFormThirdPage extends React.Component {
     return (
       <form
         onSubmit={handleSubmit(this.onFinalSubmit)}
-        className="pickup__form pickup__form--third"
+        className="form__form form__form--third"
       >
-        <div className="pickup__form__row">
+        <div className="form__form__row">
           <h2>Order Detail</h2>
         </div>
-        <div className="pickup__form__row">
-          <div className="pickup__form__info">{this.renderInfo()}</div>
+        <div className="form__form__row">
+          <div className="form__form__info">{this.renderInfo()}</div>
 
-          <div className="pickup__form__order-count">{this.renderCount()}</div>
+          <div className="form__form__order-count">{this.renderCount()}</div>
         </div>
         <div
-          className="pickup__form__row border-top--divider border-bottom--divider"
+          className="form__form__row border-top--divider border-bottom--divider"
           style={{ padding: "3rem 0" }}
         >
-          <div className="pickup__form__order-detail">
-            <div className="pickup__form__order-date">
+          <div className="form__form__order-detail">
+            <div className="form__form__order-date">
               <label>Pick-up time:</label>
               <div>{this.renderDate()}</div>
             </div>
-            <div className="pickup__form__order-total">
-              {this.renderTotal()}
-            </div>
+            <div className="form__form__order-total">{this.renderTotal()}</div>
           </div>
         </div>
-        <div className="pickup__form__row">
+        <div className="form__form__row">
           <label>Delivery Instruction (optional)</label>
           <Field name="deliveryNote" component="textarea" placeholder="Notes" />
         </div>
 
-        <div className="pickup__button-holder--horizontal">
+        <div className="form__button-holder--horizontal">
           <button type="button" className="previous" onClick={previousPage}>
             Previous
           </button>
