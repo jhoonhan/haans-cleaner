@@ -15,10 +15,11 @@ import {
   DELETE_USER,
 } from "./types";
 
-export const signIn = (status) => {
-  const type = status ? SIGN_IN : SIGN_OUT;
+export const signIn = ({ isSignedIn, userProfile }) => {
+  const type = isSignedIn ? SIGN_IN : SIGN_OUT;
   return {
     type,
+    payload: userProfile,
   };
 };
 
