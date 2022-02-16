@@ -23,6 +23,19 @@
       },
       "userId": "123jdie929da9d29",
       "id": 2
+    },
+    {
+      "name": "Junghoon Han",
+      "address": "what is going on?",
+      "date": "1234",
+      "note": "1234",
+      "clothes": {
+        "sweater": 2,
+        "jacket": 2,
+        "skirt": 2
+      },
+      "userId": "123jdie929da9d29",
+      "id": 3
     }
   ]
 }

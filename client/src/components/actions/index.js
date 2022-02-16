@@ -1,12 +1,52 @@
 import { formValues } from "redux-form";
 import server from "../apis/server";
+import {
+  FETCH_ORDER,
+  FETCH_ORDERS,
+  CREATE_ORDER,
+  EDIT_ORDER,
+  DELETE_ORDER,
+  FETCH_USER,
+  FETCH_USERS,
+  CREATE_USER,
+  EDIT_USER,
+  DELETE_USER,
+} from "./types";
 
 export const fetchUser = () => {
   return {
-    type: "FETCH_USER",
+    type: FETCH_USER,
   };
 };
 
-export const createOrder = (formValues) => async (dispatch) => {
-  server.post("/orders", formValues);
+export const fetchOrder = (id) => async (dispatch) => {
+  const res = await server.get(`/order/${id}`);
+
+  dispatch({ type: FETCH_ORDER, payload: res.data });
+};
+
+export const fetchOrders = () => async (dispatch) => {
+  const res = await server.get("/order");
+
+  dispatch({ type: FETCH_ORDER, payload: res.data });
+};
+
+export const createOrder = (formValues) => async (dispatch, getState) => {
+  // const {userId} = getState().auth;
+  // const res = await server.post("/orders", {...formValues, userId});
+  const res = await server.post("/orders", { ...formValues });
+
+  dispatch({ type: CREATE_ORDER, payload: res.data });
+};
+
+export const editOrder = (id, formValues) => async (dispatch) => {
+  const res = await server.put(`/order/${id}`, formValues);
+
+  dispatch({ type: EDIT_ORDER, payload: res.data });
+};
+
+export const deleteOrder = (id) => async (dispatch) => {
+  await server.put(`/order/${id}`);
+
+  dispatch({ type: DELETE_ORDER, payload: id });
 };

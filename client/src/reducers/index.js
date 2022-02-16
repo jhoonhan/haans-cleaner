@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer } from "redux-form";
 
-import postReducer from "./postReducer";
-import usersReducer from "./usersReducer";
+import userReducer from "./userReducer";
+import orderReducer from "./orderReducer";
 
 export default combineReducers({
-  posts: postReducer,
-  users: usersReducer,
+  users: userReducer,
+  orders: orderReducer,
   form: formReducer,
 });
