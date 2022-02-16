@@ -1,3 +1,36 @@
+input {
+  padding: 1rem;
+  border: 1px solid $primary-color;
+  box-sizing: border-box;
+  outline: none;
+}
+input:focus {
+  outline: none;
+  border: 1px solid $secondary-color;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+textarea {
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid $primary-color;
+  outline: none;
+}
+textarea:focus {
+  border: 1px solid $primary-color;
+  border: 1px solid $secondary-color;
+
+  outline: none;
+}
+
 button {
   border: 1px solid $primary-color;
   background-color: white;
@@ -7,4 +40,8 @@ button {
 .button--large {
   @extend button;
   padding: 1.5rem 2rem;
+}
+
+.input--double {
+  height: 3.2rem;
 }

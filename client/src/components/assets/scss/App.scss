@@ -1,7 +1,9 @@
 $primary-color: #707070;
+$secondary-color: red;
 
 @import "landing";
 @import "base";
+@import "pickup";
 
 html {
   color: $primary-color;

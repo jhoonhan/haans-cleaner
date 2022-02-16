@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+
 import { Field, reduxForm } from "redux-form";
 import validate from "./validate";
 import renderField from "./renderField";
@@ -7,27 +9,41 @@ const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false;
 
 const PickupFormSecondPage = (props) => {
-  const { handleSubmit, previousPage } = props;
+  const renderInput = (formProps) => {
+    return (
+      <div className="pickup__clothes">
+        <div
+          className="pickup__clothes__selector"
+          onClick={() => formProps.input.onChange(+formProps.input.value + 1)}
+        >
+          {formProps.input.name}
+        </div>
+        <input
+          className="pickup__clothes__edit"
+          onChange={formProps.input.onChange}
+          value={+formProps.input.value}
+          type="number"
+        />
+      </div>
+    );
+  };
+  const { handleSubmit, previousPage, reset } = props;
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="email" type="email" component={renderField} label="Email" />
-      <div>
-        <label>Sex</label>
-        <div>
-          <label>
-            <Field name="sex" component="input" type="radio" value="male" />{" "}
-            Male
-          </label>
-          <label>
-            <Field name="sex" component="input" type="radio" value="female" />{" "}
-            Female
-          </label>
-          <label>
-            <Field name="sex" component="input" type="radio" value="other" />{" "}
-            Other
-          </label>
-          <Field name="sex" component={renderError} />
-        </div>
+      <div className="pickup__reset-form" onClick={reset}>
+        reset
+      </div>
+      <label>Count your clothes</label>
+      <div className="pickup__selector">
+        <Field name="top" component={renderInput} />
+        <Field name="pants" component={renderInput} />
+        <Field name="sweater" component={renderInput} />
+        <Field name="jacket" component={renderInput} />
+        <Field name="coat" component={renderInput} />
+        <Field name="skirt" component={renderInput} />
+        <Field name="dress" component={renderInput} />
+        <Field name="other" component={renderInput} />
+        <Field name="error" component={renderError} />
       </div>
       <div>
         <button type="button" className="previous" onClick={previousPage}>
@@ -41,9 +57,16 @@ const PickupFormSecondPage = (props) => {
   );
 };
 
-export default reduxForm({
-  form: "pickup", //Form name is same
+const mapStateToProps = (state) => {
+  console.log(state);
+  return { null: null };
+};
+
+const wrappedForm = reduxForm({
+  form: "clothes", //Form name is same
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   validate,
 })(PickupFormSecondPage);
+
+export default connect(mapStateToProps)(wrappedForm);

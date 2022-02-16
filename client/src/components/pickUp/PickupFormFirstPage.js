@@ -6,19 +6,17 @@ import renderField from "./renderField";
 const PickupFormFirstPage = (props) => {
   const { handleSubmit } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="pickup__form" onSubmit={handleSubmit}>
+      <Field name="name" type="text" component={renderField} label="name" />
       <Field
-        name="firstName"
+        name="address"
         type="text"
         component={renderField}
-        label="First Name"
+        label="address"
       />
-      <Field
-        name="lastName"
-        type="text"
-        component={renderField}
-        label="Last Name"
-      />
+
+      <Field name="date" type="text" component={renderField} label="date" />
+      <Field name="note" type="text" component={renderField} label="note" />
       <div>
         <button type="submit" className="next">
           Next

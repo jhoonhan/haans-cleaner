@@ -1,0 +1,78 @@
+.pickup {
+  & input {
+    border: 1px solid red;
+    background-color: red;
+    outline: none;
+  }
+}
+
+.pickup-container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pickup__selector {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row: 1fr 1fr;
+  gap: 2rem;
+
+  box-sizing: border-box;
+}
+
+.pickup__clothes {
+  width: 17rem;
+  height: 17rem;
+
+  border: 1px solid black;
+
+  display: grid;
+  grid-template-rows: 1fr 2.5rem;
+  justify-items: center;
+}
+.pickup__clothes__selector {
+  width: 100%;
+  box-sizing: border-box;
+}
+.pickup__clothes__edit {
+  width: calc(100% - 10px);
+  padding: 0;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.pickup__form {
+  width: 70%;
+  display: grid;
+  // grid-template-rows: repeat(auto);
+  justify-items: center;
+  align-items: center;
+  row-gap: 2rem;
+
+  border: 1px solid red;
+
+  & label {
+    color: $primary-color;
+    font-size: 1.6rem;
+  }
+  & input {
+    width: 100%;
+  }
+  & textarea {
+    width: 100%;
+    height: 12rem;
+  }
+}
+
+.pickup__form__section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}

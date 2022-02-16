@@ -25,7 +25,7 @@ class PickupForm extends React.Component {
     const { onSubmit } = this.props;
     const { page } = this.state;
     return (
-      <div>
+      <React.Fragment>
         {page === 1 && <PickupFormFirstPage onSubmit={this.nextPage} />}
         {page === 2 && (
           <PickupFormSecondPage
@@ -39,7 +39,7 @@ class PickupForm extends React.Component {
             onSubmit={onSubmit}
           />
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
