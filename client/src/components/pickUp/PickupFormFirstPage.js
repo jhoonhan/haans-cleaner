@@ -1,12 +1,37 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import validate from "./validate";
-import renderField from "./renderField";
 
 const PickupFormFirstPage = (props) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, lastPage } = props;
+
+  const renderField = ({ input, label, type, meta: { touched, error } }) => {
+    const inputArea = (
+      <input
+        {...input}
+        placeholder={label}
+        type={type}
+        className="input--100"
+      />
+    );
+    const textArea = <textarea {...input} placeholder={label} type={type} />;
+
+    return (
+      <div className="pickup__form__row">
+        <label>{label[0].toUpperCase() + label.substring(1)}</label>
+        <div>
+          {label === "note" ? textArea : inputArea}
+          {touched && error && <span>{error}</span>}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <form className="pickup__form" onSubmit={handleSubmit}>
+      <div className="pickup__form__row">
+        <h2>Order Information</h2>
+      </div>
       <Field name="name" type="text" component={renderField} label="name" />
       <Field
         name="address"
@@ -14,11 +39,19 @@ const PickupFormFirstPage = (props) => {
         component={renderField}
         label="address"
       />
-
+      <Field
+        name="phone"
+        type="number"
+        component={renderField}
+        label="phone number"
+      />
       <Field name="date" type="text" component={renderField} label="date" />
       <Field name="note" type="text" component={renderField} label="note" />
-      <div>
+      <div className="pickup__button-holder--vertical">
         <button type="submit" className="next">
+          Count clothes (optional)
+        </button>
+        <button type="button" className="previous" onClick={lastPage}>
           Next
         </button>
       </div>

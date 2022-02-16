@@ -1,7 +1,5 @@
 .pickup {
   & input {
-    border: 1px solid $secondary-color;
-    background-color: $secondary-color;
     outline: none;
   }
 }
@@ -12,9 +10,47 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+
+  padding: 4rem 0;
+  overflow-y: scroll;
 }
+
+.pickup__form {
+  width: calc(100% - 4rem);
+  display: grid;
+  // grid-template-rows: repeat(auto);
+  justify-items: center;
+  align-items: center;
+  row-gap: 2rem;
+
+  & label {
+    color: $primary-color;
+    font-size: 1.6rem;
+  }
+  & textarea {
+    width: 100%;
+    height: 12rem;
+  }
+}
+
+.pickup__button-holder {
+  width: 100%;
+
+  display: grid;
+}
+.pickup__button-holder--vertical {
+  @extend .pickup__button-holder;
+  grid-template-rows: auto auto;
+  gap: 2rem;
+}
+.pickup__button-holder--horizontal {
+  @extend .pickup__button-holder;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+}
+
 .pickup__selector {
   width: 100%;
 
@@ -22,19 +58,21 @@
   grid-template-columns: 1fr 1fr;
   grid-row: 1fr 1fr;
   gap: 2rem;
+  justify-items: center;
 
   box-sizing: border-box;
 }
 
 .pickup__clothes {
-  width: 17rem;
-  height: 17rem;
-
-  border: 1px solid black;
+  width: 100%;
+  aspect-ratio: 1 / 1;
 
   display: grid;
   grid-template-rows: 1fr 2.5rem;
   justify-items: center;
+
+  box-sizing: border-box;
+  border: 1px solid black;
 }
 .pickup__clothes__selector {
   width: 100%;
@@ -47,32 +85,43 @@
   text-align: center;
 }
 
-.pickup__form {
-  width: 70%;
-  display: grid;
-  // grid-template-rows: repeat(auto);
-  justify-items: center;
-  align-items: center;
-  row-gap: 2rem;
-
-  border: 1px solid $secondary-color;
-
-  & label {
-    color: $primary-color;
-    font-size: 1.6rem;
-  }
-  & input {
-    width: 100%;
-  }
-  & textarea {
-    width: 100%;
-    height: 12rem;
-  }
-}
-
-.pickup__form__section {
+.pickup__form__row {
   width: 100%;
 
   display: flex;
   flex-direction: column;
+
+  padding: 0rem 0;
+}
+
+.pickup__form__order-count {
+  display: grid;
+  grid-template-rows: auto;
+  row-gap: 1rem;
+  box-sizing: border-box;
+}
+.pickup__form__order-count__row {
+  display: grid;
+  grid-template-columns: 20vw 1fr 1fr;
+  justify-items: end;
+  align-items: center;
+}
+.pickup__form__order-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.pickup__form__order-total {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-items: end;
+  justify-content: end;
+  column-gap: 1.5rem;
+}
+.pickup__form__order-date {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+.pickup__form__info {
+  text-align: right;
 }

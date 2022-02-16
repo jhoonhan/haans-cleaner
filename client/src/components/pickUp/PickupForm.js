@@ -8,6 +8,7 @@ class PickupForm extends React.Component {
   constructor(props) {
     super(props);
     this.nextPage = this.nextPage.bind(this);
+    this.lastPage = this.lastPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
     this.state = {
       page: 1,
@@ -15,6 +16,10 @@ class PickupForm extends React.Component {
   }
   nextPage() {
     this.setState({ page: this.state.page + 1 });
+  }
+
+  lastPage() {
+    this.setState({ page: 3 });
   }
 
   previousPage() {
@@ -26,7 +31,12 @@ class PickupForm extends React.Component {
     const { page } = this.state;
     return (
       <React.Fragment>
-        {page === 1 && <PickupFormFirstPage onSubmit={this.nextPage} />}
+        {page === 1 && (
+          <PickupFormFirstPage
+            onSubmit={this.nextPage}
+            lastPage={this.lastPage}
+          />
+        )}
         {page === 2 && (
           <PickupFormSecondPage
             previousPage={this.previousPage}
@@ -44,8 +54,8 @@ class PickupForm extends React.Component {
   }
 }
 
-PickupForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// PickupForm.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
 
 export default PickupForm;

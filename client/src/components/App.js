@@ -10,7 +10,7 @@ import GoogleAuth from "./apis/GoogleAuth";
 const App = () => {
   return (
     <div className="container">
-      <GoogleAuth />
+      {/* <GoogleAuth /> */}
       <BrowserRouter>
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />

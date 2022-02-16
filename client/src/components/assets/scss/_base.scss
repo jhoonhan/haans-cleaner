@@ -35,6 +35,12 @@ button {
   border: 1px solid $primary-color;
   background-color: white;
   padding: 2rem;
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary-color;
+    border: 1px solid $secondary-color;
+  }
 }
 
 .button--large {
@@ -44,4 +50,31 @@ button {
 
 .input--double {
   height: 3.2rem;
+}
+.input--100 {
+  width: 100%;
+}
+
+.fixed {
+  position: sticky;
+}
+
+.row {
+  display: grid;
+  grid-auto-columns: auto;
+  grid-template-columns: auto auto;
+}
+
+.border-top--primary {
+  border-top: 1px solid $primary-color;
+}
+.border-bottom--primary {
+  border-bottom: 1px solid $primary-color;
+}
+
+.border-top--divider {
+  border-top: 1px solid $divider-color;
+}
+.border-bottom--divider {
+  border-bottom: 1px solid $divider-color;
 }

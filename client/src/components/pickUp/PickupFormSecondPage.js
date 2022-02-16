@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import { Field, reduxForm } from "redux-form";
 import validate from "./validate";
-import renderField from "./renderField";
 
 const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false;
@@ -29,7 +28,7 @@ const PickupFormSecondPage = (props) => {
   };
   const { handleSubmit, previousPage, reset } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="pickup__form">
       <div className="pickup__reset-form" onClick={reset}>
         reset
       </div>
@@ -45,7 +44,7 @@ const PickupFormSecondPage = (props) => {
         <Field name="other" component={renderInput} />
         <Field name="error" component={renderError} />
       </div>
-      <div>
+      <div className="pickup__button-holder--horizontal fixed">
         <button type="button" className="previous" onClick={previousPage}>
           Previous
         </button>
@@ -58,7 +57,7 @@ const PickupFormSecondPage = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  // console.log(state);
   return { null: null };
 };
 

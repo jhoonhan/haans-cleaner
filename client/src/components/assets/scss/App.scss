@@ -1,5 +1,8 @@
 $primary-color: #707070;
 $secondary-color: red;
+$divider-color: #ccc;
+$dev100vw: 414px;
+$dev100vh: 896px;
 
 @import "landing";
 @import "base";
@@ -12,15 +15,17 @@ html {
 .container {
   position: relative;
 
-  width: 414px;
-  height: 896px;
+  // width: 414px;
+  // height: 896px;
+  width: 100vw;
+  height: 100vh;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  margin: 1rem auto;
+  margin: 0rem auto;
   border: 1px solid red;
 }
 
@@ -34,5 +39,8 @@ h3 {
   font-size: 1.6rem;
 }
 p {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
+}
+li {
+  font-size: 1.4rem;
 }
