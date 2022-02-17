@@ -8,6 +8,7 @@ export const EDIT_ORDER = "EDIT_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 
 export const FETCH_USER = "FETCH_USER";
+export const LOGIN_USER = "LOGIN_USER";
 export const FETCH_USERS = "FETCH_USERS";
 export const CREATE_USER = "CREATE_USER";
 export const EDIT_USER = "EDIT_USER";

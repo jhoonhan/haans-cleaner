@@ -5,7 +5,7 @@ import {
   CREATE_ORDER,
   EDIT_ORDER,
   DELETE_ORDER,
-} from "../components/actions/types";
+} from "../actions/types";
 
 const reducer = (state = [], action) => {
   switch (action.type) {

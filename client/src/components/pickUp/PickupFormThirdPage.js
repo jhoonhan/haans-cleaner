@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
-import { createOrder } from "../actions";
+import { createOrder } from "../../actions";
 import validate from "./validate";
 import price from "../price";
 

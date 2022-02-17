@@ -6,7 +6,7 @@ import { Field, reduxForm } from "redux-form";
 
 import GoogleButton from "../GoogleButton";
 
-import SignInPageTwo from "./SignInPageTwo";
+import SignUp from "./SignUp";
 
 const renderInitalSignUp = () => {
   return (
@@ -24,7 +24,7 @@ const renderNext = () => {
 const SignIn = ({ auth, user }) => {
   return (
     <div className="signIn__container">
-      {!auth.isSignedIn ? renderInitalSignUp() : <SignInPageTwo />}
+      {!auth.isSignedIn ? renderInitalSignUp() : <SignUp />}
     </div>
   );
 };

@@ -3,7 +3,10 @@
     {
       "firstName": "Joe",
       "lastName": "Han",
-      "googleId": "112981141048784001090"
+      "email": "jhoon.han2@gmail.com",
+      "phone": "44654",
+      "googleId": "112981141048784001090",
+      "id": 1
     }
   ],
   "orders": [
@@ -130,6 +133,10 @@
       "email": "jhoon.han2@gmail.com",
       "googleId": "112981141048784001090",
       "id": 11
+    },
+    {
+      "wtf": "wtf",
+      "id": 12
     }
   ]
 }

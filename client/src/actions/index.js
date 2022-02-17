@@ -9,6 +9,7 @@ import {
   CREATE_ORDER,
   EDIT_ORDER,
   DELETE_ORDER,
+  LOGIN_USER,
   FETCH_USER,
   FETCH_USERS,
   CREATE_USER,
@@ -25,12 +26,21 @@ export const signIn = ({ isSignedIn, userProfile }) => {
   };
 };
 
+export const logInUser = (formValues) => async (dispatch, getState) => {
+  // const {userId} = getState().auth;
+  // const res = await server.post("/Users", {...formValues, userId});
+  console.log(formValues);
+  const res = await server.get(`/users/${123}`);
+
+  dispatch({ type: LOGIN_USER, payload: res.data });
+  history.push("/");
+};
+
 export const createUser = (formValues) => async (dispatch, getState) => {
   // const {userId} = getState().auth;
   // const res = await server.post("/Users", {...formValues, userId});
   console.log(formValues);
-  // const res = await server.post("/users", { ...formValues });
-  const res = await server.post("/users", { wtf: "wtf" });
+  const res = await server.post("/users", { ...formValues });
 
   dispatch({ type: CREATE_USER, payload: res.data });
   history.push("/");

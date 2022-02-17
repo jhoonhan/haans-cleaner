@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import SignIn from "./singin/SingIn";
+import SignIn from "./singIn/SingIn";
 
 class Landing extends React.Component {
   componentDidMount() {
