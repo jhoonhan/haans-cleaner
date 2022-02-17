@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createUser, logInUser } from "../../actions";
+import { createUser, logInUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
 import GoogleButton from "../GoogleButton";
 
-const SignInPageTwo = (props) => {
-  useEffect(() => {}, []);
-  // console.log(auth.userProfile);
+const SignInSecondPage = (props) => {
   const { handleSubmit } = props;
-  console.log(props.user);
 
   const onFinalSubmit = (formValue) => {
     // console.log({ ...formValue, clothes });
@@ -30,7 +27,7 @@ const SignInPageTwo = (props) => {
   const renderSignUp = () => {
     return (
       <form onSubmit={handleSubmit(onFinalSubmit)} className="form__form">
-        <GoogleButton />
+        {/* <GoogleButton /> */}
         <div className="form__form__row">
           <label>First Name</label>
           <Field
@@ -90,9 +87,11 @@ const mapStateToProps = (state) => {
 
 const wrappedForm = reduxForm({
   form: "userSingUp", //Form name is same
-  destroyOnUnmount: false,
+  destroyOnUnmount: true,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   // validate,
-})(SignInPageTwo);
+})(SignInSecondPage);
 
-export default connect(mapStateToProps, { createUser, logInUser })(wrappedForm);
+export default connect(mapStateToProps, { createUser, logInUser, fetchUser })(
+  wrappedForm
+);

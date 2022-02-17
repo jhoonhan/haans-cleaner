@@ -2,7 +2,7 @@ import { SIGN_IN, SIGN_OUT } from "../actions/types";
 
 const INITIAL_STATE = {
   isSignedIn: null,
-  userProfile: null,
+  userProfile: {},
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -10,7 +10,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SIGN_IN:
       return { ...state, isSignedIn: true, userProfile: action.payload };
     case SIGN_OUT:
-      return { ...state, isSignedIn: false, userProfile: null };
+      return { ...state, isSignedIn: false, userProfile: {} };
 
     default:
       return state;

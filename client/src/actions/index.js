@@ -15,37 +15,48 @@ import {
   CREATE_USER,
   EDIT_USER,
   DELETE_USER,
+  MOUNT_USER,
 } from "./types";
 
 //////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {
-  const type = isSignedIn ? SIGN_IN : SIGN_OUT;
   return {
-    type,
-    payload: userProfile,
+    type: isSignedIn ? SIGN_IN : SIGN_OUT,
+    payload: isSignedIn ? userProfile : {},
   };
 };
 
 export const logInUser = (formValues) => async (dispatch, getState) => {
   // const {userId} = getState().auth;
   // const res = await server.post("/Users", {...formValues, userId});
-  console.log(formValues);
-  const res = await server.get(`/users/${123}`);
+  const res = await server.get(`/users/?googleId=${123}`);
 
-  dispatch({ type: LOGIN_USER, payload: res.data });
-  history.push("/");
+  dispatch({ type: LOGIN_USER, payload: res.data[0] });
+  // history.push("/");
+};
+
+export const mountUser = (user) => {
+  console.log(`mountUser fired`);
+  console.log(user);
+  return {
+    type: MOUNT_USER,
+    payload: user,
+  };
 };
 
 export const createUser = (formValues) => async (dispatch, getState) => {
   // const {userId} = getState().auth;
   // const res = await server.post("/Users", {...formValues, userId});
-  console.log(formValues);
   const res = await server.post("/users", { ...formValues });
 
   dispatch({ type: CREATE_USER, payload: res.data });
   history.push("/");
 };
 
+export const fetchUser = async (googleId) => {
+  const res = await server.get(`/users/?googleId=${googleId}`);
+  return res.data;
+};
 //
 //
 //
