@@ -15,7 +15,7 @@ const PickupFormFirstPage = (props) => {
     }
   });
 
-  const { handleSubmit, lastPage, user } = props;
+  const { handleSubmit, lastPage } = props;
 
   return (
     <form className="form__form" onSubmit={handleSubmit}>

@@ -11,6 +11,18 @@
       "googleId": "112981141048784001090",
       "fullName": "Joe Han",
       "id": 1
+    },
+    {
+      "firstName": "J",
+      "lastName": "H",
+      "email": "jhoon.han@gmail.com",
+      "phone": "3124515946",
+      "street": "4427 Carly's way",
+      "city": "Greensboro",
+      "zip": "27410",
+      "googleId": "103871420101748691850",
+      "fullName": "J H",
+      "id": 2
     }
   ],
   "orders": [
@@ -20,21 +32,12 @@
       "city": "High Point",
       "zip": "27262",
       "phone": "3128108989",
-      "date": "2022-02-07",
-      "note": "That was easy...",
-      "clothes": {
-        "sweater": 2,
-        "coat": 1,
-        "jacket": 1,
-        "skirt": 2,
-        "pants": 1,
-        "top": 1
-      },
+      "date": "2022-02-18",
       "googleId": "112981141048784001090",
       "total": {
-        "subtotal": 23.92,
-        "total": 25.06,
-        "tax": 1.14
+        "total": 0,
+        "subtotal": 0,
+        "tax": 0
       },
       "id": 1
     }

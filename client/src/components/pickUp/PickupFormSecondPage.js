@@ -12,7 +12,7 @@ const PickupFormSecondPage = (props) => {
     window.scrollTo(0, 0);
   }, []);
 
-  const renderInput = ({ input }) => {
+  const renderSelector = ({ input }) => {
     const style = input.value > 0 ? "selected" : "";
 
     return (
@@ -40,14 +40,14 @@ const PickupFormSecondPage = (props) => {
       </div>
       <label>Count your clothes</label>
       <div className="form__selector">
-        <Field name="top" component={renderInput} />
-        <Field name="pants" component={renderInput} />
-        <Field name="sweater" component={renderInput} />
-        <Field name="jacket" component={renderInput} />
-        <Field name="coat" component={renderInput} />
-        <Field name="skirt" component={renderInput} />
-        <Field name="dress" component={renderInput} />
-        <Field name="other" component={renderInput} />
+        <Field name="top" component={renderSelector} />
+        <Field name="pants" component={renderSelector} />
+        <Field name="sweater" component={renderSelector} />
+        <Field name="jacket" component={renderSelector} />
+        <Field name="coat" component={renderSelector} />
+        <Field name="skirt" component={renderSelector} />
+        <Field name="dress" component={renderSelector} />
+        <Field name="other" component={renderSelector} />
         <Field name="error" component={renderError} />
       </div>
       <div className="form__button-holder--horizontal fixed">

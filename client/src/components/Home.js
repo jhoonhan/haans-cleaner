@@ -17,7 +17,7 @@ class Home extends React.Component {
         </div>
         <div className="landing__container__buttons">
           <Link className="button" to={`/pickup`}>
-            Request for Pick-up
+            Request Pick-up
           </Link>
           <button>Order</button>
         </div>

@@ -12,14 +12,6 @@ class SignIn extends React.Component {
     this.props.fetchUser(this.props.auth.userProfile.FW);
   }
 
-  renderInitalSignUp = () => {
-    return (
-      <React.Fragment>
-        <div>No more early morning stops!</div>
-      </React.Fragment>
-    );
-  };
-
   render() {
     const isSignedIn = this.props.auth.isSignedIn;
     const loadedGoogleId = this.props.auth.userProfile.FW;

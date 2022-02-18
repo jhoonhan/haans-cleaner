@@ -65,13 +65,13 @@ class PickupFormThirdPage extends React.Component {
   renderInfo() {
     if (!this.props.pickup) return null;
 
-    const { address, name } = this.props.pickup;
+    const { street, city, zip, name } = this.props.pickup;
     return (
       <React.Fragment>
         <div>
           <h3>{name}</h3>
         </div>
-        <div>{address}</div>
+        <div>{`${street}, ${city}, ${zip}`}</div>
       </React.Fragment>
     );
   }
