@@ -19,7 +19,9 @@ class Home extends React.Component {
           <Link className="button" to={`/pickup`}>
             Request Pick-up
           </Link>
-          <button>Order</button>
+          <Link className="button" to={`/order`}>
+            Your orders
+          </Link>
         </div>
       </div>
     );
