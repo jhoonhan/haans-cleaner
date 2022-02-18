@@ -68,10 +68,10 @@ const PickupFormFirstPage = (props) => {
       <div className="form__form__row"></div>
 
       <div className="form__button-holder--vertical">
-        <button type="submit" className="next">
+        <button type="submit" className="next button--l">
           Count clothes (optional)
         </button>
-        <button type="button" className="previous" onClick={lastPage}>
+        <button type="button" className="previous button--l" onClick={lastPage}>
           Next
         </button>
       </div>

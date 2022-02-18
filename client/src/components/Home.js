@@ -16,10 +16,10 @@ class Home extends React.Component {
           <h3>It's a great day to wear a skirt</h3>
         </div>
         <div className="landing__container__buttons">
-          <Link className="button" to={`/pickup`}>
+          <Link className="button--l" to={`/pickup`}>
             Request Pick-up
           </Link>
-          <Link className="button" to={`/order`}>
+          <Link className="button--l" to={`/order`}>
             Your orders
           </Link>
         </div>

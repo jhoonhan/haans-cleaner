@@ -51,10 +51,14 @@ const PickupFormSecondPage = (props) => {
         <Field name="error" component={renderError} />
       </div>
       <div className="form__button-holder--horizontal fixed">
-        <button type="button" className="previous" onClick={previousPage}>
+        <button
+          type="button"
+          className="previous button--l"
+          onClick={previousPage}
+        >
           Previous
         </button>
-        <button type="submit" className="next">
+        <button type="submit" className="next button--l">
           Next
         </button>
       </div>

@@ -61,7 +61,7 @@ button {
   color: $primary-color;
   text-align: center;
 
-  padding: 2rem;
+  padding: 0rem;
 
   background-color: white;
   border: 1px solid $primary-color;
@@ -69,18 +69,21 @@ button {
   box-sizing: border-box;
   cursor: pointer;
 
-  &:hover {
-    color: $secondary-color;
-    border: 1px solid $secondary-color;
-  }
+  // &:hover {
+  //   color: $secondary-color;
+  //   border: 1px solid $secondary-color;
+  // }
 }
 .button {
   @extend button;
 }
-
-.button--large {
+.button--m {
   @extend button;
-  padding: 1.5rem 2rem;
+  padding: 0.75rem 1rem;
+}
+.button--l {
+  @extend button;
+  padding: 2rem 2rem;
 }
 
 .input--double {
@@ -98,6 +101,7 @@ button {
   display: grid;
   grid-auto-columns: auto;
   grid-template-columns: auto auto;
+  background-color: red;
 }
 
 .border-top--primary {

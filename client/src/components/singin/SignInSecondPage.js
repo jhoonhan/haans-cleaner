@@ -87,7 +87,11 @@ const SignInSecondPage = (props) => {
           </div>
         </div>
 
-        <button type="submit" className="w100p" style={{ marginTop: "3rem" }}>
+        <button
+          type="submit"
+          className="w100p button--l"
+          style={{ marginTop: "3rem" }}
+        >
           Create Account
         </button>
       </form>

@@ -16,12 +16,16 @@ $font-size-l: 1.6rem;
 @import "form";
 @import "signIn";
 @import "google";
+@import "order";
+@import "animation";
 
 html {
   color: $primary-color;
 }
 
 .container {
+  font-family: $font-default;
+
   position: relative;
 
   // width: 414px;
@@ -36,5 +40,5 @@ html {
 
   margin: 0rem auto;
 
-  font-family: $font-default;
+  box-sizing: border-box;
 }

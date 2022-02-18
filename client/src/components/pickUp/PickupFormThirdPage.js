@@ -24,6 +24,8 @@ class PickupFormThirdPage extends React.Component {
       clothes,
       googleId: this.props.auth.userProfile.FW,
       total: this.total,
+      timestamp: Date.now(),
+      status: "submitted",
     };
     this.props.createOrder(combined);
   };
@@ -177,11 +179,17 @@ class PickupFormThirdPage extends React.Component {
         </div>
 
         <div className="form__button-holder--horizontal">
-          <button type="button" className="previous" onClick={previousPage}>
+          <button
+            type="button"
+            className="previous button--l"
+            onClick={previousPage}
+          >
             Previous
           </button>
           {/* <button type="submit" disabled={pristine || submitting}> */}
-          <button type="submit">Submit</button>
+          <button type="submit" className="button--l">
+            Submit
+          </button>
         </div>
       </form>
     );

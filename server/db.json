@@ -32,34 +32,20 @@
       "city": "High Point",
       "zip": "27262",
       "phone": "3128108989",
-      "date": "2022-02-18",
-      "googleId": "112981141048784001090",
-      "total": {
-        "total": 0,
-        "subtotal": 0,
-        "tax": 0
-      },
-      "id": 1
-    },
-    {
-      "name": "Joe Han",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "phone": "3128108989",
+      "date": "2022-02-19",
       "clothes": {
-        "coat": 3,
-        "jacket": 1,
-        "skirt": 1,
-        "sweater": 1
+        "coat": 5,
+        "jacket": 2
       },
       "googleId": "112981141048784001090",
       "total": {
-        "subtotal": 17.94,
-        "total": 18.79,
-        "tax": 0.85
+        "subtotal": 20.93,
+        "total": 21.92,
+        "tax": 0.99
       },
-      "id": 2
+      "timestamp": 16425211563369,
+      "status": "delivered",
+      "id": 1
     },
     {
       "name": "Joe Han",
@@ -69,15 +55,60 @@
       "phone": "3128108989",
       "date": "2022-02-19",
       "clothes": {
-        "sweater": 6
+        "coat": 5,
+        "jacket": 2
       },
       "googleId": "112981141048784001090",
       "total": {
-        "subtotal": 17.94,
-        "total": 18.79,
-        "tax": 0.85
+        "subtotal": 20.93,
+        "total": 221.92,
+        "tax": 0.99
       },
+      "timestamp": 16452115632369,
+      "status": "delivered",
+      "id": 2
+    },
+    {
+      "name": "Joe Han",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "phone": "3128108989",
+      "date": "2022-02-23",
+      "clothes": {
+        "other": 5
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": 14.95,
+        "total": 15.66,
+        "tax": 0.71
+      },
+      "timestamp": 16452116013533,
+      "status": "submitted",
       "id": 3
+    },
+    {
+      "name": "Joe Han",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "date": "2022-02-23",
+      "phone": "3128108989",
+      "clothes": {
+        "coat": 2,
+        "skirt": 3,
+        "jacket": 3
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": 23.92,
+        "total": 25.06,
+        "tax": 1.14
+      },
+      "timestamp": 16435217295499,
+      "status": "submitted",
+      "id": 4
     }
   ]
 }

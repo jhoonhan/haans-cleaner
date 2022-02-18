@@ -13,11 +13,12 @@
   justify-content: flex-start;
   align-items: center;
 
-  padding: 4rem 0;
+  box-sizing: border-box;
+  padding: 4rem 2rem;
 }
 
 .form__form {
-  width: calc(100% - 4rem);
+  width: 100%;
   display: grid;
   // grid-template-rows: repeat(auto);
   justify-items: center;
