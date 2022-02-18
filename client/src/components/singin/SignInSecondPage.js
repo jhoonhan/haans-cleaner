@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { createUser, logInUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
-import GoogleButton from "../GoogleButton";
+import RenderInput from "./RenderInput";
 
 const SignInSecondPage = (props) => {
   const { handleSubmit } = props;
@@ -12,16 +12,12 @@ const SignInSecondPage = (props) => {
   const onFinalSubmit = (formValue) => {
     // console.log({ ...formValue, clothes });
     // console.log(this.props.clothes);
-    const combined = { ...formValue, googleId: props.auth.userProfile.FW };
+    const combined = {
+      ...formValue,
+      googleId: props.auth.userProfile.FW,
+      fullName: `${formValue.firstName} ${formValue.lastName}`,
+    };
     props.createUser(combined);
-  };
-
-  const renderInput = ({ input }) => {
-    return (
-      <React.Fragment>
-        <input onChange={input.onChange} value={input.value} type="text" />
-      </React.Fragment>
-    );
   };
 
   const renderSignUp = () => {
@@ -33,7 +29,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="firstName"
             type="text"
-            component={renderInput}
+            component={RenderInput}
             label="firstName"
           />
         </div>
@@ -42,7 +38,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="lastName"
             type="text"
-            component={renderInput}
+            component={RenderInput}
             label="lastName"
           />
         </div>
@@ -50,8 +46,8 @@ const SignInSecondPage = (props) => {
           <label>Email</label>
           <Field
             name="email"
-            type="number"
-            component={renderInput}
+            type="text"
+            component={RenderInput}
             label="email"
           />
         </div>
@@ -60,12 +56,40 @@ const SignInSecondPage = (props) => {
           <Field
             name="phone"
             type="number"
-            component={renderInput}
+            component={RenderInput}
             label="phone"
           />
         </div>
+        <div className="form__form__row">
+          <label>Address</label>
+          <Field
+            name="street"
+            type="text"
+            component={RenderInput}
+            label="street"
+          />
 
-        <button type="submit">Create Account</button>
+          <div className="cityzip">
+            <label>City</label>
+            <label>Zip</label>
+            <Field
+              name="city"
+              type="text"
+              component={RenderInput}
+              label="city"
+            />
+            <Field
+              name="zip"
+              type="number"
+              component={RenderInput}
+              label="zip"
+            />
+          </div>
+        </div>
+
+        <button type="submit" className="w100p" style={{ marginTop: "3rem" }}>
+          Create Account
+        </button>
       </form>
     );
   };

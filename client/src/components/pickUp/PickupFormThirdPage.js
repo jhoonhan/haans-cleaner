@@ -6,9 +6,27 @@ import validate from "./validate";
 import price from "../price";
 
 class PickupFormThirdPage extends React.Component {
+  total = { total: 0, subtotal: 0, tax: 0 };
+  taxRate = 0.0475;
+
   componentDidMount() {
     window.scrollTo(0, 0);
+
+    if (this.props.auth.isSignedIn && !this.props.user) {
+      this.props.fetchUser(this.props.auth.userProfile.FW);
+    }
   }
+
+  onFinalSubmit = (formValue) => {
+    const clothes = this.props.clothes;
+    const combined = {
+      ...formValue,
+      clothes,
+      googleId: this.props.auth.userProfile.FW,
+      total: this.total,
+    };
+    this.props.createOrder(combined);
+  };
 
   convertToArray = (data) => {
     return Object.entries(data).map(([key, value]) => {
@@ -19,12 +37,20 @@ class PickupFormThirdPage extends React.Component {
     });
   };
   getTotalPrice = (data) => {
-    let totalPrice = 0;
+    let preSubtotal = 0;
     data.forEach((el) => {
       const pricePerItem = price[el.type] * el.count;
-      totalPrice = totalPrice + pricePerItem;
+      preSubtotal = preSubtotal + pricePerItem;
     });
-    return totalPrice;
+    const subtotal = Number((Math.round(preSubtotal * 100) / 100).toFixed(2));
+    const tax = Number(
+      (Math.round(preSubtotal * this.taxRate * 100) / 100).toFixed(2)
+    );
+    const total = Number(
+      (Math.round((preSubtotal + +tax) * 100) / 100).toFixed(2)
+    );
+
+    this.total = { subtotal, total, tax };
   };
   getPickUpDate = () => {
     const date = new Date();
@@ -36,13 +62,6 @@ class PickupFormThirdPage extends React.Component {
     return date;
   };
 
-  onFinalSubmit = (formValue) => {
-    const clothes = this.props.clothes;
-    // console.log({ ...formValue, clothes });
-    // console.log(this.props.clothes);
-    const combined = { ...formValue, clothes, userId: "123jdie929da9d29" };
-    this.props.createOrder(combined);
-  };
   renderInfo() {
     if (!this.props.pickup) return null;
 
@@ -83,29 +102,26 @@ class PickupFormThirdPage extends React.Component {
       </React.Fragment>
     );
   }
+
   renderTotal() {
     if (!this.props.clothes) return null;
 
-    const subtotal =
-      Math.round(
-        this.getTotalPrice(this.convertToArray(this.props.clothes)) * 100
-      ) / 100;
-    const tax = Math.round(subtotal * 0.0475 * 100) / 100;
-    const total = Math.round((subtotal + tax) * 100) / 100;
+    this.getTotalPrice(this.convertToArray(this.props.clothes));
+
     return (
       <React.Fragment>
         <label>subtotal:</label>
-        <div>${subtotal}</div>
+        <div>${this.total.subtotal}</div>
 
         <label>tax: </label>
-        <div>${tax}</div>
+        <div>${this.total.tax}</div>
 
         <label>
           <h3>total: </h3>
         </label>
 
         <div>
-          <h3>${total}</h3>
+          <h3>${this.total.total}</h3>
         </div>
       </React.Fragment>
     );
@@ -172,14 +188,19 @@ class PickupFormThirdPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ form }) => {
-  return { pickup: form.pickup?.values, clothes: form.clothes?.values };
+const mapStateToProps = ({ form, auth, user }) => {
+  return {
+    pickup: form.pickup?.values,
+    clothes: form.clothes?.values,
+    auth,
+    user: user.currentUser,
+  };
 };
 
 export default connect(mapStateToProps, { createOrder })(
   reduxForm({
     form: "pickup", //Form name is same
-    destroyOnUnmount: false,
+    destroyOnUnmount: true,
     forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
     validate,
   })(PickupFormThirdPage)

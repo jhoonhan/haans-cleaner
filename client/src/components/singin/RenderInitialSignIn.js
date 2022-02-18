@@ -1,6 +1,6 @@
 import React from "react";
 
-const SignInInitial = () => {
+const RenderInitialSignIn = () => {
   return (
     <React.Fragment>
       <div>No more early morning stops!</div>
@@ -8,4 +8,4 @@ const SignInInitial = () => {
   );
 };
 
-export default SignInInitial;
+export default RenderInitialSignIn;

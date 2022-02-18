@@ -1,56 +1,72 @@
 import React, { useEffect } from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+
+import { fetchUser } from "../../actions";
 import validate from "./validate";
 
+import RenderField from "../singIn/RenderField";
+import RenderInput from "../singIn/RenderInput";
+
 const PickupFormFirstPage = (props) => {
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, []);
+  useEffect(() => {
+    if (props.auth.isSignedIn && !props.user) {
+      props.fetchUser(props.auth.userProfile.FW);
+    }
+  });
 
-  const { handleSubmit, lastPage } = props;
-
-  const renderField = ({ input, label, type, meta: { touched, error } }) => {
-    const inputArea = (
-      <input
-        {...input}
-        placeholder={label}
-        type={type}
-        className="input--100"
-      />
-    );
-    const textArea = <textarea {...input} placeholder={label} type={type} />;
-
-    return (
-      <div className="form__form__row">
-        <label>{label[0].toUpperCase() + label.substring(1)}</label>
-        <div>
-          {label === "note" ? textArea : inputArea}
-          {touched && error && <span>{error}</span>}
-        </div>
-      </div>
-    );
-  };
+  const { handleSubmit, lastPage, user } = props;
 
   return (
     <form className="form__form" onSubmit={handleSubmit}>
       <div className="form__form__row">
         <h2>Order Information</h2>
       </div>
-      <Field name="name" type="text" component={renderField} label="name" />
-      <Field
-        name="address"
-        type="text"
-        component={renderField}
-        label="address"
-      />
-      <Field
-        name="phone"
-        type="number"
-        component={renderField}
-        label="phone number"
-      />
-      <Field name="date" type="text" component={renderField} label="date" />
-      <Field name="note" type="text" component={renderField} label="note" />
+
+      <div className="form__form__row">
+        <Field name="name" type="text" component={RenderField} label="name" />
+      </div>
+
+      <div className="form__form__row">
+        <label>Address</label>
+        <Field
+          name="street"
+          type="text"
+          component={RenderInput}
+          label="street"
+        />
+        <div className="cityzip">
+          <label>City</label>
+          <label>Zip</label>
+          <Field name="city" type="text" component={RenderInput} label="city" />
+          <Field name="zip" type="number" component={RenderInput} label="zip" />
+        </div>
+      </div>
+
+      <div className="form__form__row">
+        <Field
+          name="phone"
+          type="number"
+          component={RenderField}
+          label="phone number"
+        />
+      </div>
+
+      <div className="form__form__row">
+        <Field
+          name="date"
+          type="date"
+          component={RenderField}
+          label="pick up date"
+        />
+      </div>
+
+      <div className="form__form__row">
+        <Field name="note" type="text" component={RenderField} label="note" />
+      </div>
+
+      <div className="form__form__row"></div>
+
       <div className="form__button-holder--vertical">
         <button type="submit" className="next">
           Count clothes (optional)
@@ -63,9 +79,39 @@ const PickupFormFirstPage = (props) => {
   );
 };
 
-export default reduxForm({
-  form: "pickup", // <------ same form name
-  destroyOnUnmount: false, // <------ preserve form data
+const mapStateToProps = ({ auth, user }) => {
+  const fullName = () => {
+    if (user.currentUser) {
+      return user.currentUser.fullName;
+    }
+    if (!user.currentUser && auth.userProfile.tf) {
+      return auth.userProfile.tf;
+    }
+    if (!user.currentUser && !auth.userProfile.tf) {
+      return "";
+    }
+  };
+
+  return {
+    initialValues: {
+      name: fullName(),
+      street: user.currentUser?.street,
+      city: user.currentUser?.city,
+      zip: user.currentUser?.zip,
+      phone: user.currentUser?.phone,
+    },
+    auth: auth,
+    user: user.currentUser,
+  };
+};
+
+const wrappedForm = reduxForm({
+  form: "pickup", //Form name is same
+  destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  validate,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
+  // validate,
 })(PickupFormFirstPage);
+
+export default connect(mapStateToProps, { fetchUser })(wrappedForm);

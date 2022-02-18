@@ -4,145 +4,39 @@
       "firstName": "Joe",
       "lastName": "Han",
       "email": "jhoon.han2@gmail.com",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "phone": "3128108989",
       "googleId": "112981141048784001090",
+      "fullName": "Joe Han",
       "id": 1
-    },
-    {
-      "firstName": "J",
-      "lastName": "H",
-      "email": "jhoon.han@gmail.com",
-      "googleId": "103871420101748691850",
-      "id": 2
     }
   ],
   "orders": [
     {
-      "address": "1234",
-      "sex": "sadas",
-      "id": 1
-    },
-    {
-      "name": "Null N test",
-      "address": "1234",
-      "date": "12323",
-      "note": "2323",
-      "notes": "2",
-      "employed": true,
-      "clothes": {
-        "top": 1,
-        "pants": 1,
-        "jacket": 1,
-        "coat": 2,
-        "skirt": 1,
-        "other": 1,
-        "dress": 1
-      },
-      "userId": "123jdie929da9d29",
-      "id": 2
-    },
-    {
-      "name": "Junghoon Han",
-      "address": "what is going on?",
-      "date": "1234",
-      "note": "1234",
+      "name": "Joe Han",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "phone": "3128108989",
+      "date": "2022-02-07",
+      "note": "That was easy...",
       "clothes": {
         "sweater": 2,
-        "jacket": 2,
-        "skirt": 2
-      },
-      "userId": "123jdie929da9d29",
-      "id": 3
-    },
-    {
-      "userId": "123jdie929da9d29",
-      "id": 4
-    },
-    {
-      "userId": "123jdie929da9d29",
-      "id": 5
-    },
-    {
-      "userId": "123jdie929da9d29",
-      "id": 6
-    },
-    {
-      "name": "Minseo Cha",
-      "address": "2835 Bond st, London, 9294",
-      "phone": "895512145",
-      "date": "2/22/2020",
-      "note": "I wanna live in london...",
-      "deliveryNote": "Get here as soon as possilbe you bitch",
-      "clothes": {
-        "coat": 4,
-        "jacket": 2,
-        "pants": 1,
-        "top": 1,
-        "skirt": 3,
-        "other": 1
-      },
-      "userId": "123jdie929da9d29",
-      "id": 7
-    },
-    {
-      "clothes": {
-        "sweater": 1,
-        "top": 1,
-        "pants": 1,
-        "jacket": 1,
-        "skirt": 1,
         "coat": 1,
-        "dress": 1,
-        "other": 1
-      },
-      "userId": "123jdie929da9d29",
-      "id": 8
-    },
-    {
-      "name": "Lingxi Zhao",
-      "address": "1123 Chicago Downtown, Chicago, IL 28282",
-      "phone": "312121515",
-      "date": "2/22/22",
-      "note": "1234",
-      "clothes": {
-        "coat": 1,
-        "sweater": 1,
         "jacket": 1,
+        "skirt": 2,
         "pants": 1,
-        "top": 1,
-        "skirt": 1,
-        "other": 1,
-        "dress": 1
+        "top": 1
       },
-      "userId": "123jdie929da9d29",
-      "id": 9
-    },
-    {
-      "name": "Database Reconstruction",
-      "address": "dsadsa",
-      "phone": "2312312",
-      "date": "3213213",
-      "deliveryNote": "3123",
-      "clothes": {
-        "sweater": 1,
-        "coat": 1,
-        "skirt": 3,
-        "jacket": 1,
-        "pants": 1,
-        "other": 1
-      },
-      "userId": "123jdie929da9d29",
-      "id": 10
-    },
-    {
-      "firstName": "Joe",
-      "lastName": "Han",
-      "email": "jhoon.han2@gmail.com",
       "googleId": "112981141048784001090",
-      "id": 11
-    },
-    {
-      "wtf": "wtf",
-      "id": 12
+      "total": {
+        "subtotal": 23.92,
+        "total": 25.06,
+        "tax": 1.14
+      },
+      "id": 1
     }
   ]
 }

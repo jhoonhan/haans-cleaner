@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, resetForm, isPristine } from "redux-form";
 import validate from "./validate";
 
 const renderError = ({ meta: { touched, error } }) =>
@@ -62,9 +62,8 @@ const PickupFormSecondPage = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  // console.log(state);
-  return { null: null };
+const mapStateToProps = ({ auth, user }) => {
+  return {};
 };
 
 const wrappedForm = reduxForm({
@@ -74,4 +73,4 @@ const wrappedForm = reduxForm({
   validate,
 })(PickupFormSecondPage);
 
-export default connect(mapStateToProps)(wrappedForm);
+export default connect(mapStateToProps, { isPristine })(wrappedForm);

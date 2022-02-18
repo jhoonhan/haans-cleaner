@@ -1,4 +1,4 @@
-import { formValues } from "redux-form";
+import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
 import {
@@ -27,8 +27,6 @@ export const signIn = ({ isSignedIn, userProfile }) => {
 };
 
 export const logInUser = (formValues) => async (dispatch, getState) => {
-  // const {userId} = getState().auth;
-  // const res = await server.post("/Users", {...formValues, userId});
   const res = await server.get(`/users/?googleId=${123}`);
 
   dispatch({ type: LOGIN_USER, payload: res.data[0] });
@@ -45,8 +43,6 @@ export const mountUser = (user) => {
 };
 
 export const createUser = (formValues) => async (dispatch, getState) => {
-  // const {userId} = getState().auth;
-  // const res = await server.post("/Users", {...formValues, userId});
   const res = await server.post("/users", { ...formValues });
 
   dispatch({ type: CREATE_USER, payload: res.data });
@@ -75,11 +71,10 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  // const {userId} = getState().auth;
-  // const res = await server.post("/orders", {...formValues, userId});
   const res = await server.post("/orders", { ...formValues });
 
   dispatch({ type: CREATE_ORDER, payload: res.data });
+  dispatch(reset("clothes"));
   history.push("/");
 };
 

@@ -4,23 +4,13 @@ import { Link } from "react-router-dom";
 import { createUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
-import GoogleButton from "../GoogleButton";
-import GoogleAuth from "../../apis/GoogleAuth";
-
 import SignInSecondPage from "./SignInSecondPage";
+import Home from "../Home";
 
 class SignIn extends React.Component {
   componentDidMount() {
-    this.props.fetchUser(this.props.googleId);
+    this.props.fetchUser(this.props.auth.userProfile.FW);
   }
-
-  renderGoogleButton = () => {
-    return (
-      <div className="login-with-google-btn">
-        <GoogleAuth />
-      </div>
-    );
-  };
 
   renderInitalSignUp = () => {
     return (
@@ -31,13 +21,13 @@ class SignIn extends React.Component {
   };
 
   render() {
-    const loadedGoogleId = this.props.googleId;
-    const userGoogleId = this.props.user.currentUser?.googleId;
-    console.log(loadedGoogleId, userGoogleId);
+    const isSignedIn = this.props.auth.isSignedIn;
+    const loadedGoogleId = this.props.auth.userProfile.FW;
+    const userGoogleId = this.props.user?.googleId;
     return (
       <div className="signIn__container">
-        {loadedGoogleId === userGoogleId ? (
-          <div>{this.props.user.currentUser.firstName}</div>
+        {isSignedIn && loadedGoogleId === userGoogleId ? (
+          <Home />
         ) : (
           <SignInSecondPage />
         )}
@@ -48,10 +38,8 @@ class SignIn extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isSignedIn: state.auth.isSignedIn,
-    userProfile: state.auth.userProfile,
-    googleId: state.auth.userProfile.FW,
-    user: state.user,
+    auth: state.auth,
+    user: state.user.currentUser,
   };
 };
 
