@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import SignIn from "./singIn/SingIn";
+import SignInInitial from "./singIn/SignInInitial";
 import GoogleButton from "./GoogleButton";
 import GoogleAuth from "../apis/GoogleAuth";
 import { fetchUser, mountUser } from "../actions";
@@ -11,14 +12,6 @@ import { fetchUser, mountUser } from "../actions";
 
 class Landing extends React.Component {
   componentDidMount() {}
-  componentDidUpdate() {
-    console.log(`----landing----`);
-    console.log(this.props.isSignedIn);
-    console.log(this.props.userProfile.FW);
-    fetchUser(this.props.userProfile.FW).then(([user]) => mountUser(user));
-
-    // const status = userGoogleId === loadedGoogleId ? true : false;
-  }
 
   renderHome() {
     return (
@@ -49,15 +42,18 @@ class Landing extends React.Component {
   //   return status;
   // }
 
+  renderInitalSignUp() {
+    return (
+      <React.Fragment>
+        <div>No more early morning stops!</div>
+      </React.Fragment>
+    );
+  }
   render() {
     return (
       <React.Fragment>
-        {/* {this.renderHome()} */}
-        {this.props.user && this.props.isSignedIn ? (
-          this.renderHome()
-        ) : (
-          <SignIn />
-        )}
+        <GoogleButton />
+        {!this.props.isSignedIn ? <SignInInitial /> : <SignIn />}
       </React.Fragment>
     );
   }

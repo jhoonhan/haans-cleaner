@@ -10,21 +10,17 @@ import {
 } from "../actions/types";
 
 const reducer = (state = {}, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case SIGN_OUT:
-      console.log(`singOUt reducer fired`);
-      return { currentUser: null };
+      return { ...state, currentUser: null };
     case FETCH_USER:
-      console.log(`fetchUser reducer fired`);
-      return { currentUser: action.payload };
+      return { ...state, currentUser: action.payload };
     case MOUNT_USER:
-      console.log(`mountUser reducer fired`);
-      return { currentUser: action.payload };
+      return { ...state, currentUser: action.payload };
     case CREATE_USER:
-      return { currentUser: action.payload };
+      return { ...state, currentUser: action.payload };
     case LOGIN_USER:
-      return { currentUser: action.payload };
+      return { ...state, currentUser: action.payload };
     case EDIT_USER:
       return { ...state, [action.payload.id]: action.payload };
     case DELETE_USER:

@@ -53,9 +53,10 @@ export const createUser = (formValues) => async (dispatch, getState) => {
   history.push("/");
 };
 
-export const fetchUser = async (googleId) => {
-  const res = await server.get(`/users/?googleId=${googleId}`);
-  return res.data;
+export const fetchUser = (id) => async (dispatch, getState) => {
+  const res = await server.get(`/users/?googleId=${id}`);
+  dispatch({ type: FETCH_USER, payload: res.data[0] });
+  // history.push("/");
 };
 //
 //

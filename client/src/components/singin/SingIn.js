@@ -9,10 +9,12 @@ import GoogleAuth from "../../apis/GoogleAuth";
 
 import SignInSecondPage from "./SignInSecondPage";
 
-const SignIn = ({ isSignedIn, user, fetchUser, userProfile }) => {
-  useEffect(() => {}, []);
+class SignIn extends React.Component {
+  componentDidMount() {
+    this.props.fetchUser(this.props.googleId);
+  }
 
-  const renderGoogleButton = () => {
+  renderGoogleButton = () => {
     return (
       <div className="login-with-google-btn">
         <GoogleAuth />
@@ -20,7 +22,7 @@ const SignIn = ({ isSignedIn, user, fetchUser, userProfile }) => {
     );
   };
 
-  const renderInitalSignUp = () => {
+  renderInitalSignUp = () => {
     return (
       <React.Fragment>
         <div>No more early morning stops!</div>
@@ -28,30 +30,27 @@ const SignIn = ({ isSignedIn, user, fetchUser, userProfile }) => {
     );
   };
 
-  const renderConditional = () => {
-    if (isSignedIn === false) {
-      return <div>{renderInitalSignUp()}</div>;
-    }
-    if (isSignedIn === true) {
-      const googleId = userProfile.FW;
-      console.log(user);
-      fetchUser(googleId);
-      console.log(user);
-      return <div>aaang!</div>;
-    }
-  };
-  return (
-    <div className="signIn__container">
-      {renderGoogleButton()}
-      {!isSignedIn ? renderInitalSignUp() : <SignInSecondPage />}
-    </div>
-  );
-};
+  render() {
+    const loadedGoogleId = this.props.googleId;
+    const userGoogleId = this.props.user.currentUser?.googleId;
+    console.log(loadedGoogleId, userGoogleId);
+    return (
+      <div className="signIn__container">
+        {loadedGoogleId === userGoogleId ? (
+          <div>{this.props.user.currentUser.firstName}</div>
+        ) : (
+          <SignInSecondPage />
+        )}
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = (state) => {
   return {
     isSignedIn: state.auth.isSignedIn,
     userProfile: state.auth.userProfile,
+    googleId: state.auth.userProfile.FW,
     user: state.user,
   };
 };
