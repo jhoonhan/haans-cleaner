@@ -40,6 +40,44 @@
         "tax": 0
       },
       "id": 1
+    },
+    {
+      "name": "Joe Han",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "phone": "3128108989",
+      "clothes": {
+        "coat": 3,
+        "jacket": 1,
+        "skirt": 1,
+        "sweater": 1
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": 17.94,
+        "total": 18.79,
+        "tax": 0.85
+      },
+      "id": 2
+    },
+    {
+      "name": "Joe Han",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "phone": "3128108989",
+      "date": "2022-02-19",
+      "clothes": {
+        "sweater": 6
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": 17.94,
+        "total": 18.79,
+        "tax": 0.85
+      },
+      "id": 3
     }
   ]
 }

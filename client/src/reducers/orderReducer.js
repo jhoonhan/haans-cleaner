@@ -10,9 +10,9 @@ import {
 const reducer = (state = [], action) => {
   switch (action.type) {
     case FETCH_ORDER:
-      return { ...state, [action.payload.id]: action.payload };
+      return { ...state, orders: action.payload };
     case FETCH_ORDERS:
-      return { ...state, ..._.mapKeys(action.payload, "id") };
+      return { ...state, orders: action.payload };
     case CREATE_ORDER:
       return { ...state, [action.payload.id]: action.payload };
     case EDIT_ORDER:

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createUser, logInUser, fetchUser } from "../../actions";
+import { createUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
 import RenderInput from "./RenderInput";
@@ -97,15 +97,15 @@ const SignInSecondPage = (props) => {
   return <React.Fragment>{renderSignUp()}</React.Fragment>;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ auth, user }) => {
   return {
     initialValues: {
-      firstName: state.auth.userProfile.VX,
-      lastName: state.auth.userProfile.iW,
-      email: state.auth.userProfile.tv,
+      firstName: auth.userProfile.VX,
+      lastName: auth.userProfile.iW,
+      email: auth.userProfile.tv,
     },
-    auth: state.auth,
-    user: state.user.currentUser,
+    auth: auth,
+    user: user.currentUser,
   };
 };
 
@@ -116,6 +116,4 @@ const wrappedForm = reduxForm({
   // validate,
 })(SignInSecondPage);
 
-export default connect(mapStateToProps, { createUser, logInUser, fetchUser })(
-  wrappedForm
-);
+export default connect(mapStateToProps, { createUser, fetchUser })(wrappedForm);

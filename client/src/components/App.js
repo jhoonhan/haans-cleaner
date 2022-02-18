@@ -7,6 +7,7 @@ import "./assets/scss/App.scss";
 import GoogleButton from "./GoogleButton";
 import Landing from "./Landing";
 import Pickup from "./pickup/Pickup";
+import Order from "./order/Order";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Router history={history}>
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />
+        <Route path="/order" exact component={Order} />
       </Router>
     </div>
   );

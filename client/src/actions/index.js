@@ -26,13 +26,6 @@ export const signIn = ({ isSignedIn, userProfile }) => {
   };
 };
 
-export const logInUser = (formValues) => async (dispatch, getState) => {
-  const res = await server.get(`/users/?googleId=${123}`);
-
-  dispatch({ type: LOGIN_USER, payload: res.data[0] });
-  // history.push("/");
-};
-
 export const mountUser = (user) => {
   console.log(`mountUser fired`);
   console.log(user);
@@ -52,6 +45,7 @@ export const createUser = (formValues) => async (dispatch, getState) => {
 export const fetchUser = (id) => async (dispatch, getState) => {
   const res = await server.get(`/users/?googleId=${id}`);
   dispatch({ type: FETCH_USER, payload: res.data[0] });
+  console.log(`user fetched`);
   // history.push("/");
 };
 //
@@ -59,9 +53,10 @@ export const fetchUser = (id) => async (dispatch, getState) => {
 //
 //////////////////// ORDER
 export const fetchOrder = (id) => async (dispatch) => {
-  const res = await server.get(`/orders/${id}`);
+  const res = await server.get(`/orders/?googleId=${id}`);
 
   dispatch({ type: FETCH_ORDER, payload: res.data });
+  console.log(`order fetched`);
 };
 
 export const fetchOrders = () => async (dispatch) => {
@@ -71,9 +66,9 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  const res = await server.post("/orders", { ...formValues });
+  await server.post("/orders", { ...formValues });
 
-  dispatch({ type: CREATE_ORDER, payload: res.data });
+  // dispatch({ type: CREATE_ORDER, payload: res.data });
   dispatch(reset("clothes"));
   history.push("/");
 };
