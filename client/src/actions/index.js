@@ -83,4 +83,5 @@ export const cancelOrder = (id) => async (dispatch) => {
   await server.delete(`/orders/${id}`);
 
   dispatch({ type: CANCEL_ORDER, payload: id });
+  history.push("/order");
 };

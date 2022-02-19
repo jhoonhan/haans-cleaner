@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { fetchUser } from "../../actions";
 import validate from "./validate";
 
-import RenderField from "../singIn/RenderField";
-import RenderInput from "../singIn/RenderInput";
+import RenderField from "../helpers/RenderField";
+import RenderInput from "../helpers/RenderInput";
 
 const PickupFormFirstPage = (props) => {
   useEffect(() => {
@@ -57,7 +57,7 @@ const PickupFormFirstPage = (props) => {
           name="date"
           type="date"
           component={RenderField}
-          label="pick up date"
+          label="pick-up date"
         />
       </div>
 

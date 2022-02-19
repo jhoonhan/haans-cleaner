@@ -8,6 +8,7 @@ import GoogleButton from "./GoogleButton";
 import Landing from "./Landing";
 import Pickup from "./pickup/Pickup";
 import Order from "./order/Order";
+import OrderCancel from "./order/OrderCancel";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />
         <Route path="/order" exact component={Order} />
+        <Route path="/order/delete/:id" exact component={OrderCancel} />
       </Router>
     </div>
   );

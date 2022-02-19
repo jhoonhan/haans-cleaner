@@ -125,3 +125,9 @@ button {
 .w100p {
   width: 100%;
 }
+
+.button--alrert {
+  background-color: $secondary-color;
+  color: white;
+  border: 1px solid $secondary-color;
+}

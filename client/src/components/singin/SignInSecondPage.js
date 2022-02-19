@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { createUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
-import RenderInput from "./RenderInput";
+import RenderInput from "../helpers/RenderInput";
 
 const SignInSecondPage = (props) => {
   const { handleSubmit } = props;

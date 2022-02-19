@@ -44,24 +44,26 @@ class PickupFormThirdPage extends React.Component {
       const pricePerItem = price[el.type] * el.count;
       preSubtotal = preSubtotal + pricePerItem;
     });
-    const subtotal = Number((Math.round(preSubtotal * 100) / 100).toFixed(2));
+    const subtotal = Number(Math.round(preSubtotal * 100) / 100).toFixed(2);
     const tax = Number(
-      (Math.round(preSubtotal * this.taxRate * 100) / 100).toFixed(2)
-    );
-    const total = Number(
-      (Math.round((preSubtotal + +tax) * 100) / 100).toFixed(2)
+      Math.round(preSubtotal * this.taxRate * 100) / 100
+    ).toFixed(2);
+    const total = Number(Math.round((preSubtotal + +tax) * 100) / 100).toFixed(
+      2
     );
 
     this.total = { subtotal, total, tax };
   };
   getPickUpDate = () => {
-    const date = new Date();
-    const hourNow = date.getHours();
+    // const date = new Date();
+    // const hourNow = date.getHours();
+    // if (hourNow > 5) {
+    //   date.setDate(date.getDate() + 1);
+    // }
 
-    if (hourNow > 5) {
-      date.setDate(date.getDate() + 1);
-    }
-    return date;
+    const selectedDate = new Date(this.props.pickup?.date);
+
+    return selectedDate;
   };
 
   renderInfo() {
@@ -130,6 +132,8 @@ class PickupFormThirdPage extends React.Component {
   }
   renderDate() {
     const result = this.getPickUpDate();
+    console.log(result);
+
     const date = {
       year: result.getFullYear(),
       month: result.getMonth() + 1,

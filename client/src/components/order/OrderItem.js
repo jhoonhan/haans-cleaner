@@ -1,5 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { cancelOrder } from "../../actions";
 
 import price from "../price";
 
@@ -12,6 +15,10 @@ class OrderItem extends React.Component {
 
     this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
   }
+
+  onCancelClick = () => {
+    this.props.cancelOrder(this.props.auth.userProfile.FW);
+  };
 
   highlightButton = () => {
     this.buttonRef.current.classList.toggle("button--active");
@@ -106,7 +113,12 @@ class OrderItem extends React.Component {
           </div>
           <div>
             {this.props.order.status === "submitted" ? (
-              <button className="button--m">Cancel</button>
+              <Link
+                to={`/order/delete/${this.props.order.id}`}
+                className="button--m"
+              >
+                Cancel
+              </Link>
             ) : null}
 
             <button
@@ -151,4 +163,4 @@ const mapStateToProps = ({ auth, user, orders }) => {
   };
 };
 
-export default connect(mapStateToProps)(OrderItem);
+export default connect(mapStateToProps, { cancelOrder })(OrderItem);
