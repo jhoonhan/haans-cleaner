@@ -1,6 +1,6 @@
 import React from "react";
 
-const RenderField = ({ input, label, type, meta: { touched, error } }) => {
+const renderField = ({ input, label, type, meta: { touched, error } }) => {
   const inputArea = (
     <input {...input} placeholder={label} type={type} className="input--100" />
   );
@@ -17,4 +17,4 @@ const RenderField = ({ input, label, type, meta: { touched, error } }) => {
   );
 };
 
-export default RenderField;
+export default renderField;

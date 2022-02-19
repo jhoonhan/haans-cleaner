@@ -8,7 +8,7 @@ import Header from "./Header";
 import Landing from "./Landing";
 import Pickup from "./pickup/Pickup";
 import Order from "./order/Order";
-import Account from "./Account";
+import Account from "./account/Account";
 
 const App = () => {
   return (

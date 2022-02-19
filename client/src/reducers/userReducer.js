@@ -22,9 +22,10 @@ const reducer = (state = {}, action) => {
     case LOGIN_USER:
       return { ...state, currentUser: action.payload };
     case EDIT_USER:
-      return { ...state, [action.payload.id]: action.payload };
+      return { ...state, currentUser: action.payload };
     case DELETE_USER:
       return _.omit(state, action.payload);
+
     default:
       return state;
   }

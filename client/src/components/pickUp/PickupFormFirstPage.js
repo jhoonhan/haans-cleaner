@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { fetchUser } from "../../actions";
 import validate from "./validate";
 
-import RenderField from "../helpers/RenderField";
-import RenderInput from "../helpers/RenderInput";
+import renderField from "../helpers/renderField";
+import renderInput from "../helpers/renderInput";
 
 const PickupFormFirstPage = (props) => {
   useEffect(() => {
@@ -20,7 +20,7 @@ const PickupFormFirstPage = (props) => {
   return (
     <form className="form__form" onSubmit={handleSubmit}>
       <div className="form__form__row">
-        <Field name="name" type="text" component={RenderField} label="name" />
+        <Field name="name" type="text" component={renderField} label="name" />
       </div>
 
       <div className="form__form__row">
@@ -28,14 +28,14 @@ const PickupFormFirstPage = (props) => {
         <Field
           name="street"
           type="text"
-          component={RenderInput}
+          component={renderInput}
           label="street"
         />
         <div className="cityzip">
           <label>City</label>
           <label>Zip</label>
-          <Field name="city" type="text" component={RenderInput} label="city" />
-          <Field name="zip" type="number" component={RenderInput} label="zip" />
+          <Field name="city" type="text" component={renderInput} label="city" />
+          <Field name="zip" type="number" component={renderInput} label="zip" />
         </div>
       </div>
 
@@ -43,7 +43,7 @@ const PickupFormFirstPage = (props) => {
         <Field
           name="phone"
           type="number"
-          component={RenderField}
+          component={renderField}
           label="phone number"
         />
       </div>
@@ -52,13 +52,13 @@ const PickupFormFirstPage = (props) => {
         <Field
           name="date"
           type="date"
-          component={RenderField}
+          component={renderField}
           label="pick-up date"
         />
       </div>
 
       <div className="form__form__row">
-        <Field name="note" type="text" component={RenderField} label="note" />
+        <Field name="note" type="text" component={renderField} label="note" />
       </div>
 
       <div className="form__form__row"></div>

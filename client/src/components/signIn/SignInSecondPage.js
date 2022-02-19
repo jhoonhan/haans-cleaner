@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { createUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
-import RenderInput from "../helpers/RenderInput";
+import renderInput from "../helpers/renderInput";
 
 const SignInSecondPage = (props) => {
   const { handleSubmit } = props;
@@ -33,7 +33,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="firstName"
             type="text"
-            component={RenderInput}
+            component={renderInput}
             label="firstName"
           />
         </div>
@@ -42,7 +42,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="lastName"
             type="text"
-            component={RenderInput}
+            component={renderInput}
             label="lastName"
           />
         </div>
@@ -51,7 +51,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="email"
             type="text"
-            component={RenderInput}
+            component={renderInput}
             label="email"
           />
         </div>
@@ -60,7 +60,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="phone"
             type="number"
-            component={RenderInput}
+            component={renderInput}
             label="phone"
           />
         </div>
@@ -69,7 +69,7 @@ const SignInSecondPage = (props) => {
           <Field
             name="street"
             type="text"
-            component={RenderInput}
+            component={renderInput}
             label="street"
           />
 
@@ -79,13 +79,13 @@ const SignInSecondPage = (props) => {
             <Field
               name="city"
               type="text"
-              component={RenderInput}
+              component={renderInput}
               label="city"
             />
             <Field
               name="zip"
               type="number"
-              component={RenderInput}
+              component={renderInput}
               label="zip"
             />
           </div>

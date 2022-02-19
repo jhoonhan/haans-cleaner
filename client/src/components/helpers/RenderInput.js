@@ -1,11 +1,16 @@
 import React from "react";
 
-const RenderInput = ({ input, type }) => {
+const renderInput = ({ input, type, placeholder }) => {
   return (
     <React.Fragment>
-      <input onChange={input.onChange} value={input.value} type={type} />
+      <input
+        onChange={input.onChange}
+        value={input.value}
+        type={type}
+        placeholder={placeholder}
+      />
     </React.Fragment>
   );
 };
 
-export default RenderInput;
+export default renderInput;

@@ -16,6 +16,7 @@ import {
   EDIT_USER,
   DELETE_USER,
   MOUNT_USER,
+  EDIT_DADDRESS,
 } from "./types";
 
 //////////////// USER
@@ -53,6 +54,13 @@ export const fetchUser = (id) => async (dispatch, getState) => {
   dispatch({ type: FETCH_USER, payload: res.data[0] });
   // history.push("/");
 };
+
+export const editUser = (id, newValue) => async (dispatch) => {
+  const res = await server.patch(`/users/${id}`, newValue);
+
+  dispatch({ type: EDIT_USER, payload: res.data });
+};
+
 //
 //
 //
@@ -89,3 +97,5 @@ export const cancelOrder = (id) => async (dispatch) => {
   dispatch({ type: CANCEL_ORDER, payload: id });
   // history.push("/order");
 };
+
+// misc
