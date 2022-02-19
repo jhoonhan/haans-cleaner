@@ -10,7 +10,7 @@ class OrderItem extends React.Component {
     this.detailRef = React.createRef();
     this.buttonRef = React.createRef();
 
-    this.animationClasses = `height--0 opacity--0 padding--0 overflow--hidden`;
+    this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
   }
 
   highlightButton = () => {
@@ -21,6 +21,7 @@ class OrderItem extends React.Component {
     this.detailRef.current.classList.toggle("height--0");
     this.detailRef.current.classList.toggle("opacity--0");
     this.detailRef.current.classList.toggle("padding--0");
+    this.detailRef.current.classList.toggle("margin--0");
     this.detailRef.current.classList.toggle("overflow--hidden");
   };
 
@@ -30,6 +31,10 @@ class OrderItem extends React.Component {
       return (
         <div className="order__detail__table" key={i}>
           <div>{key}</div>
+          <div className="order__detail__table__cell-dash">
+            <div></div>
+            <div></div>
+          </div>
           <div>{clothes[key]}</div>
           <div>x</div>
           <div>${price[key]}</div>
@@ -45,7 +50,7 @@ class OrderItem extends React.Component {
           className="order__detail__row"
           style={{
             textAlign: "end",
-            borderBottom: "1px solid #efefef",
+            borderBottom: "1px solid #eeeeee",
             marginTop: "1rem",
             paddingBottom: "1rem",
           }}
@@ -63,8 +68,9 @@ class OrderItem extends React.Component {
         <div className="order__detail__row">
           <div
             className="order__detail__table"
-            style={{ borderTop: "1px solid #efefef", paddingTop: "1rem" }}
+            style={{ borderTop: "1px solid #eeeeee", paddingTop: "1rem" }}
           >
+            <div></div>
             <div></div>
             <div>Subtotal</div>
             <div>:</div>
@@ -72,15 +78,19 @@ class OrderItem extends React.Component {
           </div>
           <div className="order__detail__table">
             <div></div>
+            <div></div>
             <div>Tax</div>
             <div>:</div>
             <div>${this.props.order.total.tax}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
+            <div></div>
             <div>Total</div>
             <div>:</div>
-            <div>${this.props.order.total.total}</div>
+            <div>
+              <b>${this.props.order.total.total}</b>
+            </div>
           </div>
         </div>
       </>
@@ -117,7 +127,9 @@ class OrderItem extends React.Component {
               ? this.props.order.date.split("-").slice(1, 3).join("/")
               : ""}
           </div>
-          <div>${this.props.order.total.total}</div>
+          <div>
+            <b>${this.props.order.total.total}</b>
+          </div>
         </div>
 
         <div

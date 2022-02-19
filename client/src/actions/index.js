@@ -8,7 +8,7 @@ import {
   FETCH_ORDERS,
   CREATE_ORDER,
   EDIT_ORDER,
-  DELETE_ORDER,
+  CANCEL_ORDER,
   LOGIN_USER,
   FETCH_USER,
   FETCH_USERS,
@@ -79,8 +79,8 @@ export const editOrder = (id, formValues) => async (dispatch) => {
   dispatch({ type: EDIT_ORDER, payload: res.data });
 };
 
-export const deleteOrder = (id) => async (dispatch) => {
-  await server.put(`/orders/${id}`);
+export const cancelOrder = (id) => async (dispatch) => {
+  await server.delete(`/orders/${id}`);
 
-  dispatch({ type: DELETE_ORDER, payload: id });
+  dispatch({ type: CANCEL_ORDER, payload: id });
 };

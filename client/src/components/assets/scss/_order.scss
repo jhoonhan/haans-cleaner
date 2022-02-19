@@ -25,10 +25,11 @@
 
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 
-  padding: 1rem 2rem;
+  padding: 2rem 2rem 0rem 2rem;
 
-  border: 1px solid #efefef;
+  border: 1px solid $divider-color;
   box-sizing: border-box;
 }
 
@@ -36,7 +37,7 @@
   display: grid;
   grid-template-columns: 7rem 1fr 7rem;
   grid-template-rows: auto auto;
-  row-gap: 1rem;
+  row-gap: 3rem;
   justify-items: center;
   align-items: center;
 
@@ -66,12 +67,12 @@
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 3rem;
 
-  padding: 1rem 0;
-  margin-top: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
 
-  border-top: 1px solid #efefef;
+  border-top: 1px solid $divider-color;
   box-sizing: border-box;
 
   opacity: 1;
@@ -90,15 +91,29 @@
   width: 100%;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 3rem 5rem;
+  grid-template-columns: auto 1fr auto 3rem 5rem;
 
-  & div:nth-child(2) {
-    text-align: end;
-  }
   & div:nth-child(3) {
-    text-align: center;
+    text-align: end;
   }
   & div:nth-child(4) {
+    text-align: center;
+  }
+  & div:nth-child(5) {
     text-align: end;
+  }
+}
+.order__detail__table__cell-dash {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0 2rem;
+
+  & div {
+    height: 50%;
+    box-sizing: border-box;
+  }
+  & div:first-child {
+    border-bottom: 1px dashed $divider-color;
   }
 }
