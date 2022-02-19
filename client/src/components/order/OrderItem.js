@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 
 import { cancelOrder } from "../../actions";
 
+import OrderCancel from "./OrderCancel";
 import price from "../price";
 
 class OrderItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { show: false };
+
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
 
     this.detailRef = React.createRef();
     this.buttonRef = React.createRef();
@@ -16,8 +21,15 @@ class OrderItem extends React.Component {
     this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
   }
 
+  showModal = () => {
+    this.setState({ show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false });
+  };
   onCancelClick = () => {
-    this.props.cancelOrder(this.props.auth.userProfile.FW);
+    // this.props.cancelOrder(this.props.auth.userProfile.FW);
   };
 
   highlightButton = () => {
@@ -33,6 +45,8 @@ class OrderItem extends React.Component {
   };
 
   renderCount(clothes) {
+    if (!clothes) return null;
+
     const keys = Object.keys(clothes);
     return keys.map((key, i) => {
       return (
@@ -107,18 +121,28 @@ class OrderItem extends React.Component {
   render() {
     return (
       <>
+        <OrderCancel
+          show={this.state.show}
+          handleClose={this.hideModal}
+          id={this.props.order.id}
+        />
         <div className="order__item">
           <div>
             <h3>{this.props.order.status}</h3>
           </div>
           <div>
-            {this.props.order.status === "submitted" ? (
+            {/* {this.props.order.status === "submitted" ? (
               <Link
                 to={`/order/delete/${this.props.order.id}`}
                 className="button--m"
               >
                 Cancel
               </Link>
+            ) : null} */}
+            {this.props.order.status === "submitted" ? (
+              <button onClick={this.showModal} className="button--m">
+                Cancel
+              </button>
             ) : null}
 
             <button

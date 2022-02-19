@@ -11,12 +11,11 @@ class OrderCancel extends React.Component {
   }
 
   renderActions() {
-    const { id } = this.props;
-    console.log(this.props);
-    console.log(id);
+    const { id, handleClose } = this.props;
     return (
       <>
-        <button onClick={() => history.push("/order")} className="button--l">
+        {/* <button onClick={() => history.push("/order")} className="button--l"> */}
+        <button onClick={handleClose} className="button--l">
           Go Back
         </button>
         <button
@@ -30,13 +29,15 @@ class OrderCancel extends React.Component {
   }
 
   render() {
+    console.log(this.props.id);
     return (
       <div>
-        <div>Delete Order</div>
         <Modal
           title="Cancel Order"
           content="Are you sure you want to cancel this order?"
           actions={this.renderActions()}
+          show={this.props.show}
+          handleClose={this.props.handleClose}
         />
       </div>
     );

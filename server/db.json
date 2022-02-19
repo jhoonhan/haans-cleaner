@@ -53,71 +53,16 @@
       "city": "High Point",
       "zip": "27262",
       "phone": "3128108989",
-      "date": "2022-02-23",
-      "clothes": {
-        "skirt": 2,
-        "coat": 1,
-        "jacket": 1,
-        "sweater": 1,
-        "top": 1,
-        "other": 1,
-        "dress": 1
-      },
+      "date": "2022-02-11",
       "googleId": "112981141048784001090",
       "total": {
-        "subtotal": "23.92",
-        "total": "25.06",
-        "tax": "1.14"
+        "total": 0,
+        "subtotal": 0,
+        "tax": 0
       },
-      "timestamp": 1645239198127,
+      "timestamp": 1645241395969,
       "status": "submitted",
       "id": 3
-    },
-    {
-      "name": "Joe Han",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "phone": "3128108989",
-      "date": "2022-03-12",
-      "clothes": {
-        "top": 1,
-        "sweater": 7,
-        "skirt": 3,
-        "dress": 2,
-        "other": 3
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "47.84",
-        "total": "50.11",
-        "tax": "2.27"
-      },
-      "timestamp": 1645239209049,
-      "status": "submitted",
-      "id": 4
-    },
-    {
-      "name": "Joe Han",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "phone": "3128108989",
-      "date": "2022-02-23",
-      "clothes": {
-        "skirt": 2,
-        "jacket": 1,
-        "sweater": 4
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "20.93",
-        "total": "21.92",
-        "tax": "0.99"
-      },
-      "timestamp": 1645239218867,
-      "status": "submitted",
-      "id": 5
     }
   ]
 }
