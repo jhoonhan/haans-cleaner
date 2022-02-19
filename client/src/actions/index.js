@@ -16,6 +16,7 @@ import {
   EDIT_USER,
   DELETE_USER,
   MOUNT_USER,
+  CURRENT_PAGE,
 } from "./types";
 
 //////////////// USER
@@ -23,6 +24,13 @@ export const signIn = ({ isSignedIn, userProfile }) => {
   return {
     type: isSignedIn ? SIGN_IN : SIGN_OUT,
     payload: isSignedIn ? userProfile : {},
+  };
+};
+
+export const currentPage = (page) => {
+  return {
+    type: CURRENT_PAGE,
+    payload: page,
   };
 };
 

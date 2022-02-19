@@ -39,7 +39,6 @@ const Order = (props) => {
 
   return (
     <div className="order-container">
-      <h2>My Orders</h2>
       <div className="order__list">{renderList()}</div>
     </div>
   );

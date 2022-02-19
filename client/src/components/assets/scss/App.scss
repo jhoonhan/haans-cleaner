@@ -1,6 +1,7 @@
 $primary-color: #707070;
 $secondary-color: red;
 $divider-color: #ccc;
+$background-color: rgba(255, 255, 255, 0.9);
 
 $dev100vw: 414px;
 $dev100vh: 896px;
@@ -11,13 +12,15 @@ $font-size-s: 1.2rem;
 $font-size-m: 1.4rem;
 $font-size-l: 1.6rem;
 
-@import 'modal';
+@import "modal";
+@import "header";
 @import "landing";
 @import "base";
 @import "form";
 @import "signIn";
 @import "google";
 @import "order";
+@import "account";
 @import "animation";
 
 html {
@@ -32,11 +35,12 @@ html {
   // width: 414px;
   // height: 896px;
   width: 100vw;
+  min-height: 100vh;
   // height: 100vh;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   margin: 0rem auto;

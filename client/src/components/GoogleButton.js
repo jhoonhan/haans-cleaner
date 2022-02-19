@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+
 import GoogleAuth from "../apis/GoogleAuth";
 
-const GoogleButton = () => {
+const GoogleButton = ({ auth }) => {
+  const showClass = auth.isSignedIn ? "hidden" : "";
+
   return (
-    <div className="login-with-google-btn">
+    <div className={`login-with-google-btn ${showClass}`}>
       <GoogleAuth />
     </div>
   );
 };
 
-export default GoogleButton;
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps)(GoogleButton);

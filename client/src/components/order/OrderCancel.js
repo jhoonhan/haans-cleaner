@@ -26,7 +26,7 @@ class OrderCancel extends React.Component {
       </>
     );
   }
-  //
+
   render() {
     return (
       <div>

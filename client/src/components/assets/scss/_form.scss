@@ -31,6 +31,15 @@
   }
 }
 
+.form__form__row {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0rem 0;
+}
+
 .form__button-holder {
   width: 100%;
 
@@ -79,15 +88,6 @@
   padding: 0;
   margin-bottom: 5px;
   text-align: center;
-}
-
-.form__form__row {
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: 0rem 0;
 }
 
 .form__form__order-count {

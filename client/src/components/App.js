@@ -4,21 +4,22 @@ import history from "../history";
 
 import "./assets/scss/App.scss";
 
-import GoogleButton from "./GoogleButton";
+import Header from "./Header";
 import Landing from "./Landing";
 import Pickup from "./pickup/Pickup";
 import Order from "./order/Order";
-import OrderCancel from "./order/OrderCancel";
+import Account from "./Account";
+import GoogleButton from "./GoogleButton";
 
 const App = () => {
   return (
     <div className="container">
-      <GoogleButton />
-
       <Router history={history}>
+        <Header />
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />
         <Route path="/order" exact component={Order} />
+        <Route path="/account" exact component={Account} />
       </Router>
     </div>
   );
