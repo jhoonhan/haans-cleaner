@@ -72,8 +72,7 @@ class OrderItem extends React.Component {
           style={{
             textAlign: "end",
             borderBottom: "1px solid #eeeeee",
-            marginTop: "1rem",
-            paddingBottom: "1rem",
+            paddingBottom: "2rem",
           }}
         >
           <div>
@@ -89,7 +88,7 @@ class OrderItem extends React.Component {
         <div className="order__detail__row">
           <div
             className="order__detail__table"
-            style={{ borderTop: "1px solid #eeeeee", paddingTop: "1rem" }}
+            style={{ borderTop: "1px solid #eeeeee", paddingTop: "2rem" }}
           >
             <div></div>
             <div></div>

@@ -14,7 +14,6 @@ class OrderCancel extends React.Component {
     const { id, handleClose } = this.props;
     return (
       <>
-        {/* <button onClick={() => history.push("/order")} className="button--l"> */}
         <button onClick={handleClose} className="button--l">
           Go Back
         </button>
@@ -29,7 +28,6 @@ class OrderCancel extends React.Component {
   }
 
   render() {
-    console.log(this.props.id);
     return (
       <div>
         <Modal

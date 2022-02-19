@@ -20,7 +20,15 @@ const Order = (props) => {
   const renderList = () => {
     if (!orders) return;
 
-    return orders.reverse().map((order) => {
+    const orderArr = Object.entries(orders).map(([key, value]) => {
+      const obj = {
+        id: key,
+        ...value,
+      };
+      return obj;
+    });
+
+    return orderArr.reverse().map((order) => {
       return (
         <div key={order.timestamp} className="order__row">
           <OrderItem order={order} />
@@ -41,7 +49,7 @@ const mapStateToProps = ({ auth, user, orders }) => {
   return {
     auth,
     user: user.currentUser,
-    orders: orders.orders,
+    orders,
   };
 };
 

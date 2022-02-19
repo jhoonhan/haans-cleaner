@@ -19,7 +19,6 @@ const App = () => {
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />
         <Route path="/order" exact component={Order} />
-        <Route path="/order/delete/:id" exact component={OrderCancel} />
       </Router>
     </div>
   );

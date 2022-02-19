@@ -53,14 +53,20 @@
       "city": "High Point",
       "zip": "27262",
       "phone": "3128108989",
-      "date": "2022-02-11",
+      "date": "2022-02-12",
+      "clothes": {
+        "coat": 5,
+        "skirt": 2,
+        "sweater": 2,
+        "pants": 2
+      },
       "googleId": "112981141048784001090",
       "total": {
-        "total": 0,
-        "subtotal": 0,
-        "tax": 0
+        "subtotal": "32.89",
+        "total": "34.45",
+        "tax": "1.56"
       },
-      "timestamp": 1645241395969,
+      "timestamp": 1645244218722,
       "status": "submitted",
       "id": 3
     }

@@ -66,9 +66,9 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  await server.post("/orders", { ...formValues });
+  const res = await server.post("/orders", { ...formValues });
 
-  // dispatch({ type: CREATE_ORDER, payload: res.data });
+  dispatch({ type: CREATE_ORDER, payload: res.data });
   dispatch(reset("clothes"));
   history.push("/");
 };
