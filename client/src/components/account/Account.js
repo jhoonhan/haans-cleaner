@@ -2,17 +2,22 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { signOutRedux, fetchUser } from "../../actions";
 import { Field, Form, reduxForm } from "redux-form";
+import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
+import AddNewAddress from "./AddNewAddress";
 
-const Account = ({ auth, user, signOutRedux, handleSubmit }) => {
-  useEffect(() => {
-    if (auth.isSignedIn && !user) {
-      fetchUser(auth.userProfile.FW);
-      console.log(`fetch`);
-    }
-  }, [auth.isSignedIn, user]);
+const Account = ({
+  auth,
+  user,
+  signOutRedux,
+  handleSubmit,
+  editUser,
+  editAccount,
+}) => {
+  useEffect(() => {}, [auth.isSignedIn, user]);
 
+  // DOM selection
   const onSignOutClick = () => {
     const gAuth = window.gapi.auth2?.getAuthInstance();
     gAuth.signOut();
@@ -52,14 +57,6 @@ const Account = ({ auth, user, signOutRedux, handleSubmit }) => {
     console.log(`aaang`);
   };
 
-  const onFocusAddress = () => {
-    console.log(`aaaaaaaang!`);
-  };
-
-  const onBlurAddress = () => {
-    console.log(`you think u better than me?`);
-  };
-
   return (
     <div className="account-container">
       <Form onSubmit={handleSubmit(onEditSubmit)} className="form__form">
@@ -81,19 +78,7 @@ const Account = ({ auth, user, signOutRedux, handleSubmit }) => {
         <div className="form__form__row">
           <label>Saved Address</label>
           <SavedAddressList />
-          <div
-            onFocus={onFocusAddress}
-            onBlur={onBlurAddress}
-            className="account__new-address"
-          >
-            <Field
-              name="newAddress"
-              placeholder="Add a new address"
-              type="text"
-              component={renderInput}
-            />
-            <button className="button--l">add</button>
-          </div>
+          <AddNewAddress />
         </div>
 
         <div className="form__form__row">
@@ -106,7 +91,7 @@ const Account = ({ auth, user, signOutRedux, handleSubmit }) => {
   );
 };
 
-const mapStateToProps = ({ auth, user }) => {
+const mapStateToProps = ({ auth, user, form }) => {
   return {
     initialValues: {
       name: user.currentUser?.fullName,
@@ -116,6 +101,7 @@ const mapStateToProps = ({ auth, user }) => {
     },
     auth,
     user: user.currentUser,
+    editAccount: form.editAccount,
   };
 };
 
@@ -126,6 +112,6 @@ const wrappedForm = reduxForm({
   // validate,
 })(Account);
 
-export default connect(mapStateToProps, { signOutRedux, fetchUser })(
+export default connect(mapStateToProps, { signOutRedux, fetchUser, editUser })(
   wrappedForm
 );

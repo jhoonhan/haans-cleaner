@@ -11,7 +11,7 @@
       "googleId": "112981141048784001090",
       "fullName": "Joe Han",
       "defaultAddress": {
-        "street": "3835 Falssslin cty",
+        "street": "2835 Fallin cty",
         "city": "High Point",
         "zip": "27858"
       },
@@ -22,24 +22,9 @@
           "zip": "27858"
         },
         {
-          "street": "2835 Fallin cty",
-          "city": "High Point",
-          "zip": "27858"
-        },
-        {
-          "street": "21835 WWFallin cty",
-          "city": "High Point",
-          "zip": "27858"
-        },
-        {
-          "street": "3835 Falssslin cty",
-          "city": "High Point",
-          "zip": "27858"
-        },
-        {
-          "street": "5835 DDFallin cty",
-          "city": "2High Point",
-          "zip": "27858"
+          "street": "Oh man this was hard",
+          "city": "123",
+          "zip": "2323"
         }
       ],
       "id": 3

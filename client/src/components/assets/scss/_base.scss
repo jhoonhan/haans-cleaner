@@ -27,6 +27,8 @@ input {
   font-size: $font-size-m;
   line-height: 1.6;
 
+  width: 100%;
+
   padding: 1rem;
 
   border: 1px solid $primary-color;
@@ -65,6 +67,7 @@ button {
   font-size: $font-size-m;
   color: $primary-color;
   text-align: center;
+  line-height: 1.6;
 
   padding: 0rem;
 
@@ -171,15 +174,26 @@ button {
   position: relative;
   width: 100%;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
 
-  padding: 1rem;
+  padding: 0rem;
   margin: 0.5rem 0;
 
   box-sizing: border-box;
   border: 1px solid $divider-color;
+  overflow-y: hidden;
+  & div {
+    padding: 1rem;
+  }
+  & .band__delete {
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+    border-left: 1px solid $divider-color;
+  }
 }
+
 .page-title {
   width: 100%;
   padding: 2rem 2rem 1rem 2rem;
@@ -195,6 +209,7 @@ button {
     font-size: $font-size-s;
     content: "default";
     position: absolute;
-    right: 2rem;
+    margin-top: 2px;
+    right: 0.8rem;
   }
 }
