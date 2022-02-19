@@ -16,7 +16,6 @@ import {
   EDIT_USER,
   DELETE_USER,
   MOUNT_USER,
-  CURRENT_PAGE,
 } from "./types";
 
 //////////////// USER
@@ -27,16 +26,15 @@ export const signIn = ({ isSignedIn, userProfile }) => {
   };
 };
 
-export const currentPage = (page) => {
+export const signOutRedux = () => {
+  history.push("/");
   return {
-    type: CURRENT_PAGE,
-    payload: page,
+    type: SIGN_OUT,
+    payload: {},
   };
 };
 
 export const mountUser = (user) => {
-  console.log(`mountUser fired`);
-  console.log(user);
   return {
     type: MOUNT_USER,
     payload: user,
@@ -53,7 +51,6 @@ export const createUser = (formValues) => async (dispatch, getState) => {
 export const fetchUser = (id) => async (dispatch, getState) => {
   const res = await server.get(`/users/?googleId=${id}`);
   dispatch({ type: FETCH_USER, payload: res.data[0] });
-  console.log(`user fetched`);
   // history.push("/");
 };
 //
@@ -64,7 +61,6 @@ export const fetchOrder = (id) => async (dispatch) => {
   const res = await server.get(`/orders/?googleId=${id}`);
 
   dispatch({ type: FETCH_ORDER, payload: res.data });
-  console.log(`order fetched`);
 };
 
 export const fetchOrders = () => async (dispatch) => {

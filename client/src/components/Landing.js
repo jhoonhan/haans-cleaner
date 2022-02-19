@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import SignIn from "./singIn/SingIn";
-import SignInInitial from "./singIn/RenderInitialSignIn";
+import SignIn from "./signIn/SingIn";
+import SignInInitial from "./signIn/RenderInitialSignIn";
 import { fetchUser, mountUser } from "../actions";
 
 // import { fetchUser } from "../actions";

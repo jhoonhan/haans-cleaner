@@ -4,12 +4,10 @@ import { reducer as formReducer } from "redux-form";
 import authReducer from "./authReducer";
 import userReducer from "./userReducer";
 import orderReducer from "./orderReducer";
-import pageReducer from "./pageReducer";
 
 export default combineReducers({
   auth: authReducer,
   user: userReducer,
   orders: orderReducer,
   form: formReducer,
-  page: pageReducer,
 });

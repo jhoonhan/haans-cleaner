@@ -12,10 +12,14 @@ const SignInSecondPage = (props) => {
   const onFinalSubmit = (formValue) => {
     // console.log({ ...formValue, clothes });
     // console.log(this.props.clothes);
+    const { firstName, lastName, street, city, zip } = formValue;
+    const combinedAddress = { street, city, zip };
     const combined = {
       ...formValue,
       googleId: props.auth.userProfile.FW,
-      fullName: `${formValue.firstName} ${formValue.lastName}`,
+      fullName: `${firstName} ${lastName}`,
+      defaultAddress: combinedAddress,
+      savedAddress: [combinedAddress],
     };
     props.createUser(combined);
   };

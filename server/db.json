@@ -4,25 +4,45 @@
       "firstName": "Joe",
       "lastName": "Han",
       "email": "jhoon.han2@gmail.com",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
       "phone": "3128108989",
+      "street": "2835 Fallin cty",
+      "city": "High Point",
+      "zip": "27858",
       "googleId": "112981141048784001090",
       "fullName": "Joe Han",
-      "id": 1
-    },
-    {
-      "firstName": "J",
-      "lastName": "H",
-      "email": "jhoon.han@gmail.com",
-      "phone": "3124515946",
-      "street": "4427 Carly's way",
-      "city": "Greensboro",
-      "zip": "27410",
-      "googleId": "103871420101748691850",
-      "fullName": "J H",
-      "id": 2
+      "defaultAddress": {
+        "street": "2835 Fallin cty",
+        "city": "High Point",
+        "zip": "27858"
+      },
+      "savedAddress": [
+        {
+          "street": "2835 Fallin cty",
+          "city": "High Point",
+          "zip": "27858"
+        },
+        {
+          "street": "2835 Fallin cty",
+          "city": "High Point",
+          "zip": "27858"
+        },
+        {
+          "street": "21835 WWFallin cty",
+          "city": "High Point",
+          "zip": "27858"
+        },
+        {
+          "street": "3835 Falssslin cty",
+          "city": "High Point",
+          "zip": "27858"
+        },
+        {
+          "street": "5835 DDFallin cty",
+          "city": "2High Point",
+          "zip": "27858"
+        }
+      ],
+      "id": 3
     }
   ],
   "orders": [
