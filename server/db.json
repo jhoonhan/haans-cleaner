@@ -11,9 +11,9 @@
       "googleId": "112981141048784001090",
       "fullName": "Joe Han",
       "defaultAddress": {
-        "street": "2835 Fallin ct",
-        "city": "High Point",
-        "zip": "27262"
+        "street": "4427 Carly's way",
+        "city": "Greensboro",
+        "zip": "27410"
       },
       "savedAddress": [
         {
@@ -25,11 +25,6 @@
           "street": "4427 Carly's way",
           "city": "Greensboro",
           "zip": "27410"
-        },
-        {
-          "street": "635 Cotanche st, APT 621",
-          "city": "Greenville",
-          "zip": "27262"
         }
       ],
       "id": 1
@@ -80,42 +75,6 @@
       "timestamp": 16452115632369,
       "status": "delivered",
       "id": 3232442
-    },
-    {
-      "name": "Joe Han",
-      "phone": "3124515946",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "clothes": {
-        "coat": 4,
-        "jacket": 2
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "17.94",
-        "total": "18.79",
-        "tax": "0.85"
-      },
-      "timestamp": 1645326383805,
-      "status": "submitted",
-      "id": 3232444
-    },
-    {
-      "name": "Joe Han",
-      "phone": "3128108989",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "googleId": "112981141048784001090",
-      "total": {
-        "total": 0,
-        "subtotal": 0,
-        "tax": 0
-      },
-      "timestamp": 1645327027778,
-      "status": "submitted",
-      "id": 3232445
     },
     {
       "name": "J H",
