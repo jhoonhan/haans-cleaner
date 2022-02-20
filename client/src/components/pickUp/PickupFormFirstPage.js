@@ -16,7 +16,6 @@ const PickupFormFirstPage = (props) => {
   );
 
   useEffect(() => {
-    console.log(`count`);
     if (props.auth.isSignedIn && !props.user) {
       props.fetchUser(props.auth.userProfile.FW);
     }

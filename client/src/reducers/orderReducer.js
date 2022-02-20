@@ -5,10 +5,13 @@ import {
   CREATE_ORDER,
   EDIT_ORDER,
   CANCEL_ORDER,
+  SIGN_OUT,
 } from "../actions/types";
 
 const reducer = (state = [], action) => {
   switch (action.type) {
+    case SIGN_OUT:
+      return {};
     case FETCH_ORDER:
       return { ...state, ..._.mapKeys(action.payload, "id") };
     case FETCH_ORDERS:

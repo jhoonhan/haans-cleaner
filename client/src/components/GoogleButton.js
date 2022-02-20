@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import GoogleAuth from "../apis/GoogleAuth";
 
 const GoogleButton = ({ auth }) => {
-  const showClass = auth.isSignedIn ? "hidden2" : "";
+  const showClass = auth.isSignedIn ? "hidden" : "";
 
   return (
     <div className={`login-with-google-btn ${showClass}`}>

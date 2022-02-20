@@ -4,10 +4,11 @@ import { Link } from "react-router-dom";
 
 import GoogleButton from "./GoogleButton";
 
-const Header = ({ auth, user }) => {
-  const [curPage, setCurPage] = useState(null);
+const Header = ({ auth, user, location }) => {
+  const [curPage, setCurPage] = useState(location.pathname.slice(1));
 
   useEffect(() => {
+    setCurPage(location.pathname.slice(1));
     if (!auth.isSignedIn) {
       setCurPage(null);
     }
@@ -18,7 +19,7 @@ const Header = ({ auth, user }) => {
   };
 
   const renderPageTitle = (title) => {
-    if (title === "Home" || title === null) return null;
+    if (title === "" || title === null) return null;
     return (
       <header className="page-title">
         <h2>{title}</h2>
@@ -32,26 +33,26 @@ const Header = ({ auth, user }) => {
     return (
       <header className="header">
         <nav className="nav__container">
-          <Link to="/" onClick={() => onNavClick("Home")} className="nav__item">
+          <Link to="/" onClick={() => onNavClick("")} className="nav__item">
             Home
           </Link>
           <Link
             to="/order"
-            onClick={() => onNavClick("Order")}
+            onClick={() => onNavClick("order")}
             className="nav__item"
           >
             Orders
           </Link>
           <Link
             to="/pickup"
-            onClick={() => onNavClick("Pick-up")}
+            onClick={() => onNavClick("pickup")}
             className="nav__item"
           >
             Request
           </Link>
           <Link
             to="/account"
-            onClick={() => onNavClick("Account")}
+            onClick={() => onNavClick("account")}
             className="nav__item"
           >
             Account

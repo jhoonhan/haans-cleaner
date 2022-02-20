@@ -9,12 +9,13 @@ import Landing from "./Landing";
 import Pickup from "./pickup/Pickup";
 import Order from "./order/Order";
 import Account from "./account/Account";
+import Test from "./Test";
 
 const App = () => {
   return (
     <div className="container">
       <Router history={history}>
-        <Header />
+        <Route path="/" component={Header} />
         <Route path="/" exact component={Landing} />
         <Route path="/pickup" exact component={Pickup} />
         <Route path="/order" exact component={Order} />
