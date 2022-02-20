@@ -4,33 +4,21 @@
       "firstName": "Joe",
       "lastName": "Han",
       "email": "jhoon.han2@gmail.com",
-      "phone": "3128108989",
-      "street": "2835 Fallin cty",
-      "city": "High Point",
-      "zip": "27858",
       "googleId": "112981141048784001090",
       "fullName": "Joe Han",
       "defaultAddress": {
-        "street": "2835 Fallin cty",
+        "street": "2835 Fallin ct",
         "city": "High Point",
-        "zip": "27858"
+        "zip": "27262"
       },
       "savedAddress": [
         {
-          "street": "2835 Fallin cty",
+          "street": "2835 Fallin ct",
           "city": "High Point",
-          "zip": "27858"
-        },
-        {
-          "street": "Oh man this was hard",
-          "city": "123",
-          "zip": "2323"
-        },
-        {
-          "street": "This"
+          "zip": "27262"
         }
       ],
-      "id": 3
+      "id": 1
     }
   ],
   "orders": [
@@ -60,48 +48,21 @@
       "street": "2835 Fallin ct",
       "city": "High Point",
       "zip": "27262",
-      "phone": "3128108989",
-      "date": "2022-02-25",
+      "phone": "3124515946",
+      "date": "2022-02-17",
       "clothes": {
-        "coat": 4,
-        "jacket": 3,
-        "skirt": 1,
-        "sweater": 1,
-        "pants": 1
+        "top": 8,
+        "skirt": 6
       },
       "googleId": "112981141048784001090",
       "total": {
-        "subtotal": "29.90",
-        "total": "31.32",
-        "tax": "1.42"
+        "subtotal": "41.86",
+        "total": "43.85",
+        "tax": "1.99"
       },
-      "timestamp": 1645278695041,
+      "timestamp": 1645318959519,
       "status": "submitted",
-      "id": 3
-    },
-    {
-      "name": "Joe Han",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "phone": "3128108989",
-      "date": "2022-02-21",
-      "clothes": {
-        "coat": 4,
-        "sweater": 1,
-        "skirt": 1,
-        "pants": 4,
-        "other": 1
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "32.89",
-        "total": "34.45",
-        "tax": "1.56"
-      },
-      "timestamp": 1645278705449,
-      "status": "submitted",
-      "id": 4
+      "id": 5
     }
   ]
 }

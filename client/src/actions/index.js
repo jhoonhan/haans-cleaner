@@ -60,6 +60,12 @@ export const editUser = (id, newValue) => async (dispatch) => {
 
   dispatch({ type: EDIT_USER, payload: res.data });
 };
+export const deleteUser = (id) => async (dispatch) => {
+  await server.delete(`/users/${id}`);
+
+  dispatch({ type: DELETE_USER, payload: id });
+  history.push("/");
+};
 
 //
 //
