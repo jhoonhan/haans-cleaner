@@ -138,7 +138,7 @@ button {
   width: 100%;
 }
 
-.button--alrert {
+.button--alert {
   background-color: $secondary-color;
   color: white;
   border: 1px solid $secondary-color;
@@ -212,4 +212,12 @@ button {
     margin-top: 2px;
     right: 0.8rem;
   }
+}
+
+.justify-self--flex-start {
+  justify-self: flex-start;
+}
+
+.margin-top--1rem {
+  margin-top: 1rem;
 }

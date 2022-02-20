@@ -24,42 +24,23 @@ const Account = ({
     signOutRedux();
   };
 
-  // const renderSavedAddressList = () => {
-  //   const filteredArr = user.savedAddress.reduce((address, i) => {
-  //     const x = address.find(
-  //       (el) => el.street === i.street && el.city === i.city && el.zip === i.zip
-  //     );
-  //     if (!x) {
-  //       return address.concat([i]);
-  //     } else {
-  //       return address;
-  //     }
-  //   }, []);
-
-  //   // Render
-  //   return filteredArr.map((address, i) => {
-  //     const defaultCss =
-  //       address.street === user.defaultAddress.street &&
-  //       address.city === user.defaultAddress.city &&
-  //       address.zip === user.defaultAddress.zip
-  //         ? "default"
-  //         : "";
-
-  //     return (
-  //       <div className={`band ${defaultCss}`} key={i}>
-  //         <div>{Object.values(address).join(", ")}</div>
-  //       </div>
-  //     );
-  //   });
-  // };
+  const onDeleteClick = () => {
+    console.log(`deleto!`);
+  };
 
   const onEditSubmit = () => {
-    console.log(`aaang`);
+    console.log(`editSubmit`);
   };
 
   return (
     <div className="account-container">
-      <Form onSubmit={handleSubmit(onEditSubmit)} className="form__form">
+      <Form
+        onSubmit={handleSubmit(() => onEditSubmit("editProfile"))}
+        className="form__form"
+      >
+        <h3 className="justify-self--flex-start margin-top--1rem">
+          Edit Profile
+        </h3>
         <div className="form__form__row">
           <label>Name</label>
           <Field name="name" type="text" component={renderInput} />
@@ -80,10 +61,24 @@ const Account = ({
           <SavedAddressList />
           <AddNewAddress />
         </div>
+        <div className="form__form__row">
+          <button onClick={handleSubmit(onEditSubmit)} className="button--l">
+            Edit Profile
+          </button>
+        </div>
+
+        <h3 className="justify-self--flex-start margin-top--1rem">
+          Edit Account
+        </h3>
+        <div className="form__form__row">
+          <button onClick={onSignOutClick} className="button--d">
+            Sign Out
+          </button>
+        </div>
 
         <div className="form__form__row">
-          <button onClick={onSignOutClick} className="button--l">
-            Sign Out
+          <button onClick={onDeleteClick} className="button--d button--alert">
+            Delete Account
           </button>
         </div>
       </Form>
@@ -115,3 +110,28 @@ const wrappedForm = reduxForm({
 export default connect(mapStateToProps, { signOutRedux, fetchUser, editUser })(
   wrappedForm
 );
+
+// class Morpheus extends Component {
+//   render() {
+//     const { handleSubmit } = this.props;
+//     return (
+//       <div>
+//         Fields go here
+//         <button onClick={handleSubmit(values =>
+//           this.props.onSubmit({
+//             ...values,
+//             pill: 'blue'
+//           }))}>Blue Pill</button>
+//         <button onClick={handleSubmit(values =>
+//           this.props.onSubmit({
+//             ...values,
+//             pill: 'red'
+//           }))}>Red Pill</button>
+//       </div>
+//     );
+//   }
+// }
+
+// export default reduxForm({
+//   form: 'morpheus'
+// })(Morpheus)

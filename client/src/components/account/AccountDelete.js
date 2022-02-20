@@ -4,7 +4,7 @@ import { cancelOrder } from "../../actions";
 
 import Modal from "../Modal";
 
-class OrderCancel extends React.Component {
+class AccountDelete extends React.Component {
   componentDidMount() {
     console.log();
   }
@@ -30,8 +30,8 @@ class OrderCancel extends React.Component {
     return (
       <div>
         <Modal
-          title="Cancel Order"
-          content="Are you sure you want to cancel this order?"
+          title="Delete Account"
+          content="Are you sure you want to delete your account?"
           actions={this.renderActions()}
           show={this.props.show}
           handleClose={this.props.handleClose}
@@ -41,4 +41,4 @@ class OrderCancel extends React.Component {
   }
 }
 
-export default connect(null, { cancelOrder })(OrderCancel);
+export default connect(null, { cancelOrder })(AccountDelete);
