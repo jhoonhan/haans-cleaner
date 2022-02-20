@@ -5,7 +5,13 @@ import { Field, reduxForm } from "redux-form";
 import renderInput from "../helpers/renderInput";
 import { editUser } from "../../actions";
 
-const AddNewAddress = ({ user, editUser, editAddress, reset }) => {
+const AddNewAddress = ({
+  user,
+  editUser,
+  editAddress,
+  reset,
+  handleSubmit,
+}) => {
   const refNewAddressContainer = React.createRef();
   const refNewAddressDropDown = React.createRef();
 
@@ -82,7 +88,7 @@ const AddNewAddress = ({ user, editUser, editAddress, reset }) => {
           />
         </div>
 
-        <button onClick={onClickNewAddress} className="button--d">
+        <button onClick={handleSubmit(onClickNewAddress)} className="button--d">
           add
         </button>
       </div>

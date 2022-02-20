@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { editUser } from "../../actions";
 
-const SavedAddressList = ({ user, editUser }) => {
-  const onClickDefault = (address) => {
-    editUser(user?.id, { defaultAddress: address });
+const SavedAddressList = ({
+  user,
+  editUser,
+  enableDelete,
+  enableDefault,
+  setSelected,
+}) => {
+  const [highlight, setHighlight] = useState({});
+
+  useEffect(() => {
+    if (user) {
+      setHighlight(user?.defaultAddress);
+    }
+  }, [user]);
+
+  const onSelect = (address) => {
+    if (!enableDefault) {
+      setHighlight(address);
+      setSelected(address);
+    }
+    if (enableDefault) {
+      editUser(user?.id, { defaultAddress: address });
+    }
+    return;
   };
   const onClickDelete = (address) => {
     const filteredArr = user.savedAddress.filter((el) => {
@@ -16,49 +37,68 @@ const SavedAddressList = ({ user, editUser }) => {
     });
     editUser(user?.id, { savedAddress: filteredArr });
   };
-  const filteredArr = user.savedAddress.reduce((address, i) => {
-    const x = address.find(
-      (el) => el.street === i.street && el.city === i.city && el.zip === i.zip
-    );
-    if (!x) {
-      return address.concat([i]);
-    } else {
-      return address;
-    }
-  }, []);
 
-  return filteredArr.map((address, i) => {
-    const defaultCss =
-      address.street === user.defaultAddress.street &&
-      address.city === user.defaultAddress.city &&
-      address.zip === user.defaultAddress.zip
-        ? "default"
-        : "";
-    const isDefault = () => {
-      if (
-        address.street === user.defaultAddress.street &&
-        address.city === user.defaultAddress.city &&
-        address.zip === user.defaultAddress.zip
-      ) {
-        return true;
+  const isDefault = (data, data2) => {
+    if (
+      data.street === data2.street &&
+      data.city === data2.city &&
+      data.zip === data2.zip
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const filteredArr = () => {
+    if (!user) return null;
+    const result = user.savedAddress.reduce((address, i) => {
+      const x = address.find(
+        (el) => el.street === i.street && el.city === i.city && el.zip === i.zip
+      );
+      if (!x) {
+        return address.concat([i]);
       } else {
-        return false;
+        return address;
       }
-    };
-    return (
-      <div className={`band ${defaultCss}`} key={i}>
-        <div onClick={() => onClickDefault(address)}>
-          {Object.values(address).join(", ")}
+    }, []);
+    return result;
+  };
+
+  const renderList = () => {
+    if (!user) return null;
+    const result = filteredArr().map((address, i) => {
+      const defaultCss =
+        enableDefault && isDefault(address, user.defaultAddress)
+          ? "default"
+          : "";
+      const highlightCss =
+        !enableDefault && isDefault(address, highlight) ? "selected" : "";
+
+      return (
+        <div className={`band ${defaultCss} ${highlightCss}`} key={i}>
+          <div onClick={() => onSelect(address)}>
+            {Object.values(address).join(", ")}
+          </div>
+          {enableDelete ? (
+            <div
+              onClick={() => onClickDelete(address)}
+              className={
+                isDefault(address, user.defaultAddress)
+                  ? "hidden"
+                  : "band__delete"
+              }
+            >
+              X
+            </div>
+          ) : null}
         </div>
-        <div
-          onClick={() => onClickDelete(address)}
-          className={isDefault() ? "hidden" : "band__delete"}
-        >
-          X
-        </div>
-      </div>
-    );
-  });
+      );
+    });
+    return result;
+  };
+
+  return <>{renderList()}</>;
 };
 
 const mapStateToProps = ({ auth, user }) => {

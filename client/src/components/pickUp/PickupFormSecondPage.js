@@ -13,7 +13,7 @@ const PickupFormSecondPage = (props) => {
   }, []);
 
   const renderSelector = ({ input }) => {
-    const style = input.value > 0 ? "selected" : "";
+    const style = input.value > 0 ? "highlighted" : "";
 
     return (
       <div className={`form__clothes ${style}`}>

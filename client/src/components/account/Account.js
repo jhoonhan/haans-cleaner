@@ -22,6 +22,7 @@ const Account = ({
   useEffect(() => {}, [auth.isSignedIn, user]);
 
   // DOM selection
+
   const onSignOutClick = () => {
     const gAuth = window.gapi.auth2?.getAuthInstance();
     gAuth.signOut();
@@ -32,11 +33,16 @@ const Account = ({
     deleteUser(user.id);
   };
 
-  const onEditSubmit = () => {
-    console.log(`editSubmit`);
+  const onEditSubmit = (type) => {
+    const formValues = editAccount.values;
+    const fullName = `${editAccount.values.firstName} ${editAccount.values.lastName}`;
+
+    if (type === "profile") {
+      editUser(user?.id, { ...user, ...formValues, fullName });
+    }
   };
 
-  const renderActions = () => {
+  const renderModalActions = () => {
     return (
       <>
         <button onClick={() => setShowModal(false)} className="button--l">
@@ -60,19 +66,22 @@ const Account = ({
         id={user.googleId}
         title="Delete Account"
         content="Are you sure?"
-        actions={renderActions()}
+        actions={renderModalActions()}
       />
       <div className="account-container">
         <Form
-          onSubmit={handleSubmit(() => onEditSubmit("editProfile"))}
+          onSubmit={handleSubmit(() => onEditSubmit("profile"))}
           className="form__form"
         >
-          <h3 className="justify-self--flex-start margin-top--1rem">
-            Edit Profile
-          </h3>
+          <h3 className="justify-self--flex-start margin-top--1rem">Profile</h3>
           <div className="form__form__row">
-            <label>Name</label>
-            <Field name="name" type="text" component={renderInput} />
+            <label>First Name</label>
+            <Field name="firstName" type="text" component={renderInput} />
+          </div>
+
+          <div className="form__form__row">
+            <label>Last Name</label>
+            <Field name="lastName" type="text" component={renderInput} />
           </div>
 
           <div className="form__form__row">
@@ -87,18 +96,19 @@ const Account = ({
 
           <div className="form__form__row">
             <label>Saved Address</label>
-            <SavedAddressList />
+            <SavedAddressList enableDelete={true} enableDefault={true} />
             <AddNewAddress />
           </div>
           <div className="form__form__row">
-            <button onClick={handleSubmit(onEditSubmit)} className="button--l">
+            <button
+              onClick={handleSubmit(() => onEditSubmit("profile"))}
+              className="button--l"
+            >
               Edit Profile
             </button>
           </div>
 
-          <h3 className="justify-self--flex-start margin-top--1rem">
-            Edit Account
-          </h3>
+          <h3 className="justify-self--flex-start margin-top--1rem">Account</h3>
           <div className="form__form__row">
             <button onClick={onSignOutClick} className="button--d">
               Sign Out
@@ -122,7 +132,8 @@ const Account = ({
 const mapStateToProps = ({ auth, user, form }) => {
   return {
     initialValues: {
-      name: user.currentUser?.fullName,
+      firstName: user.currentUser?.firstName,
+      lastName: user.currentUser?.lastName,
       defaultAddress: user.currentUser?.defaultAddress,
       phone: user.currentUser?.phone,
       email: user.currentUser?.email,

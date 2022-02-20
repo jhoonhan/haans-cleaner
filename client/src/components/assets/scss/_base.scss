@@ -130,7 +130,7 @@ button {
   border-bottom: 1px solid $divider-color;
 }
 
-.selected {
+.highlighted {
   border: 1px solid $secondary-color !important;
 }
 
@@ -211,6 +211,13 @@ button {
     position: absolute;
     margin-top: 2px;
     right: 0.8rem;
+  }
+}
+
+.selected {
+  @extend .default;
+  &::after {
+    content: "selected";
   }
 }
 

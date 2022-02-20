@@ -1,6 +1,6 @@
 import React from "react";
 
-const renderInput = ({ input, type, placeholder }) => {
+const renderInput = ({ input, type, placeholder, reference }) => {
   return (
     <React.Fragment>
       <input
@@ -8,6 +8,7 @@ const renderInput = ({ input, type, placeholder }) => {
         value={input.value}
         type={type}
         placeholder={placeholder}
+        ref={reference}
       />
     </React.Fragment>
   );

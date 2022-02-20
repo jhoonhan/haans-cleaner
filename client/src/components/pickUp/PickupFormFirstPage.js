@@ -1,19 +1,34 @@
-import React, { useEffect } from "react";
-import { Field, reduxForm } from "redux-form";
+import React, { useEffect, useState } from "react";
+import { Field, reduxForm, change } from "redux-form";
 import { connect } from "react-redux";
 
 import { fetchUser } from "../../actions";
 import validate from "./validate";
 
+import SavedAddressList from "../account/SavedAddressList";
+
 import renderField from "../helpers/renderField";
 import renderInput from "../helpers/renderInput";
 
 const PickupFormFirstPage = (props) => {
+  const [selected, setSelected] = useState(
+    props.user?.currentUser?.defaultAddress
+  );
+
   useEffect(() => {
+    console.log(`count`);
     if (props.auth.isSignedIn && !props.user) {
       props.fetchUser(props.auth.userProfile.FW);
     }
-  });
+  }, [props.auth.isSignedIn]);
+
+  useEffect(() => {
+    if (selected) {
+      props.change("street", selected.street);
+      props.change("city", selected.city);
+      props.change("zip", selected.zip);
+    }
+  }, [selected]);
 
   const { handleSubmit, lastPage } = props;
 
@@ -37,6 +52,14 @@ const PickupFormFirstPage = (props) => {
           <Field name="city" type="text" component={renderInput} label="city" />
           <Field name="zip" type="number" component={renderInput} label="zip" />
         </div>
+      </div>
+      <div className="form__form__row">
+        <label>Saved Addresses</label>
+        <SavedAddressList
+          enableDelete={false}
+          enableDefault={false}
+          setSelected={setSelected}
+        />
       </div>
 
       <div className="form__form__row">
@@ -76,25 +99,13 @@ const PickupFormFirstPage = (props) => {
 };
 
 const mapStateToProps = ({ auth, user }) => {
-  const fullName = () => {
-    if (user.currentUser) {
-      return user.currentUser.fullName;
-    }
-    if (!user.currentUser && auth.userProfile.tf) {
-      return auth.userProfile.tf;
-    }
-    if (!user.currentUser && !auth.userProfile.tf) {
-      return "";
-    }
-  };
-
   return {
     initialValues: {
-      name: fullName(),
-      street: user.currentUser?.street,
-      city: user.currentUser?.city,
-      zip: user.currentUser?.zip,
+      name: user.currentUser?.fullName,
       phone: user.currentUser?.phone,
+      street: user.currentUser?.defaultAddress.street,
+      city: user.currentUser?.defaultAddress.city,
+      zip: user.currentUser?.defaultAddress.zip,
     },
     auth: auth,
     user: user.currentUser,
@@ -110,4 +121,4 @@ const wrappedForm = reduxForm({
   // validate,
 })(PickupFormFirstPage);
 
-export default connect(mapStateToProps, { fetchUser })(wrappedForm);
+export default connect(mapStateToProps, { fetchUser, change })(wrappedForm);
