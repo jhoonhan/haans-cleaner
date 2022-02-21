@@ -8,7 +8,6 @@ import OrderItem from "./OrderItem";
 const Order = (props) => {
   const { auth, user, orders, fetchUser, fetchOrder } = props;
   const ref = React.createRef();
-
   useEffect(() => {
     if (auth.isSignedIn && !user) {
       fetchUser(auth.userProfile.FW);

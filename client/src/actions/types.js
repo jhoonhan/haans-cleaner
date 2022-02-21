@@ -16,3 +16,7 @@ export const DELETE_USER = "DELETE_USER";
 export const MOUNT_USER = "MOUNT_USER";
 
 export const EDIT_DADDRESS = "EDIT_DADDRESS";
+
+export const FETCH_COORDS = "FETCH_COORDS";
+
+export const D_FETCH_ORDER = "D_FETCH_ORDER";

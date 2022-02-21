@@ -95,7 +95,7 @@ const Account = ({
         <Modal2
           show={showModal}
           handleClose={setShowModal}
-          id={user.googleId}
+          id={user?.googleId}
           title={
             modalType === "deleteAccount" ? "Delete Account" : "Edit Account"
           }

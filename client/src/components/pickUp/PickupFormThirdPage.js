@@ -10,7 +10,7 @@ class PickupFormThirdPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { showModal: false, wtf: "wtf" };
+    this.state = { showModal: false };
 
     this.total = { total: 0, subtotal: 0, tax: 0 };
     this.taxRate = 0.0475;
@@ -18,17 +18,17 @@ class PickupFormThirdPage extends React.Component {
 
   componentDidMount() {
     window.scrollTo(0, 0);
-    console.log(this.state);
 
     if (this.props.auth.isSignedIn && !this.props.user) {
       this.props.fetchUser(this.props.auth.userProfile.FW);
     }
   }
 
-  onFinalSubmit = (formValue) => {
+  onFinalSubmit = () => {
     const clothes = this.props.clothes;
+    const formValues = this.props.pickup;
     const combined = {
-      ...formValue,
+      ...formValues,
       clothes,
       googleId: this.props.auth.userProfile.FW,
       total: this.total,
@@ -50,13 +50,11 @@ class PickupFormThirdPage extends React.Component {
         <button
           onClick={async () => {
             this.onFinalSubmit();
-            this.setState({ showModal: false }, () =>
-              console.log(`modal hidden`)
-            );
+            this.setState({ showModal: false });
           }}
           className="button--l button--alert"
         >
-          Delete
+          Submit
         </button>
       </>
     );
@@ -189,7 +187,7 @@ class PickupFormThirdPage extends React.Component {
           show={this.state.showModal}
           handleClose={this.state.setShowModal}
           id={this.props.user.googleId}
-          title="mother"
+          title="Submit Order"
           content="Are you sure?"
           actions={this.modalAction()}
         />
@@ -240,13 +238,11 @@ class PickupFormThirdPage extends React.Component {
             {/* <button type="submit" disabled={pristine || submitting}> */}
             <div
               onClick={() => {
-                this.setState({ showModal: true, wtf: "aaang" }, () =>
-                  console.log(this.state.showModal)
-                );
+                this.setState({ showModal: true });
               }}
               className="button--l"
             >
-              {this.state.wtf}
+              Submit
             </div>
           </div>
         </form>

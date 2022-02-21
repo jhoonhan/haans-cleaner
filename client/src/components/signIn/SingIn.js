@@ -6,32 +6,51 @@ import { Field, reduxForm } from "redux-form";
 
 import SignInSecondPage from "./SignInSecondPage";
 import Home from "../Home";
+import DriverHome from "../driver/DriverHome";
 
 class SignIn extends React.Component {
   componentDidMount() {
     this.props.fetchUser(this.props.auth.userProfile.FW);
   }
-
-  render() {
+  conditionalRender() {
+    if (!this.props.user) return null;
     const isSignedIn = this.props.auth.isSignedIn;
     const loadedGoogleId = this.props.auth.userProfile.FW;
-    const userGoogleId = this.props.user?.googleId;
-    return (
-      <div className="signIn__container">
-        {isSignedIn && loadedGoogleId === userGoogleId ? (
-          <Home />
-        ) : (
-          <SignInSecondPage />
-        )}
-      </div>
-    );
+    const userGoogleId = this.props.user.googleId;
+    const userRole = this.props.user.role;
+    if (
+      isSignedIn &&
+      loadedGoogleId === userGoogleId &&
+      userRole !== "driver"
+    ) {
+      return <Home />;
+    }
+    if (
+      isSignedIn &&
+      loadedGoogleId === userGoogleId &&
+      userRole === "driver"
+    ) {
+      return <DriverHome />;
+    }
+    if (isSignedIn && loadedGoogleId !== userGoogleId) {
+      return <SignInSecondPage />;
+    }
+  }
+
+  render() {
+    if (!this.props.user) return null;
+    const isSignedIn = this.props.auth.isSignedIn;
+    const loadedGoogleId = this.props.auth.userProfile.FW;
+    const userGoogleId = this.props.user.googleId;
+    const userRole = this.props.user.role;
+    return <div className="signIn__container">{this.conditionalRender()}</div>;
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ auth, user }) => {
   return {
-    auth: state.auth,
-    user: state.user.currentUser,
+    auth: auth,
+    user: user.currentUser,
   };
 };
 

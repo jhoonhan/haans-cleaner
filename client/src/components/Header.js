@@ -37,19 +37,20 @@ const Header = ({ auth, user, location }) => {
             Home
           </Link>
           <Link
-            to="/order"
-            onClick={() => onNavClick("order")}
-            className="nav__item"
-          >
-            Orders
-          </Link>
-          <Link
             to="/pickup"
             onClick={() => onNavClick("pickup")}
             className="nav__item"
           >
             Request
           </Link>
+          <Link
+            to="/order"
+            onClick={() => onNavClick("order")}
+            className="nav__item"
+          >
+            Orders
+          </Link>
+
           <Link
             to="/account"
             onClick={() => onNavClick("account")}

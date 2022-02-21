@@ -6,8 +6,8 @@ import "./assets/scss/App.scss";
 
 import Header from "./Header";
 import Landing from "./Landing";
-import Pickup from "./pickup/Pickup";
 import Order from "./order/Order";
+import Pickup from "./pickup/PickUp";
 import Account from "./account/Account";
 
 const App = () => {
@@ -21,6 +21,8 @@ const App = () => {
           <Route path="/pickup" exact component={Pickup} />
           <Route path="/order" exact component={Order} />
           <Route path="/account" exact component={Account} />
+
+          {/* <Route path="/driver" exact component={Driver}/> */}
         </Switch>
       </AnimatePresence>
     </div>

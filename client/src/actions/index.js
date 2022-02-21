@@ -1,6 +1,7 @@
 import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
+import fetchCoords from "../components/helpers/fetchCoords";
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -17,6 +18,7 @@ import {
   DELETE_USER,
   MOUNT_USER,
   EDIT_DADDRESS,
+  D_FETCH_ORDER,
 } from "./types";
 
 //////////////// USER
@@ -84,10 +86,14 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
+  const coords = await fetchCoords(formValues);
+  formValues.coords = { lat: coords.lat, lng: coords.lng };
+
   const res = await server.post("/orders", { ...formValues });
 
   dispatch({ type: CREATE_ORDER, payload: res.data });
   dispatch(reset("clothes"));
+  dispatch(reset("pickup"));
   history.push("/");
 };
 
@@ -105,3 +111,12 @@ export const cancelOrder = (id) => async (dispatch) => {
 };
 
 // misc
+
+// https://maps.googleapis.com/maps/api/geocode/json?address=2835+Fallin+ct,+High+Point,+27262&key=AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8
+
+// Driver
+export const driverFetchOrder = (date, coords) => async (dispatch) => {
+  const res = await server.get(`/orders/?date=${date}`);
+
+  dispatch({ type: D_FETCH_ORDER, payload: res.data });
+};
