@@ -132,7 +132,6 @@ class PickupFormThirdPage extends React.Component {
   }
   renderDate() {
     const result = this.getPickUpDate();
-    console.log(result);
 
     const date = {
       year: result.getFullYear(),
