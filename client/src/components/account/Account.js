@@ -19,6 +19,7 @@ const Account = ({
   deleteUser,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
   useEffect(() => {}, [auth.isSignedIn, user]);
 
@@ -30,10 +31,6 @@ const Account = ({
     signOutRedux();
   };
 
-  const onDeleteClick = () => {
-    deleteUser(user.id);
-  };
-
   const onEditSubmit = (type) => {
     const formValues = editAccount.values;
     const fullName = `${editAccount.values.firstName} ${editAccount.values.lastName}`;
@@ -43,95 +40,134 @@ const Account = ({
     }
   };
 
-  const renderModalActions = () => {
-    return (
-      <>
-        <button onClick={() => setShowModal(false)} className="button--l">
-          Go Back
-        </button>
-        <button
-          onClick={() => onDeleteClick()}
-          className="button--l button--alert"
-        >
-          Delete
-        </button>
-      </>
-    );
+  const modalAction = () => {
+    if (showModal && modalType === "deleteAccount") {
+      return (
+        <>
+          <button onClick={() => setShowModal(false)} className="button--l">
+            Go Back
+          </button>
+          <button
+            onClick={() => {
+              deleteUser(user.id);
+              setShowModal(false);
+            }}
+            className="button--l button--alert"
+          >
+            Delete
+          </button>
+        </>
+      );
+    }
+    if (showModal && modalType === "editAccount") {
+      return (
+        <>
+          <button onClick={() => setShowModal(false)} className="button--l">
+            Go Back
+          </button>
+          <button
+            onClick={handleSubmit(() => {
+              onEditSubmit("profile");
+              setShowModal(false);
+            })}
+            className="button--l button--alert"
+          >
+            Submit
+          </button>
+        </>
+      );
+    }
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ type: "spring", stiffness: 100 }}
-    >
-      <Modal2
-        show={showModal}
-        handleClose={setShowModal}
-        id={user.googleId}
-        title="Delete Account"
-        content="Are you sure?"
-        actions={renderModalActions()}
-      />
-      <div className="account-container">
-        <Form
-          onSubmit={handleSubmit(() => onEditSubmit("profile"))}
-          className="form__form"
-        >
-          <h3 className="justify-self--flex-start margin-top--1rem">Profile</h3>
-          <div className="form__form__row">
-            <label>First Name</label>
-            <Field name="firstName" type="text" component={renderInput} />
-          </div>
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", duration: 0.1 }}
+        className="motion-container"
+      >
+        <header className="page-title">
+          <h2>Account</h2>
+        </header>
 
-          <div className="form__form__row">
-            <label>Last Name</label>
-            <Field name="lastName" type="text" component={renderInput} />
-          </div>
+        <Modal2
+          show={showModal}
+          handleClose={setShowModal}
+          id={user.googleId}
+          title={
+            modalType === "deleteAccount" ? "Delete Account" : "Edit Account"
+          }
+          content="Are you sure?"
+          actions={modalAction()}
+        />
+        <div className="account-container">
+          <Form onSubmit={handleSubmit} className="form__form">
+            <h3 className="justify-self--flex-start margin-top--1rem">
+              Profile
+            </h3>
+            <div className="form__form__row">
+              <label>First Name</label>
+              <Field name="firstName" type="text" component={renderInput} />
+            </div>
 
-          <div className="form__form__row">
-            <label>Email</label>
-            <Field name="email" type="text" component={renderInput} />
-          </div>
+            <div className="form__form__row">
+              <label>Last Name</label>
+              <Field name="lastName" type="text" component={renderInput} />
+            </div>
 
-          <div className="form__form__row">
-            <label>Phone Number</label>
-            <Field name="phone" type="text" component={renderInput} />
-          </div>
+            <div className="form__form__row">
+              <label>Email</label>
+              <Field name="email" type="text" component={renderInput} />
+            </div>
 
-          <div className="form__form__row">
-            <label>Saved Address</label>
-            <SavedAddressList enableDelete={true} enableDefault={true} />
-            <AddNewAddress />
-          </div>
-          <div className="form__form__row">
-            <button
-              onClick={handleSubmit(() => onEditSubmit("profile"))}
-              className="button--l"
-            >
-              Edit Profile
-            </button>
-          </div>
+            <div className="form__form__row">
+              <label>Phone Number</label>
+              <Field name="phone" type="text" component={renderInput} />
+            </div>
 
-          <h3 className="justify-self--flex-start margin-top--1rem">Account</h3>
-          <div className="form__form__row">
-            <button onClick={onSignOutClick} className="button--d">
-              Sign Out
-            </button>
-          </div>
+            <div className="form__form__row">
+              <label>Saved Address</label>
+              <SavedAddressList enableDelete={true} enableDefault={true} />
+              <AddNewAddress />
+            </div>
+            <div className="form__form__row">
+              <button
+                onClick={handleSubmit(() => {
+                  setShowModal(true);
+                  setModalType("editAccount");
+                })}
+                className="button--l"
+              >
+                Edit Profile
+              </button>
+            </div>
 
-          <div className="form__form__row">
-            <button
-              onClick={() => setShowModal(true)}
-              className="button--d button--alert"
-            >
-              Delete Account
-            </button>
-          </div>
-        </Form>
-      </div>
-    </motion.div>
+            <h3 className="justify-self--flex-start margin-top--1rem">
+              Account
+            </h3>
+            <div className="form__form__row">
+              <button onClick={onSignOutClick} className="button--d">
+                Sign Out
+              </button>
+            </div>
+
+            <div className="form__form__row">
+              <button
+                onClick={handleSubmit(() => {
+                  setShowModal(true);
+                  setModalType("deleteAccount");
+                })}
+                className="button--d button--alert"
+              >
+                Delete Account
+              </button>
+            </div>
+          </Form>
+        </div>
+      </motion.div>
+    </>
   );
 };
 

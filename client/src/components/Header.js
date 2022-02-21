@@ -18,14 +18,14 @@ const Header = ({ auth, user, location }) => {
     setCurPage(pageTitle);
   };
 
-  const renderPageTitle = (title) => {
-    if (title === "" || title === null) return null;
-    return (
-      <header className="page-title">
-        <h2>{title}</h2>
-      </header>
-    );
-  };
+  // const renderPageTitle = (title) => {
+  //   if (title === "" || title === null) return null;
+  //   return (
+  //     <header className="page-title">
+  //       <h2>{title}</h2>
+  //     </header>
+  //   );
+  // };
 
   const renderNavigation = () => {
     if (!auth.isSignedIn || !user) return null;
@@ -65,7 +65,6 @@ const Header = ({ auth, user, location }) => {
   return (
     <>
       <GoogleButton />
-      {renderPageTitle(curPage)}
       {renderNavigation()}
     </>
   );

@@ -1,35 +1,6 @@
 {
   "users": [
     {
-      "firstName": "Joe",
-      "lastName": "Han",
-      "email": "jhoon.han2@gmail.com",
-      "phone": "3128108989",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "googleId": "112981141048784001090",
-      "fullName": "Joe Han",
-      "defaultAddress": {
-        "street": "2835 Fallin ct",
-        "city": "High Point",
-        "zip": "27262"
-      },
-      "savedAddress": [
-        {
-          "street": "2835 Fallin ct",
-          "city": "High Point",
-          "zip": "27262"
-        },
-        {
-          "street": "4427 Carly's way",
-          "city": "Greensboro",
-          "zip": "27410"
-        }
-      ],
-      "id": 1
-    },
-    {
       "firstName": "J",
       "lastName": "H",
       "email": "jhoon.han@gmail.com",
@@ -52,6 +23,27 @@
         }
       ],
       "id": 2
+    },
+    {
+      "firstName": "Junghoon",
+      "lastName": "Han",
+      "email": "jhoon.han@gmail.com",
+      "googleId": "112981141048784001090",
+      "fullName": "Junghoon Han",
+      "defaultAddress": {
+        "street": "2835 Fallin ct",
+        "city": "High Point",
+        "zip": "27262"
+      },
+      "savedAddress": [
+        {
+          "street": "2835 Fallin ct",
+          "city": "High Point",
+          "zip": "27262"
+        }
+      ],
+      "id": 3,
+      "phone": "3128108989"
     }
   ],
   "orders": [
@@ -91,22 +83,6 @@
       "timestamp": 1645328590204,
       "status": "submitted",
       "id": 3232446
-    },
-    {
-      "name": "Joe Han",
-      "phone": "3128108989",
-      "street": "4427 Carly's way",
-      "city": "Greensboro",
-      "zip": "27410",
-      "googleId": "112981141048784001090",
-      "total": {
-        "total": 0,
-        "subtotal": 0,
-        "tax": 0
-      },
-      "timestamp": 1645402862754,
-      "status": "submitted",
-      "id": 3232448
     },
     {
       "name": "Joe Han",
@@ -287,6 +263,58 @@
       "timestamp": 1645410024701,
       "status": "submitted",
       "id": 3232458
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "googleId": "112981141048784001090",
+      "total": {
+        "total": 0,
+        "subtotal": 0,
+        "tax": 0
+      },
+      "timestamp": 1645456892629,
+      "status": "submitted",
+      "id": 3232459
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "clothes": {
+        "coat": 4,
+        "jacket": 3
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": "20.93",
+        "total": "21.92",
+        "tax": "0.99"
+      },
+      "timestamp": 1645457045131,
+      "status": "submitted",
+      "id": 3232461
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "googleId": "112981141048784001090",
+      "total": {
+        "total": 0,
+        "subtotal": 0,
+        "tax": 0
+      },
+      "timestamp": 1645457413336,
+      "status": "submitted",
+      "id": 3232462
     }
   ]
 }

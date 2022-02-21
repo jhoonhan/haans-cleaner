@@ -25,7 +25,8 @@ class Landing extends React.Component {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ type: "spring", stiffness: 100 }}
+        transition={{ type: "spring", duration: 0.1 }}
+        className="motion-container"
       >
         {!this.props.isSignedIn ? <SignInInitial /> : <SignIn />}
       </motion.div>

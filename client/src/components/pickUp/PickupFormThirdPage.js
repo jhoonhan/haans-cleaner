@@ -4,13 +4,21 @@ import { Field, reduxForm } from "redux-form";
 import { createOrder } from "../../actions";
 import validate from "./validate";
 import price from "../price";
+import Modal2 from "../Modal2";
 
 class PickupFormThirdPage extends React.Component {
-  total = { total: 0, subtotal: 0, tax: 0 };
-  taxRate = 0.0475;
+  constructor(props) {
+    super(props);
+
+    this.state = { showModal: false, wtf: "wtf" };
+
+    this.total = { total: 0, subtotal: 0, tax: 0 };
+    this.taxRate = 0.0475;
+  }
 
   componentDidMount() {
     window.scrollTo(0, 0);
+    console.log(this.state);
 
     if (this.props.auth.isSignedIn && !this.props.user) {
       this.props.fetchUser(this.props.auth.userProfile.FW);
@@ -28,6 +36,30 @@ class PickupFormThirdPage extends React.Component {
       status: "submitted",
     };
     this.props.createOrder(combined);
+  };
+
+  modalAction = () => {
+    return (
+      <>
+        <button
+          onClick={() => this.setState({ showModal: false })}
+          className="button--l"
+        >
+          Go Back
+        </button>
+        <button
+          onClick={async () => {
+            this.onFinalSubmit();
+            this.setState({ showModal: false }, () =>
+              console.log(`modal hidden`)
+            );
+          }}
+          className="button--l button--alert"
+        >
+          Delete
+        </button>
+      </>
+    );
   };
 
   convertToArray = (data) => {
@@ -152,49 +184,73 @@ class PickupFormThirdPage extends React.Component {
   render() {
     const { handleSubmit, pristine, previousPage, submitting } = this.props;
     return (
-      <form
-        onSubmit={handleSubmit(this.onFinalSubmit)}
-        className="form__form form__form--third"
-      >
-        <div className="form__form__row">
-          <h2>Order Detail</h2>
-        </div>
-        <div className="form__form__row">
-          <div className="form__form__info">{this.renderInfo()}</div>
+      <>
+        <Modal2
+          show={this.state.showModal}
+          handleClose={this.state.setShowModal}
+          id={this.props.user.googleId}
+          title="mother"
+          content="Are you sure?"
+          actions={this.modalAction()}
+        />
 
-          <div className="form__form__order-count">{this.renderCount()}</div>
-        </div>
-        <div
-          className="form__form__row border-top--divider border-bottom--divider"
-          style={{ padding: "3rem 0" }}
+        <form
+          onSubmit={handleSubmit(this.onFinalSubmit)}
+          className="form__form form__form--third"
         >
-          <div className="form__form__order-detail">
-            <div className="form__form__order-date">
-              <label>Pick-up time:</label>
-              <div>{this.renderDate()}</div>
-            </div>
-            <div className="form__form__order-total">{this.renderTotal()}</div>
+          <div className="form__form__row">
+            <h2>Order Detail</h2>
           </div>
-        </div>
-        <div className="form__form__row">
-          <label>Delivery Instruction (optional)</label>
-          <Field name="deliveryNote" component="textarea" placeholder="Notes" />
-        </div>
+          <div className="form__form__row">
+            <div className="form__form__info">{this.renderInfo()}</div>
 
-        <div className="form__button-holder--horizontal">
-          <button
-            type="button"
-            className="previous button--l"
-            onClick={previousPage}
+            <div className="form__form__order-count">{this.renderCount()}</div>
+          </div>
+          <div
+            className="form__form__row border-top--divider border-bottom--divider"
+            style={{ padding: "3rem 0" }}
           >
-            Previous
-          </button>
-          {/* <button type="submit" disabled={pristine || submitting}> */}
-          <button type="submit" className="button--l">
-            Submit
-          </button>
-        </div>
-      </form>
+            <div className="form__form__order-detail">
+              <div className="form__form__order-date">
+                <label>Pick-up time:</label>
+                <div>{this.renderDate()}</div>
+              </div>
+              <div className="form__form__order-total">
+                {this.renderTotal()}
+              </div>
+            </div>
+          </div>
+          <div className="form__form__row">
+            <label>Delivery Instruction (optional)</label>
+            <Field
+              name="deliveryNote"
+              component="textarea"
+              placeholder="Notes"
+            />
+          </div>
+
+          <div className="form__button-holder--horizontal">
+            <button
+              type="button"
+              className="previous button--l"
+              onClick={previousPage}
+            >
+              Previous
+            </button>
+            {/* <button type="submit" disabled={pristine || submitting}> */}
+            <div
+              onClick={() => {
+                this.setState({ showModal: true, wtf: "aaang" }, () =>
+                  console.log(this.state.showModal)
+                );
+              }}
+              className="button--l"
+            >
+              {this.state.wtf}
+            </div>
+          </div>
+        </form>
+      </>
     );
   }
 }

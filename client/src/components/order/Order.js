@@ -39,15 +39,22 @@ const Order = (props) => {
   };
 
   return (
-    <motion.div
-      className="order-container"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ type: "spring", stiffness: 100 }}
-    >
-      <div className="order__list">{renderList()}</div>
-    </motion.div>
+    <>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", duration: 0.1 }}
+        className="motion-container"
+      >
+        <header className="page-title">
+          <h2>Order</h2>
+        </header>
+        <div className="order-container">
+          <div className="order__list">{renderList()}</div>
+        </div>
+      </motion.div>
+    </>
   );
 };
 
