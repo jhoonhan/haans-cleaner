@@ -7,6 +7,7 @@ import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
 import Modal2 from "../Modal2";
+import { motion } from "framer-motion";
 
 const Account = ({
   auth,
@@ -59,7 +60,12 @@ const Account = ({
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+    >
       <Modal2
         show={showModal}
         handleClose={setShowModal}
@@ -125,7 +131,7 @@ const Account = ({
           </div>
         </Form>
       </div>
-    </>
+    </motion.div>
   );
 };
 

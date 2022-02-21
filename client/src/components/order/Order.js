@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchOrder, fetchUser } from "../../actions";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { motion } from "framer-motion";
 
 import OrderItem from "./OrderItem";
 
@@ -39,9 +39,15 @@ const Order = (props) => {
   };
 
   return (
-    <div className="order-container">
+    <motion.div
+      className="order-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+    >
       <div className="order__list">{renderList()}</div>
-    </div>
+    </motion.div>
   );
 };
 

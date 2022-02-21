@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import SignIn from "./signIn/SingIn";
 import SignInInitial from "./signIn/RenderInitialSignIn";
@@ -20,9 +21,14 @@ class Landing extends React.Component {
   }
   render() {
     return (
-      <React.Fragment>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}
+      >
         {!this.props.isSignedIn ? <SignInInitial /> : <SignIn />}
-      </React.Fragment>
+      </motion.div>
     );
   }
 }

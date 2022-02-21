@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Router, Route, Switch } from "react-router-dom";
-import history from "../history";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 import "./assets/scss/App.scss";
 
@@ -10,28 +10,19 @@ import Pickup from "./pickup/Pickup";
 import Order from "./order/Order";
 import Account from "./account/Account";
 
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-
 const App = () => {
+  const location = useLocation();
   return (
     <div className="container">
-      <Router history={history}>
-        <Route path="/" component={Header} />
-        <Route
-          render={({ location }) => (
-            <TransitionGroup>
-              <CSSTransition key={location.key} timeout={300} classNames="fade">
-                <Switch>
-                  <Route path="/" exact component={Landing} />
-                  <Route path="/pickup" exact component={Pickup} />
-                  <Route path="/order" exact component={Order} />
-                  <Route path="/account" exact component={Account} />
-                </Switch>
-              </CSSTransition>
-            </TransitionGroup>
-          )}
-        />
-      </Router>
+      <Route path="/" component={Header} />
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <Switch location={location} key={location.pathname}>
+          <Route path="/" exact component={Landing} />
+          <Route path="/pickup" exact component={Pickup} />
+          <Route path="/order" exact component={Order} />
+          <Route path="/account" exact component={Account} />
+        </Switch>
+      </AnimatePresence>
     </div>
   );
 };
