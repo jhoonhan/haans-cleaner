@@ -1,42 +1,18 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { driverFetchOrder } from "../../actions";
+import React from "react";
 
-const DriverHome = ({ driverFetchOrder, driverOrders }) => {
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    console.log(today);
-    driverFetchOrder("2022-02-22");
-  }, []);
-
-  const renderDriverOrders = () => {
-    return driverOrders.map((order, i) => {
-      return (
-        <div key={i}>
-          <div>{order.name}</div>
-          <div>{order.date}</div>
-          <div>
-            {order.street}, {order.city}
-          </div>
-        </div>
-      );
-    });
-  };
-
+const DriverHome = () => {
   return (
-    <div className="motion-container">
-      <header className="page-title">
-        <h2>Order</h2>
-      </header>
-      <div className="order-container">
-        <div className="order__list">{renderDriverOrders()}</div>
+    <div className="signIn__container">
+      <div className="Landing__container">
+        <div className="landing__container__welcome">
+          <h2>Good morning</h2>
+          <h1>Driver</h1>
+          <h3>It's a great day to wear a skirt</h3>
+        </div>
+        <div className="landing__container__buttons"></div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ auth, user, driverOrders }) => {
-  return { auth: auth, user: user.currentUser, driverOrders };
-};
-
-export default connect(mapStateToProps, { driverFetchOrder })(DriverHome);
+export default DriverHome;

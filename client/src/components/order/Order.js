@@ -28,9 +28,9 @@ const Order = (props) => {
       return obj;
     });
 
-    return orderArr.reverse().map((order) => {
+    return orderArr.reverse().map((order, i) => {
       return (
-        <div key={order.timestamp} className="order__row">
+        <div key={i} className="order__row">
           <OrderItem order={order} />
         </div>
       );

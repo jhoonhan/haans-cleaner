@@ -10,11 +10,17 @@ import Order from "./order/Order";
 import Pickup from "./pickup/PickUp";
 import Account from "./account/Account";
 
+import DriverHeader from "./driver/DriverHeader";
+import Driver from "./driver/Driver";
+import DriverOrder from "./driver/DriverOrder";
+
 const App = () => {
   const location = useLocation();
   return (
     <div className="container">
       <Route path="/" component={Header} />
+      <Route path="/driver" component={DriverHeader} />
+
       <AnimatePresence exitBeforeEnter initial={false}>
         <Switch location={location} key={location.pathname}>
           <Route path="/" exact component={Landing} />
@@ -22,7 +28,9 @@ const App = () => {
           <Route path="/order" exact component={Order} />
           <Route path="/account" exact component={Account} />
 
-          {/* <Route path="/driver" exact component={Driver}/> */}
+          <Route path="/driver" exact component={Driver} />
+          <Route path="/driver/order" exact component={DriverOrder} />
+          {/* <Route path="/driver/account" exact component={DriverAccount} /> */}
         </Switch>
       </AnimatePresence>
     </div>
