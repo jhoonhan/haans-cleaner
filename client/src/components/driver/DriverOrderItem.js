@@ -102,14 +102,14 @@ class DriverOrderItem extends React.Component {
   }
 
   onAccept = (id) => {
-    if (this.state.status === "submitted") {
+    if (this.props.order.status === "submitted") {
       this.setState({ status: "accepted" });
       this.props.acceptOrder(id, {
         status: "accepted",
         acceptId: this.props.auth.userProfile.FW,
       });
     }
-    if (this.state.status === "accepted") {
+    if (this.props.order.status === "accepted") {
       this.setState({ status: "submitted" });
       this.props.acceptOrder(id, {
         status: "submitted",
@@ -149,9 +149,11 @@ class DriverOrderItem extends React.Component {
           </div>
           <div
             onClick={() => this.onAccept(this.props.order.id)}
-            className={`driver__order__buttton ${
-              this.props.order.status === "accepted" ? "accepted" : ""
-            }`}
+            className="driver__order__buttton"
+            style={{
+              backgroundColor:
+                this.props.order.status === "submitted" ? "aquamarine" : "#ccc",
+            }}
           >
             {this.props.order.status}
           </div>

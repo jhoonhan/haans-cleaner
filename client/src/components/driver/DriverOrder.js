@@ -30,7 +30,7 @@ const DriverOrder = ({ driverFetchOrder, driverOrders }) => {
         <h2>Order</h2>
       </header>
       <div className="order-container">
-        <div className="order__list">{renderDriverOrders()}</div>
+        <div className="driver__order__list">{renderDriverOrders()}</div>
       </div>
     </div>
   );
