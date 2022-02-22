@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createUser, fetchUser } from "../../actions";
+import { createUser, fetchUser, fetchGeocode } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
 import RenderInput from "../helpers/renderInput";
@@ -9,16 +9,18 @@ import RenderInput from "../helpers/renderInput";
 const SignInSecondPage = (props) => {
   const { handleSubmit } = props;
 
-  const onFinalSubmit = (formValue) => {
+  const onFinalSubmit = async (formValue) => {
     // console.log({ ...formValue, clothes });
     // console.log(this.props.clothes);
     const { firstName, lastName, street, city, zip } = formValue;
+    const coords = await props.fetchGeocode({ street, city, zip });
+    console.log(coords);
     const combinedAddress = { street, city, zip };
     const combined = {
       ...formValue,
       googleId: props.auth.userProfile.FW,
       fullName: `${firstName} ${lastName}`,
-      defaultAddress: combinedAddress,
+      defaultAddress: { ...combinedAddress },
       savedAddress: [combinedAddress],
     };
     props.createUser(combined);
@@ -124,4 +126,8 @@ const wrappedForm = reduxForm({
   // validate,
 })(SignInSecondPage);
 
-export default connect(mapStateToProps, { createUser, fetchUser })(wrappedForm);
+export default connect(mapStateToProps, {
+  createUser,
+  fetchUser,
+  fetchGeocode,
+})(wrappedForm);

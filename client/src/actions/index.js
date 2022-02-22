@@ -1,7 +1,8 @@
 import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
-import fetchCoords from "../components/helpers/fetchCoords";
+import GoogleGeocode from "../apis/GoogleGeocode";
+
 import {
   SIGN_IN,
   SIGN_OUT,
@@ -87,7 +88,7 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  const coords = await fetchCoords(formValues);
+  const coords = await fetchGeocode(formValues);
   formValues.coords = { lat: coords.lat, lng: coords.lng };
 
   const res = await server.post("/orders", { ...formValues });
@@ -140,3 +141,42 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
     });
   }
 };
+
+export const fetchGeocode = async (address) => {
+  const { street, city, zip } = address;
+  const queryStreet = street
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .split(" ")
+    .join("+");
+  const queryCity = city
+    .replace(/[^a-zA-Z0-9 ]/g, "")
+    .split(" ")
+    .join("+");
+  const queryZip = zip;
+
+  const res = await GoogleGeocode.get(
+    `/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
+  );
+
+  return res.data.results[0].geometry.location;
+};
+
+// export const fetchDistanceMatrix = async ({ origin, destination }) => {
+//   const convertAddress = (address) => {
+//     // 2835 Fallin ct High Point 27262
+//     console.log(`aang`);
+//     const street = address.street.replaceAll(" ", "%20");
+//     const city = address.city.replaceAll(" ", "%20");
+//     const combined = `${street}+${city}+${address.zip}`;
+//     return combined;
+//   };
+
+//   const queryOrigin = convertAddress(origin);
+//   const queryDestination = convertAddress(destination);
+
+//   const res = await GoogleGeocode.get(
+//     `/distancematrix/json?destinations=${queryOrigin}&origins=${queryDestination}&units=imperial&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
+//   );
+
+//   console.log(res.data);
+// };

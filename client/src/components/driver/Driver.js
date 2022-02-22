@@ -8,7 +8,6 @@ import DriverHeader from "./DriverHeader";
 const Driver = ({ driverFetchOrder, driverOrders }) => {
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    console.log(today);
     driverFetchOrder("2022-02-22");
   }, []);
 

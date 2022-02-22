@@ -29,27 +29,6 @@
         }
       ],
       "id": 2
-    },
-    {
-      "firstName": "Joe",
-      "lastName": "Han",
-      "email": "jhoon.han@gmail.com",
-      "googleId": "112981141048784001090",
-      "fullName": "Joe Han",
-      "defaultAddress": {
-        "street": "2835 Fallin ct",
-        "city": "High Point",
-        "zip": "27262"
-      },
-      "savedAddress": [
-        {
-          "street": "2835 Fallin ct",
-          "city": "High Point",
-          "zip": "27262"
-        }
-      ],
-      "id": 3,
-      "phone": "3128108989"
     }
   ],
   "orders": [
@@ -188,7 +167,7 @@
         "lng": -80.0461341
       },
       "id": 6,
-      "acceptId": null
+      "acceptId": "103871420101748691850"
     },
     {
       "name": "Joe Han",
@@ -218,7 +197,8 @@
         "lat": 35.6084662,
         "lng": -77.3714268
       },
-      "id": 7
+      "id": 7,
+      "acceptId": "103871420101748691850"
     },
     {
       "name": "Joe Han",
@@ -248,6 +228,110 @@
       },
       "id": 8,
       "acceptId": null
+    },
+    {
+      "name": "Jo H",
+      "phone": "3124515946",
+      "street": "463 Massachusetts Ave",
+      "city": "Cambridge",
+      "zip": "02139",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1,
+        "jacket": 1,
+        "sweater": 1,
+        "top": 1,
+        "other": 1,
+        "dress": 1
+      },
+      "googleId": "103871420101748691850",
+      "total": {
+        "subtotal": "20.93",
+        "total": "21.92",
+        "tax": "0.99"
+      },
+      "timestamp": 1645562705396,
+      "status": "submitted",
+      "coords": {
+        "lat": 42.3640329,
+        "lng": -71.1008684
+      },
+      "id": 9
+    },
+    {
+      "name": "Jo H",
+      "phone": "3124515946",
+      "street": "3710 Rivers Ave",
+      "city": "North Charleston",
+      "zip": "29405",
+      "date": "2022-02-22",
+      "clothes": {
+        "sweater": 1,
+        "jacket": 1,
+        "pants": 1
+      },
+      "googleId": "103871420101748691850",
+      "total": {
+        "subtotal": "8.97",
+        "total": "9.40",
+        "tax": "0.43"
+      },
+      "timestamp": 1645562740951,
+      "status": "submitted",
+      "coords": {
+        "lat": 32.8590255,
+        "lng": -79.9823437
+      },
+      "id": 10
+    },
+    {
+      "name": "Jo H",
+      "phone": "3124515946",
+      "street": "5635 N Tryon St",
+      "city": "Charlotte",
+      "zip": "28213",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1,
+        "other": 2,
+        "dress": 1
+      },
+      "googleId": "103871420101748691850",
+      "total": {
+        "subtotal": "14.95",
+        "total": "15.66",
+        "tax": "0.71"
+      },
+      "timestamp": 1645562775290,
+      "status": "submitted",
+      "coords": {
+        "lat": 35.2633738,
+        "lng": -80.7723883
+      },
+      "id": 11
+    },
+    {
+      "name": "Jo H",
+      "phone": "3124515946",
+      "street": "2835 Fallin ct",
+      "date": "2022-02-22",
+      "city": "High Point",
+      "zip": "27262",
+      "googleId": "103871420101748691850",
+      "total": {
+        "total": 0,
+        "subtotal": 0,
+        "tax": 0
+      },
+      "timestamp": 1645563065145,
+      "status": "submitted",
+      "coords": {
+        "lat": 35.9594345,
+        "lng": -80.0461341
+      },
+      "id": 12
     }
   ]
 }
