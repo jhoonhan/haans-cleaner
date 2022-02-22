@@ -111,10 +111,6 @@ export const cancelOrder = (id) => async (dispatch) => {
   // history.push("/order");
 };
 
-// misc
-
-// https://maps.googleapis.com/maps/api/geocode/json?address=2835+Fallin+ct,+High+Point,+27262&key=AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8
-
 // Driver
 export const driverFetchOrder = (date, coords) => async (dispatch) => {
   const res = await server.get(`/orders/?date=${date}&status=submitted`);
