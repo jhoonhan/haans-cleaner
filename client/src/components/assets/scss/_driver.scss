@@ -1,11 +1,28 @@
+.driver__order__row {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+
+  padding: 0rem 2rem;
+
+  border: 1px solid $divider-color;
+  box-sizing: border-box;
+
+  opacity: 1;
+  max-height: 100vh;
+  transition: all 0.3s;
+}
 .driver__order__item {
   display: grid;
-  grid-template-columns: 7rem 1fr 7rem;
+  grid-template-columns: auto auto auto;
   grid-template-rows: auto auto;
   row-gap: 0rem;
   justify-items: center;
   align-items: center;
 
+  padding: 2rem 0rem 1.5rem 0rem;
   box-sizing: border-box;
 
   & div:nth-child(1),
@@ -18,15 +35,36 @@
   }
 }
 
-.driver__order__row {
+.driver__order__buttton__container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  gap: 2rem;
+
+  margin-bottom: 2rem;
+
+  & div:first-child {
+    background-color: pink;
+  }
+  & div:last-child {
+    background-color: aquamarine;
+  }
+}
+.driver__order__buttton {
   width: 100%;
 
   display: flex;
-  flex-direction: column;
-  gap: 0rem;
+  align-items: center;
+  justify-content: center;
 
-  padding: 0rem 0rem 0rem 0rem;
+  padding: 1rem;
 
-  border: 1px solid $divider-color;
   box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.accepted {
+  background-color: #ccc !important;
 }

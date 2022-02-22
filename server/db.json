@@ -62,9 +62,9 @@
       "date": "2022-02-22",
       "googleId": "103871420101748691850",
       "total": {
-        "total": 0,
-        "subtotal": 0,
-        "tax": 0
+        "total": 20,
+        "subtotal": 18,
+        "tax": 2
       },
       "timestamp": 1645481988355,
       "status": "submitted",
@@ -77,31 +77,57 @@
     {
       "name": "Jo H",
       "phone": "3124515946",
+      "street": "4427 Carlys way",
+      "city": "Greensboro",
+      "zip": "27410",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1,
+        "jacket": 1,
+        "sweater": 1,
+        "pants": 4,
+        "other": 2
+      },
+      "googleId": "103871420101748691850",
+      "total": {
+        "subtotal": "29.90",
+        "total": "31.32",
+        "tax": "1.42"
+      },
+      "timestamp": 1645493975520,
+      "status": "submitted",
+      "coords": {
+        "lat": 36.1185069,
+        "lng": -79.8824345
+      },
+      "id": 3
+    },
+    {
+      "name": "Minseo Cha",
+      "phone": "3124515946",
       "street": "2835 Fallin ct",
       "city": "High Point",
       "zip": "27262",
       "date": "2022-02-22",
       "clothes": {
-        "coat": 1,
-        "sweater": 1,
-        "jacket": 1,
-        "pants": 1,
-        "skirt": 1,
-        "other": 1
+        "coat": 3,
+        "dress": 9,
+        "other": 3
       },
       "googleId": "103871420101748691850",
       "total": {
-        "subtotal": "17.94",
-        "total": "18.79",
-        "tax": "0.85"
+        "subtotal": "44.85",
+        "total": "46.98",
+        "tax": "2.13"
       },
-      "timestamp": 1645482001946,
+      "timestamp": 1645493996761,
       "status": "submitted",
       "coords": {
         "lat": 35.9594345,
         "lng": -80.0461341
       },
-      "id": 2
+      "id": 4
     },
     {
       "name": "Jo H",
@@ -112,10 +138,13 @@
       "date": "2022-02-22",
       "clothes": {
         "coat": 1,
+        "skirt": 1,
         "jacket": 1,
         "sweater": 1,
+        "top": 1,
         "pants": 1,
-        "skirt": 4
+        "other": 1,
+        "dress": 1
       },
       "googleId": "103871420101748691850",
       "total": {
@@ -123,13 +152,73 @@
         "total": "25.06",
         "tax": "1.14"
       },
-      "timestamp": 1645482026039,
+      "timestamp": 1645494058192,
       "status": "submitted",
       "coords": {
         "lat": 35.9594345,
         "lng": -80.0461341
       },
-      "id": 3
+      "id": 5
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "sweater": 1,
+        "jacket": 1,
+        "pants": 1,
+        "skirt": 1
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": "14.95",
+        "total": "15.66",
+        "tax": "0.71"
+      },
+      "timestamp": 1645494148704,
+      "status": "submitted",
+      "coords": {
+        "lat": 35.9594345,
+        "lng": -80.0461341
+      },
+      "id": 6,
+      "acceptId": null
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "635 Cotanche st",
+      "city": "Greenville",
+      "zip": "27858",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1,
+        "jacket": 1,
+        "sweater": 1,
+        "pants": 1,
+        "top": 1,
+        "other": 1
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": "20.93",
+        "total": "21.92",
+        "tax": "0.99"
+      },
+      "timestamp": 1645494177422,
+      "status": "submitted",
+      "coords": {
+        "lat": 35.6084662,
+        "lng": -77.3714268
+      },
+      "id": 7,
+      "acceptId": null
     }
   ]
 }

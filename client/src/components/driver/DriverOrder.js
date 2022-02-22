@@ -12,12 +12,15 @@ const DriverOrder = ({ driverFetchOrder, driverOrders }) => {
   }, []);
 
   const renderDriverOrders = () => {
-    return driverOrders.reverse().map((order, i) => {
-      return (
-        <div key={i} className="driver__order__row">
-          <DriverOrderItem order={order} />
-        </div>
-      );
+    const orderArr = Object.entries(driverOrders).map(([key, value]) => {
+      const obj = {
+        id: key,
+        ...value,
+      };
+      return obj;
+    });
+    return orderArr.reverse().map((order, i) => {
+      return <DriverOrderItem order={order} key={i} />;
     });
   };
 

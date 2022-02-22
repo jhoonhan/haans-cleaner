@@ -2,45 +2,30 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { cancelOrder } from "../../actions";
+import { acceptOrder } from "../../actions";
 
 import price from "../price";
 
 class DriverOrderItem extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: false };
 
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+    this.state = { status: this.props.order.status };
 
-    this.detailRef = React.createRef();
-    this.buttonRef = React.createRef();
+    this.refDetail = React.createRef();
+    this.refBand = React.createRef();
+    this.refAccept = React.createRef();
 
     this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
   }
 
-  showModal = () => {
-    this.setState({ show: true });
-  };
-
-  hideModal = () => {
-    this.setState({ show: false });
-  };
-  onCancelClick = () => {
-    // this.props.cancelOrder(this.props.auth.userProfile.FW);
-  };
-
-  highlightButton = () => {
-    this.buttonRef.current.classList.toggle("button--active");
-  };
-
-  toggleView = () => {
-    this.detailRef.current.classList.toggle("height--0");
-    this.detailRef.current.classList.toggle("opacity--0");
-    this.detailRef.current.classList.toggle("padding--0");
-    this.detailRef.current.classList.toggle("margin--0");
-    this.detailRef.current.classList.toggle("overflow--hidden");
+  toggleView = (ref) => {
+    const selectedRef = ref;
+    selectedRef.current.classList.toggle("height--0");
+    selectedRef.current.classList.toggle("opacity--0");
+    selectedRef.current.classList.toggle("padding--0");
+    selectedRef.current.classList.toggle("margin--0");
+    selectedRef.current.classList.toggle("overflow--hidden");
   };
 
   renderCount(clothes) {
@@ -116,40 +101,69 @@ class DriverOrderItem extends React.Component {
     );
   }
 
-  detailButton() {
-    return (
-      <button
-        className="button--m"
-        ref={this.buttonRef}
-        onClick={() => {
-          this.toggleView();
-          this.highlightButton();
-        }}
-      >
-        Detail
-      </button>
-    );
-  }
+  onAccept = (id) => {
+    if (this.state.status === "submitted") {
+      this.setState({ status: "accepted" });
+      this.props.acceptOrder(id, {
+        status: "accepted",
+        acceptId: this.props.auth.userProfile.FW,
+      });
+    }
+    if (this.state.status === "accepted") {
+      this.setState({ status: "submitted" });
+      this.props.acceptOrder(id, {
+        status: "submitted",
+        acceptId: this.props.auth.userProfile.FW,
+      });
+    }
+  };
 
   render() {
     return (
-      <>
-        <div className="driver__order__item">
-          <div>cell</div>
-          <div>cell</div>
-          <div>cell</div>
-          <div>cell</div>
-          <div>cell</div>
-          <div>cell</div>
+      <div ref={this.refBand} className="driver__order__row">
+        <div
+          onClick={() => {
+            this.toggleView(this.refDetail);
+          }}
+          className="driver__order__item"
+        >
+          <div>
+            <h3>0.6 mi</h3>
+          </div>
+          <div></div>
+          <div>#{this.props.order.id}</div>
+          <div>
+            {this.props.order.street}, {this.props.order.city}
+          </div>
+          <div></div>
+          <div>
+            <h3>${(this.props.order.total.total * 0.2).toFixed(2)}</h3>
+          </div>
+        </div>
+        <div className="driver__order__buttton__container">
+          <div
+            onClick={() => this.toggleView(this.refBand)}
+            className="driver__order__buttton"
+          >
+            Hide
+          </div>
+          <div
+            onClick={() => this.onAccept(this.props.order.id)}
+            className={`driver__order__buttton ${
+              this.props.order.status === "accepted" ? "accepted" : ""
+            }`}
+          >
+            {this.props.order.status}
+          </div>
         </div>
 
         <div
-          ref={this.detailRef}
+          ref={this.refDetail}
           className={`order__detail ${this.animationClasses}`}
         >
           {this.renderDetail()}
         </div>
-      </>
+      </div>
     );
   }
 }
@@ -162,4 +176,4 @@ const mapStateToProps = ({ auth, user, orders }) => {
   };
 };
 
-export default connect(mapStateToProps, { cancelOrder })(DriverOrderItem);
+export default connect(mapStateToProps, { acceptOrder })(DriverOrderItem);

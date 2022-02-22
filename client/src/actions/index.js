@@ -19,6 +19,7 @@ import {
   MOUNT_USER,
   EDIT_DADDRESS,
   D_FETCH_ORDER,
+  D_ACCEPT_ORDER,
 } from "./types";
 
 //////////////// USER
@@ -98,8 +99,8 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
 };
 
 export const editOrder = (id, formValues) => async (dispatch) => {
-  const res = await server.put(`/orders/${id}`, formValues);
-
+  const res = await server.patch(`/orders/${id}`, formValues);
+  console.log(`edit order fired`);
   dispatch({ type: EDIT_ORDER, payload: res.data });
 };
 
@@ -116,7 +117,30 @@ export const cancelOrder = (id) => async (dispatch) => {
 
 // Driver
 export const driverFetchOrder = (date, coords) => async (dispatch) => {
-  const res = await server.get(`/orders/?date=${date}`);
+  const res = await server.get(`/orders/?date=${date}&status=submitted`);
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data });
+};
+
+export const acceptOrder = (orderId, data) => async (dispatch) => {
+  const res = await server.get(`/orders/${orderId}`);
+  console.log(data.acceptId);
+
+  if (res.data.status === "submitted") {
+    console.log(`yes`);
+    const res = await server.patch(`/orders/${orderId}`, data);
+    dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
+  }
+
+  if (res.data.status === "accepted" && res.data.acceptId === data.acceptId) {
+    console.log(`yes`);
+    const res = await server.patch(`/orders/${orderId}`, {
+      ...data,
+      acceptId: null,
+    });
+    dispatch({
+      type: D_ACCEPT_ORDER,
+      payload: { ...res.data, acceptId: null },
+    });
+  }
 };
