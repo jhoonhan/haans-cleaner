@@ -29,6 +29,30 @@
         }
       ],
       "id": 2
+    },
+    {
+      "firstName": "Joe",
+      "lastName": "Han",
+      "email": "jhoon.han2@gmail.com",
+      "phone": "3128108989",
+      "street": "2835 Fallin ct",
+      "city": "High Point",
+      "zip": "27262",
+      "googleId": "112981141048784001090",
+      "fullName": "Joe Han",
+      "defaultAddress": {
+        "street": "2835 Fallin ct",
+        "city": "High Point",
+        "zip": "27262"
+      },
+      "savedAddress": [
+        {
+          "street": "2835 Fallin ct",
+          "city": "High Point",
+          "zip": "27262"
+        }
+      ],
+      "id": 3
     }
   ],
   "orders": [

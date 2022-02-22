@@ -10,10 +10,9 @@ class SignIn extends React.Component {
     this.props.fetchUser(this.props.auth.userProfile.FW);
   }
   conditionalRender() {
-    if (!this.props.user) return null;
     const isSignedIn = this.props.auth.isSignedIn;
     const loadedGoogleId = this.props.auth.userProfile.FW;
-    const userGoogleId = this.props.user.googleId;
+    const userGoogleId = this.props.user?.googleId;
     if (isSignedIn && loadedGoogleId === userGoogleId) {
       return <Home />;
     }
@@ -24,8 +23,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    if (!this.props.user) return null;
-
     return <div className="signIn__container">{this.conditionalRender()}</div>;
   }
 }

@@ -46,12 +46,23 @@ export const mountUser = (user) => {
   };
 };
 
-export const createUser = (formValues) => async (dispatch, getState) => {
-  const res = await server.post("/users", { ...formValues });
+export const createUser =
+  (formValues, googleId) => async (dispatch, getState) => {
+    const { firstName, lastName, street, city, zip } = formValues;
+    const combinedAddress = { street, city, zip };
+    const combined = {
+      ...formValues,
+      googleId,
+      fullName: `${firstName} ${lastName}`,
+      defaultAddress: combinedAddress,
+      savedAddress: [combinedAddress],
+    };
 
-  dispatch({ type: CREATE_USER, payload: res.data });
-  history.push("/");
-};
+    const res = await server.post("/users", { ...combined });
+
+    dispatch({ type: CREATE_USER, payload: res.data });
+    history.push("/");
+  };
 
 export const fetchUser = (id) => async (dispatch, getState) => {
   const res = await server.get(`/users/?googleId=${id}`);

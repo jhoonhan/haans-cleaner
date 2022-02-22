@@ -9,21 +9,9 @@ import RenderInput from "../helpers/renderInput";
 const SignInSecondPage = (props) => {
   const { handleSubmit } = props;
 
-  const onFinalSubmit = async (formValue) => {
-    // console.log({ ...formValue, clothes });
-    // console.log(this.props.clothes);
-    const { firstName, lastName, street, city, zip } = formValue;
-    const coords = await props.fetchGeocode({ street, city, zip });
-    console.log(coords);
-    const combinedAddress = { street, city, zip };
-    const combined = {
-      ...formValue,
-      googleId: props.auth.userProfile.FW,
-      fullName: `${firstName} ${lastName}`,
-      defaultAddress: { ...combinedAddress },
-      savedAddress: [combinedAddress],
-    };
-    props.createUser(combined);
+  const onFinalSubmit = (formValues) => {
+    const googleId = props.auth.userProfile.FW;
+    props.createUser(formValues, googleId);
   };
 
   const renderSignUp = () => {
