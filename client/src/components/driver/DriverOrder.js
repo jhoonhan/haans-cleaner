@@ -13,11 +13,12 @@ const DriverOrder = ({
   auth,
   driverFetchOrder,
   fetchGeocode,
-  driverOrders,
+  driver,
   fetchUser,
   center,
   zoom,
 }) => {
+  const [mapLoaded, setMapLoaded] = useState(false);
   const refPopUpContainer = React.createRef();
 
   useEffect(() => {
@@ -43,7 +44,8 @@ const DriverOrder = ({
   };
 
   const renderDriverOrders = () => {
-    const orderArr = cvtObj2Arr(driverOrders);
+    if (!mapLoaded) return;
+    const orderArr = cvtObj2Arr(driver.orders);
 
     return orderArr.reverse().map((order, i) => {
       return (
@@ -64,7 +66,7 @@ const DriverOrder = ({
       case Status.FAILURE:
         return <div>aaang</div>;
       case Status.SUCCESS:
-        return <GoogleMap />;
+        return <div>aaang</div>;
       default:
         return <div>aaang</div>;
     }
@@ -83,6 +85,7 @@ const DriverOrder = ({
         <GoogleMap
           popUpContainer={refPopUpContainer}
           getDistances={getDistances}
+          setMapLoaded={setMapLoaded}
         />
       </Wrapper>
       <div className="order-container" ref={refPopUpContainer}>
@@ -92,8 +95,8 @@ const DriverOrder = ({
   );
 };
 
-const mapStateToProps = ({ auth, user, driverOrders }) => {
-  return { auth: auth, user: user.currentUser, driverOrders };
+const mapStateToProps = ({ auth, user, driver }) => {
+  return { auth: auth, user: user.currentUser, driver };
 };
 
 export default connect(mapStateToProps, {

@@ -3,15 +3,14 @@ import { Loader } from "@googlemaps/js-api-loader";
 
 import { connect } from "react-redux";
 
-import { driverFetchOrder, loadMap } from "../actions";
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
+import { setCoordsAct } from "../actions";
 
 const GoogleMap = (props) => {
   // constructor(props) {
   //   super(props);
   //   this.state = { lat: null, lng: null };
   // }
-  const [coords, setCoords] = useState({ lat: null, lng: null });
   const refMap = React.useRef();
 
   useEffect(() => {
@@ -21,28 +20,26 @@ const GoogleMap = (props) => {
   }, []);
 
   useEffect(() => {
-    // new window.google.maps.Map(refMap.current, {
-    //   center: coords,
-    //   zoom: 11,
-    // });
-
-    if (!coords.lat) return;
+    if (!props.driver.currentCoords?.lat) return;
     const map = new window.google.maps.Map(refMap.current, {
-      center: coords,
+      center: props.driver.currentCoords,
       zoom: 11,
     });
 
     const currentLocation = new window.google.maps.Marker({
-      position: coords,
+      position: props.driver.currentCoords,
       map,
       title: "Hello World!",
     });
 
     renderMarkers(map);
-  });
+
+    props.setMapLoaded(true);
+    //
+  }, [props.driver.currentCoords]);
 
   const renderMarkers = (map) => {
-    const orders = cvtObj2Arr(props.driverOrders);
+    const orders = cvtObj2Arr(props.driver.orders);
     orders.forEach(function (order, i) {
       if (!order.coords.lat) return;
 
@@ -57,62 +54,19 @@ const GoogleMap = (props) => {
     });
   };
 
-  const getDistance = (google) => {
-    const orders = cvtObj2Arr(props.driverOrders);
-    orders.forEach((order) => {
-      const origin = new google.maps.LatLng(coords.lat, coords.lng);
-      const destination = new google.maps.LatLng(
-        order.coords.lat,
-        order.coords.lng
-      );
-
-      const callback = (response, status) => {
-        props.getDistances(response.rows[0].elements[0].distance.text);
-      };
-
-      const service = new google.maps.DistanceMatrixService();
-      service.getDistanceMatrix(
-        {
-          origins: [origin],
-          destinations: [destination],
-          travelMode: "DRIVING",
-          unitSystem: google.maps.UnitSystem.IMPERIAL,
-          avoidHighways: false,
-          avoidTolls: false,
-        },
-        callback
-      );
-    });
-  };
-
   const geoSuccess = ({ coords }) => {
-    setCoords({ lat: coords.latitude, lng: coords.longitude });
+    props.setCoordsAct({ lat: coords.latitude, lng: coords.longitude });
   };
 
   const geoFailed = () => {
     console.log(`cibal`);
   };
 
-  // renderMarkers = (map) => {
-  //   const orders = cvtObj2Arr(this.props.driverOrders);
-
-  //   orders.forEach((order) => {
-  //     console.log(order.coords);
-  //     new this.google.maps.Marker({
-  //       position: order.coords,
-  //       map,
-  //       title: "Hello World!",
-  //     });
-  //   });
-  // };
-
   return <div ref={refMap} className="googleMap"></div>;
 };
 
-const mapStateToProps = ({ auth, user, driverOrders }) => {
-  return { auth, user, driverOrders };
+const mapStateToProps = ({ auth, user, driver }) => {
+  return { auth, user, driver };
 };
 
-export default connect(mapStateToProps, { loadMap, driverFetchOrder })(
-  GoogleMap
-);
+export default connect(mapStateToProps, { setCoordsAct })(GoogleMap);

@@ -11,5 +11,5 @@ export default combineReducers({
   user: userReducer,
   orders: orderReducer,
   form: formReducer,
-  driverOrders: driverReducer,
+  driver: driverReducer,
 });

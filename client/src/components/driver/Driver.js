@@ -5,7 +5,7 @@ import { driverFetchOrder } from "../../actions";
 import DriverHome from "./DriverHome";
 import DriverHeader from "./DriverHeader";
 
-const Driver = ({ driverFetchOrder, driverOrders }) => {
+const Driver = ({ driverFetchOrder, driver }) => {
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
     driverFetchOrder("2022-02-22");
@@ -19,8 +19,8 @@ const Driver = ({ driverFetchOrder, driverOrders }) => {
   );
 };
 
-const mapStateToProps = ({ auth, user, driverOrders }) => {
-  return { auth: auth, user: user.currentUser, driverOrders };
+const mapStateToProps = ({ auth, user, driver }) => {
+  return { auth: auth, user: user.currentUser, driver };
 };
 
 export default connect(mapStateToProps, { driverFetchOrder })(Driver);

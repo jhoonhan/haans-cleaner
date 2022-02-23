@@ -22,3 +22,4 @@ export const FETCH_COORDS = "FETCH_COORDS";
 export const D_FETCH_ORDER = "D_FETCH_ORDER";
 export const D_ACCEPT_ORDER = "D_ACCEPT_ORDER";
 export const D_GET_COORDS = "D_GET_COORDS";
+export const D_SET_COORDS = "D_SET_COORDS";

@@ -23,6 +23,7 @@ import {
   D_FETCH_ORDER,
   D_ACCEPT_ORDER,
   D_GET_COORDS,
+  D_SET_COORDS,
 } from "./types";
 
 //////////////// USER
@@ -176,45 +177,6 @@ export const fetchGeocode = (address) => async (dispatch) => {
   return coords;
 };
 
-export const loadMap =
-  (date, fetchOrder, initMap, getDistance) => async (dispatch) => {
-    if (fetchOrder) {
-      const res = await server.get(`/orders/?date=2022-02-22&status=submitted`);
-      dispatch({ type: D_FETCH_ORDER, payload: res.data });
-    }
-
-    // const loader = new Loader({
-    //   apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
-    //   version: "weekly",
-    // });
-
-    // loader
-    //   .load()
-    //   .then((google) => {
-    //     initMap(google);
-    //     // getDistance(google);
-    //   })
-    //   .catch((e) => {
-    //     // do something
-    //   });
-  };
-
-// export const fetchDistanceMatrix = async ({ origin, destination }) => {
-//   const convertAddress = (address) => {
-//     // 2835 Fallin ct High Point 27262
-//     console.log(`aang`);
-//     const street = address.street.replaceAll(" ", "%20");
-//     const city = address.city.replaceAll(" ", "%20");
-//     const combined = `${street}+${city}+${address.zip}`;
-//     return combined;
-//   };
-
-//   const queryOrigin = convertAddress(origin);
-//   const queryDestination = convertAddress(destination);
-
-//   const res = await GoogleGeocode.get(
-//     `/distancematrix/json?destinations=${queryOrigin}&origins=${queryDestination}&units=imperial&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
-//   );
-
-//   console.log(res.data);
-// };
+export const setCoordsAct = (coords) => (dispatch) => {
+  dispatch({ type: D_SET_COORDS, payload: coords });
+};

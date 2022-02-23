@@ -11,7 +11,7 @@ class DriverOrderItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { status: this.props.order.status };
+    this.state = { status: this.props.order.status, distance: null };
 
     this.refDetail = React.createRef();
     this.refBand = React.createRef();
@@ -21,7 +21,7 @@ class DriverOrderItem extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.order);
+    this.getDistance();
   }
 
   toggleView = (ref) => {
@@ -123,19 +123,19 @@ class DriverOrderItem extends React.Component {
     }
   };
 
-  getDistance = (order) => {
-    console.log(window.google.maps);
+  getDistance = () => {
     const origin = new window.google.maps.LatLng(
-      this.state.lat,
-      this.state.lng
+      this.props.driver.currentCoords.lat,
+      this.props.driver.currentCoords.lng
     );
     const destination = new window.google.maps.LatLng(
-      this.order.coords.lat,
-      this.order.coords.lng
+      this.props.order.coords.lat,
+      this.props.order.coords.lng
     );
 
     const callback = (response, status) => {
-      this.props.getDistances(response.rows[0].elements[0].distance.text);
+      const distance = response.rows[0].elements[0].distance.text;
+      this.setState({ ...this.state, distance });
     };
 
     const service = new window.google.maps.DistanceMatrixService();
@@ -153,7 +153,6 @@ class DriverOrderItem extends React.Component {
   };
 
   render() {
-    // this.getDistance(this.props.order);
     return (
       <div
         ref={this.refBand}
@@ -167,7 +166,7 @@ class DriverOrderItem extends React.Component {
           className="driver__order__item"
         >
           <div>
-            <h3>0.6 mi</h3>
+            <h3>{this.state.distance}</h3>
           </div>
           <div></div>
           <div>#{this.props.order.id}</div>
@@ -209,10 +208,11 @@ class DriverOrderItem extends React.Component {
   }
 }
 
-const mapStateToProps = ({ auth, user }) => {
+const mapStateToProps = ({ auth, user, driver }) => {
   return {
     auth,
     user: user.currentUser,
+    driver,
   };
 };
 
