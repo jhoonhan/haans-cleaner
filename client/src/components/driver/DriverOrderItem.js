@@ -153,7 +153,7 @@ class DriverOrderItem extends React.Component {
   };
 
   render() {
-    this.getDistance(this.props.order);
+    // this.getDistance(this.props.order);
     return (
       <div
         ref={this.refBand}
