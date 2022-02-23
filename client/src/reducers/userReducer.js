@@ -10,12 +10,12 @@ import {
   D_GET_COORDS,
 } from "../actions/types";
 
-const reducer = (state = {}, action) => {
+const reducer = (state = { fetched: false }, action) => {
   switch (action.type) {
     case SIGN_OUT:
       return { ...state, currentUser: null };
     case FETCH_USER:
-      return { ...state, currentUser: action.payload };
+      return { ...state, currentUser: action.payload, fetched: true };
     case MOUNT_USER:
       return { ...state, currentUser: action.payload };
     case CREATE_USER:

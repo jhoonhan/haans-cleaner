@@ -7,20 +7,17 @@ import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
 import { setCoordsAct } from "../actions";
 
 const GoogleMap = (props) => {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { lat: null, lng: null };
-  // }
   const refMap = React.useRef();
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && props.driver.orders) {
       navigator.geolocation.getCurrentPosition(geoSuccess, geoFailed);
     }
-  }, []);
+  }, [props.driver.orderFetched]);
 
   useEffect(() => {
     if (!props.driver.currentCoords?.lat) return;
+
     const map = new window.google.maps.Map(refMap.current, {
       center: props.driver.currentCoords,
       zoom: 11,

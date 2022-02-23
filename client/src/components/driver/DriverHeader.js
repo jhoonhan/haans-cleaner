@@ -9,7 +9,10 @@ const DriverHeader = () => {
           Home
         </Link>
         <Link to="/driver/order" className="nav__item">
-          Orders
+          Search
+        </Link>
+        <Link to="/driver/accepted" className="nav__item">
+          Accepted
         </Link>
         <Link to="/driver/account" className="nav__item">
           Account

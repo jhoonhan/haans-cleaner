@@ -22,6 +22,7 @@ import {
   EDIT_DADDRESS,
   D_FETCH_ORDER,
   D_ACCEPT_ORDER,
+  D_FETCH_ACCEPTED,
   D_GET_COORDS,
   D_SET_COORDS,
 } from "./types";
@@ -133,9 +134,14 @@ export const driverFetchOrder = (date, coords) => async (dispatch) => {
   dispatch({ type: D_FETCH_ORDER, payload: res.data });
 };
 
+export const driverFetchAccepted = (acceptId) => async (dispatch) => {
+  const res = await server.get(`/orders/?acceptId=${acceptId}&status=accepted`);
+
+  dispatch({ type: D_FETCH_ACCEPTED, payload: res.data });
+};
+
 export const acceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/orders/${orderId}`);
-  console.log(data.acceptId);
 
   if (res.data.status === "submitted") {
     console.log(`yes`);

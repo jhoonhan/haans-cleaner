@@ -124,6 +124,10 @@ class DriverOrderItem extends React.Component {
   };
 
   getDistance = () => {
+    if (!window.google) {
+      console.log(`shiat`);
+      return;
+    }
     const origin = new window.google.maps.LatLng(
       this.props.driver.currentCoords.lat,
       this.props.driver.currentCoords.lng
@@ -152,6 +156,52 @@ class DriverOrderItem extends React.Component {
     );
   };
 
+  renderSearchButtons() {
+    return (
+      <div className="driver__order__buttton__container">
+        <div
+          onClick={() => this.toggleView(this.refBand)}
+          className="driver__order__buttton"
+        >
+          Hide
+        </div>
+        <div
+          onClick={() => this.onAccept(this.props.order.id)}
+          className="driver__order__buttton"
+          style={{
+            backgroundColor:
+              this.props.order.status === "submitted" ? "aquamarine" : "#ccc",
+          }}
+        >
+          {this.props.order.status}
+        </div>
+      </div>
+    );
+  }
+
+  renderAcceptButtons() {
+    return (
+      <div className="driver__order__buttton__container">
+        <div
+          onClick={() => this.onAccept(this.props.order.id)}
+          className="driver__order__buttton"
+          style={{
+            backgroundColor:
+              this.props.order.status === "submitted" ? "aquamarine" : "#ccc",
+          }}
+        >
+          {this.props.order.status}
+        </div>
+        <div
+          onClick={() => this.toggleView(this.refBand)}
+          className="driver__order__buttton"
+        >
+          Hide
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div
@@ -178,24 +228,9 @@ class DriverOrderItem extends React.Component {
             <h3>${(this.props.order.total.total * 0.2).toFixed(2)}</h3>
           </div>
         </div>
-        <div className="driver__order__buttton__container">
-          <div
-            onClick={() => this.toggleView(this.refBand)}
-            className="driver__order__buttton"
-          >
-            Hide
-          </div>
-          <div
-            onClick={() => this.onAccept(this.props.order.id)}
-            className="driver__order__buttton"
-            style={{
-              backgroundColor:
-                this.props.order.status === "submitted" ? "aquamarine" : "#ccc",
-            }}
-          >
-            {this.props.order.status}
-          </div>
-        </div>
+        {this.props.page === "search"
+          ? this.renderSearchButtons()
+          : this.renderAcceptButtons()}
 
         <div
           ref={this.refDetail}
