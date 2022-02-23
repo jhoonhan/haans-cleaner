@@ -59,27 +59,6 @@
     {
       "name": "Jo H",
       "phone": "3124515946",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "date": "2022-02-22",
-      "googleId": "103871420101748691850",
-      "total": {
-        "total": 20,
-        "subtotal": 18,
-        "tax": 2
-      },
-      "timestamp": 1645481988355,
-      "status": "submitted",
-      "coords": {
-        "lat": 35.9594345,
-        "lng": -80.0461341
-      },
-      "id": 1
-    },
-    {
-      "name": "Jo H",
-      "phone": "3124515946",
       "street": "4427 Carlys way",
       "city": "Greensboro",
       "zip": "27410",
@@ -105,153 +84,6 @@
         "lng": -79.8824345
       },
       "id": 3
-    },
-    {
-      "name": "Minseo Cha",
-      "phone": "3124515946",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 3,
-        "dress": 9,
-        "other": 3
-      },
-      "googleId": "103871420101748691850",
-      "total": {
-        "subtotal": "44.85",
-        "total": "46.98",
-        "tax": "2.13"
-      },
-      "timestamp": 1645493996761,
-      "status": "submitted",
-      "coords": {
-        "lat": 35.9594345,
-        "lng": -80.0461341
-      },
-      "id": 4
-    },
-    {
-      "name": "Jo H",
-      "phone": "3124515946",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 1,
-        "skirt": 1,
-        "jacket": 1,
-        "sweater": 1,
-        "top": 1,
-        "pants": 1,
-        "other": 1,
-        "dress": 1
-      },
-      "googleId": "103871420101748691850",
-      "total": {
-        "subtotal": "23.92",
-        "total": "25.06",
-        "tax": "1.14"
-      },
-      "timestamp": 1645494058192,
-      "status": "submitted",
-      "coords": {
-        "lat": 35.9594345,
-        "lng": -80.0461341
-      },
-      "id": 5,
-      "acceptId": "112981141048784001090"
-    },
-    {
-      "name": "Joe Han",
-      "phone": "3128108989",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 1,
-        "sweater": 1,
-        "jacket": 1,
-        "pants": 1,
-        "skirt": 1
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "14.95",
-        "total": "15.66",
-        "tax": "0.71"
-      },
-      "timestamp": 1645494148704,
-      "status": "submitted",
-      "coords": {
-        "lat": 35.9594345,
-        "lng": -80.0461341
-      },
-      "id": 6,
-      "acceptId": "103871420101748691850"
-    },
-    {
-      "name": "Joe Han",
-      "phone": "3128108989",
-      "street": "635 Cotanche st",
-      "city": "Greenville",
-      "zip": "27858",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 1,
-        "skirt": 1,
-        "jacket": 1,
-        "sweater": 1,
-        "pants": 1,
-        "top": 1,
-        "other": 1
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "20.93",
-        "total": "21.92",
-        "tax": "0.99"
-      },
-      "timestamp": 1645494177422,
-      "status": "submitted",
-      "coords": {
-        "lat": 35.6084662,
-        "lng": -77.3714268
-      },
-      "id": 7,
-      "acceptId": "103871420101748691850"
-    },
-    {
-      "name": "Joe Han",
-      "phone": "3128108989",
-      "street": "2835 Fallin ct",
-      "city": "High Point",
-      "zip": "27262",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 1,
-        "skirt": 1,
-        "jacket": 1,
-        "sweater": 1,
-        "pants": 1
-      },
-      "googleId": "112981141048784001090",
-      "total": {
-        "subtotal": "14.95",
-        "total": "15.66",
-        "tax": "0.71"
-      },
-      "timestamp": 1645497435202,
-      "status": "submitted",
-      "coords": {
-        "lat": 35.9594345,
-        "lng": -80.0461341
-      },
-      "id": 8,
-      "acceptId": null
     },
     {
       "name": "Jo H",
@@ -337,25 +169,71 @@
       "id": 11
     },
     {
-      "name": "Jo H",
-      "phone": "3124515946",
-      "street": "2835 Fallin ct",
-      "date": "2022-02-22",
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "508 N Hamilton St",
       "city": "High Point",
       "zip": "27262",
-      "googleId": "103871420101748691850",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1,
+        "jacket": 1
+      },
+      "googleId": "112981141048784001090",
       "total": {
-        "total": 0,
-        "subtotal": 0,
-        "tax": 0
+        "subtotal": "8.97",
+        "total": "9.40",
+        "tax": "0.43"
       },
-      "timestamp": 1645563065145,
+      "timestamp": 1645578231864,
       "status": "submitted",
-      "coords": {
-        "lat": 35.9594345,
-        "lng": -80.0461341
-      },
+      "coords": { "lat": 35.96387267506028, "lng": -80.0081406883951 },
       "id": 12
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "2019 N Main St",
+      "city": "High Point",
+      "zip": "27262",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": "5.98",
+        "total": "6.26",
+        "tax": "0.28"
+      },
+      "timestamp": 1645578254039,
+      "status": "submitted",
+      "coords": { "lat": 35.9823360789544, "lng": -80.02355498654508 },
+      "id": 13
+    },
+    {
+      "name": "Joe Han",
+      "phone": "3128108989",
+      "street": "2045 N Old Greensboro Rd",
+      "city": "High Point",
+      "zip": "27265",
+      "date": "2022-02-22",
+      "clothes": {
+        "coat": 1,
+        "skirt": 1
+      },
+      "googleId": "112981141048784001090",
+      "total": {
+        "subtotal": "5.98",
+        "total": "6.26",
+        "tax": "0.28"
+      },
+      "timestamp": 1645578279711,
+      "status": "submitted",
+      "coords": { "lat": 35.97526624270643, "lng": -80.08830165517294 },
+      "id": 14
     }
   ]
 }

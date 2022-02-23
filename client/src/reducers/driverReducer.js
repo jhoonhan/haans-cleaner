@@ -8,6 +8,7 @@ const reducer = (state = [], action) => {
     // return [...state, ...action.payload];
     case D_ACCEPT_ORDER:
       return { ...state, [action.payload.id]: action.payload };
+
     default:
       return state;
   }

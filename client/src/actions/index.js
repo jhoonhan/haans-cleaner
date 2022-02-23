@@ -2,6 +2,7 @@ import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
 import GoogleGeocode from "../apis/GoogleGeocode";
+import { Loader } from "@googlemaps/js-api-loader";
 
 import {
   SIGN_IN,
@@ -21,6 +22,7 @@ import {
   EDIT_DADDRESS,
   D_FETCH_ORDER,
   D_ACCEPT_ORDER,
+  D_GET_COORDS,
 } from "./types";
 
 //////////////// USER
@@ -153,7 +155,7 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   }
 };
 
-export const fetchGeocode = async (address) => {
+export const fetchGeocode = (address) => async (dispatch) => {
   const { street, city, zip } = address;
   const queryStreet = street
     .replace(/[^a-zA-Z0-9 ]/g, "")
@@ -168,8 +170,31 @@ export const fetchGeocode = async (address) => {
   const res = await GoogleGeocode.get(
     `/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
   );
+  const coords = res.data.results[0].geometry.location;
+  // dispatch({ type: D_GET_COORDS, payload: coords });
 
-  return res.data.results[0].geometry.location;
+  return coords;
+};
+
+export const loadMap = (date, fetchOrder, initMap) => async (dispatch) => {
+  if (fetchOrder) {
+    const res = await server.get(`/orders/?date=2022-02-22&status=submitted`);
+    dispatch({ type: D_FETCH_ORDER, payload: res.data });
+  }
+
+  const loader = new Loader({
+    apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
+    version: "weekly",
+  });
+
+  loader
+    .load()
+    .then((google) => {
+      initMap(google);
+    })
+    .catch((e) => {
+      // do something
+    });
 };
 
 // export const fetchDistanceMatrix = async ({ origin, destination }) => {

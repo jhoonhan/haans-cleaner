@@ -7,6 +7,7 @@ import {
   EDIT_USER,
   DELETE_USER,
   MOUNT_USER,
+  D_GET_COORDS,
 } from "../actions/types";
 
 const reducer = (state = {}, action) => {
@@ -25,7 +26,17 @@ const reducer = (state = {}, action) => {
       return { ...state, currentUser: action.payload };
     case DELETE_USER:
       return _.omit(state, action.payload);
-
+    case D_GET_COORDS:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          defaultAddress: {
+            ...state.currentUser.defaultAddress,
+            coords: action.payload,
+          },
+        },
+      };
     default:
       return state;
   }

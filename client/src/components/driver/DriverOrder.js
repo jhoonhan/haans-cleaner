@@ -1,18 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { driverFetchOrder, fetchUser } from "../../actions";
+import { driverFetchOrder, fetchUser, fetchGeocode } from "../../actions";
 import GoogleGeocode from "../../apis/GoogleGeocode";
 import GoogleMap from "../../apis/GoogleMap";
 
 import DriverOrderItem from "./DriverOrderItem";
+import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
 const DriverOrder = ({
   user,
   auth,
   driverFetchOrder,
+  fetchGeocode,
   driverOrders,
   fetchUser,
 }) => {
+  const refPopUpContainer = React.createRef();
+
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
     driverFetchOrder("2022-02-22");
@@ -24,16 +28,20 @@ const DriverOrder = ({
     }
   }, [auth.isSignedIn]);
 
+  useEffect(() => {
+    if (!user) return;
+    if (!user.defaultAddress.coords) {
+      // fetchGeocode(user.defaultAddress);
+    }
+  }, [user]);
+
   const renderDriverOrders = () => {
-    const orderArr = Object.entries(driverOrders).map(([key, value]) => {
-      const obj = {
-        id: key,
-        ...value,
-      };
-      return obj;
-    });
+    const orderArr = cvtObj2Arr(driverOrders);
+
     return orderArr.reverse().map((order, i) => {
-      return <DriverOrderItem order={order} key={i} />;
+      return (
+        <DriverOrderItem order={order} key={i} timestamp={order.timestamp} />
+      );
     });
   };
 
@@ -43,8 +51,8 @@ const DriverOrder = ({
         <h2>Search Order</h2>
       </header>
       {/* <GoogleMap location={user.coords} /> */}
-      <GoogleMap />
-      <div className="order-container">
+      <GoogleMap popUpContainer={refPopUpContainer} />
+      <div className="order-container" ref={refPopUpContainer}>
         <div className="driver__order__list">{renderDriverOrders()}</div>
       </div>
     </div>
@@ -55,6 +63,8 @@ const mapStateToProps = ({ auth, user, driverOrders }) => {
   return { auth: auth, user: user.currentUser, driverOrders };
 };
 
-export default connect(mapStateToProps, { driverFetchOrder, fetchUser })(
-  DriverOrder
-);
+export default connect(mapStateToProps, {
+  driverFetchOrder,
+  fetchUser,
+  fetchGeocode,
+})(DriverOrder);

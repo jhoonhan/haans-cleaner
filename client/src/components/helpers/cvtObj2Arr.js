@@ -1,8 +1,9 @@
 const fn = (data) => {
   return Object.entries(data).map(([key, value]) => {
-    const obj = {};
-    obj.type = key;
-    obj.count = value;
+    const obj = {
+      id: key,
+      ...value,
+    };
     return obj;
   });
 };

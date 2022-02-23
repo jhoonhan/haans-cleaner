@@ -120,7 +120,11 @@ class DriverOrderItem extends React.Component {
 
   render() {
     return (
-      <div ref={this.refBand} className="driver__order__row">
+      <div
+        ref={this.refBand}
+        timestamp={this.props.timestamp}
+        className="driver__order__row"
+      >
         <div
           onClick={() => {
             this.toggleView(this.refDetail);
