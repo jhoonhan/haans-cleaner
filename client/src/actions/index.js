@@ -183,20 +183,20 @@ export const loadMap =
       dispatch({ type: D_FETCH_ORDER, payload: res.data });
     }
 
-    const loader = new Loader({
-      apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
-      version: "weekly",
-    });
+    // const loader = new Loader({
+    //   apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
+    //   version: "weekly",
+    // });
 
-    loader
-      .load()
-      .then((google) => {
-        initMap(google);
-        // getDistance(google);
-      })
-      .catch((e) => {
-        // do something
-      });
+    // loader
+    //   .load()
+    //   .then((google) => {
+    //     initMap(google);
+    //     // getDistance(google);
+    //   })
+    //   .catch((e) => {
+    //     // do something
+    //   });
   };
 
 // export const fetchDistanceMatrix = async ({ origin, destination }) => {

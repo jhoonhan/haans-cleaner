@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { driverFetchOrder, fetchUser, fetchGeocode } from "../../actions";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleGeocode from "../../apis/GoogleGeocode";
 import GoogleMap from "../../apis/GoogleMap";
 
@@ -14,6 +15,8 @@ const DriverOrder = ({
   fetchGeocode,
   driverOrders,
   fetchUser,
+  center,
+  zoom,
 }) => {
   const refPopUpContainer = React.createRef();
 
@@ -54,16 +57,34 @@ const DriverOrder = ({
     });
   };
 
+  const renderMap = (status) => {
+    switch (status) {
+      case Status.LOADING:
+        return <div>aaang</div>;
+      case Status.FAILURE:
+        return <div>aaang</div>;
+      case Status.SUCCESS:
+        return <GoogleMap />;
+      default:
+        return <div>aaang</div>;
+    }
+  };
+
   return (
     <div className="motion-container">
       <header className="page-title">
         <h2>Search Order</h2>
       </header>
       {/* <GoogleMap location={user.coords} /> */}
-      <GoogleMap
-        popUpContainer={refPopUpContainer}
-        getDistances={getDistances}
-      />
+      <Wrapper
+        apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
+        render={renderMap}
+      >
+        <GoogleMap
+          popUpContainer={refPopUpContainer}
+          getDistances={getDistances}
+        />
+      </Wrapper>
       <div className="order-container" ref={refPopUpContainer}>
         <div className="driver__order__list">{renderDriverOrders()}</div>
       </div>
