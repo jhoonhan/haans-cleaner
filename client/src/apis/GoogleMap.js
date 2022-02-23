@@ -17,24 +17,11 @@ class GoogleMap extends React.Component {
     }
   }
 
-  // loadMap = () => {
-  //   const loader = new Loader({
-  //     apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
-  //     version: "weekly",
-  //   });
-
-  //   loader
-  //     .load()
-  //     .then((google) => {
-  //       this.google = google;
-  //       this.initMap();
-  //     })
-  //     .catch((e) => {
-  //       // do something
-  //     });
-  // };
-
+  setGoogle = (google) => {
+    this.google = google;
+  };
   initMap = (google) => {
+    this.setGoogle(google);
     if (!this.state.lat) return;
     const currentCoords = { lat: this.state.lat, lng: this.state.lng };
     const map = new google.maps.Map(document.querySelector(".googleMap"), {
@@ -57,8 +44,6 @@ class GoogleMap extends React.Component {
     orders.forEach(function (order, i) {
       if (!order.coords.lat) return;
 
-      const htmlData = `<div>aaang</div>`;
-
       const marker = new google.maps.Marker({
         position: {
           lat: +order.coords.lat,
@@ -68,13 +53,47 @@ class GoogleMap extends React.Component {
         title: `${order.timestamp}`,
       });
 
-      marker.addListener("click", () => {
-        const selectedNode = document.querySelector(
-          `[aria-label='${order.timestamp}']`
-        );
-        console.log(selectedNode.getBoundingClientRect());
-        popUpContainer.insertAdjacentHTML("afterbegin", htmlData);
-      });
+      // marker.addListener("click", () => {
+      //   map.panTo(marker.getPosition());
+      //   const popUps = popUpContainer.querySelectorAll(".map__pop-up");
+      //   popUps.forEach((popUp) => popUp.remove());
+      //   const selectedNode = document.querySelector(
+      //     `[aria-label='${order.timestamp}']`
+      //   );
+      //   const rect = selectedNode.getBoundingClientRect();
+      //   const style = `top:${rect.top - 70}px; left:${rect.left - 55}px`;
+      //   const htmlData = `<div class="map__pop-up" style="${style}">aaang</div>`;
+
+      //   popUpContainer.insertAdjacentHTML("afterbegin", htmlData);
+      // });
+    });
+  };
+
+  getDistance = (google) => {
+    const orders = cvtObj2Arr(this.props.driverOrders);
+    orders.forEach((order) => {
+      const origin = new google.maps.LatLng(this.state.lat, this.state.lng);
+      const destination = new google.maps.LatLng(
+        order.coords.lat,
+        order.coords.lng
+      );
+
+      const callback = (response, status) => {
+        this.props.getDistances(response.rows[0].elements[0].distance.text);
+      };
+
+      const service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix(
+        {
+          origins: [origin],
+          destinations: [destination],
+          travelMode: "DRIVING",
+          unitSystem: google.maps.UnitSystem.IMPERIAL,
+          avoidHighways: false,
+          avoidTolls: false,
+        },
+        callback
+      );
     });
   };
 
@@ -84,10 +103,10 @@ class GoogleMap extends React.Component {
       Object.keys(this.props.driverOrders).length === 0 &&
       this.props.driverOrders.constructor === Object
     ) {
-      this.props.loadMap(null, true, this.initMap);
+      this.props.loadMap(null, true, this.initMap, this.getDistance);
       return;
     }
-    this.props.loadMap(null, false, this.initMap);
+    this.props.loadMap(null, false, this.initMap, this.getDistance);
   };
 
   geoFailed = () => {

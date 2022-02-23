@@ -228,3 +228,11 @@ button {
 .margin-top--1rem {
   margin-top: 1rem;
 }
+
+.map__pop-up {
+  position: absolute;
+  width: 15rem;
+  height: 7rem;
+  background-color: white;
+  border: 1px solid red;
+}

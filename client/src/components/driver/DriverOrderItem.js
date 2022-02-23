@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Loader } from "@googlemaps/js-api-loader";
 
 import { acceptOrder } from "../../actions";
 
@@ -17,6 +18,10 @@ class DriverOrderItem extends React.Component {
     this.refAccept = React.createRef();
 
     this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
+  }
+
+  componentDidMount() {
+    // console.log(this.props.order);
   }
 
   toggleView = (ref) => {
@@ -118,7 +123,37 @@ class DriverOrderItem extends React.Component {
     }
   };
 
+  getDistance = (order) => {
+    console.log(window.google.maps);
+    const origin = new window.google.maps.LatLng(
+      this.state.lat,
+      this.state.lng
+    );
+    const destination = new window.google.maps.LatLng(
+      this.order.coords.lat,
+      this.order.coords.lng
+    );
+
+    const callback = (response, status) => {
+      this.props.getDistances(response.rows[0].elements[0].distance.text);
+    };
+
+    const service = new window.google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [origin],
+        destinations: [destination],
+        travelMode: "DRIVING",
+        unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+        avoidHighways: false,
+        avoidTolls: false,
+      },
+      callback
+    );
+  };
+
   render() {
+    this.getDistance(this.props.order);
     return (
       <div
         ref={this.refBand}
@@ -174,11 +209,10 @@ class DriverOrderItem extends React.Component {
   }
 }
 
-const mapStateToProps = ({ auth, user, orders }) => {
+const mapStateToProps = ({ auth, user }) => {
   return {
     auth,
     user: user.currentUser,
-    orders: orders.orders,
   };
 };
 

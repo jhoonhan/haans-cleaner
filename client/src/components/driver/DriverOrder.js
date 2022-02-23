@@ -35,12 +35,21 @@ const DriverOrder = ({
     }
   }, [user]);
 
+  const getDistances = (data) => {
+    console.log(data);
+  };
+
   const renderDriverOrders = () => {
     const orderArr = cvtObj2Arr(driverOrders);
 
     return orderArr.reverse().map((order, i) => {
       return (
-        <DriverOrderItem order={order} key={i} timestamp={order.timestamp} />
+        <DriverOrderItem
+          order={order}
+          key={i}
+          timestamp={order.timestamp}
+          getDistances={getDistances}
+        />
       );
     });
   };
@@ -51,7 +60,10 @@ const DriverOrder = ({
         <h2>Search Order</h2>
       </header>
       {/* <GoogleMap location={user.coords} /> */}
-      <GoogleMap popUpContainer={refPopUpContainer} />
+      <GoogleMap
+        popUpContainer={refPopUpContainer}
+        getDistances={getDistances}
+      />
       <div className="order-container" ref={refPopUpContainer}>
         <div className="driver__order__list">{renderDriverOrders()}</div>
       </div>

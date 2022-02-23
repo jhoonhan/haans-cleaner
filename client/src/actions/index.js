@@ -176,26 +176,28 @@ export const fetchGeocode = (address) => async (dispatch) => {
   return coords;
 };
 
-export const loadMap = (date, fetchOrder, initMap) => async (dispatch) => {
-  if (fetchOrder) {
-    const res = await server.get(`/orders/?date=2022-02-22&status=submitted`);
-    dispatch({ type: D_FETCH_ORDER, payload: res.data });
-  }
+export const loadMap =
+  (date, fetchOrder, initMap, getDistance) => async (dispatch) => {
+    if (fetchOrder) {
+      const res = await server.get(`/orders/?date=2022-02-22&status=submitted`);
+      dispatch({ type: D_FETCH_ORDER, payload: res.data });
+    }
 
-  const loader = new Loader({
-    apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
-    version: "weekly",
-  });
-
-  loader
-    .load()
-    .then((google) => {
-      initMap(google);
-    })
-    .catch((e) => {
-      // do something
+    const loader = new Loader({
+      apiKey: "AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8",
+      version: "weekly",
     });
-};
+
+    loader
+      .load()
+      .then((google) => {
+        initMap(google);
+        // getDistance(google);
+      })
+      .catch((e) => {
+        // do something
+      });
+  };
 
 // export const fetchDistanceMatrix = async ({ origin, destination }) => {
 //   const convertAddress = (address) => {
