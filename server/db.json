@@ -81,14 +81,14 @@
         "tax": "0.71"
       },
       "timestamp": 1645562775290,
-      "status": "accepted",
+      "status": "submitted",
       "coords": {
         "lat": 35.2633738,
         "lng": -80.7723883
       },
       "id": 11,
-      "acceptId": "112981141048784001090",
-      "distance": "70.9"
+      "acceptId": null,
+      "distance": 70.9
     },
     {
       "name": "Joe Han",
@@ -116,7 +116,7 @@
       },
       "id": 12,
       "acceptId": "112981141048784001090",
-      "distance": "2.9"
+      "distance": 2.9
     },
     {
       "name": "Joe Han",
@@ -143,7 +143,7 @@
       },
       "id": 13,
       "acceptId": "112981141048784001090",
-      "distance": "2.0"
+      "distance": 2
     },
     {
       "name": "Joe Han",
@@ -170,7 +170,7 @@
       },
       "id": 14,
       "acceptId": "112981141048784001090",
-      "distance": "4.0"
+      "distance": 4
     }
   ]
 }

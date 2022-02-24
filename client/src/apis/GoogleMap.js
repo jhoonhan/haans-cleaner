@@ -32,11 +32,10 @@ const GoogleMap = ({ orders, driver, setCoordsAct, setMapLoaded, page }) => {
     renderMarkers(map);
     setMapLoaded(true);
 
-    // if (page === "accepted") {
-    //   getDirection(map);
-    // }
+    if (page === "accepted") {
+      getDirection(map);
+    }
     //
-    // }, [driver.currentCoords]);
   }, [driver.currentCoords]);
 
   //////////////////////////////////////////
@@ -51,26 +50,25 @@ const GoogleMap = ({ orders, driver, setCoordsAct, setMapLoaded, page }) => {
 
   const calculateAndDisplayRoute = (directionsService, directionsRenderer) => {
     const origin = driver.currentCoords;
-    const destinations = cvtObj2Arr(orders);
-    console.log(destinations);
+    const ordersArr = cvtObj2Arr(orders);
+    const waypoints = ordersArr.map((el) => {
+      return { location: el.coords, stopover: false };
+    });
+    console.log(ordersArr);
+    const destination = ordersArr.reduce((prev, curr) => {
+      if (!prev.distance || !curr.distance) return null;
+      if (prev.distance < curr.distnace) {
+        return curr;
+      } else {
+        return prev;
+      }
+    });
 
     directionsService
       .route({
         origin,
-        destination: {
-          lat: 36.00234305289227,
-          lng: -80.01587722926817,
-        },
-        waypoints: [
-          {
-            location: { lat: 35.96227389191443, lng: -80.04084803896274 },
-            stopover: false,
-          },
-          {
-            location: { lat: 35.94184657462076, lng: -80.0041983363175 },
-            stopover: false,
-          },
-        ],
+        destination: destination.coords,
+        waypoints,
         optimizeWaypoints: true,
         travelMode: window.google.maps.TravelMode.DRIVING,
       })

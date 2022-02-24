@@ -144,9 +144,9 @@ class DriverOrderItem extends React.Component {
 
       if (
         this.props.page === "accepted" &&
-        this.props.order.distance !== distance
+        this.props.order.distance !== +distance
       ) {
-        this.props.setDistance(distance, this.props.order.id);
+        this.props.setDistance(+distance, this.props.order.id);
       }
     };
 
