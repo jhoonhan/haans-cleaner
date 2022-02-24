@@ -1,26 +1,56 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { driverFetchOrder } from "../../actions";
+import {
+  driverFetchOrder,
+  fetchUser,
+  driverFetchAccepted,
+} from "../../actions";
 
 import DriverHome from "./DriverHome";
 import DriverHeader from "./DriverHeader";
 
-const Driver = ({ driverFetchOrder, driver }) => {
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    driverFetchOrder("2022-02-22");
-  }, []);
+const Driver = ({
+  auth,
+  user,
+  driver,
+  driverFetchOrder,
+  fetchUser,
+  driverFetchAccepted,
+}) => {
+  const [fetched, setFetched] = useState(false);
 
-  return (
-    <>
-      <DriverHeader />
-      <DriverHome />
-    </>
-  );
+  useEffect(() => {
+    if (!auth.isSignedIn) return;
+    if (!user) {
+      fetchUser(auth.userProfile.FW);
+    }
+  }, [auth.isSignedIn]);
+
+  useEffect(() => {
+    if (user) {
+      setFetched(true);
+    }
+  }, [user]);
+
+  const render = () => {
+    if (!fetched) return null;
+    return (
+      <>
+        <DriverHeader />
+        <DriverHome />
+      </>
+    );
+  };
+
+  return render();
 };
 
 const mapStateToProps = ({ auth, user, driver }) => {
   return { auth: auth, user: user.currentUser, driver };
 };
 
-export default connect(mapStateToProps, { driverFetchOrder })(Driver);
+export default connect(mapStateToProps, {
+  driverFetchOrder,
+  fetchUser,
+  driverFetchAccepted,
+})(Driver);

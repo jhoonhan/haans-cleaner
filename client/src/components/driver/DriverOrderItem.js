@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
 
-import { acceptOrder } from "../../actions";
+import { acceptOrder, setDistance } from "../../actions";
 
 import price from "../price";
 
@@ -125,9 +125,9 @@ class DriverOrderItem extends React.Component {
 
   getDistance = () => {
     if (!window.google) {
-      console.log(`shiat`);
       return;
     }
+    console.log(`distance fired`);
     const origin = new window.google.maps.LatLng(
       this.props.driver.currentCoords.lat,
       this.props.driver.currentCoords.lng
@@ -139,6 +139,7 @@ class DriverOrderItem extends React.Component {
 
     const callback = (response, status) => {
       const distance = response.rows[0].elements[0].distance.text;
+      this.setDistance(distance);
       this.setState({ ...this.state, distance });
     };
 
@@ -251,4 +252,6 @@ const mapStateToProps = ({ auth, user, driver }) => {
   };
 };
 
-export default connect(mapStateToProps, { acceptOrder })(DriverOrderItem);
+export default connect(mapStateToProps, { acceptOrder, setDistance })(
+  DriverOrderItem
+);

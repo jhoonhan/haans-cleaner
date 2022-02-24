@@ -5,6 +5,7 @@ import {
   D_CANCEL_ORDER,
   D_SET_COORDS,
   D_FETCH_ACCEPTED,
+  D_SET_DISTANCE,
 } from "../actions/types";
 
 const reducer = (state = { fetched: false, acceptedOrders: {} }, action) => {
@@ -39,7 +40,14 @@ const reducer = (state = { fetched: false, acceptedOrders: {} }, action) => {
       };
     case D_SET_COORDS:
       return { ...state, currentCoords: action.payload };
-
+    case D_SET_DISTANCE:
+      return {
+        ...state,
+        acceptedOrders: {
+          ...state.acceptedOrders,
+          [action.payload.id]: action.payload,
+        },
+      };
     default:
       return state;
   }

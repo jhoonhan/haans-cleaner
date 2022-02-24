@@ -26,6 +26,7 @@ import {
   D_GET_COORDS,
   D_SET_COORDS,
   D_CANCEL_ORDER,
+  D_SET_DISTANCE,
 } from "./types";
 
 //////////////// USER
@@ -117,7 +118,7 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
 
 export const editOrder = (id, formValues) => async (dispatch) => {
   const res = await server.patch(`/orders/${id}`, formValues);
-  console.log(`edit order fired`);
+  // console.log(`edit order fired`);
   dispatch({ type: EDIT_ORDER, payload: res.data });
 };
 
@@ -190,4 +191,10 @@ export const fetchGeocode = (address) => async (dispatch) => {
 
 export const setCoordsAct = (coords) => (dispatch) => {
   dispatch({ type: D_SET_COORDS, payload: coords });
+};
+
+export const setDistance = (id, distance) => async (dispatch) => {
+  console.log(distance);
+  // const res = await server.patch(`/orders/${id}`, { distance });
+  // dispatch({ type: D_SET_DISTANCE, payload: distance });
 };

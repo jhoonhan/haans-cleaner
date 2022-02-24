@@ -64,94 +64,6 @@
     {
       "name": "Jo H",
       "phone": "3124515946",
-      "street": "4427 Carlys way",
-      "city": "Greensboro",
-      "zip": "27410",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 1,
-        "skirt": 1,
-        "jacket": 1,
-        "sweater": 1,
-        "pants": 4,
-        "other": 2
-      },
-      "googleId": "103871420101748691850",
-      "total": {
-        "subtotal": "29.90",
-        "total": "31.32",
-        "tax": "1.42"
-      },
-      "timestamp": 1645493975520,
-      "status": "submitted",
-      "coords": {
-        "lat": 36.1185069,
-        "lng": -79.8824345
-      },
-      "id": 3,
-      "acceptId": null
-    },
-    {
-      "name": "Jo H",
-      "phone": "3124515946",
-      "street": "463 Massachusetts Ave",
-      "city": "Cambridge",
-      "zip": "02139",
-      "date": "2022-02-22",
-      "clothes": {
-        "coat": 1,
-        "skirt": 1,
-        "jacket": 1,
-        "sweater": 1,
-        "top": 1,
-        "other": 1,
-        "dress": 1
-      },
-      "googleId": "103871420101748691850",
-      "total": {
-        "subtotal": "20.93",
-        "total": "21.92",
-        "tax": "0.99"
-      },
-      "timestamp": 1645562705396,
-      "status": "submitted",
-      "coords": {
-        "lat": 42.3640329,
-        "lng": -71.1008684
-      },
-      "id": 9,
-      "acceptId": null
-    },
-    {
-      "name": "Jo H",
-      "phone": "3124515946",
-      "street": "3710 Rivers Ave",
-      "city": "North Charleston",
-      "zip": "29405",
-      "date": "2022-02-22",
-      "clothes": {
-        "sweater": 1,
-        "jacket": 1,
-        "pants": 1
-      },
-      "googleId": "103871420101748691850",
-      "total": {
-        "subtotal": "8.97",
-        "total": "9.40",
-        "tax": "0.43"
-      },
-      "timestamp": 1645562740951,
-      "status": "submitted",
-      "coords": {
-        "lat": 32.8590255,
-        "lng": -79.9823437
-      },
-      "id": 10,
-      "acceptId": null
-    },
-    {
-      "name": "Jo H",
-      "phone": "3124515946",
       "street": "5635 N Tryon St",
       "city": "Charlotte",
       "zip": "28213",
@@ -169,13 +81,13 @@
         "tax": "0.71"
       },
       "timestamp": 1645562775290,
-      "status": "submitted",
+      "status": "accepted",
       "coords": {
         "lat": 35.2633738,
         "lng": -80.7723883
       },
       "id": 11,
-      "acceptId": null
+      "acceptId": "112981141048784001090"
     },
     {
       "name": "Joe Han",
