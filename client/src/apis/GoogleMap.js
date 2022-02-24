@@ -14,8 +14,8 @@ const GoogleMap = ({
   page,
   getDetail,
 }) => {
+  const [fetched, setFetched] = useState(false);
   const refMap = React.useRef();
-
   useEffect(() => {
     if (navigator.geolocation && !driver.currentCoords) {
       navigator.geolocation.getCurrentPosition(geoSuccess, geoFailed);
@@ -24,17 +24,18 @@ const GoogleMap = ({
 
   useEffect(() => {
     if (!driver.currentCoords) return;
-    console.log(`map loaded`);
-    const map = new window.google.maps.Map(refMap.current, {
-      center: driver.currentCoords,
-      zoom: 11,
-    });
+    // setFetched(true);
+    // console.log(`map loaded`);
+    // const map = new window.google.maps.Map(refMap.current, {
+    //   center: driver.currentCoords,
+    //   zoom: 11,
+    // });
 
-    const currentLocation = new window.google.maps.Marker({
-      position: driver.currentCoords,
-      map,
-      title: "Hello World!",
-    });
+    // const currentLocation = new window.google.maps.Marker({
+    //   position: driver.currentCoords,
+    //   map,
+    //   title: "Hello World!",
+    // });
 
     renderMarkers(map);
     setMapLoaded(true);
@@ -47,53 +48,57 @@ const GoogleMap = ({
 
   //////////////////////////////////////////
 
-  // const map = new window.google.maps.Map(refMap.current, {
-  //   center: driver.currentCoords,
-  //   zoom: 11,
-  // });
-
-  // const currentLocation = new window.google.maps.Marker({
-  //   position: driver.currentCoords,
-  //   map,
-  //   title: "Hello World!",
-  // });
-
-  const getDirection = (map) => {
-    const directionsService = new window.google.maps.DirectionsService();
-    const directionsRenderer = new window.google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  const map = () => {
+    if (!driver.currentCoords) return;
+    console.log(`mapp`);
+    new window.google.maps.Map(refMap.current, {
+      center: driver.currentCoords,
+      zoom: 11,
+    });
   };
 
-  const calculateAndDisplayRoute = (directionsService, directionsRenderer) => {
-    const origin = driver.currentCoords;
-    const ordersArr = cvtObj2Arr(orders);
-    const waypoints = ordersArr.map((el) => {
-      return { location: el.coords, stopover: false };
-    });
-    const destination = ordersArr.reduce((prev, curr) => {
-      if (!prev.distance || !curr.distance) return null;
-      if (prev.distance < curr.distnace) {
-        return curr;
-      } else {
-        return prev;
-      }
-    });
+  const currentLocation = new window.google.maps.Marker({
+    position: driver.currentCoords,
+    map,
+    title: "Hello World!",
+  });
 
-    directionsService
-      .route({
-        origin,
-        destination: destination.coords,
-        waypoints,
-        optimizeWaypoints: true,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      })
-      .then((response) => {
-        directionsRenderer.setDirections(response);
-        getDetail(response.routes[0].legs[0]);
-      })
-      .catch((e) => window.alert(`Directions request failed due to ${e}`));
-  };
+  // const getDirection = (map) => {
+  //   const directionsService = new window.google.maps.DirectionsService();
+  //   const directionsRenderer = new window.google.maps.DirectionsRenderer();
+  //   directionsRenderer.setMap(map);
+  //   calculateAndDisplayRoute(directionsService, directionsRenderer);
+  // };
+
+  // const calculateAndDisplayRoute = (directionsService, directionsRenderer) => {
+  //   const origin = driver.currentCoords;
+  //   const ordersArr = cvtObj2Arr(orders);
+  //   const waypoints = ordersArr.map((el) => {
+  //     return { location: el.coords, stopover: false };
+  //   });
+  //   const destination = ordersArr.reduce((prev, curr) => {
+  //     if (!prev.distance || !curr.distance) return null;
+  //     if (prev.distance < curr.distnace) {
+  //       return curr;
+  //     } else {
+  //       return prev;
+  //     }
+  //   });
+
+  //   directionsService
+  //     .route({
+  //       origin,
+  //       destination: destination.coords,
+  //       waypoints,
+  //       optimizeWaypoints: true,
+  //       travelMode: window.google.maps.TravelMode.DRIVING,
+  //     })
+  //     .then((response) => {
+  //       directionsRenderer.setDirections(response);
+  //       getDetail(response.routes[0].legs[0]);
+  //     })
+  //     .catch((e) => window.alert(`Directions request failed due to ${e}`));
+  // };
 
   //////////////////////////////////////////
   const renderMarkers = (map) => {
