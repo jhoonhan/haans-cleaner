@@ -71,6 +71,13 @@ const DriverAccepted = (props) => {
       });
   };
 
+  const renderTripDetail = (data) => {
+    console.log(data);
+  };
+  const getDetail = (data) => {
+    console.log(data);
+  };
+
   const render = () => {
     if (!fetched) return null;
     return (
@@ -86,8 +93,12 @@ const DriverAccepted = (props) => {
             setMapLoaded={setMapLoaded}
             orders={props.driver.acceptedOrders}
             page="accepted"
+            getDetail={getDetail}
           />
         </Wrapper>
+        <button onClick={renderTripDetail} className="button--l">
+          get trip detail
+        </button>
         <div>
           <DriverNavigation />
         </div>
