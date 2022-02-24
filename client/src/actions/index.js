@@ -193,8 +193,8 @@ export const setCoordsAct = (coords) => (dispatch) => {
   dispatch({ type: D_SET_COORDS, payload: coords });
 };
 
-export const setDistance = (id, distance) => async (dispatch) => {
-  console.log(distance);
-  // const res = await server.patch(`/orders/${id}`, { distance });
-  // dispatch({ type: D_SET_DISTANCE, payload: distance });
+export const setDistance = (distance, id) => async (dispatch) => {
+  console.log(`distance setter fired`);
+  const res = await server.patch(`/orders/${id}`, { distance });
+  dispatch({ type: D_SET_DISTANCE, payload: res.data });
 };

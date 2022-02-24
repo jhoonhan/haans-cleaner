@@ -138,9 +138,16 @@ class DriverOrderItem extends React.Component {
     );
 
     const callback = (response, status) => {
-      const distance = response.rows[0].elements[0].distance.text;
-      this.setDistance(distance);
+      const res = response.rows[0].elements[0].distance.text;
+      const distance = res.split(" ")[0];
       this.setState({ ...this.state, distance });
+
+      if (
+        this.props.page === "accepted" &&
+        this.props.order.distance !== distance
+      ) {
+        this.props.setDistance(distance, this.props.order.id);
+      }
     };
 
     const service = new window.google.maps.DistanceMatrixService();
