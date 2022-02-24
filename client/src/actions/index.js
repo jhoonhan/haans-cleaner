@@ -25,6 +25,7 @@ import {
   D_FETCH_ACCEPTED,
   D_GET_COORDS,
   D_SET_COORDS,
+  D_CANCEL_ORDER,
 } from "./types";
 
 //////////////// USER
@@ -129,10 +130,15 @@ export const cancelOrder = (id) => async (dispatch) => {
 
 // Driver
 export const driverFetchOrder = (date, coords) => async (dispatch) => {
-  const res = await server.get(`/orders/?date=${date}&status=submitted`);
+  const res = await server.get(`/orders/?date=${date}`);
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data });
 };
+// export const driverFetchOrder = (date, coords) => async (dispatch) => {
+//   const res = await server.get(`/orders/?date=${date}&status=submitted`);
+
+//   dispatch({ type: D_FETCH_ORDER, payload: res.data });
+// };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
   const res = await server.get(`/orders/?acceptId=${acceptId}&status=accepted`);
@@ -144,19 +150,18 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/orders/${orderId}`);
 
   if (res.data.status === "submitted") {
-    console.log(`yes`);
     const res = await server.patch(`/orders/${orderId}`, data);
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
   }
 
   if (res.data.status === "accepted" && res.data.acceptId === data.acceptId) {
-    console.log(`yes`);
     const res = await server.patch(`/orders/${orderId}`, {
       ...data,
       acceptId: null,
     });
+
     dispatch({
-      type: D_ACCEPT_ORDER,
+      type: D_CANCEL_ORDER,
       payload: { ...res.data, acceptId: null },
     });
   }

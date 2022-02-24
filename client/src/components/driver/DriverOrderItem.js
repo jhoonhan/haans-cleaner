@@ -186,17 +186,17 @@ class DriverOrderItem extends React.Component {
           onClick={() => this.onAccept(this.props.order.id)}
           className="driver__order__buttton"
           style={{
-            backgroundColor:
-              this.props.order.status === "submitted" ? "aquamarine" : "#ccc",
+            backgroundColor: "pink",
           }}
         >
-          {this.props.order.status}
+          cancel
         </div>
         <div
           onClick={() => this.toggleView(this.refBand)}
           className="driver__order__buttton"
+          style={{ backgroundColor: "aquamarine" }}
         >
-          Hide
+          Completed
         </div>
       </div>
     );

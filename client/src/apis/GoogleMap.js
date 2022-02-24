@@ -6,38 +6,38 @@ import { connect } from "react-redux";
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
 import { setCoordsAct } from "../actions";
 
-const GoogleMap = (props) => {
+const GoogleMap = ({ orders, driver, setCoordsAct, setMapLoaded, page }) => {
   const refMap = React.useRef();
 
   useEffect(() => {
-    if (navigator.geolocation && props.driver.orders) {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(geoSuccess, geoFailed);
     }
-  }, [props.driver.orderFetched]);
+  }, [driver.orderFetched]);
 
   useEffect(() => {
-    if (!props.driver.currentCoords?.lat) return;
+    if (!driver.currentCoords?.lat) return;
 
     const map = new window.google.maps.Map(refMap.current, {
-      center: props.driver.currentCoords,
+      center: driver.currentCoords,
       zoom: 11,
     });
 
     const currentLocation = new window.google.maps.Marker({
-      position: props.driver.currentCoords,
+      position: driver.currentCoords,
       map,
       title: "Hello World!",
     });
 
     renderMarkers(map);
 
-    props.setMapLoaded(true);
+    setMapLoaded(true);
     //
-  }, [props.driver.currentCoords]);
+  }, [driver.currentCoords]);
 
   const renderMarkers = (map) => {
-    const orders = cvtObj2Arr(props.driver.orders);
-    orders.forEach(function (order, i) {
+    const orderArr = cvtObj2Arr(orders);
+    orderArr.forEach(function (order, i) {
       if (!order.coords.lat) return;
 
       const marker = new window.google.maps.Marker({
@@ -52,14 +52,19 @@ const GoogleMap = (props) => {
   };
 
   const geoSuccess = ({ coords }) => {
-    props.setCoordsAct({ lat: coords.latitude, lng: coords.longitude });
+    setCoordsAct({ lat: coords.latitude, lng: coords.longitude });
   };
 
   const geoFailed = () => {
     console.log(`cibal`);
   };
 
-  return <div ref={refMap} className="googleMap"></div>;
+  return (
+    <div
+      ref={refMap}
+      className={page === "search" ? "googleMap--m" : "googleMap--s"}
+    ></div>
+  );
 };
 
 const mapStateToProps = ({ auth, user, driver }) => {

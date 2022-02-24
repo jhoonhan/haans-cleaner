@@ -68,7 +68,18 @@
   transition: all 0.3s;
 }
 
-.googleMap {
+.googleMap--m {
   min-width: 100%;
   aspect-ratio: 1/1;
+}
+.googleMap--s {
+  min-width: 100%;
+  aspect-ratio: 3/2;
+}
+
+.driver__start-button {
+  position: absolute;
+  width: calc(100% - 4rem);
+  bottom: 9rem;
+  left: 2rem;
 }

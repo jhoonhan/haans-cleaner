@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import cvtObj2Arr from "../helpers/cvtObj2Arr";
+
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import GoogleMap from "../../apis/GoogleMap";
 
 import DriverOrderItem from "./DriverOrderItem";
-import cvtObj2Arr from "../helpers/cvtObj2Arr";
+import DriverNavigation from "./DriverNavigation";
 import {
   driverFetchAccepted,
   fetchUser,
@@ -11,6 +16,7 @@ import {
 
 const DriverAccepted = (props) => {
   const [fetched, setFetched] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   useEffect(() => {
     if (!props.auth.isSignedIn) return;
@@ -18,9 +24,9 @@ const DriverAccepted = (props) => {
       props.fetchUser(props.auth.userProfile.FW);
     }
     if (!props.driver.fetched) {
+      props.driverFetchOrder("2022-02-22");
       props.driverFetchAccepted(props.auth.userProfile.FW);
     }
-    // props.driverFetchAccepted(props.user.googleId);
   }, [props.auth.isSignedIn]);
 
   useEffect(() => {
@@ -29,39 +35,62 @@ const DriverAccepted = (props) => {
     }
   }, [props.user.fetched, props.driver.fetched]);
 
+  const renderMap = (status) => {
+    switch (status) {
+      case Status.LOADING:
+        return <div>aaang</div>;
+      case Status.FAILURE:
+        return <div>aaang</div>;
+      case Status.SUCCESS:
+        return <div>aaang</div>;
+      default:
+        return <div>aaang</div>;
+    }
+  };
+
   const renderAceeptedOrders = () => {
     // 3 XXX
 
     const orderArr = cvtObj2Arr(props.driver.orders);
+    const filteredArr = () => {
+      const res = orderArr.filter((order) => order.status === "accepted");
+      return res;
+    };
 
-    return orderArr.reverse().map((order, i) => {
-      return (
-        <DriverOrderItem
-          order={order}
-          key={i}
-          page={"accepted"}
-          timestamp={order.timestamp}
-        />
-      );
-    });
-  };
-
-  const acceptedOrders = (orders) => {
-    const orderArr = cvtObj2Arr(orders);
-    console.log(orderArr);
-    const res = orderArr.filter((order) => order.status === "accepted");
-    console.log(res);
-    return res;
+    return filteredArr()
+      .reverse()
+      .map((order, i) => {
+        return (
+          <DriverOrderItem
+            order={order}
+            key={i}
+            page={"accepted"}
+            timestamp={order.timestamp}
+          />
+        );
+      });
   };
 
   const render = () => {
     if (!fetched) return null;
-
     return (
       <div className="motion-container">
         <header className="page-title">
           <h2>Accepted Orders</h2>
         </header>
+        <Wrapper
+          apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
+          render={renderMap}
+        >
+          <GoogleMap
+            setMapLoaded={setMapLoaded}
+            orders={props.driver.acceptedOrders}
+            page="accepted"
+          />
+        </Wrapper>
+        <div>
+          <DriverNavigation />
+        </div>
 
         <div className="order-container">
           <div className="driver__order__list">{renderAceeptedOrders()}</div>

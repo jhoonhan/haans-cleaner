@@ -97,6 +97,11 @@ button {
   @extend button;
   padding: 2rem 2rem;
 }
+.button--f {
+  @extend button;
+  padding: 2rem 2rem;
+  width: 100%;
+}
 
 .input--double {
   height: 3.2rem;

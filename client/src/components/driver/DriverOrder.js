@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { driverFetchOrder, fetchUser, fetchGeocode } from "../../actions";
+import {
+  driverFetchOrder,
+  driverFetchAccepted,
+  fetchUser,
+  fetchGeocode,
+} from "../../actions";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "../../apis/GoogleMap";
 
@@ -11,6 +16,7 @@ const DriverOrder = ({
   user,
   auth,
   driverFetchOrder,
+  driverFetchAccepted,
   fetchGeocode,
   driver,
   fetchUser,
@@ -30,8 +36,8 @@ const DriverOrder = ({
     }
     if (!driver.fetched) {
       driverFetchOrder("2022-02-22");
+      driverFetchAccepted(auth.userProfile.FW);
     }
-    // driverFetchAccepted(user.googleId);
   }, [auth.isSignedIn]);
 
   useEffect(() => {
@@ -83,7 +89,11 @@ const DriverOrder = ({
           apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
           render={renderMap}
         >
-          <GoogleMap setMapLoaded={setMapLoaded} />
+          <GoogleMap
+            setMapLoaded={setMapLoaded}
+            orders={driver.orders}
+            page="search"
+          />
         </Wrapper>
         <div className="order-container">
           <div className="driver__order__list">
@@ -102,6 +112,7 @@ const mapStateToProps = ({ auth, user, driver }) => {
 
 export default connect(mapStateToProps, {
   driverFetchOrder,
+  driverFetchAccepted,
   fetchUser,
   fetchGeocode,
 })(DriverOrder);
