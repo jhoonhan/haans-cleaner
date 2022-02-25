@@ -8,7 +8,14 @@ import { setCoordsAct } from "../actions";
 
 const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
   const [loadedMap, setLoadedMap] = useState(null);
+  const [direcRenderer, setDirecRenderer] = useState(
+    new window.google.maps.DirectionsRenderer()
+  );
+  const [direcService, setDirecService] = useState(
+    new window.google.maps.DirectionsService()
+  );
   const [trip, setTrip] = useState({ duration: null, distance: null });
+
   const refMap = React.useRef();
 
   useEffect(() => {
@@ -31,7 +38,7 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
       title: "Hello World!",
     });
     setLoadedMap(map);
-    renderMarkers(loadedMap);
+    renderMarkers(map);
 
     // if (page === "accepted") {
     //   getDirection(map);
@@ -41,16 +48,10 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
 
   //////////////////////////////////////////
 
-  const getDirection = (type) => {
-    const directionsRenderer = new window.google.maps.DirectionsRenderer();
-    const directionsService = new window.google.maps.DirectionsService();
-    calculateAndDisplayRoute(directionsService, directionsRenderer);
-  };
-
-  const calculateAndDisplayRoute = (directionsService, directionsRenderer) => {
+  const getDirection = () => {
+    direcRenderer.setMap(null);
     const origin = driver.currentCoords;
     const ordersArr = cvtObj2Arr(driver.acceptedOrders);
-    console.log(ordersArr);
     const waypoints = ordersArr.map((el) => {
       return { location: el.coords, stopover: false };
     });
@@ -62,7 +63,7 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
         return prev;
       }
     });
-    directionsService
+    direcService
       .route({
         origin,
         destination: destination.coords,
@@ -71,10 +72,9 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
         travelMode: window.google.maps.TravelMode.DRIVING,
       })
       .then((response) => {
-        console.log(response);
         if (response.status === "OK") {
-          directionsRenderer.setDirections(response);
-          directionsRenderer.setMap(loadedMap);
+          direcRenderer.setDirections(response);
+          direcRenderer.setMap(loadedMap);
         }
         renderTripDetail(response);
       })
@@ -119,6 +119,9 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
           className={page === "search" ? "googleMap--m" : "googleMap--s"}
         ></div>
         <button onClick={() => getDirection()} className="button--l">
+          get trip detail
+        </button>
+        <button onClick={() => getDirection(false)} className="button--l">
           get trip detail
         </button>
         <div>{trip.duration}</div>
