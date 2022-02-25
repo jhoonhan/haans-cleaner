@@ -8,6 +8,7 @@ import { setCoordsAct } from "../actions";
 
 const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
   const [loadedMap, setLoadedMap] = useState(null);
+  const [trip, setTrip] = useState({ duration: null, distance: null });
   const refMap = React.useRef();
 
   useEffect(() => {
@@ -17,15 +18,15 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
   }, [driver.orderFetched]);
 
   useEffect(() => {
-    // if (!driver.currentCoords) return;
+    if (!driver.currentCoords) return;
     const map = new window.google.maps.Map(refMap.current, {
-      center: { lat: 35, lng: -38 },
+      center: driver.currentCoords,
       zoom: 11,
     });
     console.log(`map loaded`);
 
     const currentLocation = new window.google.maps.Marker({
-      position: { lat: 35, lng: -38 },
+      position: driver.currentCoords,
       map,
       title: "Hello World!",
     });
@@ -36,20 +37,20 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
     //   getDirection(map);
     // }
     //
-  }, []);
+  }, [driver.currentCoords]);
 
   //////////////////////////////////////////
 
-  const getDirection = (map) => {
-    const directionsService = new window.google.maps.DirectionsService();
+  const getDirection = (type) => {
     const directionsRenderer = new window.google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
+    const directionsService = new window.google.maps.DirectionsService();
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   };
 
   const calculateAndDisplayRoute = (directionsService, directionsRenderer) => {
     const origin = driver.currentCoords;
-    const ordersArr = cvtObj2Arr(orders);
+    const ordersArr = cvtObj2Arr(driver.acceptedOrders);
+    console.log(ordersArr);
     const waypoints = ordersArr.map((el) => {
       return { location: el.coords, stopover: false };
     });
@@ -61,7 +62,6 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
         return prev;
       }
     });
-
     directionsService
       .route({
         origin,
@@ -71,7 +71,11 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
         travelMode: window.google.maps.TravelMode.DRIVING,
       })
       .then((response) => {
-        directionsRenderer.setDirections(response);
+        console.log(response);
+        if (response.status === "OK") {
+          directionsRenderer.setDirections(response);
+          directionsRenderer.setMap(loadedMap);
+        }
         renderTripDetail(response);
       })
       .catch((e) => window.alert(`Directions request failed due to ${e}`));
@@ -102,19 +106,23 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
     console.log(`cibal`);
   };
   const renderTripDetail = (response) => {
-    console.log(response.routes[0].legs[0].distance.text);
-    console.log(response.routes[0].legs[0].duration.text);
+    setTrip({
+      duration: response.routes[0].legs[0].duration.text,
+      distance: response.routes[0].legs[0].distance.text,
+    });
   };
   const render = () => {
     return (
       <>
-        <button onClick={() => getDirection(loadedMap)} className="button--l">
-          get trip detail
-        </button>
         <div
           ref={refMap}
           className={page === "search" ? "googleMap--m" : "googleMap--s"}
         ></div>
+        <button onClick={() => getDirection()} className="button--l">
+          get trip detail
+        </button>
+        <div>{trip.duration}</div>
+        <div>{trip.distance}</div>
       </>
     );
   };
