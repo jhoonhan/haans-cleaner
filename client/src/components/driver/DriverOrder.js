@@ -117,7 +117,14 @@ const DriverOrder = ({
           apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
           render={renderMap}
         >
-          <GoogleMap orders={driver.orders} page={match.params.page} />
+          <GoogleMap
+            orders={
+              match.params.page === "search"
+                ? driver.orders
+                : driver.acceptedOrders
+            }
+            page={match.params.page}
+          />
         </Wrapper>
         <div className="order-container">
           <div className="driver__order__list">

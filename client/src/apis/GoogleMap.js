@@ -6,27 +6,9 @@ import { connect } from "react-redux";
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
 import { setCoordsAct } from "../actions";
 
-const GoogleMap = ({ orders, driver, setCoordsAct, page, getDetail }) => {
+const GoogleMap = ({ orders, driver, page, setCoordsAct }) => {
   const [loadedMap, setLoadedMap] = useState(null);
-  const [fetched, setFetched] = useState(false);
   const refMap = React.useRef();
-
-  useEffect(() => {
-    console.log(loadedMap);
-
-    const map = new window.google.maps.Map(refMap.current, {
-      center: driver.currentCoords,
-      zoom: 11,
-    });
-    console.log(`map loaded`);
-
-    const currentLocation = new window.google.maps.Marker({
-      position: driver.currentCoords,
-      map,
-      title: "Hello World!",
-    });
-    setLoadedMap(map);
-  }, []);
 
   useEffect(() => {
     if (navigator.geolocation && !driver.currentCoords) {
@@ -35,28 +17,27 @@ const GoogleMap = ({ orders, driver, setCoordsAct, page, getDetail }) => {
   }, [driver.orderFetched]);
 
   useEffect(() => {
-    if (!driver.currentCoords) return;
-    setFetched(true);
+    // if (!driver.currentCoords) return;
+    const map = new window.google.maps.Map(refMap.current, {
+      center: { lat: 35, lng: -38 },
+      zoom: 11,
+    });
+    console.log(`map loaded`);
 
+    const currentLocation = new window.google.maps.Marker({
+      position: { lat: 35, lng: -38 },
+      map,
+      title: "Hello World!",
+    });
+    setLoadedMap(map);
     renderMarkers(loadedMap);
 
     // if (page === "accepted") {
     //   getDirection(map);
     // }
     //
-  }, [driver.currentCoords]);
+  }, []);
 
-  ////////////////////////////////////////
-  // console.log(refMap);
-  // const map = new window.google.maps.Map(refMap?.current, {
-  //   center: driver.currentCoords,
-  //   zoom: 11,
-  // });
-  // const currentLocation = new window.google.maps.Marker({
-  //   position: driver.currentCoords,
-  //   map,
-  //   title: "Hello World!",
-  // });
   //////////////////////////////////////////
 
   const getDirection = (map) => {
@@ -91,7 +72,7 @@ const GoogleMap = ({ orders, driver, setCoordsAct, page, getDetail }) => {
       })
       .then((response) => {
         directionsRenderer.setDirections(response);
-        getDetail(response.routes[0].legs[0]);
+        renderTripDetail(response);
       })
       .catch((e) => window.alert(`Directions request failed due to ${e}`));
   };
@@ -120,13 +101,14 @@ const GoogleMap = ({ orders, driver, setCoordsAct, page, getDetail }) => {
   const geoFailed = () => {
     console.log(`cibal`);
   };
-  const renderTripDetail = (data) => {
-    console.log(data);
+  const renderTripDetail = (response) => {
+    console.log(response.routes[0].legs[0].distance.text);
+    console.log(response.routes[0].legs[0].duration.text);
   };
   const render = () => {
     return (
       <>
-        <button onClick={renderTripDetail} className="button--l">
+        <button onClick={() => getDirection(loadedMap)} className="button--l">
           get trip detail
         </button>
         <div
