@@ -24,18 +24,18 @@ const GoogleMap = ({
 
   useEffect(() => {
     if (!driver.currentCoords) return;
-    // setFetched(true);
-    // console.log(`map loaded`);
-    // const map = new window.google.maps.Map(refMap.current, {
-    //   center: driver.currentCoords,
-    //   zoom: 11,
-    // });
+    setFetched(true);
+    console.log(`map loaded`);
+    const map = new window.google.maps.Map(refMap.current, {
+      center: driver.currentCoords,
+      zoom: 11,
+    });
 
-    // const currentLocation = new window.google.maps.Marker({
-    //   position: driver.currentCoords,
-    //   map,
-    //   title: "Hello World!",
-    // });
+    const currentLocation = new window.google.maps.Marker({
+      position: driver.currentCoords,
+      map,
+      title: "Hello World!",
+    });
 
     renderMarkers(map);
     setMapLoaded(true);
@@ -47,21 +47,6 @@ const GoogleMap = ({
   }, [driver.currentCoords]);
 
   //////////////////////////////////////////
-
-  const map = () => {
-    if (!driver.currentCoords) return;
-    console.log(`mapp`);
-    new window.google.maps.Map(refMap.current, {
-      center: driver.currentCoords,
-      zoom: 11,
-    });
-  };
-
-  const currentLocation = new window.google.maps.Marker({
-    position: driver.currentCoords,
-    map,
-    title: "Hello World!",
-  });
 
   // const getDirection = (map) => {
   //   const directionsService = new window.google.maps.DirectionsService();

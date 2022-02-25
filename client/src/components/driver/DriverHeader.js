@@ -8,10 +8,10 @@ const DriverHeader = () => {
         <Link to="/driver" className="nav__item">
           Home
         </Link>
-        <Link to="/driver/order" className="nav__item">
+        <Link to="/driver/order/search" className="nav__item">
           Search
         </Link>
-        <Link to="/driver/accepted" className="nav__item">
+        <Link to="/driver/order/accepted" className="nav__item">
           Accepted
         </Link>
         <Link to="/driver/account" className="nav__item">

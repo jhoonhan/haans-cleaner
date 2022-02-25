@@ -22,6 +22,7 @@ const DriverOrder = ({
   fetchUser,
   center,
   zoom,
+  match,
 }) => {
   const [fetched, setFetched] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
@@ -47,21 +48,49 @@ const DriverOrder = ({
   }, [user.fetched, driver.fetched]);
 
   //////////
-  const renderDriverOrders = (orders) => {
-    if (!mapLoaded) return;
+  const rednerSearchOrders = (orders, page) => {
+    // if (!mapLoaded) return;
     // 3 XXX
     const orderArr = cvtObj2Arr(orders);
+    let finalArr = orderArr;
 
-    return orderArr.reverse().map((order, i) => {
+    if (page === "accepted") {
+      finalArr = orderArr.filter((order) => order.status === "accepted");
+    }
+
+    return finalArr.reverse().map((order, i) => {
       return (
         <DriverOrderItem
           order={order}
           key={i}
-          page={"search"}
+          page={page}
           timestamp={order.timestamp}
         />
       );
     });
+  };
+
+  const renderAceeptedOrders = (orders) => {
+    // 3 XXX
+
+    const orderArr = cvtObj2Arr(orders);
+    const filteredArr = () => {
+      const res = orderArr.filter((order) => order.status === "accepted");
+      return res;
+    };
+
+    return filteredArr()
+      .reverse()
+      .map((order, i) => {
+        return (
+          <DriverOrderItem
+            order={order}
+            key={i}
+            page={"accepted"}
+            timestamp={order.timestamp}
+          />
+        );
+      });
   };
 
   const renderMap = (status) => {
@@ -83,7 +112,7 @@ const DriverOrder = ({
     return (
       <div className="motion-container">
         <header className="page-title">
-          <h2>Search Order</h2>
+          <h2>{match.params.page}</h2>
         </header>
         <Wrapper
           apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
@@ -92,12 +121,12 @@ const DriverOrder = ({
           <GoogleMap
             setMapLoaded={setMapLoaded}
             orders={driver.orders}
-            page="search"
+            page={match.params.page}
           />
         </Wrapper>
         <div className="order-container">
           <div className="driver__order__list">
-            {renderDriverOrders(driver.orders)}
+            {rednerSearchOrders(driver.orders, match.params.page)}
           </div>
         </div>
       </div>
