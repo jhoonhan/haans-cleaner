@@ -13,7 +13,6 @@ import Account from "./account/Account";
 import DriverHeader from "./driver/DriverHeader";
 import Driver from "./driver/Driver";
 import DriverOrder from "./driver/DriverOrder";
-import DriverAccepted from "./driver/DriverAccepted";
 
 const App = () => {
   const location = useLocation();
@@ -31,7 +30,6 @@ const App = () => {
 
           <Route path="/driver" exact component={Driver} />
           <Route path="/driver/order/:page" exact component={DriverOrder} />
-          {/* <Route path="/driver/accepted" exact component={DriverAccepted} /> */}
           {/* <Route path="/driver/account" exact component={DriverAccount} /> */}
         </Switch>
       </AnimatePresence>
