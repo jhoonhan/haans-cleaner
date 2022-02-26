@@ -14,7 +14,7 @@ const DriverHeader = () => {
         <Link to="/driver/order/accepted" className="nav__item">
           Accepted
         </Link>
-        <Link to="/driver/account" className="nav__item">
+        <Link to="/account" className="nav__item">
           Account
         </Link>
       </nav>

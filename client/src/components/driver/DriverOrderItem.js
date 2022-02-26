@@ -183,7 +183,11 @@ class DriverOrderItem extends React.Component {
           className="driver__order__item"
         >
           <div>
-            <h3>{this.props.order.distance}</h3>
+            <h3>
+              {this.props.order.distance
+                ? `${this.props.order.distance} mi`
+                : "Call customer"}{" "}
+            </h3>
           </div>
           <div></div>
           <div>#{this.props.order.id}</div>

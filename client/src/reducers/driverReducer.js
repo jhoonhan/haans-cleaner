@@ -8,18 +8,24 @@ import {
   D_SET_DISTANCE,
 } from "../actions/types";
 
-const reducer = (state = { fetched: false, acceptedOrders: {} }, action) => {
+const reducer = (
+  state = {
+    fetched: { searchOrder: false, acceptedOrder: false },
+    acceptedOrders: {},
+  },
+  action
+) => {
   switch (action.type) {
     case D_FETCH_ORDER:
       return {
         ...state,
-        fetched: true,
+        fetched: { ...state.fetched, searchOrder: true },
         orders: { ..._.mapKeys(action.payload, "id") },
       };
     case D_FETCH_ACCEPTED:
       return {
         ...state,
-        fetched: true,
+        fetched: { ...state.fetched, acceptedOrder: true },
         acceptedOrders: { ..._.mapKeys(action.payload, "id") },
       };
     case D_ACCEPT_ORDER:

@@ -6,7 +6,6 @@ import {
   driverFetchAccepted,
 } from "../../actions";
 
-import DriverHome from "./DriverHome";
 import DriverHeader from "./DriverHeader";
 
 const Driver = ({
@@ -36,8 +35,16 @@ const Driver = ({
     if (!fetched) return null;
     return (
       <>
-        <DriverHeader />
-        <DriverHome />
+        <div className="signIn__container">
+          <div className="Landing__container">
+            <div className="landing__container__welcome">
+              <h2>Good morning</h2>
+              <h1>Driver</h1>
+              <h3>It's a great day to wear a skirt</h3>
+            </div>
+            <div className="landing__container__buttons"></div>
+          </div>
+        </div>
       </>
     );
   };

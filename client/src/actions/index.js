@@ -27,6 +27,7 @@ import {
   D_SET_COORDS,
   D_CANCEL_ORDER,
   D_SET_DISTANCE,
+  D_SET_GEOCODE,
 } from "./types";
 
 //////////////// USER
@@ -105,12 +106,9 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  const coords = await fetchGeocode(formValues);
-  formValues.coords = { lat: coords.lat, lng: coords.lng };
+  const res1 = await server.post("/orders", { ...formValues });
 
-  const res = await server.post("/orders", { ...formValues });
-
-  dispatch({ type: CREATE_ORDER, payload: res.data });
+  dispatch({ type: CREATE_ORDER, payload: res1.data });
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
   history.push("/");
@@ -135,11 +133,6 @@ export const driverFetchOrder = (date, coords) => async (dispatch) => {
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data });
 };
-// export const driverFetchOrder = (date, coords) => async (dispatch) => {
-//   const res = await server.get(`/orders/?date=${date}&status=submitted`);
-
-//   dispatch({ type: D_FETCH_ORDER, payload: res.data });
-// };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
   const res = await server.get(`/orders/?acceptId=${acceptId}&status=accepted`);
@@ -168,26 +161,27 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   }
 };
 
-export const fetchGeocode = (address) => async (dispatch) => {
-  const { street, city, zip } = address;
-  const queryStreet = street
-    .replace(/[^a-zA-Z0-9 ]/g, "")
-    .split(" ")
-    .join("+");
-  const queryCity = city
-    .replace(/[^a-zA-Z0-9 ]/g, "")
-    .split(" ")
-    .join("+");
-  const queryZip = zip;
+// export const fetchGeocode = (address) => async (dispatch) => {
+//   console.log(address);
+//   const { street, city, zip } = address;
+//   const queryStreet = street
+//     .replace(/[^a-zA-Z0-9 ]/g, "")
+//     .split(" ")
+//     .join("+");
+//   const queryCity = city
+//     .replace(/[^a-zA-Z0-9 ]/g, "")
+//     .split(" ")
+//     .join("+");
+//   const queryZip = zip;
 
-  const res = await GoogleGeocode.get(
-    `/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
-  );
-  const coords = res.data.results[0].geometry.location;
-  // dispatch({ type: D_GET_COORDS, payload: coords });
+//   const res = await GoogleGeocode.get(
+//     `/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
+//   );
+//   const coords = res.data.results[0].geometry.location;
+//   // dispatch({ type: D_GET_COORDS, payload: coords });
 
-  return coords;
-};
+//   return coords;
+// };
 
 export const setCoordsAct = (coords) => (dispatch) => {
   dispatch({ type: D_SET_COORDS, payload: coords });
@@ -197,4 +191,9 @@ export const setDistance = (distance, id) => async (dispatch) => {
   console.log(`distance setter fired`);
   const res = await server.patch(`/orders/${id}`, { distance });
   dispatch({ type: D_SET_DISTANCE, payload: res.data });
+};
+
+export const setGeocode = (geocode, id) => (dispatch) => {
+  console.log(geocode);
+  dispatch({ type: D_SET_GEOCODE, payload: geocode });
 };

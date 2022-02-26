@@ -4,7 +4,6 @@ import {
   driverFetchOrder,
   driverFetchAccepted,
   fetchUser,
-  fetchGeocode,
 } from "../../actions";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "../../apis/GoogleMap";
@@ -17,7 +16,6 @@ const DriverOrder = ({
   auth,
   driverFetchOrder,
   driverFetchAccepted,
-  fetchGeocode,
   driver,
   fetchUser,
   center,
@@ -25,7 +23,7 @@ const DriverOrder = ({
   match,
 }) => {
   const [fetched, setFetched] = useState(false);
-  const refPopUpContainer = React.createRef();
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   ////////
 
@@ -34,39 +32,43 @@ const DriverOrder = ({
     if (!user.fetched) {
       fetchUser(auth.userProfile.FW);
     }
-    if (!driver.fetched) {
-      driverFetchOrder("2022-02-22");
+    if (!driver.fetched.searchOrder) {
+      driverFetchOrder("2022-02-22"); //LC
+    }
+    if (!driver.fetched.acceptedOrder) {
       driverFetchAccepted(auth.userProfile.FW);
     }
   }, [auth.isSignedIn]);
 
   useEffect(() => {
-    if (user.fetched && driver.fetched) {
+    if (
+      user.fetched &&
+      driver.fetched.searchOrder &&
+      driver.fetched.acceptedOrder
+    ) {
       setFetched(true);
     }
   }, [user.fetched, driver.fetched]);
 
   //////////
-  const rednerSearchOrders = (orders, page) => {
-    // if (!mapLoaded) return;
-    // 3 XXX
-    const orderArr = cvtObj2Arr(orders);
-    let finalArr = orderArr;
+  const rednerSearchOrders = () => {
+    if (!isMapLoaded) return null;
+    const orderArr = cvtObj2Arr(
+      match.params.page === "search" ? driver.orders : driver.acceptedOrders
+    );
 
-    if (page === "accepted") {
-      finalArr = orderArr.filter((order) => order.status === "accepted");
-    }
-
-    return finalArr.reverse().map((order, i) => {
-      return (
-        <DriverOrderItem
-          order={order}
-          key={i}
-          page={page}
-          timestamp={order.timestamp}
-        />
-      );
-    });
+    return orderArr
+      .sort((a, b) => a.distance - b.distance)
+      .map((order, i) => {
+        return (
+          <DriverOrderItem
+            order={order}
+            key={i}
+            page={match.params.page}
+            timestamp={order.timestamp}
+          />
+        );
+      });
   };
 
   const renderMap = (status) => {
@@ -101,12 +103,11 @@ const DriverOrder = ({
                 : driver.acceptedOrders
             }
             page={match.params.page}
+            setIsMapLoaded={setIsMapLoaded}
           />
         </Wrapper>
         <div className="order-container">
-          <div className="driver__order__list">
-            {rednerSearchOrders(driver.orders, match.params.page)}
-          </div>
+          <div className="driver__order__list">{rednerSearchOrders()}</div>
         </div>
       </div>
     );
@@ -122,5 +123,4 @@ export default connect(mapStateToProps, {
   driverFetchOrder,
   driverFetchAccepted,
   fetchUser,
-  fetchGeocode,
 })(DriverOrder);

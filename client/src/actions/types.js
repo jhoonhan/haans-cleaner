@@ -26,3 +26,4 @@ export const D_GET_COORDS = "D_GET_COORDS";
 export const D_SET_COORDS = "D_SET_COORDS";
 export const D_FETCH_ACCEPTED = "D_FETCH_ACCEPTED";
 export const D_SET_DISTANCE = "D_SET_DISTANCE";
+export const D_SET_GEOCODE = "D_SET_GEOCODE";

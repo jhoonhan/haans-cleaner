@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createUser, fetchUser, fetchGeocode } from "../../actions";
+import { createUser, fetchUser } from "../../actions";
 import { Field, reduxForm } from "redux-form";
 
 import RenderInput from "../helpers/renderInput";
@@ -117,5 +117,4 @@ const wrappedForm = reduxForm({
 export default connect(mapStateToProps, {
   createUser,
   fetchUser,
-  fetchGeocode,
 })(wrappedForm);

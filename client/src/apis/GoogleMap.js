@@ -4,9 +4,16 @@ import { Loader } from "@googlemaps/js-api-loader";
 import { connect } from "react-redux";
 
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
-import { setCoordsAct, setDistance } from "../actions";
+import { setCoordsAct, setDistance, setGeocode } from "../actions";
 
-const GoogleMap = ({ orders, driver, page, setCoordsAct, setDistance }) => {
+const GoogleMap = ({
+  orders,
+  driver,
+  page,
+  setCoordsAct,
+  setDistance,
+  setIsMapLoaded,
+}) => {
   const [loadedMap, setLoadedMap] = useState(null);
   const [direcRenderer, setDirecRenderer] = useState(
     new window.google.maps.DirectionsRenderer()
@@ -40,11 +47,6 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct, setDistance }) => {
     setLoadedMap(map);
     renderMarkers(map);
     getDistance();
-
-    // if (page === "accepted") {
-    //   getDirection(map);
-    // }
-    //
   }, [driver.currentCoords]);
 
   //////////////////////////////////////////
@@ -104,6 +106,7 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct, setDistance }) => {
     });
   };
 
+  ///////////////////////////////////////////
   const geoSuccess = ({ coords }) => {
     setCoordsAct({ lat: coords.latitude, lng: coords.longitude });
   };
@@ -111,43 +114,59 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct, setDistance }) => {
   const geoFailed = () => {
     console.log(`cibal`);
   };
+  //////////////////////////////////////////////////
 
   const getDistance = () => {
     if (!window.google) {
       return;
     }
-
     const orderArr = cvtObj2Arr(driver.orders);
-    // const destinations = orderArr.map((order) => {
-    //   if (!order.coords) return;
-    //   return !order.coords ? null : order.coords;
-    // });
     const destinations = orderArr
       .filter((order) => order.coords.lat)
       .map((order) => order.coords);
-
     const origin = new window.google.maps.LatLng(
       driver.currentCoords.lat,
       driver.currentCoords.lng
     );
 
-    const callback = (response) => {
+    const distanceMatrixCallback = (response, status) => {
       const res = response.rows[0].elements;
-      const orderArr = cvtObj2Arr(driver.orders);
-      const orders = orderArr.map((order) => {
-        return order;
-      });
 
-      orders.forEach((order, i) => {
+      orderArr.forEach((order, i) => {
         if (!driver.orders[order.id].distance) return;
-        if (res[i].distance.text !== driver.orders[order.id].distance) {
-          setDistance(res[i].distance.text, order.id);
+        if (
+          +res[i].distance.text.split(" ")[0] !==
+          driver.orders[order.id].distance
+        ) {
+          setDistance(+res[i].distance.text.split(" ")[0], order.id);
         }
       });
+      setIsMapLoaded(true);
     };
 
-    const service = new window.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
+    // const geocodingCallback = (results, status) => {
+
+    //   if (status === "OK") {
+    //     console.log(results[0].geometry.location.lat());
+    //     // if (!driver.orders[order.id]){}
+    //     setGeocode(results[0].geometry.location.lat());
+    //   } else {
+    //     alert("Geocode was not successful for the following reason: " + status);
+    //   }
+    // };
+
+    // const geocodingService = new window.google.maps.Geocoder();
+    // orderArr.forEach((order) => {
+    //   if (order.coords.lat && order.coords.lng) return;
+    //   geocodingService.geocode(
+    //     { address: order.street + order.city + order.zip },
+    //     geocodingCallback
+    //   );
+    // });
+
+    const distanceMatrixService =
+      new window.google.maps.DistanceMatrixService();
+    distanceMatrixService.getDistanceMatrix(
       {
         origins: [origin],
         destinations,
@@ -156,9 +175,10 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct, setDistance }) => {
         avoidHighways: false,
         avoidTolls: false,
       },
-      callback
+      distanceMatrixCallback
     );
   };
+  ////////////////////////////////////////////
 
   const renderTripDetail = (response) => {
     setTrip({
@@ -176,9 +196,7 @@ const GoogleMap = ({ orders, driver, page, setCoordsAct, setDistance }) => {
         <button onClick={() => getDirection()} className="button--l">
           get trip detail
         </button>
-        <button onClick={() => getDirection(false)} className="button--l">
-          get trip detail
-        </button>
+
         <div>{trip.duration}</div>
         <div>{trip.distance}</div>
       </>
@@ -192,6 +210,8 @@ const mapStateToProps = ({ auth, user, driver }) => {
   return { auth, user, driver };
 };
 
-export default connect(mapStateToProps, { setCoordsAct, setDistance })(
-  GoogleMap
-);
+export default connect(mapStateToProps, {
+  setCoordsAct,
+  setDistance,
+  setGeocode,
+})(GoogleMap);
