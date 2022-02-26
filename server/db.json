@@ -81,13 +81,13 @@
         "tax": "0.71"
       },
       "timestamp": 1645562775290,
-      "status": "submitted",
+      "status": "accepted",
       "coords": {
         "lat": 35.2633738,
         "lng": -80.7723883
       },
       "id": 11,
-      "acceptId": null,
+      "acceptId": "112981141048784001090",
       "distance": 70.9
     },
     {
@@ -186,10 +186,10 @@
         "tax": 0
       },
       "timestamp": 1645838789858,
-      "status": "submitted",
+      "status": "accepted",
       "coords": {},
       "id": 15,
-      "acceptId": null
+      "acceptId": "112981141048784001090"
     }
   ]
 }

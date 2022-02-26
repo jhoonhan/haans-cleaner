@@ -202,13 +202,15 @@ const GoogleMap = ({
           ref={refMap}
           className={page === "search" ? "googleMap--m" : "googleMap--s"}
         ></div>
-        <button onClick={() => getDirection()} className="button--l">
-          get trip detail
-        </button>
+        <div style={{ display: `${page === "search" ? "none" : "block"}` }}>
+          <button onClick={() => getDirection()} className="button--l">
+            get trip detail
+          </button>
 
-        <div>{trip.duration}</div>
-        <div>{trip.distance}</div>
-        <div>${trip.total}</div>
+          <div>{trip.duration}</div>
+          <div>{trip.distance}</div>
+          <div>${trip.total}</div>
+        </div>
       </>
     );
   };
