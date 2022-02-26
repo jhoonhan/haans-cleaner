@@ -11,7 +11,7 @@ class DriverOrderItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { status: this.props.order.status, distance: null };
+    this.state = { status: this.props.order.status };
 
     this.refDetail = React.createRef();
     this.refBand = React.createRef();
@@ -21,7 +21,7 @@ class DriverOrderItem extends React.Component {
   }
 
   componentDidMount() {
-    this.getDistance();
+    // this.getDistance();
   }
 
   toggleView = (ref) => {
@@ -123,47 +123,6 @@ class DriverOrderItem extends React.Component {
     }
   };
 
-  getDistance = () => {
-    if (!window.google) {
-      return;
-    }
-    console.log(`distance fired`);
-    const origin = new window.google.maps.LatLng(
-      this.props.driver.currentCoords.lat,
-      this.props.driver.currentCoords.lng
-    );
-    const destination = new window.google.maps.LatLng(
-      this.props.order.coords.lat,
-      this.props.order.coords.lng
-    );
-
-    const callback = (response, status) => {
-      const res = response.rows[0].elements[0].distance.text;
-      const distance = res.split(" ")[0];
-      this.setState({ ...this.state, distance });
-
-      if (
-        this.props.page === "accepted" &&
-        this.props.order.distance !== +distance
-      ) {
-        this.props.setDistance(+distance, this.props.order.id);
-      }
-    };
-
-    const service = new window.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: [origin],
-        destinations: [destination],
-        travelMode: "DRIVING",
-        unitSystem: window.google.maps.UnitSystem.IMPERIAL,
-        avoidHighways: false,
-        avoidTolls: false,
-      },
-      callback
-    );
-  };
-
   renderSearchButtons() {
     return (
       <div className="driver__order__buttton__container">
@@ -224,7 +183,7 @@ class DriverOrderItem extends React.Component {
           className="driver__order__item"
         >
           <div>
-            <h3>{this.state.distance}</h3>
+            <h3>{this.props.order.distance}</h3>
           </div>
           <div></div>
           <div>#{this.props.order.id}</div>

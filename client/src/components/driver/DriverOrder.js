@@ -69,29 +69,6 @@ const DriverOrder = ({
     });
   };
 
-  const renderAceeptedOrders = (orders) => {
-    // 3 XXX
-
-    const orderArr = cvtObj2Arr(orders);
-    const filteredArr = () => {
-      const res = orderArr.filter((order) => order.status === "accepted");
-      return res;
-    };
-
-    return filteredArr()
-      .reverse()
-      .map((order, i) => {
-        return (
-          <DriverOrderItem
-            order={order}
-            key={i}
-            page={"accepted"}
-            timestamp={order.timestamp}
-          />
-        );
-      });
-  };
-
   const renderMap = (status) => {
     switch (status) {
       case Status.LOADING:
