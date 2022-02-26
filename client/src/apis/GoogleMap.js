@@ -182,17 +182,17 @@ const GoogleMap = ({
   ////////////////////////////////////////////
 
   const renderTripDetail = (response) => {
-    const orderArr = cvtObj2Arr(driver.acceptedOrders);
-    const total = orderArr.reduce((prev, curr) => {
-      const prevTotal = prev.total.total * 0.2;
-      const currTotal = curr.total.total * 0.2;
-      return (prevTotal + currTotal).toFixed(2);
-    });
+    // const orderArr = cvtObj2Arr(driver.acceptedOrders);
+    // const total = orderArr.reduce((prev, curr) => {
+    //   const prevTotal = prev.total.total * 0.2;
+    //   const currTotal = curr.total.total * 0.2;
+    //   return (prevTotal + currTotal).toFixed(2);
+    // });
 
     setTrip({
       duration: response.routes[0].legs[0].duration.text,
       distance: response.routes[0].legs[0].distance.text,
-      total,
+      // total,
     });
   };
   const render = () => {
@@ -209,7 +209,6 @@ const GoogleMap = ({
 
           <div>{trip.duration}</div>
           <div>{trip.distance}</div>
-          <div>${trip.total}</div>
         </div>
       </>
     );

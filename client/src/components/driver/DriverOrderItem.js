@@ -156,14 +156,14 @@ class DriverOrderItem extends React.Component {
             backgroundColor: "pink",
           }}
         >
-          cancel
+          Cancel
         </div>
         <div
           onClick={() => this.toggleView(this.refBand)}
           className="driver__order__buttton"
-          style={{ backgroundColor: "aquamarine" }}
+          style={{ backgroundColor: "#ccc" }}
         >
-          Completed
+          Accepted
         </div>
       </div>
     );
