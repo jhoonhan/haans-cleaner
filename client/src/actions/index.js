@@ -185,6 +185,7 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
 
 //   return coords;
 // };
+//
 
 export const setCoordsAct = (coords) => (dispatch) => {
   dispatch({ type: D_SET_COORDS, payload: coords });
