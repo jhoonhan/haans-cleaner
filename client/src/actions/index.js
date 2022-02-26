@@ -135,7 +135,7 @@ export const driverFetchOrder = (date, coords) => async (dispatch) => {
 };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
-  const res = await server.get(`/orders/?acceptId=${acceptId}&status=accepted`);
+  const res = await server.get(`/orders/?acceptId=${acceptId}`);
 
   dispatch({ type: D_FETCH_ACCEPTED, payload: res.data });
 };
@@ -143,6 +143,9 @@ export const driverFetchAccepted = (acceptId) => async (dispatch) => {
 export const acceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/orders/${orderId}`);
 
+  if (res.data.status === "completed" || data.status === "completed") {
+    window.alert("error");
+  }
   if (res.data.status === "submitted") {
     const res = await server.patch(`/orders/${orderId}`, data);
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
@@ -162,6 +165,20 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   if (res.data.status === "accepted" && res.data.acceptId !== data.acceptId) {
     window.alert(`order is accepted by other driver`);
   }
+};
+
+export const compeleteOrder = (orderId, data) => async (dispatch) => {
+  const res = await server.get(`/orders/${orderId}`);
+
+  if (res.data.status === "completed") window.alert("error");
+  if (res.data.acceptId !== data.acceptId) window.alert("error");
+
+  const res1 = server.patch(`/orders/${orderId}`, {
+    ...data,
+    acceptId: data.acceptId,
+  });
+
+  dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
 };
 
 // export const fetchGeocode = (address) => async (dispatch) => {

@@ -122,8 +122,16 @@ class DriverOrderItem extends React.Component {
       });
     }
   };
+  onComplete = (id) => {
+    if (!this.props.order.status === "accepted") return;
+    this.setState({ status: "compeleted" });
+  };
 
   renderSearchButtons() {
+    const buttonColor = () => {
+      if (this.props.order.status === "submitted") return "aquamarine";
+      if (this.props.order.status === "accepted") return "#ccc";
+    };
     return (
       <div className="driver__order__buttton__container">
         <div
@@ -136,8 +144,7 @@ class DriverOrderItem extends React.Component {
           onClick={() => this.onAccept(this.props.order.id)}
           className="driver__order__buttton"
           style={{
-            backgroundColor:
-              this.props.order.status === "submitted" ? "aquamarine" : "#ccc",
+            backgroundColor: buttonColor(),
           }}
         >
           {this.props.order.status}
@@ -147,6 +154,10 @@ class DriverOrderItem extends React.Component {
   }
 
   renderAcceptButtons() {
+    const buttonColor = () => {
+      if (this.props.order.status === "completed") return "aquamarine";
+      if (this.props.order.status === "accepted") return "#ccc";
+    };
     return (
       <div className="driver__order__buttton__container">
         <div
@@ -159,9 +170,9 @@ class DriverOrderItem extends React.Component {
           Cancel
         </div>
         <div
-          onClick={() => this.toggleView(this.refBand)}
+          onClick={() => this.onComplete(this.refBand)}
           className="driver__order__buttton"
-          style={{ backgroundColor: "#ccc" }}
+          style={{ backgroundColor: buttonColor() }}
         >
           Accepted
         </div>

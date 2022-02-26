@@ -2,6 +2,7 @@ import _ from "lodash";
 import {
   D_FETCH_ORDER,
   D_ACCEPT_ORDER,
+  D_COMPLETE_ORDER,
   D_CANCEL_ORDER,
   D_SET_COORDS,
   D_FETCH_ACCEPTED,
@@ -12,6 +13,7 @@ const reducer = (
   state = {
     fetched: { searchOrder: false, acceptedOrder: false },
     acceptedOrders: {},
+    completedOrders: {},
   },
   action
 ) => {
@@ -34,6 +36,19 @@ const reducer = (
         orders: { ...state.orders, [action.payload.id]: action.payload },
         acceptedOrders: {
           ...state.acceptedOrders,
+          [action.payload.id]: action.payload,
+        },
+      };
+    case D_COMPLETE_ORDER:
+      return {
+        ...state,
+        orders: { ...state.orders, [action.payload.id]: action.payload },
+        acceptedOrders: {
+          ...state.acceptedOrders,
+          [action.payload.id]: action.payload,
+        },
+        completedOrders: {
+          ...state.completedOrders,
           [action.payload.id]: action.payload,
         },
       };
