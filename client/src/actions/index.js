@@ -22,6 +22,7 @@ import {
   EDIT_DADDRESS,
   D_FETCH_ORDER,
   D_ACCEPT_ORDER,
+  D_COMPLETE_ORDER,
   D_FETCH_ACCEPTED,
   D_GET_COORDS,
   D_SET_COORDS,
@@ -143,7 +144,7 @@ export const driverFetchAccepted = (acceptId) => async (dispatch) => {
 export const acceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/orders/${orderId}`);
 
-  if (res.data.status === "completed" || data.status === "completed") {
+  if (res.data.status === "completed") {
     window.alert("error");
   }
   if (res.data.status === "submitted") {
@@ -173,12 +174,16 @@ export const compeleteOrder = (orderId, data) => async (dispatch) => {
   if (res.data.status === "completed") window.alert("error");
   if (res.data.acceptId !== data.acceptId) window.alert("error");
 
-  const res1 = server.patch(`/orders/${orderId}`, {
+  console.log(orderId);
+  const res1 = await server.patch(`/orders/${orderId}`, {
     ...data,
     acceptId: data.acceptId,
   });
 
-  dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
+  dispatch({
+    type: D_COMPLETE_ORDER,
+    payload: { ...res1.data, acceptId: data.id },
+  });
 };
 
 // export const fetchGeocode = (address) => async (dispatch) => {

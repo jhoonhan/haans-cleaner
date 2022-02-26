@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
 
-import { acceptOrder, setDistance } from "../../actions";
+import { acceptOrder, setDistance, compeleteOrder } from "../../actions";
 
 import price from "../price";
 
@@ -107,6 +107,11 @@ class DriverOrderItem extends React.Component {
   }
 
   onAccept = (id) => {
+    if (this.props.order.status === "completed") {
+      window.alert("this is already completed");
+      return;
+    }
+
     if (this.props.order.status === "submitted") {
       this.setState({ status: "accepted" });
       this.props.acceptOrder(id, {
@@ -123,8 +128,12 @@ class DriverOrderItem extends React.Component {
     }
   };
   onComplete = (id) => {
-    if (!this.props.order.status === "accepted") return;
+    if (this.props.order.status !== "accepted") return;
     this.setState({ status: "compeleted" });
+    this.props.compeleteOrder(id, {
+      status: "completed",
+      acceptId: this.props.auth.userProfile.FW,
+    });
   };
 
   renderSearchButtons() {
@@ -155,7 +164,7 @@ class DriverOrderItem extends React.Component {
 
   renderAcceptButtons() {
     const buttonColor = () => {
-      if (this.props.order.status === "completed") return "aquamarine";
+      if (this.props.order.status === "completed") return "red";
       if (this.props.order.status === "accepted") return "#ccc";
     };
     return (
@@ -170,7 +179,7 @@ class DriverOrderItem extends React.Component {
           Cancel
         </div>
         <div
-          onClick={() => this.onComplete(this.refBand)}
+          onClick={() => this.onComplete(this.props.order.id)}
           className="driver__order__buttton"
           style={{ backgroundColor: buttonColor() }}
         >
@@ -233,6 +242,8 @@ const mapStateToProps = ({ auth, user, driver }) => {
   };
 };
 
-export default connect(mapStateToProps, { acceptOrder, setDistance })(
-  DriverOrderItem
-);
+export default connect(mapStateToProps, {
+  acceptOrder,
+  setDistance,
+  compeleteOrder,
+})(DriverOrderItem);

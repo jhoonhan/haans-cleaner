@@ -109,7 +109,7 @@
         "tax": "0.43"
       },
       "timestamp": 1645578231864,
-      "status": "accepted",
+      "status": "completed",
       "coords": {
         "lat": 35.96387267506028,
         "lng": -80.0081406883951
@@ -136,7 +136,7 @@
         "tax": "0.28"
       },
       "timestamp": 1645578254039,
-      "status": "accepted",
+      "status": "completed",
       "coords": {
         "lat": 35.9823360789544,
         "lng": -80.02355498654508
@@ -186,10 +186,10 @@
         "tax": 0
       },
       "timestamp": 1645838789858,
-      "status": "accepted",
+      "status": "submitted",
       "coords": {},
       "id": 15,
-      "acceptId": "112981141048784001090"
+      "acceptId": null
     }
   ]
 }
