@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
 
 import { connect } from "react-redux";
 
@@ -21,7 +20,11 @@ const GoogleMap = ({
   const [direcService, setDirecService] = useState(
     new window.google.maps.DirectionsService()
   );
-  const [trip, setTrip] = useState({ duration: null, distance: null });
+  const [trip, setTrip] = useState({
+    duration: null,
+    distance: null,
+    mafa: null,
+  });
 
   const refMap = React.useRef();
 
@@ -38,13 +41,13 @@ const GoogleMap = ({
       zoom: 11,
     });
     console.log(`map loaded`);
+    setLoadedMap(map);
 
     const currentLocation = new window.google.maps.Marker({
       position: driver.currentCoords,
       map,
       title: "Hello World!",
     });
-    setLoadedMap(map);
     renderMarkers(map);
     getDistance();
   }, [driver.currentCoords]);
@@ -54,13 +57,13 @@ const GoogleMap = ({
   const getDirection = () => {
     direcRenderer.setMap(null);
     const origin = driver.currentCoords;
-    const ordersArr = cvtObj2Arr(driver.acceptedOrders);
-    const waypoints = ordersArr
+    const orderArr = cvtObj2Arr(driver.acceptedOrders);
+    const waypoints = orderArr
       .filter((order) => order.coords.lat)
       .map((el) => {
         return { location: el.coords, stopover: false };
       });
-    const destination = ordersArr
+    const destination = orderArr
       .filter((order) => order.coords.lat)
       .reduce((prev, curr) => {
         if (!prev.distance || !curr.distance) return null;
@@ -86,7 +89,7 @@ const GoogleMap = ({
         }
         renderTripDetail(response);
       })
-      .catch((e) => window.alert(`Directions request failed due to ${e}`));
+      .catch((error) => console.error(error));
   };
 
   //////////////////////////////////////////
@@ -112,7 +115,7 @@ const GoogleMap = ({
   };
 
   const geoFailed = () => {
-    console.log(`cibal`);
+    window.alert("You must enable sharing location");
   };
   //////////////////////////////////////////////////
 
@@ -128,21 +131,6 @@ const GoogleMap = ({
       driver.currentCoords.lat,
       driver.currentCoords.lng
     );
-
-    const distanceMatrixCallback = (response, status) => {
-      const res = response.rows[0].elements;
-
-      orderArr.forEach((order, i) => {
-        if (!driver.orders[order.id].distance) return;
-        if (
-          +res[i].distance.text.split(" ")[0] !==
-          driver.orders[order.id].distance
-        ) {
-          setDistance(+res[i].distance.text.split(" ")[0], order.id);
-        }
-      });
-      setIsMapLoaded(true);
-    };
 
     // const geocodingCallback = (results, status) => {
 
@@ -163,6 +151,19 @@ const GoogleMap = ({
     //     geocodingCallback
     //   );
     // });
+    const distanceMatrixCallback = (response, status) => {
+      const res = response.rows[0].elements;
+      orderArr.forEach((order, i) => {
+        if (!driver.orders[order.id].distance) return;
+        if (
+          +res[i].distance.text.split(" ")[0] !==
+          driver.orders[order.id].distance
+        ) {
+          setDistance(+res[i].distance.text.split(" ")[0], order.id);
+        }
+      });
+      setIsMapLoaded(true);
+    };
 
     const distanceMatrixService =
       new window.google.maps.DistanceMatrixService();
@@ -181,9 +182,17 @@ const GoogleMap = ({
   ////////////////////////////////////////////
 
   const renderTripDetail = (response) => {
+    const orderArr = cvtObj2Arr(driver.acceptedOrders);
+    const total = orderArr.reduce((prev, curr) => {
+      const prevTotal = prev.total.total * 0.2;
+      const currTotal = curr.total.total * 0.2;
+      return (prevTotal + currTotal).toFixed(2);
+    });
+
     setTrip({
       duration: response.routes[0].legs[0].duration.text,
       distance: response.routes[0].legs[0].distance.text,
+      total,
     });
   };
   const render = () => {
@@ -199,6 +208,7 @@ const GoogleMap = ({
 
         <div>{trip.duration}</div>
         <div>{trip.distance}</div>
+        <div>${trip.total}</div>
       </>
     );
   };

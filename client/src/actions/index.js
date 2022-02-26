@@ -159,6 +159,9 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
       payload: { ...res.data, acceptId: null },
     });
   }
+  if (res.data.status === "accepted" && res.data.acceptId !== data.acceptId) {
+    alert(`order is accepted by other driver`);
+  }
 };
 
 // export const fetchGeocode = (address) => async (dispatch) => {
