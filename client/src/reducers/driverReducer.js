@@ -47,10 +47,6 @@ const reducer = (
           ...state.acceptedOrders,
           [action.payload.id]: action.payload,
         },
-        completedOrders: {
-          ...state.completedOrders,
-          [action.payload.id]: action.payload,
-        },
       };
     case D_CANCEL_ORDER:
       return {

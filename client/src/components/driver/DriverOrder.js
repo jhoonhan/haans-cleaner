@@ -24,7 +24,6 @@ const DriverOrder = ({
 }) => {
   const [fetched, setFetched] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
-  const [showModal, setShowModal] = useState(null);
 
   ////////
 
@@ -52,33 +51,23 @@ const DriverOrder = ({
   }, [user.fetched, driver.fetched]);
 
   //////////
-  const modalAction = () => {
-    return (
-      <>
-        <button onClick={() => setShowModal(false)} className="button--l">
-          Go Back
-        </button>
-        <button
-          onClick={() => {
-            // deleteUser(user.id);
-            console.log(`ACTION to cancel completion`);
-            setShowModal(false);
-          }}
-          className="button--l button--alert"
-        >
-          Delete
-        </button>
-      </>
-    );
-  };
+
   //////////
   const rednerSearchOrders = () => {
-    if (!isMapLoaded) return null;
-    const orderArr = cvtObj2Arr(
-      match.params.page === "search" ? driver.orders : driver.acceptedOrders
-    );
+    const conditionalArr = () => {
+      if (match.params.page === "search") {
+        const orderArr = cvtObj2Arr(driver.orders);
+        const filteredArr = orderArr.filter(
+          (order) => order.status !== "completed"
+        );
+        return filteredArr;
+      }
+      if (match.params.page === "accepted") {
+        return cvtObj2Arr(driver.acceptedOrders);
+      }
+    };
 
-    return orderArr
+    return conditionalArr()
       .sort((a, b) => a.distance - b.distance)
       .map((order, i) => {
         return (
@@ -113,17 +102,6 @@ const DriverOrder = ({
         <header className="page-title">
           <h2>{match.params.page}</h2>
         </header>
-
-        <Modal2
-          show={showModal}
-          handleClose={setShowModal}
-          id={user?.googleId}
-          title={
-            modalType === "deleteAccount" ? "Delete Account" : "Edit Account"
-          }
-          content="Are you sure?"
-          actions={modalAction()}
-        />
 
         <Wrapper
           apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}

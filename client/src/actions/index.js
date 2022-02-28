@@ -190,22 +190,22 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   }
 };
 
-export const compeleteOrder = (orderId, data) => async (dispatch) => {
+export const compeleteOrder = (orderId, data, status) => async (dispatch) => {
   const res = await server.get(`/orders/${orderId}`);
 
-  if (res.data.status === "completed") window.alert("error");
   if (res.data.acceptId !== data.acceptId) window.alert("error");
 
-  console.log(orderId);
-  const res1 = await server.patch(`/orders/${orderId}`, {
-    ...data,
-    acceptId: data.acceptId,
-  });
-
-  dispatch({
-    type: D_COMPLETE_ORDER,
-    payload: { ...res1.data, acceptId: data.id },
-  });
+  if (res.data.acceptId === data.acceptId) {
+    console.log(`fired`);
+    const res = await server.patch(`/orders/${orderId}`, {
+      ...data,
+      acceptId: data.acceptId,
+    });
+    dispatch({
+      type: D_COMPLETE_ORDER,
+      payload: { ...res.data, acceptId: data.id },
+    });
+  }
 };
 
 export const setCoordsAct = (coords) => (dispatch) => {

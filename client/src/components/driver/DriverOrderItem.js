@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
+import Modal2 from "../Modal2";
 
 import { acceptOrder, setDistance, compeleteOrder } from "../../actions";
 
@@ -13,7 +14,8 @@ const DriverOrderItem = (props) => {
 
   //   state = { status: props.order.status, showModal: false };
 
-  const [orderStatus, setOrderStatus] = useState(props.order.status);
+  // const [orderStatus, setOrderStatus] = useState(props.order.status);
+  const [showModal, setShowModal] = useState(null);
 
   // }
   const refDetail = React.createRef();
@@ -111,32 +113,60 @@ const DriverOrderItem = (props) => {
     }
 
     if (props.order.status === "submitted") {
-      setOrderStatus("accepted");
+      // setOrderStatus("accepted");
       props.acceptOrder(id, {
         status: "accepted",
         acceptId: props.auth.userProfile.FW,
       });
     }
     if (props.order.status === "accepted") {
-      setOrderStatus("submitted");
+      // setOrderStatus("submitted");
       props.acceptOrder(id, {
         status: "submitted",
         acceptId: props.auth.userProfile.FW,
       });
     }
   };
-  const onComplete = (id) => {
+  const onComplete = () => {
     if (props.order.status === "accepted") {
-      setOrderStatus("compeleted");
-      props.compeleteOrder(id, {
+      // setOrderStatus("compeleted");
+      props.compeleteOrder(props.order.id, {
         status: "completed",
         acceptId: props.auth.userProfile.FW,
       });
     }
     if (props.order.status === "completed") {
-      window.alert("already completed");
+      setShowModal(true);
     }
   };
+
+  const cancelCompletion = () => {
+    props.compeleteOrder(props.order.id, {
+      status: "accepted",
+      acceptId: props.auth.userProfile.FW,
+    });
+  };
+
+  const modalAction = () => {
+    return (
+      <>
+        <button onClick={() => setShowModal(false)} className="button--l">
+          Go Back
+        </button>
+        <button
+          onClick={() => {
+            // deleteUser(user.id);
+            cancelCompletion();
+            setShowModal(false);
+          }}
+          className="button--l button--alert"
+        >
+          Confirm
+        </button>
+      </>
+    );
+  };
+  //////////
 
   const renderSearchButtons = () => {
     const buttonColor = () => {
@@ -175,13 +205,14 @@ const DriverOrderItem = (props) => {
           onClick={() => onAccept(props.order.id)}
           className="driver__order__buttton"
           style={{
-            backgroundColor: "pink",
+            backgroundColor:
+              props.order.status === "accepted" ? "pink" : "#cccccc",
           }}
         >
           Cancel
         </div>
         <div
-          onClick={() => onComplete(props.order.id)}
+          onClick={() => onComplete()}
           className="driver__order__buttton"
           style={{ backgroundColor: buttonColor() }}
         >
@@ -193,42 +224,52 @@ const DriverOrderItem = (props) => {
 
   const render = () => {
     return (
-      <div
-        ref={refBand}
-        timestamp={props.timestamp}
-        className="driver__order__row"
-      >
+      <>
+        <Modal2
+          show={showModal}
+          handleClose={setShowModal}
+          id={props.user.googleId}
+          title={"Cancel Completion"}
+          content="A notification will be sent to the user"
+          actions={modalAction()}
+        />
         <div
-          onClick={() => {
-            toggleView(refDetail);
-          }}
-          className="driver__order__item"
+          ref={refBand}
+          timestamp={props.timestamp}
+          className="driver__order__row"
         >
-          <div>
-            <h3>
-              {props.order.distance
-                ? `${props.order.distance} mi`
-                : "Call customer"}{" "}
-            </h3>
+          <div
+            onClick={() => {
+              toggleView(refDetail);
+            }}
+            className="driver__order__item"
+          >
+            <div>
+              <h3>
+                {props.order.distance
+                  ? `${props.order.distance} mi`
+                  : "Call customer"}{" "}
+              </h3>
+            </div>
+            <div></div>
+            <div>#{props.order.id}</div>
+            <div>
+              {props.order.street}, {props.order.city}
+            </div>
+            <div></div>
+            <div>
+              <h3>${(props.order.total.total * 0.2).toFixed(2)}</h3>
+            </div>
           </div>
-          <div></div>
-          <div>#{props.order.id}</div>
-          <div>
-            {props.order.street}, {props.order.city}
-          </div>
-          <div></div>
-          <div>
-            <h3>${(props.order.total.total * 0.2).toFixed(2)}</h3>
-          </div>
-        </div>
-        {props.page === "search"
-          ? renderSearchButtons()
-          : renderAcceptButtons()}
+          {props.page === "search"
+            ? renderSearchButtons()
+            : renderAcceptButtons()}
 
-        <div ref={refDetail} className={`order__detail ${animationClasses}`}>
-          {renderDetail()}
+          <div ref={refDetail} className={`order__detail ${animationClasses}`}>
+            {renderDetail()}
+          </div>
         </div>
-      </div>
+      </>
     );
   };
   return render();

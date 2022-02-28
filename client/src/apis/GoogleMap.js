@@ -20,6 +20,7 @@ const GoogleMap = ({
   const [direcService, setDirecService] = useState(
     new window.google.maps.DirectionsService()
   );
+  const [markers, setMarkers] = useState(null);
   const [trip, setTrip] = useState({
     duration: null,
     distance: null,
@@ -45,12 +46,15 @@ const GoogleMap = ({
 
     const currentLocation = new window.google.maps.Marker({
       position: driver.currentCoords,
-      map,
+      loadedMap,
       title: "Hello World!",
     });
-    renderMarkers(map);
+
+    renderMarkers();
     getDistance();
   }, [driver.currentCoords]);
+
+  useEffect(() => {}, [driver.order, driver.acceptedOrders]);
 
   //////////////////////////////////////////
 
@@ -93,7 +97,7 @@ const GoogleMap = ({
   };
 
   //////////////////////////////////////////
-  const renderMarkers = (map) => {
+  const renderMarkers = () => {
     const orderArr = cvtObj2Arr(orders);
     orderArr.forEach(function (order, i) {
       if (!order.coords.lat) return;
@@ -103,7 +107,7 @@ const GoogleMap = ({
           lat: +order.coords.lat,
           lng: +order.coords.lng,
         },
-        map,
+        loadedMap,
         title: `${order.timestamp}`,
       });
     });
