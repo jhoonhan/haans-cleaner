@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
@@ -7,24 +7,22 @@ import { acceptOrder, setDistance, compeleteOrder } from "../../actions";
 
 import price from "../price";
 
-class DriverOrderItem extends React.Component {
-  constructor(props) {
-    super(props);
+const DriverOrderItem = (props) => {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = { status: this.props.order.status };
+  //   state = { status: props.order.status, showModal: false };
 
-    this.refDetail = React.createRef();
-    this.refBand = React.createRef();
-    this.refAccept = React.createRef();
+  const [orderStatus, setOrderStatus] = useState(props.order.status);
 
-    this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
-  }
+  // }
+  const refDetail = React.createRef();
+  const refBand = React.createRef();
+  const refAccept = React.createRef();
 
-  componentDidMount() {
-    // this.getDistance();
-  }
+  const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
-  toggleView = (ref) => {
+  const toggleView = (ref) => {
     const selectedRef = ref;
     selectedRef.current.classList.toggle("height--0");
     selectedRef.current.classList.toggle("opacity--0");
@@ -33,7 +31,7 @@ class DriverOrderItem extends React.Component {
     selectedRef.current.classList.toggle("overflow--hidden");
   };
 
-  renderCount(clothes) {
+  const renderCount = (clothes) => {
     if (!clothes) return null;
 
     const keys = Object.keys(clothes);
@@ -51,9 +49,9 @@ class DriverOrderItem extends React.Component {
         </div>
       );
     });
-  }
+  };
 
-  renderDetail() {
+  const renderDetail = () => {
     return (
       <>
         <div
@@ -65,13 +63,13 @@ class DriverOrderItem extends React.Component {
           }}
         >
           <div>
-            <strong>{this.props.order.name}</strong>
+            <strong>{props.order.name}</strong>
           </div>
-          <div>{` ${this.props.order.street}, ${this.props.order.city}`}</div>
-          <div>{this.props.order.phone}</div>
+          <div>{` ${props.order.street}, ${props.order.city}`}</div>
+          <div>{props.order.phone}</div>
         </div>
         <div className="order__detail__row">
-          {this.renderCount(this.props.order.clothes)}
+          {renderCount(props.order.clothes)}
         </div>
 
         <div className="order__detail__row">
@@ -83,14 +81,14 @@ class DriverOrderItem extends React.Component {
             <div></div>
             <div>Subtotal</div>
             <div>:</div>
-            <div>${this.props.order.total.subtotal}</div>
+            <div>${props.order.total.subtotal}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
             <div></div>
             <div>Tax</div>
             <div>:</div>
-            <div>${this.props.order.total.tax}</div>
+            <div>${props.order.total.tax}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
@@ -98,79 +96,83 @@ class DriverOrderItem extends React.Component {
             <div>Total</div>
             <div>:</div>
             <div>
-              <b>${this.props.order.total.total}</b>
+              <b>${props.order.total.total}</b>
             </div>
           </div>
         </div>
       </>
     );
-  }
+  };
 
-  onAccept = (id) => {
-    if (this.props.order.status === "completed") {
+  const onAccept = (id) => {
+    if (props.order.status === "completed") {
       window.alert("this is already completed");
       return;
     }
 
-    if (this.props.order.status === "submitted") {
-      this.setState({ status: "accepted" });
-      this.props.acceptOrder(id, {
+    if (props.order.status === "submitted") {
+      setOrderStatus("accepted");
+      props.acceptOrder(id, {
         status: "accepted",
-        acceptId: this.props.auth.userProfile.FW,
+        acceptId: props.auth.userProfile.FW,
       });
     }
-    if (this.props.order.status === "accepted") {
-      this.setState({ status: "submitted" });
-      this.props.acceptOrder(id, {
+    if (props.order.status === "accepted") {
+      setOrderStatus("submitted");
+      props.acceptOrder(id, {
         status: "submitted",
-        acceptId: this.props.auth.userProfile.FW,
+        acceptId: props.auth.userProfile.FW,
       });
     }
   };
-  onComplete = (id) => {
-    if (this.props.order.status !== "accepted") return;
-    this.setState({ status: "compeleted" });
-    this.props.compeleteOrder(id, {
-      status: "completed",
-      acceptId: this.props.auth.userProfile.FW,
-    });
+  const onComplete = (id) => {
+    if (props.order.status === "accepted") {
+      setOrderStatus("compeleted");
+      props.compeleteOrder(id, {
+        status: "completed",
+        acceptId: props.auth.userProfile.FW,
+      });
+    }
+    if (props.order.status === "completed") {
+      window.alert("already completed");
+    }
   };
 
-  renderSearchButtons() {
+  const renderSearchButtons = () => {
     const buttonColor = () => {
-      if (this.props.order.status === "submitted") return "aquamarine";
-      if (this.props.order.status === "accepted") return "#ccc";
+      if (props.order.status === "submitted") return "aquamarine";
+      if (props.order.status === "accepted") return "#ccc";
     };
     return (
       <div className="driver__order__buttton__container">
         <div
-          onClick={() => this.toggleView(this.refBand)}
+          onClick={() => toggleView(refBand)}
           className="driver__order__buttton"
         >
           Hide
         </div>
         <div
-          onClick={() => this.onAccept(this.props.order.id)}
+          onClick={() => onAccept(props.order.id)}
           className="driver__order__buttton"
           style={{
             backgroundColor: buttonColor(),
           }}
         >
-          {this.props.order.status}
+          {props.order.status}
         </div>
       </div>
     );
-  }
+  };
 
-  renderAcceptButtons() {
+  const renderAcceptButtons = () => {
     const buttonColor = () => {
-      if (this.props.order.status === "completed") return "red";
-      if (this.props.order.status === "accepted") return "#ccc";
+      if (props.order.status === "completed") return "red";
+      if (props.order.status === "accepted") return "#ccc";
     };
     return (
       <div className="driver__order__buttton__container">
         <div
-          onClick={() => this.onAccept(this.props.order.id)}
+          onClick={() => onAccept(props.order.id)}
           className="driver__order__buttton"
           style={{
             backgroundColor: "pink",
@@ -179,60 +181,58 @@ class DriverOrderItem extends React.Component {
           Cancel
         </div>
         <div
-          onClick={() => this.onComplete(this.props.order.id)}
+          onClick={() => onComplete(props.order.id)}
           className="driver__order__buttton"
           style={{ backgroundColor: buttonColor() }}
         >
-          Accepted
+          {props.order.status}
         </div>
       </div>
     );
-  }
+  };
 
-  render() {
+  const render = () => {
     return (
       <div
-        ref={this.refBand}
-        timestamp={this.props.timestamp}
+        ref={refBand}
+        timestamp={props.timestamp}
         className="driver__order__row"
       >
         <div
           onClick={() => {
-            this.toggleView(this.refDetail);
+            toggleView(refDetail);
           }}
           className="driver__order__item"
         >
           <div>
             <h3>
-              {this.props.order.distance
-                ? `${this.props.order.distance} mi`
+              {props.order.distance
+                ? `${props.order.distance} mi`
                 : "Call customer"}{" "}
             </h3>
           </div>
           <div></div>
-          <div>#{this.props.order.id}</div>
+          <div>#{props.order.id}</div>
           <div>
-            {this.props.order.street}, {this.props.order.city}
+            {props.order.street}, {props.order.city}
           </div>
           <div></div>
           <div>
-            <h3>${(this.props.order.total.total * 0.2).toFixed(2)}</h3>
+            <h3>${(props.order.total.total * 0.2).toFixed(2)}</h3>
           </div>
         </div>
-        {this.props.page === "search"
-          ? this.renderSearchButtons()
-          : this.renderAcceptButtons()}
+        {props.page === "search"
+          ? renderSearchButtons()
+          : renderAcceptButtons()}
 
-        <div
-          ref={this.refDetail}
-          className={`order__detail ${this.animationClasses}`}
-        >
-          {this.renderDetail()}
+        <div ref={refDetail} className={`order__detail ${animationClasses}`}>
+          {renderDetail()}
         </div>
       </div>
     );
-  }
-}
+  };
+  return render();
+};
 
 const mapStateToProps = ({ auth, user, driver }) => {
   return {
