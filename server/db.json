@@ -163,13 +163,13 @@
         "tax": "0.28"
       },
       "timestamp": 1645578279711,
-      "status": "submitted",
+      "status": "accepted",
       "coords": {
         "lat": 35.97526624270643,
         "lng": -80.08830165517294
       },
       "id": 14,
-      "acceptId": null,
+      "acceptId": "112981141048784001090",
       "distance": 4
     },
     {

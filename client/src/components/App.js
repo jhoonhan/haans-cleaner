@@ -30,6 +30,8 @@ const App = () => {
 
           <Route path="/driver" exact component={Driver} />
           <Route path="/driver/order/:page" exact component={DriverOrder} />
+          <Route path="/driver/account" exact component={Account} />
+
           {/* <Route path="/driver/account" exact component={DriverAccount} /> */}
         </Switch>
       </AnimatePresence>

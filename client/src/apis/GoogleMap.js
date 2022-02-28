@@ -5,6 +5,10 @@ import { connect } from "react-redux";
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
 import { setCoordsAct, setDistance, setGeocode } from "../actions";
 
+import markerRed from "../image/marker-red.png";
+import markerBlue from "../image/marker-blue.png";
+import markerGreen from "../image/marker-green.png";
+
 const GoogleMap = ({
   orders,
   driver,
@@ -49,6 +53,7 @@ const GoogleMap = ({
     const currentLocation = new window.google.maps.Marker({
       position: driver.currentCoords,
       map,
+      icon: markerBlue,
       title: "Hello World!",
     });
 
@@ -59,7 +64,7 @@ const GoogleMap = ({
     if (loadedMap !== null) {
       loadMarkers();
     }
-  }, [loadedMap, driver.acceptedOrders]);
+  }, [loadedMap, driver.acceptedOrders, driver.order]);
 
   useEffect(() => {
     if (loadedMap === null) return;
@@ -71,29 +76,18 @@ const GoogleMap = ({
     }
   }, [markers]);
 
-  useEffect(() => {}, [driver.orders, driver.acceptedOrders]);
-
-  // useEffect(() => {
-  //   if (!markers) return;
-
-  //   markers.forEach((marker) => {
-  //     if (marker === null) return;
-  //     marker.setMap(loadedMap);
-  //   });
-  // }, [markers]);
-
   //////////////////////////////////////////
 
   const getDirection = () => {
     direcRenderer.setMap(null);
     const origin = driver.currentCoords;
-    const orderArr = cvtObj2Arr(driver.acceptedOrders);
-    const waypoints = orderArr
+    const ordersArr = cvtObj2Arr(driver.acceptedOrders);
+    const waypoints = ordersArr
       .filter((order) => order.coords.lat)
       .map((el) => {
         return { location: el.coords, stopover: false };
       });
-    const destination = orderArr
+    const destination = ordersArr
       .filter((order) => order.coords.lat)
       .reduce((prev, curr) => {
         if (!prev.distance || !curr.distance) return null;
@@ -124,41 +118,39 @@ const GoogleMap = ({
 
   //////////////////////////////////////////
   const loadMarkers = () => {
-    console.log("marker loaded");
     if (markers !== null) {
       markers.forEach((marker) => marker.setMap(null));
       setMarkers(null);
     }
-
-    const orderArr = cvtObj2Arr(orders);
-    const markersArr = orderArr.map(function (order, i) {
-      if (!order.coords.lat) return null;
-
-      const marker = new window.google.maps.Marker({
-        position: {
-          lat: +order.coords.lat,
-          lng: +order.coords.lng,
-        },
-        title: `${order.timestamp}`,
+    if (markers === null) {
+      const ordersArr = cvtObj2Arr(orders);
+      const markersArr = ordersArr.map(function (order, i) {
+        let customIcon;
+        if (!order.coords.lat) return null;
+        if (order.status === "submitted") {
+          customIcon = markerRed;
+        }
+        if (order.status === "accepted") {
+          customIcon = markerGreen;
+        }
+        const marker = new window.google.maps.Marker({
+          position: {
+            lat: +order.coords.lat,
+            lng: +order.coords.lng,
+          },
+          icon: customIcon,
+          title: `${order.timestamp}`,
+        });
+        return marker;
       });
-      return marker;
-    });
-    console.log(markersArr);
-    setMarkers(markersArr.filter((marker) => marker !== null));
-  };
-  const clearMarkers = () => {
-    console.log(`clear markers fired`);
-    setMarkers(null);
-    markers.forEach((marker) => {
-      marker.setMap(null);
-    });
+      setMarkers(markersArr.filter((marker) => marker !== null));
+    }
   };
 
   const renderMarkers = () => {
     if (markers === null) return;
 
     markers.forEach((marker) => {
-      console.log(marker);
       marker.setMap(loadedMap);
     });
   };
@@ -177,8 +169,8 @@ const GoogleMap = ({
     if (!window.google) {
       return;
     }
-    const orderArr = cvtObj2Arr(driver.orders);
-    const destinations = orderArr
+    const ordersArr = cvtObj2Arr(driver.orders);
+    const destinations = ordersArr
       .filter((order) => order.coords.lat)
       .map((order) => order.coords);
     const origin = new window.google.maps.LatLng(
@@ -186,28 +178,9 @@ const GoogleMap = ({
       driver.currentCoords.lng
     );
 
-    // const geocodingCallback = (results, status) => {
-
-    //   if (status === "OK") {
-    //     console.log(results[0].geometry.location.lat());
-    //     // if (!driver.orders[order.id]){}
-    //     setGeocode(results[0].geometry.location.lat());
-    //   } else {
-    //     alert("Geocode was not successful for the following reason: " + status);
-    //   }
-    // };
-
-    // const geocodingService = new window.google.maps.Geocoder();
-    // orderArr.forEach((order) => {
-    //   if (order.coords.lat && order.coords.lng) return;
-    //   geocodingService.geocode(
-    //     { address: order.street + order.city + order.zip },
-    //     geocodingCallback
-    //   );
-    // });
     const distanceMatrixCallback = (response, status) => {
       const res = response.rows[0].elements;
-      orderArr.forEach((order, i) => {
+      ordersArr.forEach((order, i) => {
         if (!driver.orders[order.id].distance) return;
         if (
           +res[i].distance.text.split(" ")[0] !==
@@ -236,8 +209,8 @@ const GoogleMap = ({
   ////////////////////////////////////////////
 
   const renderTripDetail = (response) => {
-    // const orderArr = cvtObj2Arr(driver.acceptedOrders);
-    // const total = orderArr.reduce((prev, curr) => {
+    // const ordersArr = cvtObj2Arr(driver.acceptedOrders);
+    // const total = ordersArr.reduce((prev, curr) => {
     //   const prevTotal = prev.total.total * 0.2;
     //   const currTotal = curr.total.total * 0.2;
     //   return (prevTotal + currTotal).toFixed(2);
