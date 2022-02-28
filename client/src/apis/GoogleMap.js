@@ -21,6 +21,8 @@ const GoogleMap = ({
     new window.google.maps.DirectionsService()
   );
   const [markers, setMarkers] = useState(null);
+  const [test, setTest] = useState(null);
+
   const [trip, setTrip] = useState({
     duration: null,
     distance: null,
@@ -33,7 +35,7 @@ const GoogleMap = ({
     if (navigator.geolocation && !driver.currentCoords) {
       navigator.geolocation.getCurrentPosition(geoSuccess, geoFailed);
     }
-  }, [driver.orderFetched]);
+  }, []);
 
   useEffect(() => {
     if (!driver.currentCoords) return;
@@ -46,15 +48,39 @@ const GoogleMap = ({
 
     const currentLocation = new window.google.maps.Marker({
       position: driver.currentCoords,
-      loadedMap,
+      map,
       title: "Hello World!",
     });
 
-    renderMarkers();
     getDistance();
   }, [driver.currentCoords]);
 
-  useEffect(() => {}, [driver.order, driver.acceptedOrders]);
+  useEffect(() => {
+    if (loadedMap !== null) {
+      loadMarkers();
+    }
+  }, [loadedMap, driver.acceptedOrders]);
+
+  useEffect(() => {
+    if (loadedMap === null) return;
+    if (markers === null) {
+      loadMarkers();
+    }
+    if (markers !== null) {
+      renderMarkers();
+    }
+  }, [markers]);
+
+  useEffect(() => {}, [driver.orders, driver.acceptedOrders]);
+
+  // useEffect(() => {
+  //   if (!markers) return;
+
+  //   markers.forEach((marker) => {
+  //     if (marker === null) return;
+  //     marker.setMap(loadedMap);
+  //   });
+  // }, [markers]);
 
   //////////////////////////////////////////
 
@@ -97,19 +123,43 @@ const GoogleMap = ({
   };
 
   //////////////////////////////////////////
-  const renderMarkers = () => {
+  const loadMarkers = () => {
+    console.log("marker loaded");
+    if (markers !== null) {
+      markers.forEach((marker) => marker.setMap(null));
+      setMarkers(null);
+    }
+
     const orderArr = cvtObj2Arr(orders);
-    orderArr.forEach(function (order, i) {
-      if (!order.coords.lat) return;
+    const markersArr = orderArr.map(function (order, i) {
+      if (!order.coords.lat) return null;
 
       const marker = new window.google.maps.Marker({
         position: {
           lat: +order.coords.lat,
           lng: +order.coords.lng,
         },
-        loadedMap,
         title: `${order.timestamp}`,
       });
+      return marker;
+    });
+    console.log(markersArr);
+    setMarkers(markersArr.filter((marker) => marker !== null));
+  };
+  const clearMarkers = () => {
+    console.log(`clear markers fired`);
+    setMarkers(null);
+    markers.forEach((marker) => {
+      marker.setMap(null);
+    });
+  };
+
+  const renderMarkers = () => {
+    if (markers === null) return;
+
+    markers.forEach((marker) => {
+      console.log(marker);
+      marker.setMap(loadedMap);
     });
   };
 
