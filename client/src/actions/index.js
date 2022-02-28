@@ -53,7 +53,6 @@ import {
 //   return coords;
 // };
 //
-
 //////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {
   return {
