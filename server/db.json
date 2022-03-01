@@ -41,9 +41,9 @@
       "googleId": "112981141048784001090",
       "fullName": "Joe Han",
       "defaultAddress": {
-        "street": "4427 Carlys way",
-        "city": "Greensboro",
-        "zip": "27410"
+        "street": "2835 Fallin ct",
+        "city": "High Point",
+        "zip": "27262"
       },
       "savedAddress": [
         {
@@ -163,13 +163,13 @@
         "tax": "0.28"
       },
       "timestamp": 1645578279711,
-      "status": "accepted",
+      "status": "submitted",
       "coords": {
         "lat": 35.97526624270643,
         "lng": -80.08830165517294
       },
       "id": 14,
-      "acceptId": "112981141048784001090",
+      "acceptId": null,
       "distance": 4
     },
     {

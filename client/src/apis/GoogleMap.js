@@ -13,6 +13,7 @@ const GoogleMap = ({
   orders,
   driver,
   page,
+  mapRatio,
   setCoordsAct,
   setDistance,
   setIsMapLoaded,
@@ -30,7 +31,7 @@ const GoogleMap = ({
   const [trip, setTrip] = useState({
     duration: null,
     distance: null,
-    mafa: null,
+    total: null,
   });
 
   const refMap = React.useRef();
@@ -209,33 +210,50 @@ const GoogleMap = ({
   ////////////////////////////////////////////
 
   const renderTripDetail = (response) => {
-    // const ordersArr = cvtObj2Arr(driver.acceptedOrders);
-    // const total = ordersArr.reduce((prev, curr) => {
-    //   const prevTotal = prev.total.total * 0.2;
-    //   const currTotal = curr.total.total * 0.2;
-    //   return (prevTotal + currTotal).toFixed(2);
-    // });
+    let total;
+    const ordersArr = cvtObj2Arr(driver.acceptedOrders);
+    if (ordersArr.length <= 1) {
+      total = (ordersArr[0].total.total * 0.2).toFixed(2);
+    }
+    if (ordersArr.length > 1) {
+      total = ordersArr.reduce((prev, curr) => {
+        const prevTotal = prev.total.total * 0.2;
+        const currTotal = curr.total.total * 0.2;
+        return (prevTotal + currTotal).toFixed(2);
+      });
+    }
 
     setTrip({
       duration: response.routes[0].legs[0].duration.text,
       distance: response.routes[0].legs[0].distance.text,
-      // total,
+      total,
     });
   };
   const render = () => {
+    const conditionalStyle = `${
+      page === "accepted" && cvtObj2Arr(driver.acceptedOrders).length > 0
+        ? "block"
+        : "none"
+    }`;
     return (
       <>
         <div
           ref={refMap}
-          className={page === "search" ? "googleMap--m" : "googleMap--s"}
+          className="googleMap--c"
+          style={{ aspectRatio: mapRatio }}
         ></div>
-        <div style={{ display: `${page === "search" ? "none" : "block"}` }}>
-          <button onClick={() => getDirection()} className="button--l">
+        <div
+          style={{
+            display: conditionalStyle,
+          }}
+        >
+          <button onClick={() => getDirection()} className={`button--l`}>
             get trip detail
           </button>
 
           <div>{trip.duration}</div>
           <div>{trip.distance}</div>
+          <div>{trip.total ? `$${trip.total}` : ""}</div>
         </div>
       </>
     );

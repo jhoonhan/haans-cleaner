@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import {
   driverFetchOrder,
@@ -24,8 +24,17 @@ const DriverOrder = ({
 }) => {
   const [fetched, setFetched] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [mapRatio, setMapRatio] = useState("1 / 1");
 
+  const googleMapWrapper = useRef(null);
   ////////
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    // return () => {
+    //   window.removeEventListener("scroll", aaang);
+    // };
+  }, []);
 
   useEffect(() => {
     if (!auth.isSignedIn) return;
@@ -51,6 +60,17 @@ const DriverOrder = ({
   }, [user.fetched, driver.fetched]);
 
   //////////
+
+  const handleScroll = () => {
+    if (!googleMapWrapper.current) return;
+    const rect = googleMapWrapper.current.getBoundingClientRect();
+    // if (rect.y < 0 && mapRatio !== "1 / 1") {
+    if (rect.y < 0 && mapRatio === "1 / 1") {
+      setMapRatio("2 / 1");
+    } else if (rect.y > 0) {
+      setMapRatio("1 / 1");
+    }
+  };
 
   //////////
   const rednerSearchOrders = () => {
@@ -103,20 +123,23 @@ const DriverOrder = ({
           <h2>{match.params.page}</h2>
         </header>
 
-        <Wrapper
-          apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
-          render={renderMap}
-        >
-          <GoogleMap
-            orders={
-              match.params.page === "search"
-                ? driver.orders
-                : driver.acceptedOrders
-            }
-            page={match.params.page}
-            setIsMapLoaded={setIsMapLoaded}
-          />
-        </Wrapper>
+        <div ref={googleMapWrapper}>
+          <Wrapper
+            apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
+            render={renderMap}
+          >
+            <GoogleMap
+              orders={
+                match.params.page === "search"
+                  ? driver.orders
+                  : driver.acceptedOrders
+              }
+              page={match.params.page}
+              mapRatio={mapRatio}
+              setIsMapLoaded={setIsMapLoaded}
+            />
+          </Wrapper>
+        </div>
         <div className="order-container">
           <div className="driver__order__list">{rednerSearchOrders()}</div>
         </div>
