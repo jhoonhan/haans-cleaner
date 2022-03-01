@@ -13,7 +13,7 @@ const GoogleMap = ({
   orders,
   driver,
   page,
-  mapRatio,
+  mapClass,
   setCoordsAct,
   setDistance,
   setIsMapLoaded,
@@ -237,11 +237,7 @@ const GoogleMap = ({
     }`;
     return (
       <>
-        <div
-          ref={refMap}
-          className="googleMap--c"
-          style={{ aspectRatio: mapRatio }}
-        ></div>
+        <div ref={refMap} className={`googleMap--c ${mapClass}`}></div>
         <div
           style={{
             display: conditionalStyle,

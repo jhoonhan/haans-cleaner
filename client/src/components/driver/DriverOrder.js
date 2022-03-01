@@ -24,17 +24,24 @@ const DriverOrder = ({
 }) => {
   const [fetched, setFetched] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
-  const [mapRatio, setMapRatio] = useState("1 / 1");
+  const [scrollEvent, setScrollEvent] = useState(false);
+  const [mapClass, setMapClass] = useState("mapInitRatio");
 
   const googleMapWrapper = useRef(null);
+  const headerRef = useRef(null);
   ////////
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    // return () => {
-    //   window.removeEventListener("scroll", aaang);
-    // };
-  }, []);
+    if (scrollEvent) {
+      window.addEventListener("scroll", handleScroll);
+    }
+    if (!scrollEvent) {
+      window.removeEventListener("scroll", handleScroll);
+      setMapClass("mapInitRatio");
+    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollEvent]);
 
   useEffect(() => {
     if (!auth.isSignedIn) return;
@@ -56,19 +63,41 @@ const DriverOrder = ({
       driver.fetched.acceptedOrder
     ) {
       setFetched(true);
+      setScrollEvent(true);
     }
   }, [user.fetched, driver.fetched]);
+
+  useEffect(() => {
+    if (
+      match.params.page === "search" &&
+      cvtObj2Arr(driver.orders).length < 3
+    ) {
+      setScrollEvent(false);
+    }
+    if (
+      match.params.page === "accepted" &&
+      cvtObj2Arr(driver.acceptedOrders).length < 3
+    ) {
+      setScrollEvent(false);
+    }
+  }, [driver.orders, driver.acceptedOrders]);
 
   //////////
 
   const handleScroll = () => {
-    if (!googleMapWrapper.current) return;
-    const rect = googleMapWrapper.current.getBoundingClientRect();
-    // if (rect.y < 0 && mapRatio !== "1 / 1") {
-    if (rect.y < 0 && mapRatio === "1 / 1") {
-      setMapRatio("2 / 1");
-    } else if (rect.y > 0) {
-      setMapRatio("1 / 1");
+    if (!headerRef.current) return;
+    if (match.params.page === "search" && cvtObj2Arr(driver.orders).length < 3)
+      return;
+    if (
+      match.params.page === "accepted" &&
+      cvtObj2Arr(driver.acceptedOrders).length < 3
+    )
+      return;
+    const rect = headerRef.current.getBoundingClientRect();
+    if (rect.y !== 0 && mapClass === "mapInitRatio") {
+      setMapClass("mapStickyRatio");
+    } else if (rect.y === 0) {
+      setMapClass("mapInitRatio");
     }
   };
 
@@ -119,11 +148,11 @@ const DriverOrder = ({
 
     return (
       <div className="motion-container">
-        <header className="page-title">
+        <header className="page-title" ref={headerRef}>
           <h2>{match.params.page}</h2>
         </header>
 
-        <div ref={googleMapWrapper}>
+        <div ref={googleMapWrapper} className={mapClass}>
           <Wrapper
             apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
             render={renderMap}
@@ -135,7 +164,6 @@ const DriverOrder = ({
                   : driver.acceptedOrders
               }
               page={match.params.page}
-              mapRatio={mapRatio}
               setIsMapLoaded={setIsMapLoaded}
             />
           </Wrapper>

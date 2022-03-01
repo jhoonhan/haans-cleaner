@@ -77,7 +77,10 @@
   aspect-ratio: 3/2;
 }
 .googleMap--c {
+  position: relative;
+  top: 0;
   min-width: 100%;
+  min-height: 100%;
 }
 
 .driver__start-button {
@@ -85,4 +88,14 @@
   width: calc(100% - 4rem);
   bottom: 9rem;
   left: 2rem;
+}
+.mapInitRatio {
+  aspect-ratio: 1 / 1;
+}
+.mapStickyRatio {
+  // aspect-ratio: 2/1;
+  position: sticky;
+  top: 0;
+  position: sticky;
+  aspect-ratio: 2 / 1;
 }
