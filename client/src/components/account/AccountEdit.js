@@ -3,16 +3,13 @@ import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import { signOutRedux, fetchUser, deleteUser } from "../../actions";
 import { Field, Form, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
 import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
 import Modal2 from "../Modal2";
-import DriverAccount from "../driver/DriverAccount";
-import AccountEdit from "./AccountEdit";
 
-const Account = ({
+const AccountEdit = ({
   auth,
   user,
   signOutRedux,
@@ -20,19 +17,11 @@ const Account = ({
   editUser,
   editAccount,
   deleteUser,
-  match,
 }) => {
-  const [page, setPage] = useState("landing");
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
 
   const [showForm, setShowForm] = useState(false);
-
-  useEffect(() => {
-    console.log(match.path);
-  }, [auth.isSignedIn, user]);
-
-  // DOM selection
 
   const onSignOutClick = () => {
     const gAuth = window.gapi.auth2?.getAuthInstance();
@@ -46,14 +35,6 @@ const Account = ({
 
     if (type === "profile") {
       editUser(user?.id, { ...user, ...formValues, fullName });
-    }
-  };
-
-  const onClickExpand = () => {
-    if (showForm) {
-      setShowForm(false);
-    } else {
-      setShowForm(true);
     }
   };
 
@@ -99,62 +80,76 @@ const Account = ({
   const render = () => {
     return (
       <>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ type: "spring", duration: 0.1 }}
-          className="motion-container"
-        >
-          <header className="page-title">
-            <h2>Account</h2>
-          </header>
-
-          <Modal2
-            show={showModal}
-            handleClose={setShowModal}
-            id={user?.googleId}
-            title={
-              modalType === "deleteAccount" ? "Delete Account" : "Edit Account"
-            }
-            content="Are you sure?"
-            actions={modalAction()}
-          />
-          {/* <AccountEdit /> */}
-          <div className="account-container">
+        <Modal2
+          show={showModal}
+          handleClose={setShowModal}
+          id={user?.googleId}
+          title={
+            modalType === "deleteAccount" ? "Delete Account" : "Edit Account"
+          }
+          content="Are you sure?"
+          actions={modalAction()}
+        />
+        <header className="page-title">
+          <h2>Account</h2>
+        </header>
+        <div className="account-container">
+          <h3 className="align-self-flex-start margin-top--1rem">My Profile</h3>
+          <Form onSubmit={handleSubmit} className="form__form">
             <div className="form__form__row">
-              <Link to="/account/edit" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Personal Information
-                </h3>
-              </Link>
-
-              <Link to="/account/edit" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Payment Methods
-                </h3>
-              </Link>
-
-              <Link to="/account/address" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Address Book
-                </h3>
-              </Link>
-
-              <Link to="/account/edit" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  My Orders
-                </h3>
-              </Link>
+              <label>First Name</label>
+              <Field name="firstName" type="text" component={renderInput} />
             </div>
 
+            <div className="form__form__row">
+              <label>Last Name</label>
+              <Field name="lastName" type="text" component={renderInput} />
+            </div>
+
+            <div className="form__form__row">
+              <label>Email</label>
+              <Field name="email" type="text" component={renderInput} />
+            </div>
+
+            <div className="form__form__row">
+              <label>Phone Number</label>
+              <Field name="phone" type="text" component={renderInput} />
+            </div>
+
+            <div className="form__form__row">
+              <button
+                onClick={handleSubmit(() => {
+                  setShowModal(true);
+                  setModalType("editAccount");
+                })}
+                className="button--l"
+              >
+                Edit Profile
+              </button>
+            </div>
+
+            <h3 className="justify-self--flex-start margin-top--1rem">
+              Account
+            </h3>
             <div className="form__form__row">
               <button onClick={onSignOutClick} className="button--d">
                 Sign Out
               </button>
             </div>
-          </div>
-        </motion.div>
+
+            <div className="form__form__row">
+              <button
+                onClick={handleSubmit(() => {
+                  setShowModal(true);
+                  setModalType("deleteAccount");
+                })}
+                className="button--d button--alert"
+              >
+                Delete Account
+              </button>
+            </div>
+          </Form>
+        </div>
       </>
     );
   };
@@ -163,40 +158,29 @@ const Account = ({
 
 const mapStateToProps = ({ auth, user, form }) => {
   return {
+    initialValues: {
+      firstName: user.currentUser?.firstName,
+      lastName: user.currentUser?.lastName,
+      defaultAddress: user.currentUser?.defaultAddress,
+      phone: user.currentUser?.phone,
+      email: user.currentUser?.email,
+    },
     auth,
     user: user.currentUser,
     editAccount: form.editAccount,
   };
 };
 
+const wrappedForm = reduxForm({
+  form: "editAccount", //Form name is same
+  destroyOnUnmount: true,
+  forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+  // validate,
+})(AccountEdit);
+
 export default connect(mapStateToProps, {
   signOutRedux,
   fetchUser,
   editUser,
   deleteUser,
-})(Account);
-
-// class Morpheus extends Component {
-//   render() {
-//     const { handleSubmit } = this.props;
-//     return (
-//       <div>
-//         Fields go here
-//         <button onClick={handleSubmit(values =>
-//           this.props.onSubmit({
-//             ...values,
-//             pill: 'blue'
-//           }))}>Blue Pill</button>
-//         <button onClick={handleSubmit(values =>
-//           this.props.onSubmit({
-//             ...values,
-//             pill: 'red'
-//           }))}>Red Pill</button>
-//       </div>
-//     );
-//   }
-// }
-
-// export default reduxForm({
-//   form: 'morpheus'
-// })(Morpheus)
+})(wrappedForm);

@@ -25,7 +25,7 @@ const DriverAccount = ({ auth, user, driver, match }) => {
       });
   };
   const render = () => {
-    if (match !== "/driver/account") return;
+    if (match !== "/driver/account") return null;
     return (
       <div className="driver-account">
         <h3 className="justify-self--flex-start margin-top--1rem">

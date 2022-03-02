@@ -12,9 +12,9 @@ const DriverOrderItem = (props) => {
   const [showModal, setShowModal] = useState(null);
 
   // }
-  const refDetail = React.createRef();
-  const refBand = React.createRef();
-  const refAccept = React.createRef();
+  const refDetail = React.useRef(null);
+  const refBand = React.useRef(null);
+  const refAccept = React.useRef(null);
 
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 

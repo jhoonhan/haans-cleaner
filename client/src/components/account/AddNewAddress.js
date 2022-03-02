@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 
 import { Field, reduxForm } from "redux-form";
@@ -12,8 +12,8 @@ const AddNewAddress = ({
   reset,
   handleSubmit,
 }) => {
-  const refNewAddressContainer = React.createRef();
-  const refNewAddressDropDown = React.createRef();
+  const refNewAddressContainer = useRef(null);
+  const refNewAddressDropDown = useRef(null);
 
   const onClickNewAddress = () => {
     const newAddress = {
