@@ -9,12 +9,6 @@ import { acceptOrder, setDistance, compeleteOrder } from "../../actions";
 import price from "../price";
 
 const DriverOrderItem = (props) => {
-  // constructor(props) {
-  //   super(props);
-
-  //   state = { status: props.order.status, showModal: false };
-
-  // const [orderStatus, setOrderStatus] = useState(props.order.status);
   const [showModal, setShowModal] = useState(null);
 
   // }
@@ -133,6 +127,7 @@ const DriverOrderItem = (props) => {
       props.compeleteOrder(props.order.id, {
         status: "completed",
         acceptId: props.auth.userProfile.FW,
+        userId: props.user.id,
       });
     }
     if (props.order.status === "completed") {
@@ -144,6 +139,7 @@ const DriverOrderItem = (props) => {
     props.compeleteOrder(props.order.id, {
       status: "accepted",
       acceptId: props.auth.userProfile.FW,
+      userId: props.user.id,
     });
   };
 
@@ -221,6 +217,11 @@ const DriverOrderItem = (props) => {
       </div>
     );
   };
+  const renderButtons = () => {
+    if (props.page === "search") return renderSearchButtons();
+    if (props.page === "accepted") return renderAcceptButtons();
+    if (props.page === "account") return null;
+  };
 
   const render = () => {
     return (
@@ -261,9 +262,7 @@ const DriverOrderItem = (props) => {
               <h3>${(props.order.total.total * 0.2).toFixed(2)}</h3>
             </div>
           </div>
-          {props.page === "search"
-            ? renderSearchButtons()
-            : renderAcceptButtons()}
+          {renderButtons()}
 
           <div ref={refDetail} className={`order__detail ${animationClasses}`}>
             {renderDetail()}

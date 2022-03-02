@@ -180,6 +180,11 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
       acceptId: null,
     });
 
+    if (res.status !== 200) {
+      console.error(`error`);
+      return;
+    }
+
     dispatch({
       type: D_CANCEL_ORDER,
       payload: { ...res.data, acceptId: null },
@@ -190,17 +195,22 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   }
 };
 
-export const compeleteOrder = (orderId, data, status) => async (dispatch) => {
+export const compeleteOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/orders/${orderId}`);
 
   if (res.data.acceptId !== data.acceptId) window.alert("error");
 
   if (res.data.acceptId === data.acceptId) {
-    console.log(`fired`);
     const res = await server.patch(`/orders/${orderId}`, {
       ...data,
       acceptId: data.acceptId,
     });
+
+    if (res.status !== 200) {
+      console.error(`error`);
+      return;
+    }
+
     dispatch({
       type: D_COMPLETE_ORDER,
       payload: { ...res.data, acceptId: data.id },
@@ -219,6 +229,5 @@ export const setDistance = (distance, id) => async (dispatch) => {
 };
 
 export const setGeocode = (geocode, id) => (dispatch) => {
-  console.log(geocode);
   dispatch({ type: D_SET_GEOCODE, payload: geocode });
 };

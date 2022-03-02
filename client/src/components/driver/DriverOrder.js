@@ -31,19 +31,6 @@ const DriverOrder = ({
   const headerRef = useRef(null);
   ////////
   useEffect(() => {
-    if (scrollEvent) {
-      window.addEventListener("scroll", handleScroll);
-    }
-    if (!scrollEvent) {
-      window.removeEventListener("scroll", handleScroll);
-      setMapClass("mapInitRatio");
-    }
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollEvent]);
-
-  useEffect(() => {
     if (!auth.isSignedIn) return;
     if (!user.fetched) {
       fetchUser(auth.userProfile.FW);
@@ -67,10 +54,25 @@ const DriverOrder = ({
     }
   }, [user.fetched, driver.fetched]);
 
+  /////////////////////
+  useEffect(() => {
+    if (scrollEvent) {
+      window.addEventListener("scroll", handleScroll);
+    }
+    if (!scrollEvent) {
+      window.removeEventListener("scroll", handleScroll);
+      setMapClass("mapInitRatio");
+    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollEvent]);
+
   useEffect(() => {
     if (
       match.params.page === "search" &&
-      cvtObj2Arr(driver.orders).length < 3
+      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
+        .length < 3
     ) {
       setScrollEvent(false);
     }

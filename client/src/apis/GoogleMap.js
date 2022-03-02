@@ -216,11 +216,15 @@ const GoogleMap = ({
       total = (ordersArr[0].total.total * 0.2).toFixed(2);
     }
     if (ordersArr.length > 1) {
-      total = ordersArr.reduce((prev, curr) => {
-        const prevTotal = prev.total.total * 0.2;
-        const currTotal = curr.total.total * 0.2;
-        return (prevTotal + currTotal).toFixed(2);
-      });
+      total = ordersArr
+        .filter((order) => order.total.total !== 0)
+        .reduce((prev, curr) => {
+          const prevTotal = prev.total.total * 0.2;
+          console.log(prev.total.total);
+          const currTotal = curr.total.total * 0.2;
+          console.log(curr.total.total);
+          return (prevTotal + currTotal).toFixed(2);
+        });
     }
 
     setTrip({
