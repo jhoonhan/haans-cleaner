@@ -1,6 +1,6 @@
 const catchAsync = require("./../utils/catchAsync");
 
-exports.createOne = (Model) =>
+exports.create = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.create(req.body);
 
@@ -14,8 +14,8 @@ exports.createOne = (Model) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const features = Model.find();
-    const data = await features.query;
+    const query = Model.find();
+    const data = await query;
 
     // SEND RESPONSE
     res.status(200).json({
@@ -33,6 +33,31 @@ exports.getOne = (Model) =>
     if (!data) {
       return next(new AppError("No document found with that ID", 404));
     }
+
+    res.status(200).json({
+      status: "success",
+      data,
+    });
+  });
+
+exports.update = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const query = Model.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      // runValidators: true,
+    });
+    const data = await query;
+
+    res.status(200).json({
+      status: "success",
+      data,
+    });
+  });
+
+exports.delete = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const query = Model.findByIdAndDelete(req.params.id);
+    const data = await query;
 
     res.status(200).json({
       status: "success",

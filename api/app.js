@@ -11,6 +11,8 @@ const cookieParser = require("cookie-parser");
 const compression = require("compression");
 const cors = require("cors");
 
+const AppError = require("./utils/appError");
+
 const userRouter = require("./routes/userRoutes");
 
 // start express app

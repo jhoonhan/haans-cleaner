@@ -4,7 +4,7 @@
   "description": "Built using modern technologies: node.js, express, mongoDB, mongoose and friends 😁",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "server": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js"
