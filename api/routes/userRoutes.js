@@ -10,8 +10,6 @@ router.get("/getall", userController.getAll);
 router.get("/:id", userController.getOne);
 router.get("/get/:googleId", userController.getByGoogleId);
 
-router.get("/search", userController.searchByQuery);
-
 router.patch("/:id", userController.update);
 router.delete("/:id", userController.delete);
 

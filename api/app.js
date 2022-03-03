@@ -29,6 +29,10 @@ app.options("*", cors());
 // Set security HTTP headers
 app.use(helmet());
 
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 // Limit requests from same API
 // const limiter = rateLimit({
 //   max: 20,
@@ -56,6 +60,12 @@ app.use(
 );
 
 app.use(compression());
+
+// Test middleware
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 
 // Routes
 app.use("/api/v2/user/", userRouter);

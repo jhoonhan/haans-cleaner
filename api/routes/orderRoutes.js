@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post("/", orderController.create);
 
-router.get("/:id", orderController.getOne);
 router.get("/getall", orderController.getAll);
+router.get("/:id", orderController.getOne);
 router.get("/get/:googleId", orderController.getByGoogleId);
 
 router.patch("/update/:id", orderController.update);

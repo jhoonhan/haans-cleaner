@@ -117,7 +117,7 @@ export const deleteUser = (id) => async (dispatch) => {
 //
 //////////////////// ORDER
 export const fetchOrder = (googleId) => async (dispatch) => {
-  const res = await server.get(`/order/serach/googleId=${googleId}`);
+  const res = await server.get(`/order/get/${googleId}`);
 
   dispatch({ type: FETCH_ORDER, payload: res.data });
 };
@@ -152,13 +152,13 @@ export const cancelOrder = (id) => async (dispatch) => {
 
 // Driver
 export const driverFetchOrder = (date, coords) => async (dispatch) => {
-  const res = await server.get(`/order/?date=${date}`);
+  const res = await server.get(`/order/getall/?date=${date}`);
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data });
 };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
-  const res = await server.get(`/order/?acceptId=${acceptId}`);
+  const res = await server.get(`/order/getall/?acceptId=${acceptId}`);
 
   dispatch({ type: D_FETCH_ACCEPTED, payload: res.data });
 };
@@ -170,12 +170,12 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
     window.alert("error");
   }
   if (res.data.status === "submitted") {
-    const res = await server.patch(`/order/${orderId}`, data);
+    const res = await server.patch(`/order/update/${orderId}`, data);
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
   }
 
   if (res.data.status === "accepted" && res.data.acceptId === data.acceptId) {
-    const res = await server.patch(`/order/${orderId}`, {
+    const res = await server.patch(`/order/update/${orderId}`, {
       ...data,
       acceptId: null,
     });
@@ -196,12 +196,12 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
 };
 
 export const compeleteOrder = (orderId, data) => async (dispatch) => {
-  const res = await server.get(`/orders/${orderId}`);
+  const res = await server.get(`/order/${orderId}`);
 
   if (res.data.acceptId !== data.acceptId) window.alert("error");
 
   if (res.data.acceptId === data.acceptId) {
-    const res = await server.patch(`/orders/${orderId}`, {
+    const res = await server.patch(`/order/update/${orderId}`, {
       ...data,
       acceptId: data.acceptId,
     });
@@ -224,7 +224,7 @@ export const setCoordsAct = (coords) => (dispatch) => {
 
 export const setDistance = (distance, id) => async (dispatch) => {
   console.log(`distance setter fired`);
-  const res = await server.patch(`/orders/${id}`, { distance });
+  const res = await server.patch(`/order/update/${id}`, { distance });
   dispatch({ type: D_SET_DISTANCE, payload: res.data });
 };
 
