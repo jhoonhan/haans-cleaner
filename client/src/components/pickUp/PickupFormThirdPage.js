@@ -92,7 +92,8 @@ class PickupFormThirdPage extends React.Component {
     // if (hourNow > 5) {
     //   date.setDate(date.getDate() + 1);
     // }
-
+    //
+    //
     const selectedDate = new Date(this.props.pickup?.date);
 
     return selectedDate;
