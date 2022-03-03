@@ -6,6 +6,7 @@ exports.create = factory.create(Order);
 
 exports.getAll = factory.getAll(Order);
 exports.getOne = factory.getOne(Order);
+exports.getByGoogleId = factory.getByGoogleId(Order);
 
 exports.update = factory.update(Order);
 

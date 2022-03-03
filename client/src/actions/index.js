@@ -88,25 +88,25 @@ export const createUser =
       savedAddress: [combinedAddress],
     };
 
-    const res = await server.post("/users", { ...combined });
+    const res = await server.post("/user", { ...combined });
 
     dispatch({ type: CREATE_USER, payload: res.data });
     history.push("/");
   };
 
-export const fetchUser = (id) => async (dispatch, getState) => {
-  const res = await server.get(`/users/?googleId=${id}`);
+export const fetchUser = (googleId) => async (dispatch, getState) => {
+  const res = await server.get(`/user/search/${googleId}`);
   dispatch({ type: FETCH_USER, payload: res.data[0] });
   // history.push("/");
 };
 
 export const editUser = (id, newValue) => async (dispatch) => {
-  const res = await server.patch(`/users/${id}`, newValue);
+  const res = await server.patch(`/user/${id}`, newValue);
 
   dispatch({ type: EDIT_USER, payload: res.data });
 };
 export const deleteUser = (id) => async (dispatch) => {
-  await server.delete(`/users/${id}`);
+  await server.delete(`/user/delete/${id}`);
 
   dispatch({ type: DELETE_USER, payload: id });
   history.push("/");
@@ -116,20 +116,20 @@ export const deleteUser = (id) => async (dispatch) => {
 //
 //
 //////////////////// ORDER
-export const fetchOrder = (id) => async (dispatch) => {
-  const res = await server.get(`/orders/?googleId=${id}`);
+export const fetchOrder = (googleId) => async (dispatch) => {
+  const res = await server.get(`/order/serach/googleId=${googleId}`);
 
   dispatch({ type: FETCH_ORDER, payload: res.data });
 };
 
 export const fetchOrders = () => async (dispatch) => {
-  const res = await server.get("/orders");
+  const res = await server.get("/order/getall");
 
   dispatch({ type: FETCH_ORDER, payload: res.data });
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  const res1 = await server.post("/orders", { ...formValues });
+  const res1 = await server.post("/order", { ...formValues });
 
   dispatch({ type: CREATE_ORDER, payload: res1.data });
   dispatch(reset("clothes"));
@@ -138,13 +138,13 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
 };
 
 export const editOrder = (id, formValues) => async (dispatch) => {
-  const res = await server.patch(`/orders/${id}`, formValues);
+  const res = await server.patch(`/order/update/${id}`, formValues);
   // console.log(`edit order fired`);
   dispatch({ type: EDIT_ORDER, payload: res.data });
 };
 
 export const cancelOrder = (id) => async (dispatch) => {
-  await server.delete(`/orders/${id}`);
+  await server.delete(`/order/delete/${id}`);
 
   dispatch({ type: CANCEL_ORDER, payload: id });
   // history.push("/order");
@@ -152,30 +152,30 @@ export const cancelOrder = (id) => async (dispatch) => {
 
 // Driver
 export const driverFetchOrder = (date, coords) => async (dispatch) => {
-  const res = await server.get(`/orders/?date=${date}`);
+  const res = await server.get(`/order/?date=${date}`);
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data });
 };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
-  const res = await server.get(`/orders/?acceptId=${acceptId}`);
+  const res = await server.get(`/order/?acceptId=${acceptId}`);
 
   dispatch({ type: D_FETCH_ACCEPTED, payload: res.data });
 };
 
 export const acceptOrder = (orderId, data) => async (dispatch) => {
-  const res = await server.get(`/orders/${orderId}`);
+  const res = await server.get(`/order/${orderId}`);
 
   if (res.data.status === "completed") {
     window.alert("error");
   }
   if (res.data.status === "submitted") {
-    const res = await server.patch(`/orders/${orderId}`, data);
+    const res = await server.patch(`/order/${orderId}`, data);
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
   }
 
   if (res.data.status === "accepted" && res.data.acceptId === data.acceptId) {
-    const res = await server.patch(`/orders/${orderId}`, {
+    const res = await server.patch(`/order/${orderId}`, {
       ...data,
       acceptId: null,
     });
