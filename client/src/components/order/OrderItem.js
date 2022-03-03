@@ -123,7 +123,7 @@ class OrderItem extends React.Component {
         <OrderCancel
           show={this.state.show}
           handleClose={this.hideModal}
-          id={this.props.order.id}
+          id={this.props.order._id}
         />
         <div className="order__item">
           <div>
@@ -155,7 +155,7 @@ class OrderItem extends React.Component {
               Detail
             </button>
           </div>
-          <div>#{this.props.order.id}</div>
+          <div>#{this.props.order.ticketId}</div>
           <div>
             Pick-up Date:{" "}
             {this.props.order.date

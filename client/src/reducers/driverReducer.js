@@ -22,37 +22,37 @@ const reducer = (
       return {
         ...state,
         fetched: { ...state.fetched, searchOrder: true },
-        orders: { ..._.mapKeys(action.payload, "id") },
+        orders: { ..._.mapKeys(action.payload, "_id") },
       };
     case D_FETCH_ACCEPTED:
       return {
         ...state,
         fetched: { ...state.fetched, acceptedOrder: true },
-        acceptedOrders: { ..._.mapKeys(action.payload, "id") },
+        acceptedOrders: { ..._.mapKeys(action.payload, "_id") },
       };
     case D_ACCEPT_ORDER:
       return {
         ...state,
-        orders: { ...state.orders, [action.payload.id]: action.payload },
+        orders: { ...state.orders, [action.payload._id]: action.payload },
         acceptedOrders: {
           ...state.acceptedOrders,
-          [action.payload.id]: action.payload,
+          [action.payload._id]: action.payload,
         },
       };
     case D_COMPLETE_ORDER:
       return {
         ...state,
-        orders: { ...state.orders, [action.payload.id]: action.payload },
+        orders: { ...state.orders, [action.payload._id]: action.payload },
         acceptedOrders: {
           ...state.acceptedOrders,
-          [action.payload.id]: action.payload,
+          [action.payload._id]: action.payload,
         },
       };
     case D_CANCEL_ORDER:
       return {
         ...state,
-        orders: { ...state.orders, [action.payload.id]: action.payload },
-        acceptedOrders: _.omit(state.acceptedOrders, [action.payload.id]),
+        orders: { ...state.orders, [action.payload._id]: action.payload },
+        acceptedOrders: _.omit(state.acceptedOrders, [action.payload._id]),
         // return _.omit(state, action.payload);
       };
     case D_SET_COORDS:
@@ -62,7 +62,7 @@ const reducer = (
         ...state,
         acceptedOrders: {
           ...state.acceptedOrders,
-          [action.payload.id]: action.payload,
+          [action.payload._id]: action.payload,
         },
       };
     default:

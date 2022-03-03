@@ -13,13 +13,13 @@ const reducer = (state = [], action) => {
     case SIGN_OUT:
       return {};
     case FETCH_ORDER:
-      return { ...state, ..._.mapKeys(action.payload, "id") };
+      return { ...state, ..._.mapKeys(action.payload, "_id") };
     case FETCH_ORDERS:
       return { ...state, orders: action.payload };
     case CREATE_ORDER:
-      return { ...state, [action.payload.id]: action.payload };
+      return { ...state, [action.payload._id]: action.payload };
     case EDIT_ORDER:
-      return { ...state, [action.payload.id]: action.payload };
+      return { ...state, [action.payload._id]: action.payload };
     case CANCEL_ORDER:
       return _.omit(state, action.payload);
     default:

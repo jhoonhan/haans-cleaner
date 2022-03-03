@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const clothesSchema = new mongoose.Schema({
   top: {
@@ -128,6 +129,8 @@ const orderSchema = new mongoose.Schema({
     type: coordsSchema,
   },
 });
+
+orderSchema.plugin(AutoIncrement, { inc_field: "ticketId" });
 
 const Order = mongoose.model("Order", orderSchema);
 

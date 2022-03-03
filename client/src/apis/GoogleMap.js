@@ -180,6 +180,7 @@ const GoogleMap = ({
     );
 
     const distanceMatrixCallback = (response, status) => {
+      if (!response) return;
       const res = response.rows[0].elements;
       ordersArr.forEach((order, i) => {
         if (!driver.orders[order.id].distance) return;

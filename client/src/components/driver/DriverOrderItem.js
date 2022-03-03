@@ -124,10 +124,9 @@ const DriverOrderItem = (props) => {
   const onComplete = () => {
     if (props.order.status === "accepted") {
       // setOrderStatus("compeleted");
-      props.compeleteOrder(props.order.id, {
+      props.compeleteOrder(props.order._id, {
         status: "completed",
         acceptId: props.auth.userProfile.FW,
-        userId: props.user.id,
       });
     }
     if (props.order.status === "completed") {
@@ -178,7 +177,7 @@ const DriverOrderItem = (props) => {
           Hide
         </div>
         <div
-          onClick={() => onAccept(props.order.id)}
+          onClick={() => onAccept(props.order._id)}
           className="driver__order__buttton"
           style={{
             backgroundColor: buttonColor(),
@@ -253,7 +252,7 @@ const DriverOrderItem = (props) => {
               </h3>
             </div>
             <div></div>
-            <div>#{props.order.id}</div>
+            <div>#{props.order.ticketId}</div>
             <div>
               {props.order.street}, {props.order.city}
             </div>

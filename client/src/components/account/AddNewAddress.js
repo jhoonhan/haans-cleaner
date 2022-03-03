@@ -21,7 +21,7 @@ const AddNewAddress = ({
       city: editAddress.values.newCity,
       zip: editAddress.values.newZip,
     };
-    editUser(user?.id, { savedAddress: [...user.savedAddress, newAddress] });
+    editUser(user?._id, { savedAddress: [...user.savedAddress, newAddress] });
 
     onControlNewAddress(true);
 

@@ -34,7 +34,7 @@ const AccountEdit = ({
     const fullName = `${editAccount.values.firstName} ${editAccount.values.lastName}`;
 
     if (type === "profile") {
-      editUser(user?.id, { ...user, ...formValues, fullName });
+      editUser(user?._id, { ...user, ...formValues, fullName });
     }
   };
 
@@ -47,7 +47,7 @@ const AccountEdit = ({
           </button>
           <button
             onClick={() => {
-              deleteUser(user.id);
+              deleteUser(user._id);
               setShowModal(false);
             }}
             className="button--l button--alert"

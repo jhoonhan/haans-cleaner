@@ -23,7 +23,7 @@ const SavedAddressList = ({
       setSelected(address);
     }
     if (enableDefault) {
-      editUser(user?.id, { defaultAddress: address });
+      editUser(user?._id, { defaultAddress: address });
     }
     return;
   };
@@ -35,7 +35,7 @@ const SavedAddressList = ({
         el.zip !== address.zip
       );
     });
-    editUser(user?.id, { savedAddress: filteredArr });
+    editUser(user?._id, { savedAddress: filteredArr });
   };
 
   const isDefault = (data, data2) => {

@@ -13,6 +13,7 @@ const addressSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
+  _id: false,
 });
 
 const userSchema = new mongoose.Schema({
@@ -21,7 +22,7 @@ const userSchema = new mongoose.Schema({
     // required: [true, "user must have a name"],
     trim: true,
   },
-  firstname: {
+  firstName: {
     type: String,
     // required: [true, "user must have a name"],
     trim: true,
@@ -56,7 +57,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   googleId: {
-    type: Number,
+    type: String,
     // required: [true, "you must provide a Google Id"],
     trim: true,
   },

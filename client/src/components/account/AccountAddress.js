@@ -34,7 +34,7 @@ const AccountAddress = ({
     const fullName = `${editAccount.values.firstName} ${editAccount.values.lastName}`;
 
     if (type === "profile") {
-      editUser(user?.id, { ...user, ...formValues, fullName });
+      editUser(user?._id, { ...user, ...formValues, fullName });
     }
   };
 

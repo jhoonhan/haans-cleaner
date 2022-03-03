@@ -90,23 +90,23 @@ export const createUser =
 
     const res = await server.post("/user", { ...combined });
 
-    dispatch({ type: CREATE_USER, payload: res.data });
+    dispatch({ type: CREATE_USER, payload: res.data.data.data });
     history.push("/");
   };
 
 export const fetchUser = (googleId) => async (dispatch, getState) => {
-  const res = await server.get(`/user/search/${googleId}`);
-  dispatch({ type: FETCH_USER, payload: res.data[0] });
+  const res = await server.get(`/user/get/${googleId}`);
+  dispatch({ type: FETCH_USER, payload: res.data.data[0] });
   // history.push("/");
 };
 
 export const editUser = (id, newValue) => async (dispatch) => {
   const res = await server.patch(`/user/${id}`, newValue);
 
-  dispatch({ type: EDIT_USER, payload: res.data });
+  dispatch({ type: EDIT_USER, payload: res.data.data });
 };
 export const deleteUser = (id) => async (dispatch) => {
-  await server.delete(`/user/delete/${id}`);
+  await server.delete(`/user/${id}`);
 
   dispatch({ type: DELETE_USER, payload: id });
   history.push("/");
@@ -119,19 +119,19 @@ export const deleteUser = (id) => async (dispatch) => {
 export const fetchOrder = (googleId) => async (dispatch) => {
   const res = await server.get(`/order/get/${googleId}`);
 
-  dispatch({ type: FETCH_ORDER, payload: res.data });
+  dispatch({ type: FETCH_ORDER, payload: res.data.data });
 };
 
 export const fetchOrders = () => async (dispatch) => {
   const res = await server.get("/order/getall");
 
-  dispatch({ type: FETCH_ORDER, payload: res.data });
+  dispatch({ type: FETCH_ORDER, payload: res.data.data });
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
   const res1 = await server.post("/order", { ...formValues });
 
-  dispatch({ type: CREATE_ORDER, payload: res1.data });
+  dispatch({ type: CREATE_ORDER, payload: res1.data.data.data });
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
   history.push("/");
@@ -154,24 +154,24 @@ export const cancelOrder = (id) => async (dispatch) => {
 export const driverFetchOrder = (date, coords) => async (dispatch) => {
   const res = await server.get(`/order/getall/?date=${date}`);
 
-  dispatch({ type: D_FETCH_ORDER, payload: res.data });
+  dispatch({ type: D_FETCH_ORDER, payload: res.data.data });
 };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
   const res = await server.get(`/order/getall/?acceptId=${acceptId}`);
 
-  dispatch({ type: D_FETCH_ACCEPTED, payload: res.data });
+  dispatch({ type: D_FETCH_ACCEPTED, payload: res.data.data });
 };
 
 export const acceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/order/${orderId}`);
-
-  if (res.data.status === "completed") {
+  console.log(res.data.data.status);
+  if (res.data.data.status === "completed") {
     window.alert("error");
   }
-  if (res.data.status === "submitted") {
+  if (res.data.data.status === "submitted") {
     const res = await server.patch(`/order/update/${orderId}`, data);
-    dispatch({ type: D_ACCEPT_ORDER, payload: res.data });
+    dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
   }
 
   if (res.data.status === "accepted" && res.data.acceptId === data.acceptId) {
@@ -190,17 +190,21 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
       payload: { ...res.data, acceptId: null },
     });
   }
-  if (res.data.status === "accepted" && res.data.acceptId !== data.acceptId) {
+  if (
+    res.data.status === "accepted" &&
+    res.data.data.acceptId !== data.acceptId
+  ) {
     window.alert(`order is accepted by other driver`);
   }
 };
 
 export const compeleteOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/order/${orderId}`);
+  console.log(res.data.data);
 
-  if (res.data.acceptId !== data.acceptId) window.alert("error");
+  if (res.data.data.acceptId !== data.acceptId) window.alert("error");
 
-  if (res.data.acceptId === data.acceptId) {
+  if (res.data.data.acceptId === data.acceptId) {
     const res = await server.patch(`/order/update/${orderId}`, {
       ...data,
       acceptId: data.acceptId,
