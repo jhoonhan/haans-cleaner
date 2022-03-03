@@ -14,6 +14,7 @@ const cors = require("cors");
 const AppError = require("./utils/appError");
 
 const userRouter = require("./routes/userRoutes");
+const orderRouter = require("./routes/orderRoutes");
 
 // start express app
 const app = express();
@@ -57,7 +58,8 @@ app.use(
 app.use(compression());
 
 // Routes
-app.use("/api/v2/users/", userRouter);
+app.use("/api/v2/user/", userRouter);
+app.use("/api/v2/order/", orderRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

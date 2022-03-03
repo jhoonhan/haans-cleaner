@@ -34,7 +34,12 @@ const PickupFormFirstPage = (props) => {
   return (
     <form className="form__form" onSubmit={handleSubmit}>
       <div className="form__form__row">
-        <Field name="name" type="text" component={renderField} label="name" />
+        <Field
+          name="name"
+          type="text"
+          component={renderField}
+          label="fullName"
+        />
       </div>
 
       <div className="form__form__row">

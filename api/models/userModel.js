@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
   },
   defaultAddress: {
-    type: [addressSchema],
+    type: addressSchema,
   },
   savedAddress: {
     type: [addressSchema],
