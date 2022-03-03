@@ -7,6 +7,8 @@ import {
   D_SET_COORDS,
   D_FETCH_ACCEPTED,
   D_SET_DISTANCE,
+  D_EDIT_ORDER,
+  D_EDIT_ACCEPTED_ORDER,
 } from "../actions/types";
 
 const reducer = (
@@ -23,6 +25,30 @@ const reducer = (
         ...state,
         fetched: { ...state.fetched, searchOrder: true },
         orders: { ..._.mapKeys(action.payload, "_id") },
+      };
+    case D_EDIT_ORDER:
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          [action.payload._id]: action.payload,
+        },
+      };
+    case D_EDIT_ACCEPTED_ORDER:
+      return {
+        ...state,
+        acceptedOrder: {
+          ...state.acceptedOrders,
+          [action.payload._id]: action.payload,
+        },
+      };
+    case D_SET_DISTANCE:
+      return {
+        ...state,
+        acceptedOrders: {
+          ...state.acceptedOrders,
+          [action.payload._id]: action.payload,
+        },
       };
     case D_FETCH_ACCEPTED:
       return {
@@ -57,14 +83,7 @@ const reducer = (
       };
     case D_SET_COORDS:
       return { ...state, currentCoords: action.payload };
-    case D_SET_DISTANCE:
-      return {
-        ...state,
-        acceptedOrders: {
-          ...state.acceptedOrders,
-          [action.payload._id]: action.payload,
-        },
-      };
+
     default:
       return state;
   }

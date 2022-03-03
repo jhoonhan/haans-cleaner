@@ -101,7 +101,7 @@ const orderSchema = new mongoose.Schema({
     trim: true,
   },
   acceptId: {
-    type: Number,
+    type: String,
     // required: [true, "you must provide a Google Id"],
     trim: true,
   },

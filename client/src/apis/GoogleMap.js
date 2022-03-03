@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
-import { setCoordsAct, setDistance, setGeocode } from "../actions";
+import { driverSetCoordsAct, driverEditAcceptedOrder } from "../actions";
 
 import markerRed from "../image/marker-red.png";
 import markerBlue from "../image/marker-blue.png";
@@ -14,8 +14,8 @@ const GoogleMap = ({
   driver,
   page,
   mapClass,
-  setCoordsAct,
-  setDistance,
+  driverSetCoordsAct,
+  driverEditAcceptedOrder,
   setIsMapLoaded,
 }) => {
   const [loadedMap, setLoadedMap] = useState(null);
@@ -158,7 +158,7 @@ const GoogleMap = ({
 
   ///////////////////////////////////////////
   const geoSuccess = ({ coords }) => {
-    setCoordsAct({ lat: coords.latitude, lng: coords.longitude });
+    driverSetCoordsAct({ lat: coords.latitude, lng: coords.longitude });
   };
 
   const geoFailed = () => {
@@ -182,13 +182,17 @@ const GoogleMap = ({
     const distanceMatrixCallback = (response, status) => {
       if (!response) return;
       const res = response.rows[0].elements;
+
       ordersArr.forEach((order, i) => {
         if (!driver.orders[order.id].distance) return;
         if (
           +res[i].distance.text.split(" ")[0] !==
           driver.orders[order.id].distance
         ) {
-          setDistance(+res[i].distance.text.split(" ")[0], order.id);
+          driverEditAcceptedOrder(
+            { distance: +res[i].distance.text.split(" ")[0] },
+            order._id
+          );
         }
       });
       setIsMapLoaded(true);
@@ -268,7 +272,6 @@ const mapStateToProps = ({ auth, user, driver }) => {
 };
 
 export default connect(mapStateToProps, {
-  setCoordsAct,
-  setDistance,
-  setGeocode,
+  driverSetCoordsAct,
+  driverEditAcceptedOrder,
 })(GoogleMap);

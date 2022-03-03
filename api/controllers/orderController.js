@@ -13,4 +13,4 @@ exports.update = factory.update(Order);
 
 exports.delete = factory.delete(Order);
 
-exports.getGeocode = controller.getGeocode(Order);
+exports.getGeocode = controller.getGeocode();

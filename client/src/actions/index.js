@@ -22,6 +22,7 @@ import {
   EDIT_DADDRESS,
   D_FETCH_ORDER,
   D_ACCEPT_ORDER,
+  D_EDIT_ACCEPTED_ORDER,
   D_COMPLETE_ORDER,
   D_FETCH_ACCEPTED,
   D_GET_COORDS,
@@ -108,18 +109,19 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
-  const res1 = await server.post("/order", { ...formValues });
+  const { street, city, zip } = formValues;
+  const res = await server.post(`/order/geocode`, {
+    street,
+    city,
+    zip,
+  });
+
+  const res1 = await server.post("/order", { ...formValues, coords: res.data });
 
   dispatch({ type: CREATE_ORDER, payload: res1.data.data.data });
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
   history.push("/");
-};
-
-export const editOrder = (id, formValues) => async (dispatch) => {
-  const res = await server.patch(`/order/update/${id}`, formValues);
-  // console.log(`edit order fired`);
-  dispatch({ type: EDIT_ORDER, payload: res.data });
 };
 
 export const cancelOrder = (id) => async (dispatch) => {
@@ -142,9 +144,15 @@ export const driverFetchAccepted = (acceptId) => async (dispatch) => {
   dispatch({ type: D_FETCH_ACCEPTED, payload: res.data.data });
 };
 
-export const acceptOrder = (orderId, data) => async (dispatch) => {
+export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
+  console.log(dataObj);
+  const res = await server.patch(`/order/update/${id}`, dataObj);
+  // console.log(`edit order fired`);
+  dispatch({ type: D_EDIT_ACCEPTED_ORDER, payload: res.data.data });
+};
+
+export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/order/${orderId}`);
-  console.log(res.data.data.status);
   if (res.data.data.status === "completed") {
     window.alert("error");
   }
@@ -153,7 +161,10 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
   }
 
-  if (res.data.status === "accepted" && res.data.acceptId === data.acceptId) {
+  if (
+    res.data.data.status === "accepted" &&
+    res.data.data.acceptId === data.acceptId
+  ) {
     const res = await server.patch(`/order/update/${orderId}`, {
       ...data,
       acceptId: null,
@@ -166,7 +177,7 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
 
     dispatch({
       type: D_CANCEL_ORDER,
-      payload: { ...res.data, acceptId: null },
+      payload: { ...res.data.data, acceptId: null },
     });
   }
   if (
@@ -177,7 +188,7 @@ export const acceptOrder = (orderId, data) => async (dispatch) => {
   }
 };
 
-export const compeleteOrder = (orderId, data) => async (dispatch) => {
+export const driverCompeleteOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/order/${orderId}`);
   console.log(res.data.data);
 
@@ -196,21 +207,16 @@ export const compeleteOrder = (orderId, data) => async (dispatch) => {
 
     dispatch({
       type: D_COMPLETE_ORDER,
-      payload: { ...res.data, acceptId: data.id },
+      payload: { ...res.data.data, acceptId: data.id },
     });
   }
 };
 
-export const setCoordsAct = (coords) => (dispatch) => {
+export const driverSetCoordsAct = (coords) => (dispatch) => {
   dispatch({ type: D_SET_COORDS, payload: coords });
 };
 
-export const setDistance = (distance, id) => async (dispatch) => {
-  console.log(`distance setter fired`);
-  const res = await server.patch(`/order/update/${id}`, { distance });
-  dispatch({ type: D_SET_DISTANCE, payload: res.data });
-};
-
-export const setGeocode = (geocode, id) => (dispatch) => {
-  dispatch({ type: D_SET_GEOCODE, payload: geocode });
+export const getGeocode = (address, id) => async (dispatch) => {
+  const res = await server.get(`/geocode/${id}`, address);
+  console.log(res);
 };

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
 import Modal2 from "../Modal2";
 
-import { acceptOrder, setDistance, compeleteOrder } from "../../actions";
+import { driverAcceptOrder, driverCompeleteOrder } from "../../actions";
 
 import price from "../price";
 
@@ -108,14 +108,14 @@ const DriverOrderItem = (props) => {
 
     if (props.order.status === "submitted") {
       // setOrderStatus("accepted");
-      props.acceptOrder(id, {
+      props.driverAcceptOrder(id, {
         status: "accepted",
         acceptId: props.auth.userProfile.FW,
       });
     }
     if (props.order.status === "accepted") {
       // setOrderStatus("submitted");
-      props.acceptOrder(id, {
+      props.driverAcceptOrder(id, {
         status: "submitted",
         acceptId: props.auth.userProfile.FW,
       });
@@ -124,7 +124,7 @@ const DriverOrderItem = (props) => {
   const onComplete = () => {
     if (props.order.status === "accepted") {
       // setOrderStatus("compeleted");
-      props.compeleteOrder(props.order._id, {
+      props.driverCompeleteOrder(props.order._id, {
         status: "completed",
         acceptId: props.auth.userProfile.FW,
       });
@@ -135,7 +135,7 @@ const DriverOrderItem = (props) => {
   };
 
   const cancelCompletion = () => {
-    props.compeleteOrder(props.order.id, {
+    props.driverCompeleteOrder(props.order.id, {
       status: "accepted",
       acceptId: props.auth.userProfile.FW,
       userId: props.user.id,
@@ -282,7 +282,6 @@ const mapStateToProps = ({ auth, user, driver }) => {
 };
 
 export default connect(mapStateToProps, {
-  acceptOrder,
-  setDistance,
-  compeleteOrder,
+  driverAcceptOrder,
+  driverCompeleteOrder,
 })(DriverOrderItem);
