@@ -15,6 +15,7 @@
     "@babel/polyfill": "^7.12.1",
     "@swc/helpers": "^0.3.2",
     "aws-sdk": "^2.1069.0",
+    "axios": "^0.26.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "compression": "^1.7.4",

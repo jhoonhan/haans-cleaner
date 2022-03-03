@@ -31,27 +31,6 @@ import {
   D_SET_GEOCODE,
 } from "./types";
 
-// export const fetchGeocode = (address) => async (dispatch) => {
-//   console.log(address);
-//   const { street, city, zip } = address;
-//   const queryStreet = street
-//     .replace(/[^a-zA-Z0-9 ]/g, "")
-//     .split(" ")
-//     .join("+");
-//   const queryCity = city
-//     .replace(/[^a-zA-Z0-9 ]/g, "")
-//     .split(" ")
-//     .join("+");
-//   const queryZip = zip;
-
-//   const res = await GoogleGeocode.get(
-//     `/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.REACT_APP_GOOGLE_GEOCODING}`
-//   );
-//   const coords = res.data.results[0].geometry.location;
-//   // dispatch({ type: D_GET_COORDS, payload: coords });
-
-//   return coords;
-// };
 //
 //////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {

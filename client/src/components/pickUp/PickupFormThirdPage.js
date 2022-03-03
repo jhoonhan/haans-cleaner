@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { createRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
+
+import GoogleMap from "../../apis/GoogleMap";
 import { createOrder } from "../../actions";
 import validate from "./validate";
 import price from "../price";
@@ -11,6 +14,8 @@ class PickupFormThirdPage extends React.Component {
     super(props);
 
     this.state = { showModal: false };
+
+    this.googleMapWrapper = createRef();
 
     this.total = { total: 0, subtotal: 0, tax: 0 };
     this.taxRate = 0.0475;
@@ -180,6 +185,18 @@ class PickupFormThirdPage extends React.Component {
       </React.Fragment>
     );
   }
+  renderMap = (status) => {
+    switch (status) {
+      case Status.LOADING:
+        return <div>aaang</div>;
+      case Status.FAILURE:
+        return <div>aaang</div>;
+      case Status.SUCCESS:
+        return <div>aaang</div>;
+      default:
+        return <div>aaang</div>;
+    }
+  };
 
   render() {
     const { handleSubmit, pristine, previousPage, submitting } = this.props;
