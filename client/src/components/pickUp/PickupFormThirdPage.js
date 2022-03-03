@@ -27,12 +27,11 @@ class PickupFormThirdPage extends React.Component {
   onFinalSubmit = () => {
     const clothes = this.props.clothes;
     const formValues = this.props.pickup;
-    const googleId = this.props.auth.userProfile.FW;
-    const strGoogleId = googleId.toString();
+
     const combined = {
       ...formValues,
       clothes,
-      googleId: `${this.props.auth.userProfile.FW}`,
+      googleId: this.props.auth.userProfile.FW,
       total: this.total,
       timestamp: Date.now(),
       status: "submitted",

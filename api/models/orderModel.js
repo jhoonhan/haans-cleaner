@@ -100,11 +100,6 @@ const orderSchema = new mongoose.Schema({
     // required: [true, "you must provide an address"],
     trim: true,
   },
-  googleId: {
-    type: Number,
-    // required: [true, "you must provide a Google Id"],
-    trim: true,
-  },
   acceptId: {
     type: Number,
     // required: [true, "you must provide a Google Id"],
