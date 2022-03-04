@@ -117,31 +117,37 @@ export const fetchOrders = () => async (dispatch) => {
   dispatch({ type: FETCH_ORDER, payload: res.data.data });
 };
 
-export const createOrder = (formValues) => async (dispatch, getState) => {
+export const createOrder = (data) => async (dispatch, getState) => {
   dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
 
-  const { street, city, zip } = formValues;
+  const { street, city, zip } = data;
   const res = await server.post(`/order/geocode`, {
     street,
     city,
     zip,
   });
 
-  const res1 = await server.post("/order", { ...formValues, coords: res.data });
+  const res1 = await server.post("/order", { ...data, coords: res.data });
   dispatch({ type: CREATE_ORDER, payload: res1.data.data.data });
   dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
 
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
   history.push("/");
-  // return res;
+  return res;
 };
 
 export const cancelOrder = (id, callback) => async (dispatch) => {
-  await server.delete(`/order/delete/${id}`);
-
-  callback(false);
-  dispatch({ type: CANCEL_ORDER, payload: id });
+  dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
+  const res = await server.delete(`/order/delete/${id}`);
+  if (res.status === 200) {
+    callback(false);
+    dispatch({ type: CANCEL_ORDER, payload: id });
+    dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
+  }
+  if (res.status !== 200) {
+    window.alert("error");
+  }
 };
 
 // Driver

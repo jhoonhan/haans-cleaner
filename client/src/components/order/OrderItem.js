@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import { cancelOrder } from "../../actions";
 
 import Modal from "../Modal";
+import Loader from "../Loader";
 import price from "../price";
 
-const OrderItem = (props) => {
+const OrderItem = ({ auth, user, order, loader, cancelOrder }) => {
   const [showModal, setShowModal] = useState(false);
   const refDetail = useRef(null);
   const refBand = React.useRef(null);
@@ -54,14 +55,12 @@ const OrderItem = (props) => {
           }}
         >
           <div>
-            <strong>{props.order.name}</strong>
+            <strong>{order.name}</strong>
           </div>
-          <div>{` ${props.order.street}, ${props.order.city}`}</div>
-          <div>{props.order.phone}</div>
+          <div>{` ${order.street}, ${order.city}`}</div>
+          <div>{order.phone}</div>
         </div>
-        <div className="order__detail__row">
-          {renderCount(props.order.clothes)}
-        </div>
+        <div className="order__detail__row">{renderCount(order.clothes)}</div>
 
         <div className="order__detail__row">
           <div
@@ -72,14 +71,14 @@ const OrderItem = (props) => {
             <div></div>
             <div>Subtotal</div>
             <div>:</div>
-            <div>${props.order.total.subtotal}</div>
+            <div>${order.total.subtotal}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
             <div></div>
             <div>Tax</div>
             <div>:</div>
-            <div>${props.order.total.tax}</div>
+            <div>${order.total.tax}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
@@ -87,7 +86,7 @@ const OrderItem = (props) => {
             <div>Total</div>
             <div>:</div>
             <div>
-              <b>${props.order.total.total}</b>
+              <b>${order.total.total}</b>
             </div>
           </div>
         </div>
@@ -103,8 +102,7 @@ const OrderItem = (props) => {
         </button>
         <button
           onClick={() => {
-            console.log(props.order);
-            props.cancelOrder(props.order._id, setShowModal);
+            cancelOrder(order._id, setShowModal);
           }}
           className="button--l button--alert"
         >
@@ -117,10 +115,11 @@ const OrderItem = (props) => {
   const render = () => {
     return (
       <>
+        {loader.showLoader && <Loader />}
         <Modal
           show={showModal}
           handleClose={setShowModal}
-          id={props.user.googleId}
+          id={user.googleId}
           title={"Cancel Order"}
           content="You cannot undeo your cancellation"
           actions={modalAction()}
@@ -134,10 +133,10 @@ const OrderItem = (props) => {
           className="order__item"
         >
           <div>
-            <h3>{props.order.status}</h3>
+            <h3>{order.status}</h3>
           </div>
           <div>
-            {props.order.status === "submitted" ? (
+            {order.status === "submitted" ? (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -149,15 +148,13 @@ const OrderItem = (props) => {
               </button>
             ) : null}
           </div>
-          <div>#{props.order.ticketId}</div>
+          <div>#{order.ticketId}</div>
           <div>
             Pick-up Date:{" "}
-            {props.order.date
-              ? props.order.date.split("-").slice(1, 3).join("/")
-              : ""}
+            {order.date ? order.date.split("-").slice(1, 3).join("/") : ""}
           </div>
           <div>
-            <b>${props.order.total.total}</b>
+            <b>${order.total.total}</b>
           </div>
         </div>
 
@@ -170,11 +167,12 @@ const OrderItem = (props) => {
   return render();
 };
 
-const mapStateToProps = ({ auth, user, orders }) => {
+const mapStateToProps = ({ auth, user, orders, loader }) => {
   return {
     auth,
     user: user.currentUser,
     orders: orders.orders,
+    loader,
   };
 };
 

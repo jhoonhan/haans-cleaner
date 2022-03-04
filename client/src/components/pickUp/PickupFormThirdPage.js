@@ -58,7 +58,6 @@ class PickupFormThirdPage extends React.Component {
         <button
           onClick={async () => {
             this.onFinalSubmit();
-            this.setState({ showModal: false });
           }}
           className="button--l button--alert"
         >
@@ -189,7 +188,6 @@ class PickupFormThirdPage extends React.Component {
   }
 
   render() {
-    console.log(this.props.loader);
     const { handleSubmit, pristine, previousPage, submitting } = this.props;
     return (
       <>
