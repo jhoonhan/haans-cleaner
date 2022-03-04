@@ -7,7 +7,7 @@ import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
-import Modal2 from "../Modal2";
+import Modal from "../Modal";
 
 const AccountEdit = ({
   auth,
@@ -80,7 +80,7 @@ const AccountEdit = ({
   const render = () => {
     return (
       <>
-        <Modal2
+        <Modal
           show={showModal}
           handleClose={setShowModal}
           id={user?.googleId}

@@ -7,7 +7,7 @@ import GoogleMap from "../../apis/GoogleMap";
 import { createOrder } from "../../actions";
 import validate from "./validate";
 import price from "../price";
-import Modal2 from "../Modal2";
+import Modal from "../Modal";
 import Loader from "../Loader";
 
 class PickupFormThirdPage extends React.Component {
@@ -194,7 +194,7 @@ class PickupFormThirdPage extends React.Component {
     return (
       <>
         {this.props.loader.showLoader && <Loader />}
-        <Modal2
+        <Modal
           show={this.state.showModal}
           handleClose={this.state.setShowModal}
           id={this.props.user.googleId}

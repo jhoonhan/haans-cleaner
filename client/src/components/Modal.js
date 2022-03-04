@@ -2,7 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 const Modal = (props) => {
-  const showHideClassName = props.show ? "display--flex" : "display--hidden";
+  const showHideClassName = props.show
+    ? "transform--visible opacity--100"
+    : "transform--hidden opacity--0";
 
   return ReactDOM.createPortal(
     <div className={`modal ${showHideClassName}`}>

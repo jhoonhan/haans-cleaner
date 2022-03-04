@@ -137,9 +137,10 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
   // return res;
 };
 
-export const cancelOrder = (id) => async (dispatch) => {
+export const cancelOrder = (id, callback) => async (dispatch) => {
   await server.delete(`/order/delete/${id}`);
 
+  callback(false);
   dispatch({ type: CANCEL_ORDER, payload: id });
 };
 

@@ -1,50 +1,28 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { cancelOrder } from "../../actions";
 
-import OrderCancel from "./OrderCancel";
+import Modal from "../Modal";
 import price from "../price";
 
-class OrderItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { show: false };
+const OrderItem = (props) => {
+  const [showModal, setShowModal] = useState(false);
+  const refDetail = useRef(null);
+  const refBand = React.useRef(null);
 
-    this.showModal = this.showModal.bind(this);
-    this.hideModal = this.hideModal.bind(this);
+  const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
-    this.detailRef = React.createRef();
-    this.buttonRef = React.createRef();
-
-    this.animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
-  }
-
-  showModal = () => {
-    this.setState({ show: true });
+  const toggleView = () => {
+    refDetail.current.classList.toggle("height--0");
+    refDetail.current.classList.toggle("opacity--0");
+    refDetail.current.classList.toggle("padding--0");
+    refDetail.current.classList.toggle("margin--0");
+    refDetail.current.classList.toggle("overflow--hidden");
   };
 
-  hideModal = () => {
-    this.setState({ show: false });
-  };
-  onCancelClick = () => {
-    // this.props.cancelOrder(this.props.auth.userProfile.FW);
-  };
-
-  highlightButton = () => {
-    this.buttonRef.current.classList.toggle("button--active");
-  };
-
-  toggleView = () => {
-    this.detailRef.current.classList.toggle("height--0");
-    this.detailRef.current.classList.toggle("opacity--0");
-    this.detailRef.current.classList.toggle("padding--0");
-    this.detailRef.current.classList.toggle("margin--0");
-    this.detailRef.current.classList.toggle("overflow--hidden");
-  };
-
-  renderCount(clothes) {
+  const renderCount = (clothes) => {
     if (!clothes) return null;
 
     const keys = Object.keys(clothes);
@@ -62,9 +40,9 @@ class OrderItem extends React.Component {
         </div>
       );
     });
-  }
+  };
 
-  renderDetail() {
+  const renderDetail = () => {
     return (
       <>
         <div
@@ -76,13 +54,13 @@ class OrderItem extends React.Component {
           }}
         >
           <div>
-            <strong>{this.props.order.name}</strong>
+            <strong>{props.order.name}</strong>
           </div>
-          <div>{` ${this.props.order.street}, ${this.props.order.city}`}</div>
-          <div>{this.props.order.phone}</div>
+          <div>{` ${props.order.street}, ${props.order.city}`}</div>
+          <div>{props.order.phone}</div>
         </div>
         <div className="order__detail__row">
-          {this.renderCount(this.props.order.clothes)}
+          {renderCount(props.order.clothes)}
         </div>
 
         <div className="order__detail__row">
@@ -94,14 +72,14 @@ class OrderItem extends React.Component {
             <div></div>
             <div>Subtotal</div>
             <div>:</div>
-            <div>${this.props.order.total.subtotal}</div>
+            <div>${props.order.total.subtotal}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
             <div></div>
             <div>Tax</div>
             <div>:</div>
-            <div>${this.props.order.total.tax}</div>
+            <div>${props.order.total.tax}</div>
           </div>
           <div className="order__detail__table">
             <div></div>
@@ -109,66 +87,88 @@ class OrderItem extends React.Component {
             <div>Total</div>
             <div>:</div>
             <div>
-              <b>${this.props.order.total.total}</b>
+              <b>${props.order.total.total}</b>
             </div>
           </div>
         </div>
       </>
     );
-  }
+  };
 
-  render() {
+  const modalAction = () => {
     return (
       <>
-        <OrderCancel
-          show={this.state.show}
-          handleClose={this.hideModal}
-          id={this.props.order._id}
+        <button onClick={() => setShowModal(false)} className="button--l">
+          Go Back
+        </button>
+        <button
+          onClick={() => {
+            console.log(props.order);
+            props.cancelOrder(props.order._id, setShowModal);
+          }}
+          className="button--l button--alert"
+        >
+          Confirm
+        </button>
+      </>
+    );
+  };
+
+  const render = () => {
+    return (
+      <>
+        <Modal
+          show={showModal}
+          handleClose={setShowModal}
+          id={props.user.googleId}
+          title={"Cancel Order"}
+          content="You cannot undeo your cancellation"
+          actions={modalAction()}
         />
-        <div className="order__item">
+
+        <div
+          ref={refBand}
+          onClick={() => {
+            toggleView();
+          }}
+          className="order__item"
+        >
           <div>
-            <h3>{this.props.order.status}</h3>
+            <h3>{props.order.status}</h3>
           </div>
           <div>
-            {this.props.order.status === "submitted" ? (
-              <button onClick={this.showModal} className="button--m">
+            {props.order.status === "submitted" ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowModal(true);
+                }}
+                className="button--m"
+              >
                 Cancel
               </button>
             ) : null}
-
-            <button
-              className="button--m"
-              ref={this.buttonRef}
-              onClick={() => {
-                this.toggleView();
-                this.highlightButton();
-              }}
-            >
-              Detail
-            </button>
           </div>
-          <div>#{this.props.order.ticketId}</div>
+          <div>#{props.order.ticketId}</div>
           <div>
             Pick-up Date:{" "}
-            {this.props.order.date
-              ? this.props.order.date.split("-").slice(1, 3).join("/")
+            {props.order.date
+              ? props.order.date.split("-").slice(1, 3).join("/")
               : ""}
           </div>
           <div>
-            <b>${this.props.order.total.total}</b>
+            <b>${props.order.total.total}</b>
           </div>
         </div>
 
-        <div
-          ref={this.detailRef}
-          className={`order__detail ${this.animationClasses}`}
-        >
-          {this.renderDetail()}
+        <div ref={refDetail} className={`order__detail ${animationClasses}`}>
+          {renderDetail()}
         </div>
       </>
     );
-  }
-}
+  };
+  return render();
+};
 
 const mapStateToProps = ({ auth, user, orders }) => {
   return {

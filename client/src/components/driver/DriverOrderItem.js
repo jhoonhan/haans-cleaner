@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
-import Modal2 from "../Modal2";
+import Modal from "../Modal";
 
 import { driverAcceptOrder, driverCompeleteOrder } from "../../actions";
 
@@ -224,7 +224,7 @@ const DriverOrderItem = (props) => {
   const render = () => {
     return (
       <>
-        <Modal2
+        <Modal
           show={showModal}
           handleClose={setShowModal}
           id={props.user.googleId}

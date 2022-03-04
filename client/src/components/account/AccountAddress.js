@@ -7,7 +7,7 @@ import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
-import Modal2 from "../Modal2";
+import Modal from "../Modal";
 
 const AccountAddress = ({
   auth,

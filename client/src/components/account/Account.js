@@ -8,7 +8,7 @@ import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
-import Modal2 from "../Modal2";
+import Modal from "../Modal";
 import DriverAccount from "../driver/DriverAccount";
 import AccountEdit from "./AccountEdit";
 
@@ -110,7 +110,7 @@ const Account = ({
             <h2>Account</h2>
           </header>
 
-          <Modal2
+          <Modal
             show={showModal}
             handleClose={setShowModal}
             id={user?.googleId}
