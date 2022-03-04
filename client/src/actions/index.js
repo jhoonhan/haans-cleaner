@@ -181,12 +181,11 @@ export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
 
 export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
   const res = await server.get(`/order/${orderId}`);
-  if (res.data.data.status === "completed") {
-    window.alert("error");
-  }
+
   if (res.data.data.status === "submitted") {
     const res = await server.patch(`/order/update/${orderId}`, data);
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
+    return res;
   }
 
   if (
@@ -198,15 +197,15 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
       acceptId: null,
     });
 
-    if (res.status !== 200) {
-      console.error(`error`);
-      return;
-    }
-
     dispatch({
       type: D_CANCEL_ORDER,
       payload: { ...res.data.data, acceptId: null },
     });
+    return res;
+  }
+
+  if (res.data.data.status === "completed") {
+    window.alert("error");
   }
   if (
     res.data.status === "accepted" &&

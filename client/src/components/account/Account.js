@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
-import { signOutRedux, fetchUser, deleteUser } from "../../actions";
+import { signOutRedux, fetchUser, deleteUser, fetchOrder } from "../../actions";
 import { Field, Form, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import { editUser } from "../../actions";
@@ -15,13 +15,17 @@ import AccountEdit from "./AccountEdit";
 const Account = ({
   auth,
   user,
+  userFetched,
+  order,
   signOutRedux,
   handleSubmit,
   editUser,
+  fetchUser,
   editAccount,
   deleteUser,
   match,
 }) => {
+  const [fetched, setFetched] = useState(false);
   const [page, setPage] = useState("landing");
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -29,7 +33,13 @@ const Account = ({
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    console.log(match.path);
+    if (!auth.isSignedIn) return;
+    if (!userFetched) {
+      fetchUser(auth.userProfile.FW);
+    }
+    if (auth.isSignedIn && userFetched) {
+      setFetched(true);
+    }
   }, [auth.isSignedIn, user]);
 
   // DOM selection
@@ -97,6 +107,7 @@ const Account = ({
   };
 
   const render = () => {
+    if (!fetched) return null;
     return (
       <>
         <motion.div
@@ -141,7 +152,7 @@ const Account = ({
                 </h3>
               </Link>
 
-              <Link to="/account/edit" className="nav__item">
+              <Link to="/account/order" className="nav__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   My Orders
                 </h3>
@@ -161,10 +172,12 @@ const Account = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, form }) => {
+const mapStateToProps = ({ auth, order, user, form }) => {
   return {
     auth,
+    order,
     user: user.currentUser,
+    userFetched: user.fetched,
     editAccount: form.editAccount,
   };
 };

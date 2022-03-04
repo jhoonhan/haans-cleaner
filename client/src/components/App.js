@@ -15,6 +15,7 @@ import Driver from "./driver/Driver";
 import DriverOrder from "./driver/DriverOrder";
 import AccountEdit from "./account/AccountEdit";
 import AccountAddress from "./account/AccountAddress";
+import AccountOrder from "./account/AccountOrder";
 
 const App = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/account" exact component={Account} />
           <Route path="/account/edit" exact component={AccountEdit} />
           <Route path="/account/address" exact component={AccountAddress} />
+          <Route path="/account/order" exact component={AccountOrder} />
 
           <Route path="/driver" exact component={Driver} />
           <Route path="/driver/order/:page" exact component={DriverOrder} />

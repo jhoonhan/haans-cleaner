@@ -9,6 +9,8 @@ import { driverAcceptOrder, driverCompeleteOrder } from "../../actions";
 import price from "../price";
 
 const DriverOrderItem = (props) => {
+  const [btnLoading, setBtnLoading] = useState(false);
+
   const refDetail = React.useRef(null);
   const refBand = React.useRef(null);
 
@@ -96,26 +98,27 @@ const DriverOrderItem = (props) => {
     );
   };
 
-  const onAccept = (id) => {
+  const onAccept = async (id) => {
+    setBtnLoading(true);
     if (props.order.status === "completed") {
       window.alert("this is already completed");
-      return;
     }
 
     if (props.order.status === "submitted") {
       // setOrderStatus("accepted");
-      props.driverAcceptOrder(id, {
+      await props.driverAcceptOrder(id, {
         status: "accepted",
         acceptId: props.auth.userProfile.FW,
       });
     }
     if (props.order.status === "accepted") {
       // setOrderStatus("submitted");
-      props.driverAcceptOrder(id, {
+      await props.driverAcceptOrder(id, {
         status: "submitted",
         acceptId: props.auth.userProfile.FW,
       });
     }
+    setBtnLoading(false);
   };
 
   //////////
@@ -140,7 +143,7 @@ const DriverOrderItem = (props) => {
             backgroundColor: buttonColor(),
           }}
         >
-          {props.order.status}
+          {!btnLoading ? props.order.status : "Loading"}
         </div>
       </div>
     );
@@ -186,14 +189,6 @@ const DriverOrderItem = (props) => {
   const render = () => {
     return (
       <>
-        {/* <Modal
-          show={showModal}
-          handleClose={setShowModal}
-          id={props.user.googleId}
-          title={"Confrim Completion"}
-          content="You will not be able to cancel your confirmation"
-          actions={modalAction()}
-        /> */}
         <div
           ref={refBand}
           timestamp={props.timestamp}
