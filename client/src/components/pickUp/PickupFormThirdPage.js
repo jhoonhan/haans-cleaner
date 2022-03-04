@@ -8,6 +8,7 @@ import { createOrder } from "../../actions";
 import validate from "./validate";
 import price from "../price";
 import Modal2 from "../Modal2";
+import Loader from "../Loader";
 
 class PickupFormThirdPage extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class PickupFormThirdPage extends React.Component {
       timestamp: Date.now(),
       status: "submitted",
     };
-    this.props.createOrder(combined).then((res) => console.log(res));
+    this.props.createOrder(combined);
   };
 
   modalAction = () => {
@@ -188,9 +189,11 @@ class PickupFormThirdPage extends React.Component {
   }
 
   render() {
+    console.log(this.props.loader);
     const { handleSubmit, pristine, previousPage, submitting } = this.props;
     return (
       <>
+        {this.props.loader.showLoader && <Loader />}
         <Modal2
           show={this.state.showModal}
           handleClose={this.state.setShowModal}
@@ -199,7 +202,6 @@ class PickupFormThirdPage extends React.Component {
           content="Are you sure?"
           actions={this.modalAction()}
         />
-
         <form
           onSubmit={handleSubmit(this.onFinalSubmit)}
           className="form__form form__form--third"
@@ -259,12 +261,13 @@ class PickupFormThirdPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ form, auth, user }) => {
+const mapStateToProps = ({ form, auth, user, loader }) => {
   return {
     pickup: form.pickup?.values,
     clothes: form.clothes?.values,
     auth,
     user: user.currentUser,
+    loader,
   };
 };
 

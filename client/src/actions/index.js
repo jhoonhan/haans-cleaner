@@ -5,6 +5,7 @@ import GoogleGeocode from "../apis/GoogleGeocode";
 import { Loader } from "@googlemaps/js-api-loader";
 
 import {
+  LOADING_TOGGLE_ACTION,
   SIGN_IN,
   SIGN_OUT,
   FETCH_ORDER,
@@ -32,7 +33,15 @@ import {
   D_SET_GEOCODE,
 } from "./types";
 
-//
+/// GLobal
+
+export const loadingToggleAction = (status) => {
+  return {
+    type: LOADING_TOGGLE_ACTION,
+    payload: status,
+  };
+};
+
 //////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {
   return {
@@ -109,6 +118,8 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const createOrder = (formValues) => async (dispatch, getState) => {
+  dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
+
   const { street, city, zip } = formValues;
   const res = await server.post(`/order/geocode`, {
     street,
@@ -117,12 +128,13 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
   });
 
   const res1 = await server.post("/order", { ...formValues, coords: res.data });
-
   dispatch({ type: CREATE_ORDER, payload: res1.data.data.data });
+  dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
+
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
   history.push("/");
-  return res;
+  // return res;
 };
 
 export const cancelOrder = (id) => async (dispatch) => {

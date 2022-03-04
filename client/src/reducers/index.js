@@ -5,6 +5,7 @@ import authReducer from "./authReducer";
 import userReducer from "./userReducer";
 import orderReducer from "./orderReducer";
 import driverReducer from "./driverReducer";
+import loadReducer from "./loadReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   orders: orderReducer,
   form: formReducer,
   driver: driverReducer,
+  loader: loadReducer,
 });
