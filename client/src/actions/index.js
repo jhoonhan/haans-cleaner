@@ -129,7 +129,6 @@ export const cancelOrder = (id) => async (dispatch) => {
   await server.delete(`/order/delete/${id}`);
 
   dispatch({ type: CANCEL_ORDER, payload: id });
-  // history.push("/order");
 };
 
 // Driver
