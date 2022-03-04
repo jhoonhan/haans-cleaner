@@ -42,7 +42,7 @@ class PickupFormThirdPage extends React.Component {
       timestamp: Date.now(),
       status: "submitted",
     };
-    this.props.createOrder(combined);
+    this.props.createOrder(combined).then((res) => console.log(res));
   };
 
   modalAction = () => {
@@ -186,18 +186,6 @@ class PickupFormThirdPage extends React.Component {
       </React.Fragment>
     );
   }
-  renderMap = (status) => {
-    switch (status) {
-      case Status.LOADING:
-        return <div>aaang</div>;
-      case Status.FAILURE:
-        return <div>aaang</div>;
-      case Status.SUCCESS:
-        return <div>aaang</div>;
-      default:
-        return <div>aaang</div>;
-    }
-  };
 
   render() {
     const { handleSubmit, pristine, previousPage, submitting } = this.props;

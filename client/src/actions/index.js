@@ -122,6 +122,7 @@ export const createOrder = (formValues) => async (dispatch, getState) => {
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
   history.push("/");
+  return res;
 };
 
 export const cancelOrder = (id) => async (dispatch) => {
