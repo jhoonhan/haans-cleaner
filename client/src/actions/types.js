@@ -1,3 +1,5 @@
+export const LOADING_TOGGLE_ACTION = "LOADING_TOGGLE_ACTION";
+
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 
