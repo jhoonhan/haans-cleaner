@@ -200,7 +200,7 @@ const PickupFormThirdPage = (props) => {
     const { handleSubmit, pristine, previousPage, submitting } = props;
     return (
       <>
-        {props.loader.showLoader && <Loader />}
+        <Loader show={props.loader.showLoader} />
         <Modal
           show={showModal}
           handleClose={setShowModal}

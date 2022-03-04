@@ -78,7 +78,7 @@ const Order = ({
           transition={{ type: "spring", duration: 0.1 }}
           className="motion-container"
         >
-          {loader.showLoader && <Loader />}
+          <Loader show={loader.showLoader} />
           <Modal
             show={showModal}
             handleClose={setShowModal}

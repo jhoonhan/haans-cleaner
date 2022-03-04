@@ -3,10 +3,15 @@ import { connect } from "react-redux";
 import {
   driverFetchOrder,
   driverFetchAccepted,
+  driverCompeleteOrder,
   fetchUser,
+  cancelOrder,
 } from "../../actions";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "../../apis/GoogleMap";
+
+import Loader from "../Loader";
+import Modal from "../Modal";
 
 import DriverOrderItem from "./DriverOrderItem";
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
@@ -16,16 +21,22 @@ const DriverOrder = ({
   auth,
   driverFetchOrder,
   driverFetchAccepted,
+  driverCompeleteOrder,
   driver,
   fetchUser,
+  cancelOrder,
   center,
   zoom,
   match,
+  loader,
 }) => {
   const [fetched, setFetched] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [scrollEvent, setScrollEvent] = useState(false);
   const [mapClass, setMapClass] = useState("mapInitRatio");
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(false);
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
@@ -127,6 +138,8 @@ const DriverOrder = ({
             key={i}
             page={match.params.page}
             timestamp={order.timestamp}
+            setShowModal={setShowModal}
+            setSelectedOrder={setSelectedOrder}
           />
         );
       });
@@ -145,46 +158,95 @@ const DriverOrder = ({
     }
   };
 
+  const modalAction = () => {
+    const onComplete = () => {
+      if (selectedOrder.status === "accepted") {
+        // setOrderStatus("compeleted");
+        driverCompeleteOrder(
+          { orderId: selectedOrder._id, userId: selectedOrder.userId },
+          {
+            ...selectedOrder,
+            status: "completed",
+            acceptId: auth.userProfile.FW,
+          }
+        );
+        setShowModal(false);
+      }
+      if (selectedOrder.status === "completed") {
+        setShowModal(false);
+      }
+    };
+
+    return (
+      <>
+        <button onClick={() => setShowModal(false)} className="button--l">
+          Go Back
+        </button>
+        <button
+          onClick={() => {
+            onComplete();
+          }}
+          className="button--l button--alert"
+        >
+          Confirm
+        </button>
+      </>
+    );
+  };
+
   const render = () => {
     if (!fetched) return null;
 
     return (
-      <div className="motion-container">
-        <header className="page-title" ref={headerRef}>
-          <h2>{match.params.page}</h2>
-        </header>
+      <>
+        <Loader show={loader.showLoader} />
+        <Modal
+          show={showModal}
+          handleClose={setShowModal}
+          id={user.googleId}
+          title={"Confrim Completion"}
+          content="You will not be able to cancel your confirmation"
+          actions={modalAction()}
+        />
+        <div className="motion-container">
+          <header className="page-title" ref={headerRef}>
+            <h2>{match.params.page}</h2>
+          </header>
 
-        <div ref={googleMapWrapper} className={mapClass}>
-          <Wrapper
-            apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
-            render={renderMap}
-          >
-            <GoogleMap
-              orders={
-                match.params.page === "search"
-                  ? driver.orders
-                  : driver.acceptedOrders
-              }
-              page={match.params.page}
-              setIsMapLoaded={setIsMapLoaded}
-            />
-          </Wrapper>
+          <div ref={googleMapWrapper} className={mapClass}>
+            <Wrapper
+              apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
+              render={renderMap}
+            >
+              <GoogleMap
+                orders={
+                  match.params.page === "search"
+                    ? driver.orders
+                    : driver.acceptedOrders
+                }
+                page={match.params.page}
+                setIsMapLoaded={setIsMapLoaded}
+              />
+            </Wrapper>
+          </div>
+          <div className="order-container">
+            <div className="driver__order__list">{rednerSearchOrders()}</div>
+          </div>
         </div>
-        <div className="order-container">
-          <div className="driver__order__list">{rednerSearchOrders()}</div>
-        </div>
-      </div>
+      </>
     );
   };
   return render();
 };
 
-const mapStateToProps = ({ auth, user, driver }) => {
-  return { auth: auth, user, driver };
+const mapStateToProps = ({ auth, user, driver, loader }) => {
+  return { auth: auth, user, driver, loader };
 };
 
 export default connect(mapStateToProps, {
   driverFetchOrder,
   driverFetchAccepted,
+  driverCompeleteOrder,
   fetchUser,
+  cancelOrder,
 })(DriverOrder);

@@ -9,12 +9,8 @@ import { driverAcceptOrder, driverCompeleteOrder } from "../../actions";
 import price from "../price";
 
 const DriverOrderItem = (props) => {
-  const [showModal, setShowModal] = useState(null);
-
-  // }
   const refDetail = React.useRef(null);
   const refBand = React.useRef(null);
-  const refAccept = React.useRef(null);
 
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
@@ -121,41 +117,7 @@ const DriverOrderItem = (props) => {
       });
     }
   };
-  const onComplete = () => {
-    if (props.order.status === "accepted") {
-      // setOrderStatus("compeleted");
-      props.driverCompeleteOrder(
-        { orderId: props.order._id, userId: props.order.userId },
-        {
-          ...props.order,
-          status: "completed",
-          acceptId: props.auth.userProfile.FW,
-        }
-      );
-      setShowModal(false);
-    }
-    if (props.order.status === "completed") {
-      setShowModal(false);
-    }
-  };
 
-  const modalAction = () => {
-    return (
-      <>
-        <button onClick={() => setShowModal(false)} className="button--l">
-          Go Back
-        </button>
-        <button
-          onClick={() => {
-            onComplete();
-          }}
-          className="button--l button--alert"
-        >
-          Confirm
-        </button>
-      </>
-    );
-  };
   //////////
 
   const renderSearchButtons = () => {
@@ -203,9 +165,9 @@ const DriverOrderItem = (props) => {
         </div>
         <div
           onClick={() => {
-            props.order.status === "accepted"
-              ? setShowModal(true)
-              : setShowModal(false);
+            if (props.order.status === "completed") return;
+            props.setShowModal(true);
+            props.setSelectedOrder(props.order);
           }}
           className="driver__order__buttton"
           style={{ backgroundColor: buttonColor() }}
@@ -224,14 +186,14 @@ const DriverOrderItem = (props) => {
   const render = () => {
     return (
       <>
-        <Modal
+        {/* <Modal
           show={showModal}
           handleClose={setShowModal}
           id={props.user.googleId}
           title={"Confrim Completion"}
           content="You will not be able to cancel your confirmation"
           actions={modalAction()}
-        />
+        /> */}
         <div
           ref={refBand}
           timestamp={props.timestamp}
