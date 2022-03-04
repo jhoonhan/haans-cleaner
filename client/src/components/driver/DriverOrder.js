@@ -160,7 +160,7 @@ const DriverOrder = ({
       if (selectedOrder.status === "accepted") {
         // setOrderStatus("compeleted");
         driverCompeleteOrder(
-          { orderId: selectedOrder._id, userId: selectedOrder.userId },
+          { orderId: selectedOrder._id, userId: user.currentUser._id },
           {
             ...selectedOrder,
             status: "completed",

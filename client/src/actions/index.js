@@ -226,9 +226,7 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
       ...data,
       acceptId: data.acceptId,
     });
-    const res1 = await server.patch(`/user/completed/${userId}`, {
-      ...data,
-    });
+    const res1 = await server.patch(`/user/completed/${userId}`, data);
 
     if (res.status !== 200 || res1.status !== 200) {
       console.error(`error`);
