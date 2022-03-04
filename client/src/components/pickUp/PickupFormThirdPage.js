@@ -65,7 +65,7 @@ const PickupFormThirdPage = (props) => {
       timestamp: Date.now(),
       status: "submitted",
     };
-    props.createOrder(combined);
+    props.createOrder(combined).then(() => setShowModal(false));
   };
 
   const modalAction = () => {

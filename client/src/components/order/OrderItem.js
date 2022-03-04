@@ -115,7 +115,7 @@ const OrderItem = ({ auth, user, order, loader, cancelOrder }) => {
   const render = () => {
     return (
       <>
-        {loader.showLoader && <Loader />}
+        {/* {loader.showLoader && <Loader />}
         <Modal
           show={showModal}
           handleClose={setShowModal}
@@ -123,7 +123,7 @@ const OrderItem = ({ auth, user, order, loader, cancelOrder }) => {
           title={"Cancel Order"}
           content="You cannot undeo your cancellation"
           actions={modalAction()}
-        />
+        /> */}
 
         <div
           ref={refBand}

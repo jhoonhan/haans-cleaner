@@ -33,6 +33,14 @@ import {
   D_SET_GEOCODE,
 } from "./types";
 
+/// Helpers
+const _loadingApiCall = async (fn, dispatch) => {
+  dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
+  const res = await fn();
+  dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
+  return res;
+};
+
 /// GLobal
 
 export const loadingToggleAction = (status) => {
@@ -111,25 +119,25 @@ export const fetchOrder = (googleId) => async (dispatch) => {
   dispatch({ type: FETCH_ORDER, payload: res.data.data });
 };
 
-export const fetchOrders = () => async (dispatch) => {
-  const res = await server.get("/order/getall");
-
-  dispatch({ type: FETCH_ORDER, payload: res.data.data });
-};
-
 export const createOrder = (data) => async (dispatch, getState) => {
-  dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
+  const fn = async () => {
+    const res = await server.post(`/order/geocode`, {
+      ...data,
+    });
+    const res1 = await server.post("/order", { ...data, coords: res.data });
+    return res1;
+  };
 
-  const { street, city, zip } = data;
-  const res = await server.post(`/order/geocode`, {
-    street,
-    city,
-    zip,
-  });
+  const res = await _loadingApiCall(fn, dispatch);
 
-  const res1 = await server.post("/order", { ...data, coords: res.data });
-  dispatch({ type: CREATE_ORDER, payload: res1.data.data.data });
-  dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
+  if (res.status === 201) {
+    dispatch({ type: CREATE_ORDER, payload: res.data.data.data });
+  }
+
+  if (res.status !== 201) {
+    window.alert("error");
+    return;
+  }
 
   dispatch(reset("clothes"));
   dispatch(reset("pickup"));
@@ -138,16 +146,17 @@ export const createOrder = (data) => async (dispatch, getState) => {
 };
 
 export const cancelOrder = (id, callback) => async (dispatch) => {
-  dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
-  const res = await server.delete(`/order/delete/${id}`);
+  const res = await _loadingApiCall(
+    () => server.delete(`/order/delete/${id}`),
+    dispatch
+  );
   if (res.status === 200) {
-    callback(false);
     dispatch({ type: CANCEL_ORDER, payload: id });
-    dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
   }
   if (res.status !== 200) {
     window.alert("error");
   }
+  callback(false);
 };
 
 // Driver
