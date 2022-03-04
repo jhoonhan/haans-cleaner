@@ -130,14 +130,6 @@ class OrderItem extends React.Component {
             <h3>{this.props.order.status}</h3>
           </div>
           <div>
-            {/* {this.props.order.status === "submitted" ? (
-              <Link
-                to={`/order/delete/${this.props.order.id}`}
-                className="button--m"
-              >
-                Cancel
-              </Link>
-            ) : null} */}
             {this.props.order.status === "submitted" ? (
               <button onClick={this.showModal} className="button--m">
                 Cancel

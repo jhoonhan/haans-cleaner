@@ -128,18 +128,11 @@ const DriverOrderItem = (props) => {
         status: "completed",
         acceptId: props.auth.userProfile.FW,
       });
+      setShowModal(false);
     }
     if (props.order.status === "completed") {
-      setShowModal(true);
+      setShowModal(false);
     }
-  };
-
-  const cancelCompletion = () => {
-    props.driverCompeleteOrder(props.order.id, {
-      status: "accepted",
-      acceptId: props.auth.userProfile.FW,
-      userId: props.user.id,
-    });
   };
 
   const modalAction = () => {
@@ -150,9 +143,7 @@ const DriverOrderItem = (props) => {
         </button>
         <button
           onClick={() => {
-            // deleteUser(user.id);
-            cancelCompletion();
-            setShowModal(false);
+            onComplete();
           }}
           className="button--l button--alert"
         >
@@ -197,7 +188,7 @@ const DriverOrderItem = (props) => {
     return (
       <div className="driver__order__buttton__container">
         <div
-          onClick={() => onAccept(props.order.id)}
+          onClick={() => onAccept(props.order._id)}
           className="driver__order__buttton"
           style={{
             backgroundColor:
@@ -207,7 +198,11 @@ const DriverOrderItem = (props) => {
           Cancel
         </div>
         <div
-          onClick={() => onComplete()}
+          onClick={() => {
+            props.order.status === "accepted"
+              ? setShowModal(true)
+              : setShowModal(false);
+          }}
           className="driver__order__buttton"
           style={{ backgroundColor: buttonColor() }}
         >
@@ -229,8 +224,8 @@ const DriverOrderItem = (props) => {
           show={showModal}
           handleClose={setShowModal}
           id={props.user.googleId}
-          title={"Cancel Completion"}
-          content="A notification will be sent to the user"
+          title={"Confrim Completion"}
+          content="You will not be able to cancel your confirmation"
           actions={modalAction()}
         />
         <div

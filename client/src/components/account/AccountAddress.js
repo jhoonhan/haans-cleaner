@@ -47,7 +47,7 @@ const AccountAddress = ({
           </button>
           <button
             onClick={() => {
-              deleteUser(user.id);
+              deleteUser(user._id);
               setShowModal(false);
             }}
             className="button--l button--alert"

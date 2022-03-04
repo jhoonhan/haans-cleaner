@@ -11,3 +11,23 @@ exports.getByGoogleId = factory.getByGoogleId(User);
 exports.update = factory.update(User);
 
 exports.delete = factory.delete(User);
+
+exports.test = factory.test(User);
+
+exports.postCompleted = () =>
+  catchAsync(async (req, res, next) => {
+    const query = User.findByIdAndUpdate(
+      req.params.id,
+      { $push: { completedOrders: req.body } },
+      {
+        new: true,
+        // runValidators: true,
+      }
+    );
+    const data = await query;
+
+    res.status(200).json({
+      status: "success",
+      data,
+    });
+  });

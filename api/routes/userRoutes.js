@@ -5,6 +5,7 @@ const userController = require("../controllers/userController");
 const router = express.Router();
 
 router.post("/", userController.create);
+router.patch("/completed/:id", userController.postCompleted());
 
 router.get("/getall", userController.getAll);
 router.get("/:id", userController.getOne);

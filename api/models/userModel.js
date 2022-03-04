@@ -17,6 +17,9 @@ const addressSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
+  completedOrders: {
+    type: Array,
+  },
   fullName: {
     type: String,
     // required: [true, "user must have a name"],

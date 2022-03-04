@@ -182,12 +182,10 @@ const GoogleMap = ({
     const distanceMatrixCallback = (response, status) => {
       if (!response) return;
       const res = response.rows[0].elements;
-
       ordersArr.forEach((order, i) => {
-        if (!driver.orders[order.id].distance) return;
         if (
           +res[i].distance.text.split(" ")[0] !==
-          driver.orders[order.id].distance
+          driver.orders[order._id].distance
         ) {
           driverEditAcceptedOrder(
             { distance: +res[i].distance.text.split(" ")[0] },

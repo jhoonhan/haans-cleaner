@@ -207,7 +207,7 @@ export const driverCompeleteOrder = (orderId, data) => async (dispatch) => {
 
     dispatch({
       type: D_COMPLETE_ORDER,
-      payload: { ...res.data.data, acceptId: data.id },
+      payload: { ...res.data.data, acceptId: data._id },
     });
   }
 };
