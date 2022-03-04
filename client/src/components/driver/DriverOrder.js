@@ -52,9 +52,6 @@ const DriverOrder = ({
     if (!driver.fetched.acceptedOrder) {
       driverFetchAccepted(auth.userProfile.FW);
     }
-  }, [auth.isSignedIn]);
-
-  useEffect(() => {
     if (
       user.fetched &&
       driver.fetched.searchOrder &&
@@ -63,7 +60,7 @@ const DriverOrder = ({
       setFetched(true);
       setScrollEvent(true);
     }
-  }, [user.fetched, driver.fetched]);
+  }, [auth.isSignedIn, user.fetched, driver.fetched]);
 
   /////////////////////
   useEffect(() => {

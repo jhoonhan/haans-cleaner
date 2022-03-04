@@ -9,31 +9,23 @@ import renderInput from "../helpers/renderInput";
 
 import Modal from "../Modal";
 
-import DriverAccount from "../driver/DriverAccount";
 import AccountEdit from "./AccountEdit";
 import AccountOrder from "./AccountOrder";
 import AccountAddress from "./AccountAddress";
 import AccountHome from "./AccountHome";
 
+import DriverAccountHome from "../driver/DriverAccountHome";
+
 const Account = ({
   auth,
   user,
   userFetched,
-  order,
   signOutRedux,
-  handleSubmit,
-  editUser,
   fetchUser,
-  editAccount,
-  deleteUser,
   match,
 }) => {
   const [fetched, setFetched] = useState(false);
   const [page, setPage] = useState("home");
-  const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState(null);
-
-  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (!auth.isSignedIn) return;
@@ -48,62 +40,25 @@ const Account = ({
   // DOM selection
 
   const onSignOutClick = () => {
-    const gAuth = window.gapi.auth2?.getAuthInstance();
+    const gAuth = window.gapi.auth2.getAuthInstance();
     gAuth.signOut();
     signOutRedux();
   };
 
-  const onEditSubmit = (type) => {
-    const formValues = editAccount.values;
-    const fullName = `${editAccount.values.firstName} ${editAccount.values.lastName}`;
-
-    if (type === "profile") {
-      editUser(user?._id, { ...user, ...formValues, fullName });
-    }
-  };
-
-  const modalAction = () => {
-    if (showModal && modalType === "deleteAccount") {
-      return (
-        <>
-          <button onClick={() => setShowModal(false)} className="button--l">
-            Go Back
-          </button>
-          <button
-            onClick={() => {
-              deleteUser(user._id);
-              setShowModal(false);
-            }}
-            className="button--l button--alert"
-          >
-            Delete
-          </button>
-        </>
-      );
-    }
-    if (showModal && modalType === "editAccount") {
-      return (
-        <>
-          <button onClick={() => setShowModal(false)} className="button--l">
-            Go Back
-          </button>
-          <button
-            onClick={handleSubmit(() => {
-              onEditSubmit("profile");
-              setShowModal(false);
-            })}
-            className="button--l button--alert"
-          >
-            Submit
-          </button>
-        </>
-      );
-    }
-  };
-
   const renderContent = () => {
+    console.log(match.path);
     if (page === "home")
       return <AccountHome setPage={setPage} onSignOutClick={onSignOutClick} />;
+    if (page === "edit") return <AccountEdit setPage={setPage} />;
+    if (page === "address") return <AccountAddress setPage={setPage} />;
+    if (page === "order") return <AccountOrder setPage={setPage} />;
+  };
+
+  const renderDriverContent = () => {
+    if (page === "home")
+      return (
+        <DriverAccountHome setPage={setPage} onSignOutClick={onSignOutClick} />
+      );
     if (page === "edit") return <AccountEdit setPage={setPage} />;
     if (page === "address") return <AccountAddress setPage={setPage} />;
     if (page === "order") return <AccountOrder setPage={setPage} />;
@@ -124,17 +79,7 @@ const Account = ({
             <h2>Account</h2>
           </header>
 
-          <Modal
-            show={showModal}
-            handleClose={setShowModal}
-            id={user?.googleId}
-            title={
-              modalType === "deleteAccount" ? "Delete Account" : "Edit Account"
-            }
-            content="Are you sure?"
-            actions={modalAction()}
-          />
-          {renderContent()}
+          {match.path === "/account" ? renderContent() : renderDriverContent()}
         </motion.div>
       </>
     );

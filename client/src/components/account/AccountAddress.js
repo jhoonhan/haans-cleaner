@@ -2,23 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import { signOutRedux, fetchUser, deleteUser } from "../../actions";
-import { Field, Form, reduxForm } from "redux-form";
 import { editUser } from "../../actions";
-import renderInput from "../helpers/renderInput";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
-import Modal from "../Modal";
 
-const AccountAddress = ({
-  auth,
-  user,
-  signOutRedux,
-  handleSubmit,
-  editUser,
-  editAccount,
-  deleteUser,
-  setPage,
-}) => {
+const AccountAddress = ({ setPage }) => {
   const render = () => {
     return (
       <motion.div
@@ -53,17 +41,4 @@ const AccountAddress = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, form }) => {
-  return {
-    auth,
-    user: user.currentUser,
-    editAccount: form.editAccount,
-  };
-};
-
-export default connect(mapStateToProps, {
-  signOutRedux,
-  fetchUser,
-  editUser,
-  deleteUser,
-})(AccountAddress);
+export default AccountAddress;

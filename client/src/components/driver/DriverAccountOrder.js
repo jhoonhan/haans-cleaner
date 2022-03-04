@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 
-import { fetchOrder, fetchUser } from "../../actions";
+import {
+  fetchOrder,
+  fetchUser,
+  driverFetchOrder,
+  driverFetchAccepted,
+} from "../../actions";
 import OrderItem from "../order/OrderItem";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
-const AccountOrder = ({
+const DriverAccountOrder = ({
   auth,
   user,
-  userFetched,
+  driver,
   orders,
+  driverFetchOrder,
+  driverFetchAccepted,
   fetchUser,
   fetchOrder,
   setPage,
@@ -20,16 +27,23 @@ const AccountOrder = ({
 
   useEffect(() => {
     if (!auth.isSignedIn) return;
-    if (!userFetched) {
+    if (!user.fetched) {
       fetchUser(auth.userProfile.FW);
     }
-    if (!orders) {
-      fetchOrder(auth.userProfile.FW);
+    if (!driver.fetched.searchOrder) {
+      driverFetchOrder("2022-02-22"); //LC
     }
-    if (auth.isSignedIn && userFetched && orders) {
+    if (!driver.fetched.acceptedOrder) {
+      driverFetchAccepted(auth.userProfile.FW);
+    }
+    if (
+      user.fetched &&
+      driver.fetched.searchOrder &&
+      driver.fetched.acceptedOrder
+    ) {
       setFetched(true);
     }
-  }, [auth.isSignedIn, user, orders]);
+  }, [auth.isSignedIn, user.fetched, driver.fetched]);
 
   const renderList = () => {
     const orderArr = cvtObj2Arr(orders).filter(
@@ -69,15 +83,19 @@ const AccountOrder = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, orders }) => {
+const mapStateToProps = ({ auth, user, orders, driver }) => {
   return {
     auth,
-    user: user.currentUser,
+    user,
     userFetched: user.fetched,
+    driver,
     orders,
   };
 };
 
-export default connect(mapStateToProps, { fetchUser, fetchOrder })(
-  AccountOrder
-);
+export default connect(mapStateToProps, {
+  fetchUser,
+  fetchOrder,
+  driverFetchOrder,
+  driverFetchAccepted,
+})(DriverAccountOrder);

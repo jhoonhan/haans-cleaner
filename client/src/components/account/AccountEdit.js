@@ -5,8 +5,7 @@ import { signOutRedux, fetchUser, deleteUser } from "../../actions";
 import { Field, Form, reduxForm } from "redux-form";
 import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
-import SavedAddressList from "./SavedAddressList";
-import AddNewAddress from "./AddNewAddress";
+
 import Modal from "../Modal";
 
 const AccountEdit = ({
@@ -21,8 +20,6 @@ const AccountEdit = ({
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
-
-  const [showForm, setShowForm] = useState(false);
 
   const onSignOutClick = () => {
     const gAuth = window.gapi.auth2?.getAuthInstance();
