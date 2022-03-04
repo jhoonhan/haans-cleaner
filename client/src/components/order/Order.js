@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchOrder, fetchUser } from "../../actions";
+import { cancelOrder, fetchOrder, fetchUser } from "../../actions";
 import { motion } from "framer-motion";
 
 import OrderItem from "./OrderItem";
 import Modal from "../Modal";
 import Loader from "../Loader";
 
-const Order = ({ auth, user, orders, loader, fetchUser, fetchOrder }) => {
+const Order = ({
+  auth,
+  user,
+  orders,
+  loader,
+  fetchUser,
+  cancelOrder,
+  fetchOrder,
+}) => {
   const [showModal, setShowModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(false);
 
   useEffect(() => {
     if (auth.isSignedIn && !user) {
@@ -19,17 +28,16 @@ const Order = ({ auth, user, orders, loader, fetchUser, fetchOrder }) => {
     }
   }, [auth.isSignedIn, user]);
 
-  const someFn = () => {
-    console.log(`aaang`);
-  };
-
   const modalAction = () => {
     return (
       <>
         <button onClick={() => setShowModal(false)} className="button--l">
           Go Back
         </button>
-        <button onClick={someFn} className="button--l button--alert">
+        <button
+          onClick={() => cancelOrder(selectedOrder, setShowModal)}
+          className="button--l button--alert"
+        >
           Confirm
         </button>
       </>
@@ -50,7 +58,11 @@ const Order = ({ auth, user, orders, loader, fetchUser, fetchOrder }) => {
     return orderArr.reverse().map((order, i) => {
       return (
         <div key={i} className="order__row">
-          <OrderItem order={order} />
+          <OrderItem
+            order={order}
+            setShowModal={setShowModal}
+            setSelectedOrder={setSelectedOrder}
+          />
         </div>
       );
     });
@@ -98,4 +110,6 @@ const mapStateToProps = ({ auth, user, orders, loader }) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchOrder, fetchUser })(Order);
+export default connect(mapStateToProps, { fetchOrder, fetchUser, cancelOrder })(
+  Order
+);

@@ -145,13 +145,13 @@ export const createOrder = (data) => async (dispatch, getState) => {
   return res;
 };
 
-export const cancelOrder = (id, callback) => async (dispatch) => {
+export const cancelOrder = (order, callback) => async (dispatch) => {
   const res = await _loadingApiCall(
-    () => server.delete(`/order/delete/${id}`),
+    () => server.delete(`/order/delete/${order._id}`),
     dispatch
   );
   if (res.status === 200) {
-    dispatch({ type: CANCEL_ORDER, payload: id });
+    dispatch({ type: CANCEL_ORDER, payload: order._id });
   }
   if (res.status !== 200) {
     window.alert("error");

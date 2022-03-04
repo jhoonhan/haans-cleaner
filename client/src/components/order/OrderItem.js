@@ -8,10 +8,18 @@ import Modal from "../Modal";
 import Loader from "../Loader";
 import price from "../price";
 
-const OrderItem = ({ auth, user, order, loader, cancelOrder }) => {
-  const [showModal, setShowModal] = useState(false);
+const OrderItem = ({
+  auth,
+  user,
+  order,
+  loader,
+  cancelOrder,
+  setShowModal,
+  setSelectedOrder,
+}) => {
+  // const [showModal, setShowModal] = useState(false);
   const refDetail = useRef(null);
-  const refBand = React.useRef(null);
+  const refBand = useRef(null);
 
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
@@ -94,37 +102,9 @@ const OrderItem = ({ auth, user, order, loader, cancelOrder }) => {
     );
   };
 
-  const modalAction = () => {
-    return (
-      <>
-        <button onClick={() => setShowModal(false)} className="button--l">
-          Go Back
-        </button>
-        <button
-          onClick={() => {
-            cancelOrder(order._id, setShowModal);
-          }}
-          className="button--l button--alert"
-        >
-          Confirm
-        </button>
-      </>
-    );
-  };
-
   const render = () => {
     return (
       <>
-        {/* {loader.showLoader && <Loader />}
-        <Modal
-          show={showModal}
-          handleClose={setShowModal}
-          id={user.googleId}
-          title={"Cancel Order"}
-          content="You cannot undeo your cancellation"
-          actions={modalAction()}
-        /> */}
-
         <div
           ref={refBand}
           onClick={() => {
@@ -140,6 +120,7 @@ const OrderItem = ({ auth, user, order, loader, cancelOrder }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  setSelectedOrder(order);
                   setShowModal(true);
                 }}
                 className="button--m"
