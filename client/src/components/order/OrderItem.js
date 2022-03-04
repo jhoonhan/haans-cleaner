@@ -8,15 +8,7 @@ import Modal from "../Modal";
 import Loader from "../Loader";
 import price from "../price";
 
-const OrderItem = ({
-  auth,
-  user,
-  order,
-  loader,
-  cancelOrder,
-  setShowModal,
-  setSelectedOrder,
-}) => {
+const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
   // const [showModal, setShowModal] = useState(false);
   const refDetail = useRef(null);
   const refBand = useRef(null);
@@ -101,10 +93,23 @@ const OrderItem = ({
       </>
     );
   };
+  const renderDate = () => {
+    const ts = new Date(order.timestamp);
+    const orderDate = ts.toDateString();
+
+    const pickupDate = order.date
+      ? order.date.split("-").slice(1, 3).join("/")
+      : "";
+    if (page === "account") {
+      return <div>{orderDate}</div>;
+    } else {
+      return <div>Pick-up Date: {pickupDate}</div>;
+    }
+  };
 
   const render = () => {
     return (
-      <>
+      <div className="order__row">
         <div
           ref={refBand}
           onClick={() => {
@@ -130,10 +135,7 @@ const OrderItem = ({
             ) : null}
           </div>
           <div>#{order.ticketId}</div>
-          <div>
-            Pick-up Date:{" "}
-            {order.date ? order.date.split("-").slice(1, 3).join("/") : ""}
-          </div>
+          <div>{renderDate()}</div>
           <div>
             <b>${order.total.total}</b>
           </div>
@@ -142,19 +144,14 @@ const OrderItem = ({
         <div ref={refDetail} className={`order__detail ${animationClasses}`}>
           {renderDetail()}
         </div>
-      </>
+      </div>
     );
   };
   return render();
 };
 
 const mapStateToProps = ({ auth, user, orders, loader }) => {
-  return {
-    auth,
-    user: user.currentUser,
-    orders: orders.orders,
-    loader,
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, { cancelOrder })(OrderItem);

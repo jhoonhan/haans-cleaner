@@ -7,6 +7,8 @@ import OrderItem from "./OrderItem";
 import Modal from "../Modal";
 import Loader from "../Loader";
 
+import cvtObj2Arr from "../helpers/cvtObj2Arr";
+
 const Order = ({
   auth,
   user,
@@ -47,25 +49,21 @@ const Order = ({
   const renderList = () => {
     if (!orders) return;
 
-    const orderArr = Object.entries(orders).map(([key, value]) => {
-      const obj = {
-        id: key,
-        ...value,
-      };
-      return obj;
-    });
+    const orderArr = cvtObj2Arr(orders);
 
-    return orderArr.reverse().map((order, i) => {
-      return (
-        <div key={i} className="order__row">
+    return orderArr
+      .reverse()
+      .filter((order) => order.status !== "completed")
+      .map((order, i) => {
+        return (
           <OrderItem
             order={order}
+            key={i}
             setShowModal={setShowModal}
             setSelectedOrder={setSelectedOrder}
           />
-        </div>
-      );
-    });
+        );
+      });
   };
 
   const render = () => {

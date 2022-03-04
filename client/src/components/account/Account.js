@@ -6,11 +6,14 @@ import { Field, Form, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
-import SavedAddressList from "./SavedAddressList";
-import AddNewAddress from "./AddNewAddress";
+
 import Modal from "../Modal";
+
 import DriverAccount from "../driver/DriverAccount";
 import AccountEdit from "./AccountEdit";
+import AccountOrder from "./AccountOrder";
+import AccountAddress from "./AccountAddress";
+import AccountHome from "./AccountHome";
 
 const Account = ({
   auth,
@@ -26,7 +29,7 @@ const Account = ({
   match,
 }) => {
   const [fetched, setFetched] = useState(false);
-  const [page, setPage] = useState("landing");
+  const [page, setPage] = useState("home");
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
 
@@ -56,14 +59,6 @@ const Account = ({
 
     if (type === "profile") {
       editUser(user?._id, { ...user, ...formValues, fullName });
-    }
-  };
-
-  const onClickExpand = () => {
-    if (showForm) {
-      setShowForm(false);
-    } else {
-      setShowForm(true);
     }
   };
 
@@ -106,6 +101,14 @@ const Account = ({
     }
   };
 
+  const renderContent = () => {
+    if (page === "home")
+      return <AccountHome setPage={setPage} onSignOutClick={onSignOutClick} />;
+    if (page === "edit") return <AccountEdit setPage={setPage} />;
+    if (page === "address") return <AccountAddress setPage={setPage} />;
+    if (page === "order") return <AccountOrder setPage={setPage} />;
+  };
+
   const render = () => {
     if (!fetched) return null;
     return (
@@ -113,7 +116,7 @@ const Account = ({
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          exit={{ opacity: 1 }}
           transition={{ type: "spring", duration: 0.1 }}
           className="motion-container"
         >
@@ -131,40 +134,7 @@ const Account = ({
             content="Are you sure?"
             actions={modalAction()}
           />
-          {/* <AccountEdit /> */}
-          <div className="account-container">
-            <div className="form__form__row">
-              <Link to="/account/edit" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Personal Information
-                </h3>
-              </Link>
-
-              <Link to="/account/edit" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Payment Methods
-                </h3>
-              </Link>
-
-              <Link to="/account/address" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Address Book
-                </h3>
-              </Link>
-
-              <Link to="/account/order" className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  My Orders
-                </h3>
-              </Link>
-            </div>
-
-            <div className="form__form__row">
-              <button onClick={onSignOutClick} className="button--d">
-                Sign Out
-              </button>
-            </div>
-          </div>
+          {renderContent()}
         </motion.div>
       </>
     );

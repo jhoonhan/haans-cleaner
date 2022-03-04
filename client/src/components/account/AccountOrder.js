@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
+import { motion } from "framer-motion";
 import { Field, reduxForm } from "redux-form";
-import renderInput from "../helpers/renderInput";
-import { editUser, fetchUser } from "../../actions";
+
+import { fetchOrder, fetchUser } from "../../actions";
 import OrderItem from "../order/OrderItem";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
-const AccountOrder = ({ auth, user, userFetched, orders, fetchUser }) => {
+const AccountOrder = ({
+  auth,
+  user,
+  userFetched,
+  orders,
+  fetchUser,
+  fetchOrder,
+  setPage,
+}) => {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
@@ -16,26 +24,21 @@ const AccountOrder = ({ auth, user, userFetched, orders, fetchUser }) => {
     if (!userFetched) {
       fetchUser(auth.userProfile.FW);
     }
-    if (auth.isSignedIn && userFetched) {
+    if (!orders) {
+      fetchOrder(auth.userProfile.FW);
+    }
+    if (auth.isSignedIn && userFetched && orders) {
       setFetched(true);
     }
-  }, [auth.isSignedIn, user]);
+  }, [auth.isSignedIn, user, orders]);
 
   const renderList = () => {
-    if (!orders) return;
-
-    const orderArr = cvtObj2Arr(orders);
+    const orderArr = cvtObj2Arr(orders).filter(
+      (order) => order.status === "completed"
+    );
 
     return orderArr.reverse().map((order, i) => {
-      return (
-        <div key={i} className="order__row">
-          <OrderItem
-            order={order}
-            // setShowModal={setShowModal}
-            // setSelectedOrder={setSelectedOrder}
-          />
-        </div>
-      );
+      return <OrderItem key={i} order={order} page={"account"} />;
     });
   };
 
@@ -43,10 +46,24 @@ const AccountOrder = ({ auth, user, userFetched, orders, fetchUser }) => {
     if (!fetched) return null;
 
     return (
-      <div>
-        {renderList()}
-        <div>aaaang</div>
-      </div>
+      <motion.div
+        className="motion-container account__content__container"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", duration: 0.1 }}
+      >
+        <div className="account-container">
+          <div
+            onClick={() => setPage("home")}
+            className="account__btn--go-back"
+          >
+            X
+          </div>
+          <h3 className="align-self-flex-start">Completed Orders</h3>
+          <div className="order__list">{renderList()}</div>
+        </div>
+      </motion.div>
     );
   };
 
@@ -62,4 +79,6 @@ const mapStateToProps = ({ auth, user, orders }) => {
   };
 };
 
-export default connect(mapStateToProps, { editUser, fetchUser })(AccountOrder);
+export default connect(mapStateToProps, { fetchUser, fetchOrder })(
+  AccountOrder
+);

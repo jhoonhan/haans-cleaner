@@ -8,7 +8,7 @@ import {
   SIGN_OUT,
 } from "../actions/types";
 
-const reducer = (state = [], action) => {
+const reducer = (state = null, action) => {
   switch (action.type) {
     case SIGN_OUT:
       return {};

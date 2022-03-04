@@ -17,76 +17,26 @@ const AccountAddress = ({
   editUser,
   editAccount,
   deleteUser,
+  setPage,
 }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState(null);
-
-  const [showForm, setShowForm] = useState(false);
-
-  const onSignOutClick = () => {
-    const gAuth = window.gapi.auth2?.getAuthInstance();
-    gAuth.signOut();
-    signOutRedux();
-  };
-
-  const onEditSubmit = (type) => {
-    const formValues = editAccount.values;
-    const fullName = `${editAccount.values.firstName} ${editAccount.values.lastName}`;
-
-    if (type === "profile") {
-      editUser(user?._id, { ...user, ...formValues, fullName });
-    }
-  };
-
-  const modalAction = () => {
-    if (showModal && modalType === "deleteAccount") {
-      return (
-        <>
-          <button onClick={() => setShowModal(false)} className="button--l">
-            Go Back
-          </button>
-          <button
-            onClick={() => {
-              deleteUser(user._id);
-              setShowModal(false);
-            }}
-            className="button--l button--alert"
-          >
-            Delete
-          </button>
-        </>
-      );
-    }
-    if (showModal && modalType === "editAccount") {
-      return (
-        <>
-          <button onClick={() => setShowModal(false)} className="button--l">
-            Go Back
-          </button>
-          <button
-            onClick={handleSubmit(() => {
-              onEditSubmit("profile");
-              setShowModal(false);
-            })}
-            className="button--l button--alert"
-          >
-            Submit
-          </button>
-        </>
-      );
-    }
-  };
-
   const render = () => {
     return (
-      <>
-        <header className="page-title">
-          <h2>Account</h2>
-        </header>
+      <motion.div
+        className="motion-container account__content__container"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", duration: 0.1 }}
+      >
         <div className="account-container">
-          <h3 className="align-self-flex-start margin-top--1rem">
-            My Addresses
-          </h3>
+          <div
+            onClick={() => setPage("home")}
+            className="account__btn--go-back"
+          >
+            X
+          </div>
+
+          <h3 className="align-self-flex-start">My Addresses</h3>
 
           <div className="form__form__row">
             <label>Saved Address</label>
@@ -97,7 +47,7 @@ const AccountAddress = ({
             <AddNewAddress />
           </div>
         </div>
-      </>
+      </motion.div>
     );
   };
   return render();

@@ -17,6 +17,7 @@ const AccountEdit = ({
   editUser,
   editAccount,
   deleteUser,
+  setPage,
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(null);
@@ -79,7 +80,13 @@ const AccountEdit = ({
 
   const render = () => {
     return (
-      <>
+      <motion.div
+        className="motion-container account__content__container"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", duration: 0.1 }}
+      >
         <Modal
           show={showModal}
           handleClose={setShowModal}
@@ -90,11 +97,15 @@ const AccountEdit = ({
           content="Are you sure?"
           actions={modalAction()}
         />
-        <header className="page-title">
-          <h2>Account</h2>
-        </header>
+
         <div className="account-container">
-          <h3 className="align-self-flex-start margin-top--1rem">My Profile</h3>
+          <div
+            onClick={() => setPage("home")}
+            className="account__btn--go-back"
+          >
+            X
+          </div>
+          <h3 className="align-self-flex-start">My Profile</h3>
           <Form onSubmit={handleSubmit} className="form__form">
             <div className="form__form__row">
               <label>First Name</label>
@@ -150,7 +161,7 @@ const AccountEdit = ({
             </div>
           </Form>
         </div>
-      </>
+      </motion.div>
     );
   };
   return render();
