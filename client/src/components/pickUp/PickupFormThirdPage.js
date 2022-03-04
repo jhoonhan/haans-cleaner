@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
@@ -10,54 +10,73 @@ import price from "../price";
 import Modal from "../Modal";
 import Loader from "../Loader";
 
-class PickupFormThirdPage extends React.Component {
-  constructor(props) {
-    super(props);
+const PickupFormThirdPage = (props) => {
+  // constructor(props) {
+  //   super(props);
 
-    this.state = { showModal: false };
+  //   // state = { showModal: false };
 
-    this.googleMapWrapper = createRef();
+  //   // googleMapWrapper = createRef();
 
-    this.total = { total: 0, subtotal: 0, tax: 0 };
-    this.taxRate = 0.0475;
-  }
+  //   // total = { total: 0, subtotal: 0, tax: 0 };
+  //   taxRate = 0.0475;
+  // }
+  const [showModal, setShowModal] = useState(false);
+  const refGoogleMapWrapper = useRef(null);
+  const [total, setTotal] = useState({ total: 0, subtotal: 0, tax: 0 });
+  // let total = { total: 0, subtotal: 0, tax: 0 };
+  const taxRate = 0.0475;
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   window.scrollTo(0, 0);
+
+  //   if (props.auth.isSignedIn && !props.user) {
+  //     props.fetchUser(props.auth.userProfile.FW);
+  //   }
+  // }
+
+  useEffect(() => {
     window.scrollTo(0, 0);
-
-    if (this.props.auth.isSignedIn && !this.props.user) {
-      this.props.fetchUser(this.props.auth.userProfile.FW);
+    if (props.auth.isSignedIn && !props.user) {
+      props.fetchUser(props.auth.userProfile.FW);
     }
-  }
+    if (props.clothes) getTotalPrice(cvtObj2Arr(props.clothes));
+  }, []);
 
-  onFinalSubmit = () => {
-    const clothes = this.props.clothes;
-    const formValues = this.props.pickup;
+  const cvtObj2Arr = (data) => {
+    return Object.entries(data).map(([key, value]) => {
+      const obj = {};
+      obj.type = key;
+      obj.count = value;
+      return obj;
+    });
+  };
+
+  const onFinalSubmit = () => {
+    const clothes = props.clothes;
+    const formValues = props.pickup;
 
     const combined = {
       ...formValues,
       clothes,
-      googleId: this.props.auth.userProfile.FW,
-      userId: this.props.user._id,
-      total: this.total,
+      googleId: props.auth.userProfile.FW,
+      userId: props.user._id,
+      total,
       timestamp: Date.now(),
       status: "submitted",
     };
-    this.props.createOrder(combined);
+    props.createOrder(combined);
   };
 
-  modalAction = () => {
+  const modalAction = () => {
     return (
       <>
-        <button
-          onClick={() => this.setState({ showModal: false })}
-          className="button--l"
-        >
+        <button onClick={() => setShowModal(false)} className="button--l">
           Go Back
         </button>
         <button
           onClick={async () => {
-            this.onFinalSubmit();
+            onFinalSubmit();
           }}
           className="button--l button--alert"
         >
@@ -67,31 +86,23 @@ class PickupFormThirdPage extends React.Component {
     );
   };
 
-  convertToArray = (data) => {
-    return Object.entries(data).map(([key, value]) => {
-      const obj = {};
-      obj.type = key;
-      obj.count = value;
-      return obj;
-    });
-  };
-  getTotalPrice = (data) => {
+  const getTotalPrice = (data) => {
     let preSubtotal = 0;
     data.forEach((el) => {
       const pricePerItem = price[el.type] * el.count;
       preSubtotal = preSubtotal + pricePerItem;
     });
     const subtotal = Number(Math.round(preSubtotal * 100) / 100).toFixed(2);
-    const tax = Number(
-      Math.round(preSubtotal * this.taxRate * 100) / 100
-    ).toFixed(2);
-    const total = Number(Math.round((preSubtotal + +tax) * 100) / 100).toFixed(
+    const tax = Number(Math.round(preSubtotal * taxRate * 100) / 100).toFixed(
       2
     );
-
-    this.total = { subtotal, total, tax };
+    const totalCalculated = Number(
+      Math.round((preSubtotal + +tax) * 100) / 100
+    ).toFixed(2);
+    console.log(totalCalculated);
+    setTotal({ subtotal, total: totalCalculated, tax });
   };
-  getPickUpDate = () => {
+  const getPickUpDate = () => {
     // const date = new Date();
     // const hourNow = date.getHours();
     // if (hourNow > 5) {
@@ -99,15 +110,15 @@ class PickupFormThirdPage extends React.Component {
     // }
     //
     //
-    const selectedDate = new Date(this.props.pickup?.date);
+    const selectedDate = new Date(props.pickup?.date);
 
     return selectedDate;
   };
 
-  renderInfo() {
-    if (!this.props.pickup) return null;
+  const renderInfo = () => {
+    if (!props.pickup) return null;
 
-    const { street, city, zip, name } = this.props.pickup;
+    const { street, city, zip, name } = props.pickup;
     return (
       <React.Fragment>
         <div>
@@ -116,11 +127,11 @@ class PickupFormThirdPage extends React.Component {
         <div>{`${street}, ${city}, ${zip}`}</div>
       </React.Fragment>
     );
-  }
-  renderCount() {
-    if (!this.props.clothes) return;
+  };
+  const renderCount = () => {
+    if (!props.clothes) return;
 
-    const clothes = this.convertToArray(this.props.clothes);
+    const clothes = cvtObj2Arr(props.clothes);
 
     return (
       <React.Fragment>
@@ -143,33 +154,31 @@ class PickupFormThirdPage extends React.Component {
         })}
       </React.Fragment>
     );
-  }
+  };
 
-  renderTotal() {
-    if (!this.props.clothes) return null;
-
-    this.getTotalPrice(this.convertToArray(this.props.clothes));
+  const renderTotal = () => {
+    if (!props.clothes) return null;
 
     return (
       <React.Fragment>
         <label>subtotal:</label>
-        <div>${this.total.subtotal}</div>
+        <div>${total.subtotal}</div>
 
         <label>tax: </label>
-        <div>${this.total.tax}</div>
+        <div>${total.tax}</div>
 
         <label>
           <h3>total: </h3>
         </label>
 
         <div>
-          <h3>${this.total.total}</h3>
+          <h3>${total.total}</h3>
         </div>
       </React.Fragment>
     );
-  }
-  renderDate() {
-    const result = this.getPickUpDate();
+  };
+  const renderDate = () => {
+    const result = getPickUpDate();
 
     const date = {
       year: result.getFullYear(),
@@ -185,32 +194,32 @@ class PickupFormThirdPage extends React.Component {
         <h3>7:00AM - 9:00AM</h3>
       </React.Fragment>
     );
-  }
+  };
 
-  render() {
-    const { handleSubmit, pristine, previousPage, submitting } = this.props;
+  const render = () => {
+    const { handleSubmit, pristine, previousPage, submitting } = props;
     return (
       <>
-        {this.props.loader.showLoader && <Loader />}
+        {props.loader.showLoader && <Loader />}
         <Modal
-          show={this.state.showModal}
-          handleClose={this.state.setShowModal}
-          id={this.props.user.googleId}
+          show={showModal}
+          handleClose={setShowModal}
+          id={props.user.googleId}
           title="Submit Order"
           content="Are you sure?"
-          actions={this.modalAction()}
+          actions={modalAction()}
         />
         <form
-          onSubmit={handleSubmit(this.onFinalSubmit)}
+          onSubmit={handleSubmit(onFinalSubmit)}
           className="form__form form__form--third"
         >
           <div className="form__form__row">
             <h2>Order Detail</h2>
           </div>
           <div className="form__form__row">
-            <div className="form__form__info">{this.renderInfo()}</div>
+            <div className="form__form__info">{renderInfo()}</div>
 
-            <div className="form__form__order-count">{this.renderCount()}</div>
+            <div className="form__form__order-count">{renderCount()}</div>
           </div>
           <div
             className="form__form__row border-top--divider border-bottom--divider"
@@ -219,11 +228,9 @@ class PickupFormThirdPage extends React.Component {
             <div className="form__form__order-detail">
               <div className="form__form__order-date">
                 <label>Pick-up time:</label>
-                <div>{this.renderDate()}</div>
+                <div>{renderDate()}</div>
               </div>
-              <div className="form__form__order-total">
-                {this.renderTotal()}
-              </div>
+              <div className="form__form__order-total">{renderTotal()}</div>
             </div>
           </div>
           <div className="form__form__row">
@@ -246,7 +253,7 @@ class PickupFormThirdPage extends React.Component {
             {/* <button type="submit" disabled={pristine || submitting}> */}
             <div
               onClick={() => {
-                this.setState({ showModal: true });
+                setShowModal(true);
               }}
               className="button--l"
             >
@@ -256,8 +263,9 @@ class PickupFormThirdPage extends React.Component {
         </form>
       </>
     );
-  }
-}
+  };
+  return render();
+};
 
 const mapStateToProps = ({ form, auth, user, loader }) => {
   return {
