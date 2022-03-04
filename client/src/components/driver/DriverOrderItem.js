@@ -124,10 +124,14 @@ const DriverOrderItem = (props) => {
   const onComplete = () => {
     if (props.order.status === "accepted") {
       // setOrderStatus("compeleted");
-      props.driverCompeleteOrder(props.order._id, {
-        status: "completed",
-        acceptId: props.auth.userProfile.FW,
-      });
+      props.driverCompeleteOrder(
+        { orderId: props.order._id, userId: props.order.userId },
+        {
+          ...props.order,
+          status: "completed",
+          acceptId: props.auth.userProfile.FW,
+        }
+      );
       setShowModal(false);
     }
     if (props.order.status === "completed") {

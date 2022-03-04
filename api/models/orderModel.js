@@ -95,6 +95,10 @@ const orderSchema = new mongoose.Schema({
     // required: [true, "you must provide an address"],
     trim: true,
   },
+  userId: {
+    type: String,
+    trim: true,
+  },
   status: {
     type: String,
     // required: [true, "you must provide an address"],

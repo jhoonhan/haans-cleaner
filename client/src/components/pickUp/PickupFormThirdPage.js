@@ -37,6 +37,7 @@ class PickupFormThirdPage extends React.Component {
       ...formValues,
       clothes,
       googleId: this.props.auth.userProfile.FW,
+      userId: this.props.user._id,
       total: this.total,
       timestamp: Date.now(),
       status: "submitted",

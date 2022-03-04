@@ -188,7 +188,8 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
   }
 };
 
-export const driverCompeleteOrder = (orderId, data) => async (dispatch) => {
+export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
+  const { orderId, userId } = ids;
   const res = await server.get(`/order/${orderId}`);
   console.log(res.data.data);
 
@@ -199,8 +200,11 @@ export const driverCompeleteOrder = (orderId, data) => async (dispatch) => {
       ...data,
       acceptId: data.acceptId,
     });
+    const res1 = await server.patch(`/user/completed/${userId}`, {
+      ...data,
+    });
 
-    if (res.status !== 200) {
+    if (res.status !== 200 || res1.status !== 200) {
       console.error(`error`);
       return;
     }
