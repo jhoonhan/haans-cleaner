@@ -191,7 +191,6 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
 export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
   const { orderId, userId } = ids;
   const res = await server.get(`/order/${orderId}`);
-  console.log(res.data.data);
 
   if (res.data.data.acceptId !== data.acceptId) window.alert("error");
 
@@ -211,7 +210,7 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
 
     dispatch({
       type: D_COMPLETE_ORDER,
-      payload: { ...res.data.data, acceptId: data._id },
+      payload: { ...res.data.data, acceptId: data.acceptId },
     });
   }
 };
