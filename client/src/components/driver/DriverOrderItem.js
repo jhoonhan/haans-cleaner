@@ -13,7 +13,6 @@ const DriverOrderItem = (props) => {
 
   const refDetail = React.useRef(null);
   const refBand = React.useRef(null);
-
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
   const toggleView = (ref) => {
@@ -100,6 +99,9 @@ const DriverOrderItem = (props) => {
 
   const onAccept = async (id) => {
     setBtnLoading(true);
+
+    const acceptDate = new Date();
+
     if (props.order.status === "completed") {
       window.alert("this is already completed");
     }
@@ -109,6 +111,7 @@ const DriverOrderItem = (props) => {
       await props.driverAcceptOrder(id, {
         status: "accepted",
         acceptId: props.auth.userProfile.FW,
+        acceptDate,
       });
     }
     if (props.order.status === "accepted") {

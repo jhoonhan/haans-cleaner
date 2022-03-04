@@ -15,6 +15,7 @@ import AccountAddress from "./AccountAddress";
 import AccountHome from "./AccountHome";
 
 import DriverAccountHome from "../driver/DriverAccountHome";
+import DriverAccountOrder from "../driver/DriverAccountOrder";
 
 const Account = ({
   auth,
@@ -29,9 +30,10 @@ const Account = ({
 
   useEffect(() => {
     if (!auth.isSignedIn) return;
-    if (!userFetched) {
+    if (auth.isSignedIn && !fetched) {
       fetchUser(auth.userProfile.FW);
     }
+
     if (auth.isSignedIn && userFetched) {
       setFetched(true);
     }
@@ -61,7 +63,7 @@ const Account = ({
       );
     if (page === "edit") return <AccountEdit setPage={setPage} />;
     if (page === "address") return <AccountAddress setPage={setPage} />;
-    if (page === "order") return <AccountOrder setPage={setPage} />;
+    if (page === "order") return <DriverAccountOrder setPage={setPage} />;
   };
 
   const render = () => {

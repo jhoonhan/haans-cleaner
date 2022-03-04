@@ -113,6 +113,8 @@ const DriverOrder = ({
 
   //////////
   const rednerSearchOrders = () => {
+    const dayy = new Date().getDate();
+    console.log(dayy);
     const conditionalArr = () => {
       if (match.params.page === "search") {
         const orderArr = cvtObj2Arr(driver.orders);

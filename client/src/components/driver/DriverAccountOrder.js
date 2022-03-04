@@ -2,51 +2,14 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 
-import {
-  fetchOrder,
-  fetchUser,
-  driverFetchOrder,
-  driverFetchAccepted,
-} from "../../actions";
+import { fetchUser } from "../../actions";
 import OrderItem from "../order/OrderItem";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
-const DriverAccountOrder = ({
-  auth,
-  user,
-  driver,
-  orders,
-  driverFetchOrder,
-  driverFetchAccepted,
-  fetchUser,
-  fetchOrder,
-  setPage,
-}) => {
-  const [fetched, setFetched] = useState(false);
-
-  useEffect(() => {
-    if (!auth.isSignedIn) return;
-    if (!user.fetched) {
-      fetchUser(auth.userProfile.FW);
-    }
-    if (!driver.fetched.searchOrder) {
-      driverFetchOrder("2022-02-22"); //LC
-    }
-    if (!driver.fetched.acceptedOrder) {
-      driverFetchAccepted(auth.userProfile.FW);
-    }
-    if (
-      user.fetched &&
-      driver.fetched.searchOrder &&
-      driver.fetched.acceptedOrder
-    ) {
-      setFetched(true);
-    }
-  }, [auth.isSignedIn, user.fetched, driver.fetched]);
-
+const DriverAccountOrder = ({ auth, completedOrders, setPage }) => {
   const renderList = () => {
-    const orderArr = cvtObj2Arr(orders).filter(
+    const orderArr = cvtObj2Arr(completedOrders).filter(
       (order) => order.status === "completed"
     );
 
@@ -56,8 +19,6 @@ const DriverAccountOrder = ({
   };
 
   const render = () => {
-    if (!fetched) return null;
-
     return (
       <motion.div
         className="motion-container account__content__container"
@@ -83,19 +44,13 @@ const DriverAccountOrder = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, orders, driver }) => {
+const mapStateToProps = ({ auth, user }) => {
   return {
     auth,
-    user,
-    userFetched: user.fetched,
-    driver,
-    orders,
+    completedOrders: user.currentUser.completedOrders,
   };
 };
 
 export default connect(mapStateToProps, {
   fetchUser,
-  fetchOrder,
-  driverFetchOrder,
-  driverFetchAccepted,
 })(DriverAccountOrder);

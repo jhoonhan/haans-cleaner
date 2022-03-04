@@ -195,6 +195,7 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
     const res = await server.patch(`/order/update/${orderId}`, {
       ...data,
       acceptId: null,
+      acceptDate: null,
     });
 
     dispatch({
