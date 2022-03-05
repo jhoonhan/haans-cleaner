@@ -47,7 +47,7 @@ const DriverOrder = ({
       fetchUser(auth.userProfile.FW);
     }
     if (!driver.fetched.searchOrder) {
-      driverFetchOrder(user._id); //LC
+      driverFetchOrder(auth.userProfile.FW); //LC
     }
     if (!driver.fetched.acceptedOrder) {
       driverFetchAccepted(auth.userProfile.FW);
