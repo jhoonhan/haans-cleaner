@@ -98,6 +98,10 @@ const DriverOrderItem = (props) => {
   };
 
   const onAccept = async (id) => {
+    if (btnLoading) {
+      console.log(`no double click you moron`);
+      return;
+    }
     setBtnLoading(true);
 
     if (props.order.status === "completed") {
