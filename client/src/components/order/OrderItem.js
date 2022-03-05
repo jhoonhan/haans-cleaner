@@ -94,6 +94,7 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
     );
   };
   const renderDate = () => {
+    console.log(order.completedDate);
     if (page === "account") {
       return (
         <div>{new Date(order.completedDate).toISOString().split("T")[0]}</div>

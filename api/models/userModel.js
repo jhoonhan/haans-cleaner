@@ -1,4 +1,10 @@
 const mongoose = require("mongoose");
+const {
+  orderSchema,
+  coordsSchema,
+  totalSchema,
+  clothesSchema,
+} = require("./orderModel");
 
 const addressSchema = new mongoose.Schema({
   street: {
@@ -73,6 +79,9 @@ const userSchema = new mongoose.Schema({
   timestamp: {
     type: Number,
     default: Date.now(),
+  },
+  orders: {
+    type: [orderSchema],
   },
 });
 

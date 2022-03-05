@@ -1,7 +1,7 @@
 const endOfDay = require("date-fns/endOfDay");
 const startOfDay = require("date-fns/startOfDay");
 
-const Order = require("../models/orderModel");
+const { Order } = require("../models/orderModel");
 const factory = require("./handlers");
 const controller = require("./controller");
 const catchAsync = require("../utils/catchAsync");

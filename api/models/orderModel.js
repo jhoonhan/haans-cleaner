@@ -139,4 +139,10 @@ orderSchema.plugin(AutoIncrement, { inc_field: "ticketId" });
 
 const Order = mongoose.model("Order", orderSchema);
 
-module.exports = Order;
+module.exports = {
+  Order,
+  orderSchema,
+  coordsSchema,
+  totalSchema,
+  clothesSchema,
+};
