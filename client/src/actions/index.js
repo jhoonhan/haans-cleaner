@@ -187,7 +187,6 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
   if (res.data.data.status === "submitted") {
     const res = await server.patch(`/order/update/${orderId}`, data);
     dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
-    return res;
   }
 
   if (
@@ -204,7 +203,6 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
       type: D_CANCEL_ORDER,
       payload: { ...res.data.data, acceptId: null },
     });
-    return res;
   }
 
   if (res.data.data.status === "completed") {
@@ -219,7 +217,7 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
 };
 
 export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
-  const { orderId, userId } = ids;
+  const { orderId, driverId, customerId } = ids;
   const res = await server.get(`/order/${orderId}`);
 
   if (res.data.data.acceptId !== data.acceptId) window.alert("error");
@@ -229,7 +227,10 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
       ...data,
       acceptId: data.acceptId,
     });
-    const res1 = await server.patch(`/user/completed/${userId}`, data);
+    const res1 = await server.patch(
+      `/user/completed/${customerId}/${driverId}`,
+      data
+    );
 
     if (res.status !== 200 || res1.status !== 200) {
       console.error(`error`);

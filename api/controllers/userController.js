@@ -16,20 +16,28 @@ exports.test = factory.test(User);
 
 exports.postCompleted = () =>
   catchAsync(async (req, res, next) => {
-    const query = User.findByIdAndUpdate(
-      req.params.id,
+    const driverQuery = User.findByIdAndUpdate(
+      req.params.driverId,
       { $push: { completedOrders: req.body } },
       {
         new: true,
         // runValidators: true,
       }
     );
-    const data = await query;
-    console.log(data);
+    const customerQuery = User.findByIdAndUpdate(
+      req.params.customerId,
+      {
+        $push: { orders: req.body },
+      },
+      { new: true }
+    );
+    const driverData = await driverQuery;
+    const customerData = await customerQuery;
 
     res.status(200).json({
       status: "success",
-      data,
+      driverData,
+      customerData,
     });
     return;
   });

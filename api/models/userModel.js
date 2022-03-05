@@ -23,9 +23,6 @@ const addressSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-  completedOrders: {
-    type: Array,
-  },
   fullName: {
     type: String,
     // required: [true, "user must have a name"],
@@ -81,6 +78,9 @@ const userSchema = new mongoose.Schema({
     default: Date.now(),
   },
   orders: {
+    type: [orderSchema],
+  },
+  completedOrders: {
     type: [orderSchema],
   },
 });
