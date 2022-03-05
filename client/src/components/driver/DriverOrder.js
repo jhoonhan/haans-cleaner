@@ -47,7 +47,7 @@ const DriverOrder = ({
       fetchUser(auth.userProfile.FW);
     }
     if (!driver.fetched.searchOrder) {
-      driverFetchOrder("2022-03-04"); //LC
+      driverFetchOrder(user._id); //LC
     }
     if (!driver.fetched.acceptedOrder) {
       driverFetchAccepted(auth.userProfile.FW);
@@ -165,6 +165,7 @@ const DriverOrder = ({
             ...selectedOrder,
             status: "completed",
             acceptId: auth.userProfile.FW,
+            completedDate: new Date().toISOString().split("T")[0],
           }
         );
         setShowModal(false);

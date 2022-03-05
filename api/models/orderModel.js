@@ -112,6 +112,9 @@ const orderSchema = new mongoose.Schema({
   acceptDate: {
     type: Date,
   },
+  completedDate: {
+    type: Date,
+  },
   distance: {
     type: Number,
     // required: [true, "you must provide a Google Id"],

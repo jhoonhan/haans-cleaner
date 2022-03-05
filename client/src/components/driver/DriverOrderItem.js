@@ -100,8 +100,6 @@ const DriverOrderItem = (props) => {
   const onAccept = async (id) => {
     setBtnLoading(true);
 
-    const acceptDate = new Date();
-
     if (props.order.status === "completed") {
       window.alert("this is already completed");
     }
@@ -111,7 +109,7 @@ const DriverOrderItem = (props) => {
       await props.driverAcceptOrder(id, {
         status: "accepted",
         acceptId: props.auth.userProfile.FW,
-        acceptDate,
+        acceptDate: new Date().toISOString().split("T")[0],
       });
     }
     if (props.order.status === "accepted") {
@@ -119,6 +117,7 @@ const DriverOrderItem = (props) => {
       await props.driverAcceptOrder(id, {
         status: "submitted",
         acceptId: props.auth.userProfile.FW,
+        acceptDate: null,
       });
     }
     setBtnLoading(false);

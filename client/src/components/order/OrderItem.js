@@ -94,16 +94,17 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
     );
   };
   const renderDate = () => {
-    const ts = new Date(order.timestamp);
-    const orderDate = ts.toDateString();
-
-    const pickupDate = order.date
-      ? order.date.split("-").slice(1, 3).join("/")
-      : "";
     if (page === "account") {
-      return <div>{orderDate}</div>;
+      return (
+        <div>{new Date(order.completedDate).toISOString().split("T")[0]}</div>
+      );
+      // return null;
     } else {
-      return <div>Pick-up Date: {pickupDate}</div>;
+      return (
+        <div>
+          Pick-up Date: {new Date(order.timestamp).toISOString().split("T")[0]}
+        </div>
+      );
     }
   };
 

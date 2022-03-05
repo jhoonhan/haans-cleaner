@@ -21,17 +21,49 @@ exports.getGeocode = controller.getGeocode();
 exports.getAccepted = () =>
   catchAsync(async (req, res, next) => {
     const date = new Date();
-
+    const today = date.toISOString().split("T")[0];
+    console.log(new Date(today));
+    let query;
     // console.log(startDate);
+    if (req.params.type === "search") {
+      query = Order.find({
+        $or: [
+          {
+            $and: [
+              { status: "accepted" },
+              { acceptId: req.params.acceptId },
+              // { date: { $eq: new Date(today) } },
+            ],
+          },
+          {
+            $and: [
+              { status: "submitted" },
+              { date: { $lte: new Date(today) } },
+            ],
+          },
+        ],
+      });
+    }
+    if (req.params.type === "accepted") {
+      query = Order.find({
+        $or: [
+          {
+            $and: [{ status: "accepted" }, { acceptId: req.params.acceptId }],
+          },
+          {
+            $and: [
+              { status: "completed" },
+              { completedDate: { $eq: new Date(today) } },
+            ],
+          },
+        ],
+      });
+    }
 
-    const query = Order.find({
-      $or: [{ status: "accepted" }, { status: "completed" }],
-      acceptId: req.params.acceptId,
-      date: {
-        $gte: new Date().setDate(date.getDate() - 2),
-        $lte: new Date().setDate(date.getDate() + 2),
-      },
-    });
+    // date: {
+    //   // $gte: new Date().setDate(date.getDate() - 2),
+    //   $lte: new Date("2022-03-04").setDate(date.getDate() + 0),
+    // },
 
     const data = await query;
 
