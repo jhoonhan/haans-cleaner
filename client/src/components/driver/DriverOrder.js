@@ -47,7 +47,7 @@ const DriverOrder = ({
       fetchUser(auth.userProfile.FW);
     }
     if (!driver.fetched.searchOrder) {
-      driverFetchOrder("2022-02-22"); //LC
+      driverFetchOrder("2022-03-04"); //LC
     }
     if (!driver.fetched.acceptedOrder) {
       driverFetchAccepted(auth.userProfile.FW);
@@ -113,8 +113,6 @@ const DriverOrder = ({
 
   //////////
   const rednerSearchOrders = () => {
-    const dayy = new Date().getDate();
-    console.log(dayy);
     const conditionalArr = () => {
       if (match.params.page === "search") {
         const orderArr = cvtObj2Arr(driver.orders);

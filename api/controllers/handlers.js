@@ -40,22 +40,6 @@ exports.getOne = (Model) =>
     });
   });
 
-// exports.searchByQuery = (Model) => {
-//   catchAsync(async (req, res, next) => {
-//     const query = Model.find(req.query);
-//     const data = await query;
-
-//     if (!data) {
-//       return next(new AppError("No document found with that ID", 404));
-//     }
-
-//     res.status(200).json({
-//       status: "success",
-//       data,
-//     });
-//   });
-// };
-
 exports.getByGoogleId = (Model) =>
   catchAsync(async (req, res, next) => {
     const query = Model.find({ googleId: req.params.googleId });

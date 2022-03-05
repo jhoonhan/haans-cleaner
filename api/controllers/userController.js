@@ -25,9 +25,11 @@ exports.postCompleted = () =>
       }
     );
     const data = await query;
+    console.log(data);
 
     res.status(200).json({
       status: "success",
       data,
     });
+    return;
   });

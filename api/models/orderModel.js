@@ -86,9 +86,9 @@ const orderSchema = new mongoose.Schema({
     // required: [true, "you must provide an email address"],
   },
   date: {
-    type: String,
+    type: Date,
     // required: [true, "you must provide a phone number"],
-    trim: true,
+    // trim: true,
   },
   googleId: {
     type: String,
@@ -108,6 +108,9 @@ const orderSchema = new mongoose.Schema({
     type: String,
     // required: [true, "you must provide a Google Id"],
     trim: true,
+  },
+  acceptDate: {
+    type: Date,
   },
   distance: {
     type: Number,
