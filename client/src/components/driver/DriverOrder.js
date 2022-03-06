@@ -39,6 +39,8 @@ const DriverOrder = ({
   const [showModal, setShowModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(false);
 
+  const [selectedDates, setSelectedDates] = useState([]);
+
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
   ////////
@@ -46,14 +48,15 @@ const DriverOrder = ({
     if (fetched) return;
     if (!auth.isSignedIn) return;
     if (!user.fetched) {
+      console.log(`fetchUser`);
       fetchUser(auth.userProfile.FW);
     }
-    if (!driver.fetched.searchOrder) {
-      driverFetchOrder(auth.userProfile.FW); //LC
-    }
-    if (!driver.fetched.acceptedOrder) {
+    if (!driver.fetched.searchOrder && !driver.fetched.acceptedOrder) {
+      console.log(`fetchOrder`);
+      driverFetchOrder(auth.userProfile.FW, selectedDates); //LC
       driverFetchAccepted(auth.userProfile.FW);
     }
+
     if (
       user.fetched &&
       driver.fetched.searchOrder &&
@@ -65,37 +68,41 @@ const DriverOrder = ({
   }, [auth.isSignedIn, user.fetched, driver.fetched]);
 
   /////////////////////
-  useEffect(() => {
-    if (!driver.fetched) return;
-    if (scrollEvent) {
-      window.addEventListener("scroll", handleScroll);
-    }
-    if (!scrollEvent) {
-      window.removeEventListener("scroll", handleScroll);
-      setMapClass("mapInitRatio");
-    }
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollEvent]);
+  // useEffect(() => {
+  //   if (!driver.fetched) return;
+  //   if (scrollEvent) {
+  //     window.addEventListener("scroll", handleScroll);
+  //   }
+  //   if (!scrollEvent) {
+  //     window.removeEventListener("scroll", handleScroll);
+  //     setMapClass("mapInitRatio");
+  //   }
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [scrollEvent]);
 
-  useEffect(() => {
-    if (
-      match.params.page === "search" &&
-      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
-        .length < 3
-    ) {
-      setScrollEvent(false);
-    }
-    if (
-      match.params.page === "accepted" &&
-      cvtObj2Arr(driver.acceptedOrders).length < 3
-    ) {
-      setScrollEvent(false);
-    }
-  }, [driver.orders, driver.acceptedOrders]);
+  // useEffect(() => {
+  //   if (
+  //     match.params.page === "search" &&
+  //     cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
+  //       .length < 3
+  //   ) {
+  //     setScrollEvent(false);
+  //   }
+  //   if (
+  //     match.params.page === "accepted" &&
+  //     cvtObj2Arr(driver.acceptedOrders).length < 3
+  //   ) {
+  //     setScrollEvent(false);
+  //   }
+  // }, [driver.orders, driver.acceptedOrders]);
 
   //////////
+
+  // useEffect(() => {
+  //   console.log(`date selected: ${selectedDates}`);
+  // }, [selectedDates]);
 
   const handleScroll = () => {
     if (!headerRef.current) return;
@@ -200,25 +207,27 @@ const DriverOrder = ({
 
   const render = () => {
     if (!fetched) return null;
+    console.log(fetched);
+    console.log(`render init`);
 
     return (
       <>
-        <Loader show={loader.showLoader} />
-        <Modal
+        {/* <Loader show={loader.showLoader} /> */}
+        {/* <Modal
           show={showModal}
           handleClose={setShowModal}
           id={user.googleId}
           title={"Confrim Completion"}
           content="You will not be able to cancel your confirmation"
           actions={modalAction()}
-        />
+        /> */}
         <div className="motion-container">
           <header className="page-title" ref={headerRef}>
             <h2>{match.params.page}</h2>
           </header>
 
           <div ref={googleMapWrapper} className={mapClass}>
-            <Wrapper
+            {/* <Wrapper
               apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
               render={renderMap}
             >
@@ -231,11 +240,11 @@ const DriverOrder = ({
                 page={match.params.page}
                 setIsMapLoaded={setIsMapLoaded}
               />
-            </Wrapper>
+            </Wrapper> */}
           </div>
           <div className="order-container">
-            <DriverDateSelector />
-            <div className="driver__order__list">{rednerSearchOrders()}</div>
+            {/* <DriverDateSelector setSelectedDates={setSelectedDates} /> */}
+            {/* <div className="driver__order__list">{rednerSearchOrders()}</div> */}
           </div>
         </div>
       </>

@@ -160,7 +160,8 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 };
 
 // Driver
-export const driverFetchOrder = (acceptId, coords) => async (dispatch) => {
+export const driverFetchOrder = (acceptId, date) => async (dispatch) => {
+  console.log(date);
   // const res = await server.get(`/order/getall/?date=${date}`);
   const res = await server.get(`/order/driversearch/search/${acceptId}`);
 
