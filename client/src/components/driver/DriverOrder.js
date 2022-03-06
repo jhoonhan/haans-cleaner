@@ -14,6 +14,7 @@ import Loader from "../Loader";
 import Modal from "../Modal";
 
 import DriverOrderItem from "./DriverOrderItem";
+import DriverDateSelector from "./DriverDateSelector";
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
 const DriverOrder = ({
@@ -42,6 +43,7 @@ const DriverOrder = ({
   const headerRef = useRef(null);
   ////////
   useEffect(() => {
+    if (fetched) return;
     if (!auth.isSignedIn) return;
     if (!user.fetched) {
       fetchUser(auth.userProfile.FW);
@@ -64,6 +66,7 @@ const DriverOrder = ({
 
   /////////////////////
   useEffect(() => {
+    if (!driver.fetched) return;
     if (scrollEvent) {
       window.addEventListener("scroll", handleScroll);
     }
@@ -171,8 +174,7 @@ const DriverOrder = ({
             acceptId: auth.userProfile.FW,
             completedDate: new Date().toISOString().split("T")[0],
           }
-        );
-        setShowModal(false);
+        ).then(() => setShowModal(false));
       }
       if (selectedOrder.status === "completed") {
         setShowModal(false);
@@ -232,6 +234,7 @@ const DriverOrder = ({
             </Wrapper>
           </div>
           <div className="order-container">
+            <DriverDateSelector />
             <div className="driver__order__list">{rednerSearchOrders()}</div>
           </div>
         </div>

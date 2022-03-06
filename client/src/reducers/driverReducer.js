@@ -15,7 +15,6 @@ const reducer = (
   state = {
     fetched: { searchOrder: false, acceptedOrder: false },
     acceptedOrders: {},
-    completedOrders: {},
   },
   action
 ) => {

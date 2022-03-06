@@ -22,7 +22,6 @@ const PickupFormThirdPage = (props) => {
   //   taxRate = 0.0475;
   // }
   const [showModal, setShowModal] = useState(false);
-  const refGoogleMapWrapper = useRef(null);
   const [total, setTotal] = useState({ total: 0, subtotal: 0, tax: 0 });
   // let total = { total: 0, subtotal: 0, tax: 0 };
   const taxRate = 0.0475;

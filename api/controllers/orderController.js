@@ -53,6 +53,7 @@ exports.getAccepted = () =>
           {
             $and: [
               { status: "completed" },
+              { acceptId: req.params.acceptId },
               { completedDate: { $eq: new Date(today) } },
             ],
           },

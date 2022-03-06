@@ -163,7 +163,6 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 export const driverFetchOrder = (acceptId, coords) => async (dispatch) => {
   // const res = await server.get(`/order/getall/?date=${date}`);
   const res = await server.get(`/order/driversearch/search/${acceptId}`);
-  console.log(res.data.data);
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data.data });
 };
@@ -218,25 +217,35 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
 
 export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
   const { orderId, driverId, customerId } = ids;
-  const res = await server.get(`/order/${orderId}`);
-
-  if (res.data.data.acceptId !== data.acceptId) window.alert("error");
-
-  if (res.data.data.acceptId === data.acceptId) {
-    const res = await server.patch(`/order/update/${orderId}`, {
-      ...data,
-      acceptId: data.acceptId,
-    });
-    const res1 = await server.patch(
-      `/user/completed/${customerId}/${driverId}`,
-      data
-    );
-
-    if (res.status !== 200 || res1.status !== 200) {
-      console.error(`error`);
-      return;
+  const fn = async () => {
+    const res = await server.get(`/order/${orderId}`);
+    if (res.data.data.acceptId !== data.acceptId) {
+      window.alert("The order was completed or accepted by other");
+      return { status: 404 };
     }
-    //
+    if (res.data.data.acceptId === data.acceptId) {
+      const res = await server.patch(`/order/update/${orderId}`, {
+        ...data,
+        acceptId: data.acceptId,
+      });
+      const res1 = await server.patch(
+        `/user/completed/${customerId}/${driverId}`,
+        data
+      );
+
+      if (res.status !== 200 || res1.status !== 200) {
+        console.error(`error`);
+        return null;
+      }
+      if (res.status === 200 && res1.status === 200) {
+        return res;
+      }
+    }
+  };
+
+  const res = await _loadingApiCall(fn, dispatch);
+
+  if (res.status === 200) {
     dispatch({
       type: D_COMPLETE_ORDER,
       payload: { ...res.data.data, acceptId: data.acceptId },
