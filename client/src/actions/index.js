@@ -160,10 +160,17 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 };
 
 // Driver
-export const driverFetchOrder = (acceptId, date) => async (dispatch) => {
-  console.log(date);
+export const driverFetchOrder = (acceptId, dates) => async (dispatch) => {
+  // if (date.length === 0) return;
+  console.log(`fetched`);
+
   // const res = await server.get(`/order/getall/?date=${date}`);
-  const res = await server.get(`/order/driversearch/search/${acceptId}`);
+  const res = await server.get(
+    `/order/driversearch/search/${acceptId}?dates=${dates}`,
+    {
+      aaang: "aaang",
+    }
+  );
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data.data });
 };

@@ -48,11 +48,9 @@ const DriverOrder = ({
     if (fetched) return;
     if (!auth.isSignedIn) return;
     if (!user.fetched) {
-      console.log(`fetchUser`);
       fetchUser(auth.userProfile.FW);
     }
     if (!driver.fetched.searchOrder && !driver.fetched.acceptedOrder) {
-      console.log(`fetchOrder`);
       driverFetchOrder(auth.userProfile.FW, selectedDates); //LC
       driverFetchAccepted(auth.userProfile.FW);
     }
@@ -102,8 +100,13 @@ const DriverOrder = ({
   //////////
 
   useEffect(() => {
-    console.log(`date selected: ${selectedDates}`);
+    if (fetched) {
+      console.log(`find with dates`);
+      driverFetchOrder(auth.userProfile.FW, selectedDates);
+    }
   }, [selectedDates]);
+
+  ////////////////
 
   const handleScroll = () => {
     if (!headerRef.current) return;
@@ -208,8 +211,6 @@ const DriverOrder = ({
 
   const render = () => {
     if (!fetched) return null;
-    console.log(fetched);
-    console.log(`render init`);
 
     return (
       <>
