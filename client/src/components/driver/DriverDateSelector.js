@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-const DriverDateSelector = ({ setSelectedDates }) => {
+const DriverDateSelector = ({ setSelectedDates, page }) => {
   const [dateSelector, selectDateSelector] = useState([
     new Date().toISOString().split("T")[0],
   ]);
@@ -54,6 +54,7 @@ const DriverDateSelector = ({ setSelectedDates }) => {
   };
 
   const render = () => {
+    if (page === "accepted") return null;
     return (
       <div className="driver__order__date-selector">
         {rednerDateSelectors()}

@@ -57,13 +57,17 @@ exports.getAccepted = () =>
       query = Order.find({
         $or: [
           {
-            $and: [{ status: "accepted" }, { acceptId: req.params.acceptId }],
+            $and: [
+              { status: "accepted" },
+              { acceptId: req.params.acceptId },
+              { date: { $eq: new Date(today) } },
+            ],
           },
           {
             $and: [
               { status: "completed" },
               { acceptId: req.params.acceptId },
-              { completedDate: { $eq: new Date(today) } },
+              { date: { $eq: new Date(today) } },
             ],
           },
         ],

@@ -47,21 +47,17 @@ const DriverOrder = ({
   const headerRef = useRef(null);
   ////////
   useEffect(() => {
-    if (fetched) return;
     if (!auth.isSignedIn) return;
-    console.log(`fetch sequence fired`);
     fetchUser(auth.userProfile.FW);
-    driverFetchOrder(auth.userProfile.FW, selectedDates); //LC
-    driverFetchAccepted(auth.userProfile.FW);
+    driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDates); //LC
   }, [auth.isSignedIn]);
 
   useEffect(() => {
     if (
-      user.fetched &&
-      driver.fetched.searchOrder &&
-      driver.fetched.acceptedOrder
+      user.fetched && [
+        driver.fetched.searchOrder || driver.fetched.acceptedOrder,
+      ]
     ) {
-      console.log(`all fetched`);
       setFetched(true);
       setScrollEvent(true);
     }
@@ -77,7 +73,6 @@ const DriverOrder = ({
       cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
         .length < 3
     ) {
-      console.log(`UE 3-1`);
       setScrollEvent(false);
     } else {
       setScrollEvent(true);
@@ -86,8 +81,6 @@ const DriverOrder = ({
       match.params.page === "accepted" &&
       cvtObj2Arr(driver.acceptedOrders).length < 3
     ) {
-      console.log(`UE 3-2`);
-
       setScrollEvent(false);
     }
   }, [fetched, driver.orders, driver.acceptedOrders]);
@@ -96,12 +89,9 @@ const DriverOrder = ({
     if (!fetched) return;
 
     if (scrollEvent) {
-      console.log(`UE 2-1`);
       window.addEventListener("scroll", handleScroll);
     }
     if (!scrollEvent) {
-      console.log(`UE 2-2`);
-
       window.removeEventListener("scroll", handleScroll);
       setMapClass("mapInitRatio");
     }
@@ -113,12 +103,8 @@ const DriverOrder = ({
   //////////
 
   useEffect(() => {
-    console.log(scrollEvent);
-  }, [scrollEvent]);
-
-  useEffect(() => {
     if (fetched) {
-      driverFetchOrder(auth.userProfile.FW, selectedDates);
+      driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDates);
     }
   }, [selectedDates]);
 
@@ -260,7 +246,10 @@ const DriverOrder = ({
             </Wrapper>
           </div>
           <div className="order-container">
-            <DriverDateSelector setSelectedDates={setSelectedDates} />
+            <DriverDateSelector
+              setSelectedDates={setSelectedDates}
+              page={match.params.page}
+            />
             <div className="driver__order__list">{rednerSearchOrders()}</div>
           </div>
         </div>
