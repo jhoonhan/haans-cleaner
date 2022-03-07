@@ -37,7 +37,7 @@ const DriverOrder = ({
   const [mapClass, setMapClass] = useState("mapInitRatio");
 
   const [showModal, setShowModal] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]

@@ -37,7 +37,7 @@ const DriverDateSelector = ({ selectedDate, setSelectedDate, page }) => {
   };
 
   const render = () => {
-    if (page === "accepted") return null;
+    // if (page === "accepted") return null;
     return (
       <div className="driver__order__date-selector">
         {rednerDateSelectors()}

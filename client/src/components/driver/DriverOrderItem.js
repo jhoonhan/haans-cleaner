@@ -154,6 +154,19 @@ const DriverOrderItem = (props) => {
       </div>
     );
   };
+  const onClickComplete = () => {
+    if (props.order.status === "completed") return;
+    const date = new Date().toISOString().split("T")[0];
+    const today = new Date(date).toDateString();
+    const pickupDate = new Date(props.order.date).toDateString();
+
+    if (pickupDate === today) {
+      props.setShowModal(true);
+      props.setSelectedOrder(props.order);
+    } else {
+      console.log(`Wait for God's calling`);
+    }
+  };
 
   const renderAcceptButtons = () => {
     const buttonColor = () => {
@@ -173,11 +186,7 @@ const DriverOrderItem = (props) => {
           Cancel
         </div>
         <div
-          onClick={() => {
-            if (props.order.status === "completed") return;
-            props.setShowModal(true);
-            props.setSelectedOrder(props.order);
-          }}
+          onClick={onClickComplete}
           className="driver__order__buttton"
           style={{ backgroundColor: buttonColor() }}
         >
