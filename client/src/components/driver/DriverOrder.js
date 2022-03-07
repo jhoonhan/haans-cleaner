@@ -39,7 +39,9 @@ const DriverOrder = ({
   const [showModal, setShowModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(false);
 
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedDates, setSelectedDates] = useState([
+    new Date().toISOString().split("T")[0],
+  ]);
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
@@ -47,32 +49,59 @@ const DriverOrder = ({
   useEffect(() => {
     if (fetched) return;
     if (!auth.isSignedIn) return;
-    if (!user.fetched) {
-      fetchUser(auth.userProfile.FW);
-    }
-    if (!driver.fetched.searchOrder && !driver.fetched.acceptedOrder) {
-      driverFetchOrder(auth.userProfile.FW, selectedDates); //LC
-      driverFetchAccepted(auth.userProfile.FW);
-    }
+    console.log(`fetch sequence fired`);
+    fetchUser(auth.userProfile.FW);
+    driverFetchOrder(auth.userProfile.FW, selectedDates); //LC
+    driverFetchAccepted(auth.userProfile.FW);
+  }, [auth.isSignedIn]);
 
+  useEffect(() => {
     if (
-      auth.isSignedIn &&
       user.fetched &&
       driver.fetched.searchOrder &&
       driver.fetched.acceptedOrder
     ) {
+      console.log(`all fetched`);
       setFetched(true);
       setScrollEvent(true);
     }
-  }, [auth.isSignedIn, user.fetched, driver.fetched]);
+  }, [user.fetched, driver.fetched.searchOrder, driver.fetched.acceptedOrder]);
 
   /////////////////////
+
   useEffect(() => {
-    if (!driver.fetched) return;
+    if (!fetched) return;
+
+    if (
+      match.params.page === "search" &&
+      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
+        .length < 3
+    ) {
+      console.log(`UE 3-1`);
+      setScrollEvent(false);
+    } else {
+      setScrollEvent(true);
+    }
+    if (
+      match.params.page === "accepted" &&
+      cvtObj2Arr(driver.acceptedOrders).length < 3
+    ) {
+      console.log(`UE 3-2`);
+
+      setScrollEvent(false);
+    }
+  }, [fetched, driver.orders, driver.acceptedOrders]);
+
+  useEffect(() => {
+    if (!fetched) return;
+
     if (scrollEvent) {
+      console.log(`UE 2-1`);
       window.addEventListener("scroll", handleScroll);
     }
     if (!scrollEvent) {
+      console.log(`UE 2-2`);
+
       window.removeEventListener("scroll", handleScroll);
       setMapClass("mapInitRatio");
     }
@@ -81,27 +110,14 @@ const DriverOrder = ({
     };
   }, [scrollEvent]);
 
-  useEffect(() => {
-    if (
-      match.params.page === "search" &&
-      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
-        .length < 3
-    ) {
-      setScrollEvent(false);
-    }
-    if (
-      match.params.page === "accepted" &&
-      cvtObj2Arr(driver.acceptedOrders).length < 3
-    ) {
-      setScrollEvent(false);
-    }
-  }, [driver.orders, driver.acceptedOrders]);
-
   //////////
 
   useEffect(() => {
+    console.log(scrollEvent);
+  }, [scrollEvent]);
+
+  useEffect(() => {
     if (fetched) {
-      console.log(`find with dates`);
       driverFetchOrder(auth.userProfile.FW, selectedDates);
     }
   }, [selectedDates]);
@@ -211,7 +227,6 @@ const DriverOrder = ({
 
   const render = () => {
     if (!fetched) return null;
-
     return (
       <>
         <Loader show={loader.showLoader} />

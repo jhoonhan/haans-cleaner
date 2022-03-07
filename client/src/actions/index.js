@@ -95,6 +95,7 @@ export const fetchUser = (googleId) => async (dispatch, getState) => {
   const res = await server.get(`/user/get/${googleId}`);
   dispatch({ type: FETCH_USER, payload: res.data.data[0] });
   // history.push("/");
+  if (res.status === 200) console.log(`user fetched`);
 };
 
 export const editUser = (id, newValue) => async (dispatch) => {
@@ -162,21 +163,19 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 // Driver
 export const driverFetchOrder = (acceptId, dates) => async (dispatch) => {
   // if (date.length === 0) return;
-  console.log(`fetched`);
 
   // const res = await server.get(`/order/getall/?date=${date}`);
   const res = await server.get(
-    `/order/driversearch/search/${acceptId}?dates=${dates}`,
-    {
-      aaang: "aaang",
-    }
+    `/order/driversearch/search/${acceptId}?dates=${dates}`
   );
+  if (res.status === 200) console.log(`order fetched`);
 
   dispatch({ type: D_FETCH_ORDER, payload: res.data.data });
 };
 
 export const driverFetchAccepted = (acceptId) => async (dispatch) => {
   const res = await server.get(`/order/driversearch/accepted/${acceptId}`);
+  if (res.status === 200) console.log(`accepted fetched`);
 
   dispatch({ type: D_FETCH_ACCEPTED, payload: res.data.data });
 };
