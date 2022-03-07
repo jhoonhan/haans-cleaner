@@ -21,18 +21,14 @@ exports.getGeocode = controller.getGeocode();
 exports.getAccepted = () =>
   catchAsync(async (req, res, next) => {
     let query;
-    let dates;
-    const date = new Date();
-    const today = date.toISOString().split("T")[0];
+    const date = new Date(req.query.date);
+    const today = new Date().toISOString().split("T")[0];
 
-    if (req.query.dates) {
-      dates = req.query.dates.split(",").map((date) => new Date(date));
-    }
     // console.log(startDate);
     if (req.params.type === "search") {
       query = Order.find({
         $and: [
-          { date: { $in: dates } },
+          { date: { $eq: date } },
           {
             $or: [
               {

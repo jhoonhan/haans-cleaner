@@ -39,9 +39,9 @@ const DriverOrder = ({
   const [showModal, setShowModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(false);
 
-  const [selectedDates, setSelectedDates] = useState([
-    new Date().toISOString().split("T")[0],
-  ]);
+  const [selectedDate, setSelectedDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
@@ -49,7 +49,7 @@ const DriverOrder = ({
   useEffect(() => {
     if (!auth.isSignedIn) return;
     fetchUser(auth.userProfile.FW);
-    driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDates); //LC
+    driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate); //LC
   }, [auth.isSignedIn]);
 
   useEffect(() => {
@@ -104,9 +104,9 @@ const DriverOrder = ({
 
   useEffect(() => {
     if (fetched) {
-      driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDates);
+      driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate);
     }
-  }, [selectedDates]);
+  }, [selectedDate]);
 
   ////////////////
 
@@ -247,7 +247,8 @@ const DriverOrder = ({
           </div>
           <div className="order-container">
             <DriverDateSelector
-              setSelectedDates={setSelectedDates}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               page={match.params.page}
             />
             <div className="driver__order__list">{rednerSearchOrders()}</div>

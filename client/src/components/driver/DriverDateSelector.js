@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-const DriverDateSelector = ({ setSelectedDates, page }) => {
-  const [dateSelector, selectDateSelector] = useState([
-    new Date().toISOString().split("T")[0],
-  ]);
-
-  useEffect(() => {
-    setSelectedDates(dateSelector);
-  }, [dateSelector]);
-
+const DriverDateSelector = ({ selectedDate, setSelectedDate, page }) => {
   const dates = () => {
     const dates = [];
     for (let i = 0; i < 4; i++) {
@@ -20,23 +12,14 @@ const DriverDateSelector = ({ setSelectedDates, page }) => {
     return dates;
   };
 
-  const onSelectDate = (date) => {
-    if (dateSelector.includes(date)) {
-      selectDateSelector(dateSelector.filter((el) => el !== date));
-    }
-    if (!dateSelector.includes(date)) {
-      selectDateSelector([...dateSelector, date]);
-    }
-  };
-  //
   const rednerDateSelectors = () => {
     const dateSelectors = dates().map((date, i) => {
       return (
         <div
-          onClick={() => onSelectDate(date)}
+          onClick={() => setSelectedDate(date)}
           key={i}
           style={
-            dateSelector.includes(date)
+            selectedDate === date
               ? { backgroundColor: "red" }
               : { backgroundColor: "blue" }
           }

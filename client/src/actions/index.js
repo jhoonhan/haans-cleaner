@@ -161,12 +161,12 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 };
 
 // Driver
-export const driverFetchOrder = (acceptId, page, dates) => async (dispatch) => {
+export const driverFetchOrder = (acceptId, page, date) => async (dispatch) => {
   // if (date.length === 0) return;
 
   // const res = await server.get(`/order/getall/?date=${date}`);
   const res = await server.get(
-    `/order/driversearch/${page}/${acceptId}?dates=${dates}`
+    `/order/driversearch/${page}/${acceptId}?date=${date}`
   );
   if (res.status !== 200) {
     console.error(`error`);
