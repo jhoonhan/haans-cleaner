@@ -58,6 +58,7 @@ const DriverOrder = ({
     }
 
     if (
+      auth.isSignedIn &&
       user.fetched &&
       driver.fetched.searchOrder &&
       driver.fetched.acceptedOrder
@@ -68,41 +69,41 @@ const DriverOrder = ({
   }, [auth.isSignedIn, user.fetched, driver.fetched]);
 
   /////////////////////
-  // useEffect(() => {
-  //   if (!driver.fetched) return;
-  //   if (scrollEvent) {
-  //     window.addEventListener("scroll", handleScroll);
-  //   }
-  //   if (!scrollEvent) {
-  //     window.removeEventListener("scroll", handleScroll);
-  //     setMapClass("mapInitRatio");
-  //   }
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [scrollEvent]);
+  useEffect(() => {
+    if (!driver.fetched) return;
+    if (scrollEvent) {
+      window.addEventListener("scroll", handleScroll);
+    }
+    if (!scrollEvent) {
+      window.removeEventListener("scroll", handleScroll);
+      setMapClass("mapInitRatio");
+    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollEvent]);
 
-  // useEffect(() => {
-  //   if (
-  //     match.params.page === "search" &&
-  //     cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
-  //       .length < 3
-  //   ) {
-  //     setScrollEvent(false);
-  //   }
-  //   if (
-  //     match.params.page === "accepted" &&
-  //     cvtObj2Arr(driver.acceptedOrders).length < 3
-  //   ) {
-  //     setScrollEvent(false);
-  //   }
-  // }, [driver.orders, driver.acceptedOrders]);
+  useEffect(() => {
+    if (
+      match.params.page === "search" &&
+      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
+        .length < 3
+    ) {
+      setScrollEvent(false);
+    }
+    if (
+      match.params.page === "accepted" &&
+      cvtObj2Arr(driver.acceptedOrders).length < 3
+    ) {
+      setScrollEvent(false);
+    }
+  }, [driver.orders, driver.acceptedOrders]);
 
   //////////
 
-  // useEffect(() => {
-  //   console.log(`date selected: ${selectedDates}`);
-  // }, [selectedDates]);
+  useEffect(() => {
+    console.log(`date selected: ${selectedDates}`);
+  }, [selectedDates]);
 
   const handleScroll = () => {
     if (!headerRef.current) return;
@@ -212,22 +213,22 @@ const DriverOrder = ({
 
     return (
       <>
-        {/* <Loader show={loader.showLoader} /> */}
-        {/* <Modal
+        <Loader show={loader.showLoader} />
+        <Modal
           show={showModal}
           handleClose={setShowModal}
           id={user.googleId}
           title={"Confrim Completion"}
           content="You will not be able to cancel your confirmation"
           actions={modalAction()}
-        /> */}
+        />
         <div className="motion-container">
           <header className="page-title" ref={headerRef}>
             <h2>{match.params.page}</h2>
           </header>
 
           <div ref={googleMapWrapper} className={mapClass}>
-            {/* <Wrapper
+            <Wrapper
               apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
               render={renderMap}
             >
@@ -240,11 +241,11 @@ const DriverOrder = ({
                 page={match.params.page}
                 setIsMapLoaded={setIsMapLoaded}
               />
-            </Wrapper> */}
+            </Wrapper>
           </div>
           <div className="order-container">
-            {/* <DriverDateSelector setSelectedDates={setSelectedDates} /> */}
-            {/* <div className="driver__order__list">{rednerSearchOrders()}</div> */}
+            <DriverDateSelector setSelectedDates={setSelectedDates} />
+            <div className="driver__order__list">{rednerSearchOrders()}</div>
           </div>
         </div>
       </>
