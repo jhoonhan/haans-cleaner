@@ -18,33 +18,40 @@ exports.delete = factory.delete(Order);
 
 exports.getGeocode = controller.getGeocode();
 
-exports.getAccepted = () =>
+exports.getDriverOrder = () =>
   catchAsync(async (req, res, next) => {
     let query;
     const date = new Date(req.query.date);
     const today = new Date().toISOString().split("T")[0];
 
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const results = {};
+
+    results.next = {
+      page: page + 1,
+      limit,
+    };
+    results.prev = {
+      page: page - 1,
+      limit,
+    };
+
     // console.log(startDate);
     if (req.params.type === "search") {
       query = Order.find({
-        $and: [
-          { date: { $eq: date } },
+        $or: [
           {
-            $or: [
-              {
-                $and: [
-                  { status: "accepted" },
-                  { acceptId: req.params.acceptId },
-                  // { date: { $eq: new Date(today) } },
-                ],
-              },
-              {
-                $and: [
-                  { status: "submitted" },
-                  // { date: { $lte: new Date(today) } },
-                ],
-              },
+            $and: [
+              { status: "accepted" },
+              { acceptId: req.params.acceptId },
+              { date: { $eq: date } },
             ],
+          },
+          {
+            $and: [{ status: "submitted" }, { date: { $eq: date } }],
           },
         ],
       });
@@ -70,19 +77,17 @@ exports.getAccepted = () =>
       });
     }
 
-    // date: {
-    //   // $gte: new Date().setDate(date.getDate() - 2),
-    //   $lte: new Date("2022-03-04").setDate(date.getDate() + 0),
-    // },
-
     const data = await query;
+    results.data = data.slice(startIndex, endIndex);
 
     if (!data) {
       return next(new AppError("No document found with that ID", 404));
     }
     res.status(200).json({
       status: "success",
-      results: data.length,
-      data,
+      totlaResults: results.data.length,
+      nextPage: results.next,
+      prevPage: results.prev,
+      data: results.data,
     });
   });

@@ -224,12 +224,8 @@ const DriverOrderItem = (props) => {
             </div>
             <div></div>
             <div>
-              {props.page === "search"
-                ? new Date(props.order.date).toISOString().split("T")[0]
-                : new Date(props.order.acceptDate)
-                    .toISOString()
-                    .split("T")[0]}{" "}
-              #{props.order.ticketId}
+              {new Date(props.order.date).toISOString().split("T")[0]}#
+              {props.order.ticketId}
             </div>
             <div>
               {props.order.street}, {props.order.city}
