@@ -64,8 +64,8 @@ const DriverOrder = ({
   );
 
   useEffect(() => {
-    console.log(orders);
-  }, [orders]);
+    console.log(pageNumber);
+  }, [pageNumber]);
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
