@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import {
   driverFetchOrder,
@@ -14,6 +14,7 @@ import Modal from "../Modal";
 
 import DriverOrderItem from "./DriverOrderItem";
 import DriverDateSelector from "./DriverDateSelector";
+import useOrderSearch from "./useOrderSearch";
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
 const DriverOrder = ({
@@ -40,8 +41,31 @@ const DriverOrder = ({
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-
   const [pageNumber, setPageNumber] = useState(1);
+
+  const observer = useRef();
+  const lastOrderElementRef = useCallback((node) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        console.log("visible");
+        setPageNumber((prevPageNumber) => prevPageNumber + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
+
+  const { loading, error, orders, hasMore } = useOrderSearch(
+    auth.userProfile.FW,
+    match.params.page,
+    selectedDate,
+    pageNumber,
+    driverFetchOrder
+  );
+
+  useEffect(() => {
+    console.log(orders);
+  }, [orders]);
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
@@ -49,7 +73,7 @@ const DriverOrder = ({
   useEffect(() => {
     if (!auth.isSignedIn) return;
     fetchUser(auth.userProfile.FW);
-    driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate); //LC
+    // driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate); //LC
   }, [auth.isSignedIn]);
 
   useEffect(() => {
@@ -102,11 +126,11 @@ const DriverOrder = ({
 
   //////////
 
-  useEffect(() => {
-    if (fetched) {
-      driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate);
-    }
-  }, [selectedDate]);
+  // useEffect(() => {
+  //   if (fetched) {
+  //     driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate);
+  //   }
+  // }, [selectedDate]);
 
   ////////////////
 
@@ -145,16 +169,31 @@ const DriverOrder = ({
     return conditionalArr()
       .sort((a, b) => a.distance - b.distance)
       .map((order, i) => {
-        return (
-          <DriverOrderItem
-            order={order}
-            key={i}
-            page={match.params.page}
-            timestamp={order.timestamp}
-            setShowModal={setShowModal}
-            setSelectedOrder={setSelectedOrder}
-          />
-        );
+        if (conditionalArr().length === i + 1) {
+          return (
+            <div ref={lastOrderElementRef} key={i}>
+              <DriverOrderItem
+                order={order}
+                page={match.params.page}
+                timestamp={order.timestamp}
+                setShowModal={setShowModal}
+                setSelectedOrder={setSelectedOrder}
+              />
+            </div>
+          );
+        } else {
+          return (
+            <div key={i}>
+              <DriverOrderItem
+                order={order}
+                page={match.params.page}
+                timestamp={order.timestamp}
+                setShowModal={setShowModal}
+                setSelectedOrder={setSelectedOrder}
+              />
+            </div>
+          );
+        }
       });
   };
 

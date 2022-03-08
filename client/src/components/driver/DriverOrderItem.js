@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";

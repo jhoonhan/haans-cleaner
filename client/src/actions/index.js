@@ -169,12 +169,12 @@ export const driverFetchOrder = (acceptId, type, date) => async (dispatch) => {
     console.error(`error`);
     return;
   }
-  console.log(res.data);
 
   dispatch({
     type: type === "search" ? D_FETCH_ORDER : D_FETCH_ACCEPTED,
     payload: res.data.data,
   });
+  return res;
 };
 
 export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
