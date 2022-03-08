@@ -161,32 +161,20 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 };
 
 // Driver
-export const driverFetchOrder = (acceptId, page, date) => async (dispatch) => {
-  // if (date.length === 0) return;
-
-  // const res = await server.get(`/order/getall/?date=${date}`);
+export const driverFetchOrder = (acceptId, type, date) => async (dispatch) => {
   const res = await server.get(
-    `/order/driversearch/${page}/${acceptId}?date=${date}`
+    `/order/driversearch/${type}/${acceptId}?date=${date}&page=1&limit=5`
   );
   if (res.status !== 200) {
     console.error(`error`);
     return;
   }
+  console.log(res.data);
 
   dispatch({
-    type: page === "search" ? D_FETCH_ORDER : D_FETCH_ACCEPTED,
+    type: type === "search" ? D_FETCH_ORDER : D_FETCH_ACCEPTED,
     payload: res.data.data,
   });
-};
-
-export const driverFetchAccepted = (acceptId) => async (dispatch) => {
-  const res = await server.get(`/order/driversearch/accepted/${acceptId}`);
-
-  if (res.status !== 200) {
-    console.error(`error`);
-    return;
-  }
-  dispatch({ type: D_FETCH_ACCEPTED, payload: res.data.data });
 };
 
 export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {

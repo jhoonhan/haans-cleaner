@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {
-  driverFetchOrder,
-  fetchUser,
-  driverFetchAccepted,
-} from "../../actions";
+import { driverFetchOrder, fetchUser } from "../../actions";
 
 import DriverHeader from "./DriverHeader";
 
-const Driver = ({
-  auth,
-  user,
-  driver,
-  driverFetchOrder,
-  fetchUser,
-  driverFetchAccepted,
-}) => {
+const Driver = ({ auth, user, driver, driverFetchOrder, fetchUser }) => {
   const [fetched, setFetched] = useState(false);
 
   useEffect(() => {
@@ -59,5 +48,4 @@ const mapStateToProps = ({ auth, user, driver }) => {
 export default connect(mapStateToProps, {
   driverFetchOrder,
   fetchUser,
-  driverFetchAccepted,
 })(Driver);

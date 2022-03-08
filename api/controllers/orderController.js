@@ -24,20 +24,7 @@ exports.getDriverOrder = () =>
     const date = new Date(req.query.date);
     const today = new Date().toISOString().split("T")[0];
 
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
     const results = {};
-
-    results.next = {
-      page: page + 1,
-      limit,
-    };
-    results.prev = {
-      page: page - 1,
-      limit,
-    };
 
     // console.log(startDate);
     if (req.params.type === "search") {
@@ -78,7 +65,25 @@ exports.getDriverOrder = () =>
     }
 
     const data = await query;
+
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
     results.data = data.slice(startIndex, endIndex);
+
+    if (endIndex < data.length)
+      results.next = {
+        page: page + 1,
+        limit,
+      };
+
+    if (startIndex > 0) {
+      results.prev = {
+        page: page - 1,
+        limit,
+      };
+    }
 
     if (!data) {
       return next(new AppError("No document found with that ID", 404));

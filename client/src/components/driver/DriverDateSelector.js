@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 const DriverDateSelector = ({ selectedDate, setSelectedDate, page }) => {
   const dates = () => {
     const dates = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = -1; i < 4; i++) {
       const today = new Date();
       const date = new Date().setDate(today.getDate() + i);
       dates.push(new Date(date).toISOString().split("T")[0]);

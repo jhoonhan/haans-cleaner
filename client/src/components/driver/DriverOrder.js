@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import {
   driverFetchOrder,
-  driverFetchAccepted,
   driverCompeleteOrder,
   fetchUser,
   cancelOrder,
@@ -21,7 +20,6 @@ const DriverOrder = ({
   user,
   auth,
   driverFetchOrder,
-  driverFetchAccepted,
   driverCompeleteOrder,
   driver,
   fetchUser,
@@ -42,6 +40,8 @@ const DriverOrder = ({
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
   );
+
+  const [pageNumber, setPageNumber] = useState(1);
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
@@ -266,7 +266,6 @@ const mapStateToProps = ({ auth, user, driver, loader }) => {
 
 export default connect(mapStateToProps, {
   driverFetchOrder,
-  driverFetchAccepted,
   driverCompeleteOrder,
   fetchUser,
   cancelOrder,
