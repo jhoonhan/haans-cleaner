@@ -3,21 +3,13 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
-import { driverSetCoordsAct, driverEditAcceptedOrder } from "../actions";
+import { driverSetCoords, driverEditAcceptedOrder } from "../actions";
 
 import markerRed from "../image/marker-red.png";
 import markerBlue from "../image/marker-blue.png";
 import markerGreen from "../image/marker-green.png";
 
-const GoogleMap = ({
-  orders,
-  driver,
-  page,
-  mapClass,
-  driverSetCoordsAct,
-  driverEditAcceptedOrder,
-  setIsMapLoaded,
-}) => {
+const GoogleMap = ({ orders, driver, page, mapClass }) => {
   const [loadedMap, setLoadedMap] = useState(null);
   const [direcRenderer, setDirecRenderer] = useState(
     new window.google.maps.DirectionsRenderer()
@@ -36,12 +28,6 @@ const GoogleMap = ({
   const refMap = React.useRef();
 
   useEffect(() => {
-    if (navigator.geolocation && !driver.currentCoords) {
-      navigator.geolocation.getCurrentPosition(geoSuccess, geoFailed);
-    }
-  }, []);
-
-  useEffect(() => {
     if (!driver.currentCoords) return;
     const map = new window.google.maps.Map(refMap.current, {
       center: driver.currentCoords,
@@ -57,14 +43,14 @@ const GoogleMap = ({
       title: "Hello World!",
     });
 
-    getDistance();
+    // getDistance();
   }, [driver.currentCoords]);
 
   useEffect(() => {
     if (loadedMap !== null) {
       loadMarkers();
     }
-  }, [loadedMap, driver.acceptedOrders, driver.order]);
+  }, [loadedMap, driver.acceptedOrders, driver.orders]);
 
   useEffect(() => {
     if (loadedMap === null) return;
@@ -155,61 +141,6 @@ const GoogleMap = ({
     });
   };
 
-  ///////////////////////////////////////////
-  const geoSuccess = ({ coords }) => {
-    driverSetCoordsAct({ lat: coords.latitude, lng: coords.longitude });
-  };
-
-  const geoFailed = () => {
-    window.alert("You must enable sharing location");
-  };
-  ////////////////////////////////////////////////
-  // GET DISTANCE NOW GETS CALLED FROM SERVER SIDE
-  const getDistance = () => {
-    if (!window.google) {
-      return;
-    }
-    const ordersArr = cvtObj2Arr(driver.orders);
-    const destinations = ordersArr
-      .filter((order) => order.coords.lat)
-      .map((order) => order.coords);
-    const origin = new window.google.maps.LatLng(
-      driver.currentCoords.lat,
-      driver.currentCoords.lng
-    );
-
-    const distanceMatrixCallback = (response, status) => {
-      if (!response) return;
-      const res = response.rows[0].elements;
-      ordersArr.forEach((order, i) => {
-        if (
-          +res[i].distance.text.split(" ")[0] !==
-          driver.orders[order._id].distance
-        ) {
-          driverEditAcceptedOrder(
-            { distance: +res[i].distance.text.split(" ")[0] },
-            order._id
-          );
-        }
-      });
-    };
-
-    const distanceMatrixService =
-      new window.google.maps.DistanceMatrixService();
-    distanceMatrixService.getDistanceMatrix(
-      {
-        origins: [origin],
-        destinations,
-        travelMode: "DRIVING",
-        unitSystem: window.google.maps.UnitSystem.IMPERIAL,
-        avoidHighways: false,
-        avoidTolls: false,
-      },
-      distanceMatrixCallback
-    );
-  };
-  //////////////////////////////////////////
-
   const renderTripDetail = (response) => {
     let total;
     const ordersArr = cvtObj2Arr(driver.acceptedOrders);
@@ -268,6 +199,6 @@ const mapStateToProps = ({ auth, user, driver }) => {
 };
 
 export default connect(mapStateToProps, {
-  driverSetCoordsAct,
+  driverSetCoords,
   driverEditAcceptedOrder,
 })(GoogleMap);

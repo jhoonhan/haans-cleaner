@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useOrderSearch = (
-  fetched,
+  readyForSearch,
   acceptId,
   type,
   selectedDate,
@@ -16,11 +16,10 @@ const useOrderSearch = (
   const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
-    if (!fetched || !coords) return;
+    if (!readyForSearch || !coords) return;
     setLoading(true);
     setError(false);
 
-    console.log(`search fireds`);
     const query = {
       acceptId,
       type,
@@ -44,15 +43,15 @@ const useOrderSearch = (
         setError(true);
         console.log(e);
       });
-  }, [fetched, coords, selectedDate, pageNumber]);
+  }, [readyForSearch, coords, selectedDate, pageNumber]);
 
   useEffect(() => {
-    if (!fetched) return;
+    if (!readyForSearch) return;
     setPageNumber(1);
   }, [selectedDate]);
 
   useEffect(() => {
-    if (!fetched) return;
+    if (!readyForSearch) return;
     driverClearOrder();
   }, [selectedDate]);
 

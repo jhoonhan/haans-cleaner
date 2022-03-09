@@ -164,7 +164,6 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 // Driver
 export const driverFetchOrder = (query) => async (dispatch) => {
   const { acceptId, type, coords, selectedDate, pageNumber } = query;
-  console.log(coords);
   const res = await server.get(
     `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`
   );
@@ -264,7 +263,7 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
   }
 };
 
-export const driverSetCoordsAct = (coords) => (dispatch) => {
+export const driverSetCoords = (coords) => (dispatch) => {
   dispatch({ type: D_SET_COORDS, payload: coords });
 };
 

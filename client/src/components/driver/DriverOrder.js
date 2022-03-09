@@ -4,6 +4,7 @@ import {
   driverFetchOrder,
   driverCompeleteOrder,
   driverClearOrder,
+  driverSetCoords,
   fetchUser,
   cancelOrder,
 } from "../../actions";
@@ -16,6 +17,9 @@ import Modal from "../Modal";
 import DriverOrderItem from "./DriverOrderItem";
 import DriverDateSelector from "./DriverDateSelector";
 import useOrderSearch from "./useOrderSearch";
+import useGeolocation from "./useGeolocation";
+import useShrinkMapOnScroll from "./useShrinkMapOnScroll";
+
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
 import { D_FETCH_ORDER } from "../../actions/types";
@@ -26,6 +30,7 @@ const DriverOrder = ({
   driverFetchOrder,
   driverCompeleteOrder,
   driverClearOrder,
+  driverSetCoords,
   driver,
   fetchUser,
   cancelOrder,
@@ -35,7 +40,9 @@ const DriverOrder = ({
   loader,
 }) => {
   const [fetched, setFetched] = useState(false);
+  const [readyForSearch, setReadyForSearch] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+
   const [scrollEvent, setScrollEvent] = useState(false);
   const [mapClass, setMapClass] = useState("mapInitRatio");
 
@@ -48,31 +55,43 @@ const DriverOrder = ({
   const [pageNumber, setPageNumber] = useState(1);
 
   ////////////////
-
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
   ////////
+  useGeolocation(driver, driverSetCoords);
+
+  ///
   useEffect(() => {
-    if (!auth.isSignedIn) return;
-    fetchUser(auth.userProfile.FW);
-    // driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate); //LC
-  }, [auth.isSignedIn]);
+    if (!user.fetched && auth.isSignedIn) {
+      fetchUser(auth.userProfile.FW);
+    }
+    if (user.fetched && auth.isSignedIn) {
+      setReadyForSearch(true);
+    }
+  }, [auth.isSignedIn, user.fetched]);
 
   useEffect(() => {
     if (
-      user.fetched && [
-        driver.fetched.searchOrder || driver.fetched.acceptedOrder,
-      ]
+      driver.fetched.searchOrder &&
+      user.fetched &&
+      match.params.page === "search"
     ) {
       setFetched(true);
-      setScrollEvent(true);
     }
-  }, [user.fetched, driver.fetched.searchOrder, driver.fetched.acceptedOrder]);
+    if (
+      driver.fetched.acceptedOrder &&
+      user.fetched &&
+      match.params.page === "accepted"
+    ) {
+      setFetched(true);
+    }
+  }, [driver.fetched]);
 
+  /////////////////////
   /////////////////////
 
   const { loading, error, hasMore } = useOrderSearch(
-    fetched,
+    readyForSearch,
     auth.userProfile.FW,
     match.params.page,
     selectedDate,
@@ -99,58 +118,71 @@ const DriverOrder = ({
   );
 
   ///
-  useEffect(() => {
-    if (!fetched) return;
-    if (
-      match.params.page === "search" &&
-      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
-        .length < 3
-    ) {
-      setScrollEvent(false);
-    } else {
-      setScrollEvent(true);
-    }
-    if (
-      match.params.page === "accepted" &&
-      cvtObj2Arr(driver.acceptedOrders).length < 3
-    ) {
-      setScrollEvent(false);
-    }
-  }, [fetched, driver.orders, driver.acceptedOrders]);
+  const { scroll, handleScroll } = useShrinkMapOnScroll(
+    fetched,
+    match.params.page,
+    driver,
+    scrollEvent,
+    setScrollEvent,
+    headerRef,
+    mapClass,
+    setMapClass,
+    driver.orders
+  );
 
-  useEffect(() => {
-    if (!fetched) return;
+  useEffect();
 
-    if (scrollEvent) {
-      window.addEventListener("scroll", handleScroll);
-    }
-    if (!scrollEvent) {
-      window.removeEventListener("scroll", handleScroll);
-      setMapClass("mapInitRatio");
-    }
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollEvent]);
+  // useEffect(() => {
+  //   if (!fetched) return;
+  //   if (
+  //     match.params.page === "search" &&
+  //     cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
+  //       .length < 3
+  //   ) {
+  //     setScrollEvent(false);
+  //   } else {
+  //     setScrollEvent(true);
+  //   }
+  //   if (
+  //     match.params.page === "accepted" &&
+  //     cvtObj2Arr(driver.acceptedOrders).length < 3
+  //   ) {
+  //     setScrollEvent(false);
+  //   }
+  // }, [fetched, driver.orders, driver.acceptedOrders]);
 
-  ////////////////
+  // useEffect(() => {
+  //   if (!fetched) return;
 
-  const handleScroll = () => {
-    if (!headerRef.current) return;
-    if (match.params.page === "search" && cvtObj2Arr(driver.orders).length < 3)
-      return;
-    if (
-      match.params.page === "accepted" &&
-      cvtObj2Arr(driver.acceptedOrders).length < 3
-    )
-      return;
-    const rect = headerRef.current.getBoundingClientRect();
-    if (rect.y !== 0 && mapClass === "mapInitRatio") {
-      setMapClass("mapStickyRatio");
-    } else if (rect.y === 0) {
-      setMapClass("mapInitRatio");
-    }
-  };
+  //   if (scrollEvent) {
+  //     window.addEventListener("scroll", handleScroll);
+  //   }
+  //   if (!scrollEvent) {
+  //     window.removeEventListener("scroll", handleScroll);
+  //     setMapClass("mapInitRatio");
+  //   }
+  //   return () => {
+  //     console.log(`unmounted`);
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [scrollEvent]);
+
+  // const handleScroll = () => {
+  //   if (!headerRef.current) return;
+  //   if (match.params.page === "search" && cvtObj2Arr(driver.orders).length < 3)
+  //     return;
+  //   if (
+  //     match.params.page === "accepted" &&
+  //     cvtObj2Arr(driver.acceptedOrders).length < 3
+  //   )
+  //     return;
+  //   const rect = headerRef.current.getBoundingClientRect();
+  //   if (rect.y !== 0 && mapClass === "mapInitRatio") {
+  //     setMapClass("mapStickyRatio");
+  //   } else if (rect.y === 0) {
+  //     setMapClass("mapInitRatio");
+  //   }
+  // };
 
   //////////
   const rednerSearchOrders = () => {
@@ -306,6 +338,7 @@ export default connect(mapStateToProps, {
   driverFetchOrder,
   driverCompeleteOrder,
   driverClearOrder,
+  driverSetCoords,
   fetchUser,
   cancelOrder,
 })(DriverOrder);
