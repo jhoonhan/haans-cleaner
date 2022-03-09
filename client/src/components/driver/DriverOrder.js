@@ -167,35 +167,33 @@ const DriverOrder = ({
       }
     };
 
-    return conditionalArr()
-      .sort((a, b) => a.distance - b.distance)
-      .map((order, i) => {
-        if (conditionalArr().length === i + 1) {
-          return (
-            <div ref={lastOrderElementRef} key={i}>
-              <DriverOrderItem
-                order={order}
-                page={match.params.page}
-                timestamp={order.timestamp}
-                setShowModal={setShowModal}
-                setSelectedOrder={setSelectedOrder}
-              />
-            </div>
-          );
-        } else {
-          return (
-            <div key={i}>
-              <DriverOrderItem
-                order={order}
-                page={match.params.page}
-                timestamp={order.timestamp}
-                setShowModal={setShowModal}
-                setSelectedOrder={setSelectedOrder}
-              />
-            </div>
-          );
-        }
-      });
+    return conditionalArr().map((order, i) => {
+      if (conditionalArr().length === i + 1) {
+        return (
+          <div ref={lastOrderElementRef} key={i}>
+            <DriverOrderItem
+              order={order}
+              page={match.params.page}
+              timestamp={order.timestamp}
+              setShowModal={setShowModal}
+              setSelectedOrder={setSelectedOrder}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div key={i}>
+            <DriverOrderItem
+              order={order}
+              page={match.params.page}
+              timestamp={order.timestamp}
+              setShowModal={setShowModal}
+              setSelectedOrder={setSelectedOrder}
+            />
+          </div>
+        );
+      }
+    });
   };
 
   const renderMap = (status) => {

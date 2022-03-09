@@ -22,7 +22,6 @@ exports.getDriverOrder = () =>
   catchAsync(async (req, res, next) => {
     let query;
     const date = new Date(req.query.date);
-    const today = new Date().toISOString().split("T")[0];
 
     const results = {};
 
@@ -65,12 +64,13 @@ exports.getDriverOrder = () =>
     }
 
     const data = await query;
-
-    const orderArr = await controller.getDistance(data);
+    const orderArr = await controller.getDistance(data, [
+      req.query.lat,
+      req.query.lng,
+    ]);
     const sortedArr = orderArr.sort((a, b) => {
       return a.distance - b.distance;
     });
-    console.log(sortedArr);
 
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);

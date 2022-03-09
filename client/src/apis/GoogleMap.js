@@ -57,7 +57,7 @@ const GoogleMap = ({
       title: "Hello World!",
     });
 
-    // getDistance();
+    getDistance();
   }, [driver.currentCoords]);
 
   useEffect(() => {
@@ -163,52 +163,52 @@ const GoogleMap = ({
   const geoFailed = () => {
     window.alert("You must enable sharing location");
   };
-  //////////////////////////////////////////////////
+  ////////////////////////////////////////////////
   // GET DISTANCE NOW GETS CALLED FROM SERVER SIDE
-  // const getDistance = () => {
-  //   if (!window.google) {
-  //     return;
-  //   }
-  //   const ordersArr = cvtObj2Arr(driver.orders);
-  //   const destinations = ordersArr
-  //     .filter((order) => order.coords.lat)
-  //     .map((order) => order.coords);
-  //   const origin = new window.google.maps.LatLng(
-  //     driver.currentCoords.lat,
-  //     driver.currentCoords.lng
-  //   );
+  const getDistance = () => {
+    if (!window.google) {
+      return;
+    }
+    const ordersArr = cvtObj2Arr(driver.orders);
+    const destinations = ordersArr
+      .filter((order) => order.coords.lat)
+      .map((order) => order.coords);
+    const origin = new window.google.maps.LatLng(
+      driver.currentCoords.lat,
+      driver.currentCoords.lng
+    );
 
-  //   const distanceMatrixCallback = (response, status) => {
-  //     if (!response) return;
-  //     const res = response.rows[0].elements;
-  //     ordersArr.forEach((order, i) => {
-  //       if (
-  //         +res[i].distance.text.split(" ")[0] !==
-  //         driver.orders[order._id].distance
-  //       ) {
-  //         driverEditAcceptedOrder(
-  //           { distance: +res[i].distance.text.split(" ")[0] },
-  //           order._id
-  //         );
-  //       }
-  //     });
-  //   };
+    const distanceMatrixCallback = (response, status) => {
+      if (!response) return;
+      const res = response.rows[0].elements;
+      ordersArr.forEach((order, i) => {
+        if (
+          +res[i].distance.text.split(" ")[0] !==
+          driver.orders[order._id].distance
+        ) {
+          driverEditAcceptedOrder(
+            { distance: +res[i].distance.text.split(" ")[0] },
+            order._id
+          );
+        }
+      });
+    };
 
-  //   const distanceMatrixService =
-  //     new window.google.maps.DistanceMatrixService();
-  //   distanceMatrixService.getDistanceMatrix(
-  //     {
-  //       origins: [origin],
-  //       destinations,
-  //       travelMode: "DRIVING",
-  //       unitSystem: window.google.maps.UnitSystem.IMPERIAL,
-  //       avoidHighways: false,
-  //       avoidTolls: false,
-  //     },
-  //     distanceMatrixCallback
-  //   );
-  // };
-  ////////////////////////////////////////////
+    const distanceMatrixService =
+      new window.google.maps.DistanceMatrixService();
+    distanceMatrixService.getDistanceMatrix(
+      {
+        origins: [origin],
+        destinations,
+        travelMode: "DRIVING",
+        unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+        avoidHighways: false,
+        avoidTolls: false,
+      },
+      distanceMatrixCallback
+    );
+  };
+  //////////////////////////////////////////
 
   const renderTripDetail = (response) => {
     let total;

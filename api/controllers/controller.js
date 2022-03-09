@@ -23,11 +23,9 @@ exports.getGeocode = () =>
     return;
   });
 
-exports.getDistance = async (orderData) => {
-  const origin = [{ lat: 35.969689314975284, lng: -80.03943902205476 }];
+exports.getDistance = async (orderData, [lat, lng]) => {
+  const originQuery = `${lat}%2C${lng}`;
   const destinations = orderData.map((order) => order.coords);
-
-  const originQuery = `${origin[0].lat}%2C${origin[0].lng}`;
   const destinationQuery = destinations
     .map((des) => `${des.lat}%2C${des.lng}`)
     .join("%7C");

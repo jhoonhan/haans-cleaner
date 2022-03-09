@@ -166,7 +166,7 @@ export const driverFetchOrder = (query) => async (dispatch) => {
   const { acceptId, type, coords, selectedDate, pageNumber } = query;
   console.log(coords);
   const res = await server.get(
-    `/order/driversearch/${type}/${acceptId}?date=${selectedDate}&page=${pageNumber}&limit=5`
+    `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`
   );
   if (res.status !== 200) {
     console.error(`error`);
