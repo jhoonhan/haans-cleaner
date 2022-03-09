@@ -17,6 +17,7 @@ exports.update = factory.update(Order);
 exports.delete = factory.delete(Order);
 
 exports.getGeocode = controller.getGeocode();
+exports.getDistance = controller.getDistance();
 
 exports.getDriverOrder = () =>
   catchAsync(async (req, res, next) => {
