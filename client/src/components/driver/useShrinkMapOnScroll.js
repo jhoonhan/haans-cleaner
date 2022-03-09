@@ -5,12 +5,9 @@ const useShrinkMapOnScroll = (
   fetched,
   driver,
   page,
-  scrollEvent,
-  setScrollEvent,
   headerRef,
   mapClass,
-  setMapClass,
-  test
+  setMapClass
 ) => {
   const [scroll, setScroll] = useState(false);
 
@@ -23,24 +20,24 @@ const useShrinkMapOnScroll = (
         .length < 3
     ) {
       console.log(`set event FALSE`);
-      setScrollEvent(false);
+      setScroll(false);
     } else {
       console.log(`set event TRUE`);
-      setScrollEvent(true);
+      setScroll(true);
     }
     if (page === "accepted" && cvtObj2Arr(driver.acceptedOrders).length < 3) {
-      setScrollEvent(false);
+      setScroll(false);
     }
-  }, [fetched, driver.orders, driver.acceptedOrders, test]);
+  }, [fetched, driver.orders, driver.acceptedOrders]);
 
   useEffect(() => {
     console.log(`UE 2`);
     if (!fetched) return;
 
-    if (scrollEvent) {
+    if (scroll) {
       window.addEventListener("scroll", handleScroll);
     }
-    if (!scrollEvent) {
+    if (!scroll) {
       window.removeEventListener("scroll", handleScroll);
       setMapClass("mapInitRatio");
     }
@@ -48,7 +45,7 @@ const useShrinkMapOnScroll = (
       console.log(`unmounted`);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scrollEvent]);
+  }, [scroll]);
 
   const handleScroll = () => {
     if (!headerRef.current) return;
@@ -63,7 +60,7 @@ const useShrinkMapOnScroll = (
     }
   };
 
-  return { scrollEvent };
+  return { scroll, handleScroll };
 };
 
 export default useShrinkMapOnScroll;

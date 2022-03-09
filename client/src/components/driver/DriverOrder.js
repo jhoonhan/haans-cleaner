@@ -122,15 +122,10 @@ const DriverOrder = ({
     fetched,
     match.params.page,
     driver,
-    scrollEvent,
-    setScrollEvent,
     headerRef,
     mapClass,
-    setMapClass,
-    driver.orders
+    setMapClass
   );
-
-  useEffect();
 
   // useEffect(() => {
   //   if (!fetched) return;
