@@ -94,7 +94,7 @@ const wrappedForm = reduxForm({
   form: "pickup", //Form name is same
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  enableReinitialize: false,
+  enableReinitialize: true,
   keepDirtyOnReinitialize: true,
   // validate,
 })(PickupFormFirstPage);

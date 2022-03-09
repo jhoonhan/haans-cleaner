@@ -165,8 +165,9 @@ const PickupFormFourthPage = (props) => {
     );
   };
   const renderDate = () => {
-    const pickupDate = new Date(props.pickup.date);
-    console.log(pickupDate);
+    const selectedDate = new Date(props.pickup.date);
+    const convertedDate = selectedDate.toISOString().split("T")[0];
+    const pickupDate = new Date(convertedDate);
 
     const date = {
       year: pickupDate.getFullYear(),
@@ -257,8 +258,8 @@ const PickupFormFourthPage = (props) => {
 
 const mapStateToProps = ({ form, auth, user, loader }) => {
   return {
-    pickup: form.pickup?.values,
-    clothes: form.clothes?.values,
+    pickup: form.pickup.values,
+    clothes: form.clothes.values,
     auth,
     user: user.currentUser,
     loader,
@@ -268,7 +269,7 @@ const mapStateToProps = ({ form, auth, user, loader }) => {
 export default connect(mapStateToProps, { createOrder })(
   reduxForm({
     form: "pickup", //Form name is same
-    destroyOnUnmount: true,
+    destroyOnUnmount: false,
     forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
     validate,
   })(PickupFormFourthPage)
