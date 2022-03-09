@@ -29,7 +29,7 @@ const PickupFormFirstPage = (props) => {
     }
   }, [selected]);
 
-  const { handleSubmit, lastPage } = props;
+  const { handleSubmit } = props;
 
   return (
     <form className="form__form" onSubmit={handleSubmit}>
@@ -39,30 +39,6 @@ const PickupFormFirstPage = (props) => {
           type="text"
           component={renderField}
           label="fullName"
-        />
-      </div>
-
-      <div className="form__form__row">
-        <label>Address</label>
-        <Field
-          name="street"
-          type="text"
-          component={renderInput}
-          label="street"
-        />
-        <div className="cityzip">
-          <label>City</label>
-          <label>Zip</label>
-          <Field name="city" type="text" component={renderInput} label="city" />
-          <Field name="zip" type="number" component={renderInput} label="zip" />
-        </div>
-      </div>
-      <div className="form__form__row">
-        <label>Saved Addresses</label>
-        <SavedAddressList
-          enableDelete={false}
-          enableDefault={false}
-          setSelected={setSelected}
         />
       </div>
 
@@ -91,10 +67,7 @@ const PickupFormFirstPage = (props) => {
       <div className="form__form__row"></div>
 
       <div className="form__button-holder--vertical">
-        <button type="submit" className="next button--l">
-          Count clothes (optional)
-        </button>
-        <button type="button" className="previous button--l" onClick={lastPage}>
+        <button type="submit" className="previous button--l">
           Next
         </button>
       </div>
@@ -110,6 +83,7 @@ const mapStateToProps = ({ auth, user }) => {
       street: user.currentUser?.defaultAddress.street,
       city: user.currentUser?.defaultAddress.city,
       zip: user.currentUser?.defaultAddress.zip,
+      date: "2022-03-09",
     },
     auth: auth,
     user: user.currentUser,
@@ -120,7 +94,7 @@ const wrappedForm = reduxForm({
   form: "pickup", //Form name is same
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  enableReinitialize: true,
+  enableReinitialize: false,
   keepDirtyOnReinitialize: true,
   // validate,
 })(PickupFormFirstPage);

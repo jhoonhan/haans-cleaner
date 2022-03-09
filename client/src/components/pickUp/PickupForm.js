@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import PickupFormFirstPage from "./PickupFormFirstPage";
 import PickupFormSecondPage from "./PickupFormSecondPage";
 import PickupFormThirdPage from "./PickupFormThirdPage";
+import PickupFormFourthPage from "./PickupFormFourthPage";
 
 class PickupForm extends React.Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class PickupForm extends React.Component {
   }
 
   lastPage() {
-    this.setState({ page: 3 });
+    this.setState({ page: 4 });
   }
 
   previousPage() {
@@ -48,13 +49,13 @@ class PickupForm extends React.Component {
           />
         )}
         {page === 3 && (
-          <PickupFormSecondPage
+          <PickupFormThirdPage
             previousPage={this.previousPage}
             onSubmit={this.nextPage}
           />
         )}
         {page === 4 && (
-          <PickupFormThirdPage
+          <PickupFormFourthPage
             previousPage={this.previousPage}
             onSubmit={onSubmit}
           />

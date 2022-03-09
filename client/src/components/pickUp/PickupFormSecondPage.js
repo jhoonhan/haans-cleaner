@@ -1,55 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Field, reduxForm, change } from "redux-form";
 import { connect } from "react-redux";
 
-import { Field, reduxForm, resetForm, isPristine } from "redux-form";
+import { fetchUser } from "../../actions";
 import validate from "./validate";
 
-const renderError = ({ meta: { touched, error } }) =>
-  touched && error ? <span>{error}</span> : false;
+import SavedAddressList from "../account/SavedAddressList";
+
+import renderField from "../helpers/renderField";
+import renderInput from "../helpers/renderInput";
 
 const PickupFormSecondPage = (props) => {
+  const [selected, setSelected] = useState(
+    props.user?.currentUser?.defaultAddress
+  );
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (props.auth.isSignedIn && !props.user) {
+      props.fetchUser(props.auth.userProfile.FW);
+    }
+  }, [props.auth.isSignedIn]);
 
-  const renderSelector = ({ input }) => {
-    const style = input.value > 0 ? "highlighted" : "";
+  useEffect(() => {
+    if (selected) {
+      props.change("street", selected.street);
+      props.change("city", selected.city);
+      props.change("zip", selected.zip);
+    }
+  }, [selected]);
 
-    return (
-      <div className={`form__clothes ${style}`}>
-        <div
-          className="form__clothes__selector"
-          onClick={() => input.onChange(+input.value + 1)}
-        >
-          {input.name}
+  const { handleSubmit, previousPage, lastPage } = props;
+
+  return (
+    <form className="form__form" onSubmit={handleSubmit}>
+      <div className="form__form__row">
+        <label>Address</label>
+        <Field
+          name="street"
+          type="text"
+          component={renderInput}
+          label="street"
+        />
+        <div className="cityzip">
+          <label>City</label>
+          <label>Zip</label>
+          <Field name="city" type="text" component={renderInput} label="city" />
+          <Field name="zip" type="number" component={renderInput} label="zip" />
         </div>
-        <input
-          className="form__clothes__edit"
-          onChange={input.onChange}
-          value={+input.value}
-          type="number"
+      </div>
+      <div className="form__form__row">
+        <label>Saved Addresses</label>
+        <SavedAddressList
+          enableDelete={false}
+          enableDefault={false}
+          setSelected={setSelected}
         />
       </div>
-    );
-  };
-  const { handleSubmit, previousPage, reset } = props;
-  return (
-    <form onSubmit={handleSubmit} className="form__form">
-      <div className="form__reset-form" onClick={reset}>
-        reset
-      </div>
-      <label>Count your clothes</label>
-      <div className="form__selector">
-        <Field name="top" component={renderSelector} />
-        <Field name="pants" component={renderSelector} />
-        <Field name="sweater" component={renderSelector} />
-        <Field name="jacket" component={renderSelector} />
-        <Field name="coat" component={renderSelector} />
-        <Field name="skirt" component={renderSelector} />
-        <Field name="dress" component={renderSelector} />
-        <Field name="other" component={renderSelector} />
-        <Field name="error" component={renderError} />
-      </div>
+
+      <div className="form__form__row"></div>
+
       <div className="form__button-holder--horizontal fixed">
         <button
           type="button"
@@ -67,14 +76,26 @@ const PickupFormSecondPage = (props) => {
 };
 
 const mapStateToProps = ({ auth, user }) => {
-  return {};
+  return {
+    initialValues: {
+      name: user.currentUser?.fullName,
+      phone: user.currentUser?.phone,
+      street: user.currentUser?.defaultAddress.street,
+      city: user.currentUser?.defaultAddress.city,
+      zip: user.currentUser?.defaultAddress.zip,
+    },
+    auth: auth,
+    user: user.currentUser,
+  };
 };
 
 const wrappedForm = reduxForm({
-  form: "clothes", //Form name is same
+  form: "pickup", //Form name is same
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
-  validate,
+  enableReinitialize: false,
+  keepDirtyOnReinitialize: true,
+  // validate,
 })(PickupFormSecondPage);
 
-export default connect(mapStateToProps, { isPristine })(wrappedForm);
+export default connect(mapStateToProps, { fetchUser, change })(wrappedForm);
