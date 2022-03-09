@@ -32,3 +32,4 @@ export const D_FETCH_ACCEPTED = "D_FETCH_ACCEPTED";
 export const D_SET_DISTANCE = "D_SET_DISTANCE";
 export const D_SET_GEOCODE = "D_SET_GEOCODE";
 export const D_COMPLETE_ORDER = "D_COMPLETE_ORDER";
+export const D_CLEAR_ORDER = "D_CLEAR_ORDER";

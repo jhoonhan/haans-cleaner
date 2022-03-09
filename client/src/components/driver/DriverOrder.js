@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   driverFetchOrder,
   driverCompeleteOrder,
+  driverClearOrder,
   fetchUser,
   cancelOrder,
 } from "../../actions";
@@ -17,11 +18,14 @@ import DriverDateSelector from "./DriverDateSelector";
 import useOrderSearch from "./useOrderSearch";
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
+import { D_FETCH_ORDER } from "../../actions/types";
+
 const DriverOrder = ({
   user,
   auth,
   driverFetchOrder,
   driverCompeleteOrder,
+  driverClearOrder,
   driver,
   fetchUser,
   cancelOrder,
@@ -43,29 +47,7 @@ const DriverOrder = ({
   );
   const [pageNumber, setPageNumber] = useState(1);
 
-  const observer = useRef();
-  const lastOrderElementRef = useCallback((node) => {
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        console.log("visible");
-        setPageNumber((prevPageNumber) => prevPageNumber + 1);
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, []);
-
-  const { loading, error, orders, hasMore } = useOrderSearch(
-    auth.userProfile.FW,
-    match.params.page,
-    selectedDate,
-    pageNumber,
-    driverFetchOrder
-  );
-
-  useEffect(() => {
-    console.log(pageNumber);
-  }, [pageNumber]);
+  ////////////////
 
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
@@ -89,9 +71,36 @@ const DriverOrder = ({
 
   /////////////////////
 
+  const { loading, error, hasMore } = useOrderSearch(
+    fetched,
+    auth.userProfile.FW,
+    match.params.page,
+    selectedDate,
+    pageNumber,
+    setPageNumber,
+    driverFetchOrder,
+    driverClearOrder,
+    driver.currentCoords
+  );
+
+  const observer = useRef();
+  const lastOrderElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore]
+  );
+
+  ///
   useEffect(() => {
     if (!fetched) return;
-
     if (
       match.params.page === "search" &&
       cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
@@ -123,14 +132,6 @@ const DriverOrder = ({
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scrollEvent]);
-
-  //////////
-
-  // useEffect(() => {
-  //   if (fetched) {
-  //     driverFetchOrder(auth.userProfile.FW, match.params.page, selectedDate);
-  //   }
-  // }, [selectedDate]);
 
   ////////////////
 
@@ -306,6 +307,7 @@ const mapStateToProps = ({ auth, user, driver, loader }) => {
 export default connect(mapStateToProps, {
   driverFetchOrder,
   driverCompeleteOrder,
+  driverClearOrder,
   fetchUser,
   cancelOrder,
 })(DriverOrder);

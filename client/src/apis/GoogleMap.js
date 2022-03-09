@@ -26,7 +26,6 @@ const GoogleMap = ({
     new window.google.maps.DirectionsService()
   );
   const [markers, setMarkers] = useState(null);
-  const [test, setTest] = useState(null);
 
   const [trip, setTrip] = useState({
     duration: null,
@@ -193,7 +192,6 @@ const GoogleMap = ({
           );
         }
       });
-      setIsMapLoaded(true);
     };
 
     const distanceMatrixService =

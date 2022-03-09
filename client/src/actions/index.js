@@ -22,6 +22,7 @@ import {
   MOUNT_USER,
   EDIT_DADDRESS,
   D_FETCH_ORDER,
+  D_CLEAR_ORDER,
   D_ACCEPT_ORDER,
   D_EDIT_ACCEPTED_ORDER,
   D_COMPLETE_ORDER,
@@ -161,9 +162,11 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
 };
 
 // Driver
-export const driverFetchOrder = (acceptId, type, date) => async (dispatch) => {
+export const driverFetchOrder = (query) => async (dispatch) => {
+  const { acceptId, type, coords, selectedDate, pageNumber } = query;
+  console.log(coords);
   const res = await server.get(
-    `/order/driversearch/${type}/${acceptId}?date=${date}&page=1&limit=5`
+    `/order/driversearch/${type}/${acceptId}?date=${selectedDate}&page=${pageNumber}&limit=5`
   );
   if (res.status !== 200) {
     console.error(`error`);
@@ -175,6 +178,10 @@ export const driverFetchOrder = (acceptId, type, date) => async (dispatch) => {
     payload: res.data.data,
   });
   return res;
+};
+
+export const driverClearOrder = () => (dispatch) => {
+  dispatch({ type: D_CLEAR_ORDER, payload: null });
 };
 
 export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
