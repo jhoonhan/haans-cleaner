@@ -140,7 +140,7 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       marker.setMap(loadedMap);
     });
   };
-
+  /////////////////////////////////////////
   const renderTripDetail = (response) => {
     let total;
     const ordersArr = cvtObj2Arr(driver.acceptedOrders);
@@ -149,14 +149,9 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     }
     if (ordersArr.length > 1) {
       total = ordersArr
-        .filter((order) => order.total.total !== 0)
-        .reduce((prev, curr) => {
-          const prevTotal = prev.total.total * 0.2;
-          console.log(prev.total.total);
-          const currTotal = curr.total.total * 0.2;
-          console.log(curr.total.total);
-          return (prevTotal + currTotal).toFixed(2);
-        });
+        .filter((order) => order.total.total !== "0")
+        .map((order) => +order.total.total * 0.2)
+        .reduce((a, b) => a + b);
     }
 
     setTrip({

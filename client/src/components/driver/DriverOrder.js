@@ -18,11 +18,8 @@ import DriverOrderItem from "./DriverOrderItem";
 import DriverDateSelector from "./DriverDateSelector";
 import useOrderSearch from "./useOrderSearch";
 import useGeolocation from "./useGeolocation";
-import useShrinkMapOnScroll from "./useShrinkMapOnScroll";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
-
-import { D_FETCH_ORDER } from "../../actions/types";
 
 const DriverOrder = ({
   user,
@@ -118,66 +115,57 @@ const DriverOrder = ({
   );
 
   ///
-  const { scroll, handleScroll } = useShrinkMapOnScroll(
-    fetched,
-    match.params.page,
-    driver,
-    headerRef,
-    mapClass,
-    setMapClass
-  );
 
-  // useEffect(() => {
-  //   if (!fetched) return;
-  //   if (
-  //     match.params.page === "search" &&
-  //     cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
-  //       .length < 3
-  //   ) {
-  //     setScrollEvent(false);
-  //   } else {
-  //     setScrollEvent(true);
-  //   }
-  //   if (
-  //     match.params.page === "accepted" &&
-  //     cvtObj2Arr(driver.acceptedOrders).length < 3
-  //   ) {
-  //     setScrollEvent(false);
-  //   }
-  // }, [fetched, driver.orders, driver.acceptedOrders]);
+  useEffect(() => {
+    if (!fetched) return;
+    if (
+      match.params.page === "search" &&
+      cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
+        .length < 3
+    ) {
+      setScrollEvent(false);
+    } else {
+      setScrollEvent(true);
+    }
+    if (
+      match.params.page === "accepted" &&
+      cvtObj2Arr(driver.acceptedOrders).length < 3
+    ) {
+      setScrollEvent(false);
+    }
+  }, [fetched, driver.orders, driver.acceptedOrders]);
 
-  // useEffect(() => {
-  //   if (!fetched) return;
+  useEffect(() => {
+    if (!fetched) return;
 
-  //   if (scrollEvent) {
-  //     window.addEventListener("scroll", handleScroll);
-  //   }
-  //   if (!scrollEvent) {
-  //     window.removeEventListener("scroll", handleScroll);
-  //     setMapClass("mapInitRatio");
-  //   }
-  //   return () => {
-  //     console.log(`unmounted`);
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [scrollEvent]);
+    if (scrollEvent) {
+      window.addEventListener("scroll", handleScroll);
+    }
+    if (!scrollEvent) {
+      window.removeEventListener("scroll", handleScroll);
+      setMapClass("mapInitRatio");
+    }
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollEvent]);
 
-  // const handleScroll = () => {
-  //   if (!headerRef.current) return;
-  //   if (match.params.page === "search" && cvtObj2Arr(driver.orders).length < 3)
-  //     return;
-  //   if (
-  //     match.params.page === "accepted" &&
-  //     cvtObj2Arr(driver.acceptedOrders).length < 3
-  //   )
-  //     return;
-  //   const rect = headerRef.current.getBoundingClientRect();
-  //   if (rect.y !== 0 && mapClass === "mapInitRatio") {
-  //     setMapClass("mapStickyRatio");
-  //   } else if (rect.y === 0) {
-  //     setMapClass("mapInitRatio");
-  //   }
-  // };
+  const handleScroll = () => {
+    if (!headerRef.current) return;
+    if (match.params.page === "search" && cvtObj2Arr(driver.orders).length < 3)
+      return;
+    if (
+      match.params.page === "accepted" &&
+      cvtObj2Arr(driver.acceptedOrders).length < 3
+    )
+      return;
+    const rect = headerRef.current.getBoundingClientRect();
+    if (rect.y !== 0 && mapClass === "mapInitRatio") {
+      setMapClass("mapStickyRatio");
+    } else if (rect.y === 0) {
+      setMapClass("mapInitRatio");
+    }
+  };
 
   //////////
   const rednerSearchOrders = () => {

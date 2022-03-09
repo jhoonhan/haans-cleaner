@@ -48,7 +48,6 @@ const Account = ({
   };
 
   const renderContent = () => {
-    console.log(match.path);
     if (page === "home")
       return <AccountHome setPage={setPage} onSignOutClick={onSignOutClick} />;
     if (page === "edit") return <AccountEdit setPage={setPage} />;

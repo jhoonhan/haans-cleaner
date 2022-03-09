@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 
@@ -16,8 +16,6 @@ const AccountOrder = ({
   fetchOrder,
   setPage,
 }) => {
-  const [fetched, setFetched] = useState(false);
-
   useEffect(() => {
     if (!auth.isSignedIn) return;
     if (!userFetched) {
@@ -31,12 +29,37 @@ const AccountOrder = ({
     }
   }, [auth.isSignedIn, user, orders]);
 
-  const renderList = () => {
-    const orderArr = cvtObj2Arr(orders).filter(
-      (order) => order.status === "completed"
-    );
+  const now = new Date().toISOString().split("T")[0];
+  const today = new Date(now);
 
-    return orderArr.reverse().map((order, i) => {
+  const [fetched, setFetched] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(today.toISOString());
+  const [orders2, setOrders] = useState(null);
+  const dateSelector = useRef(null);
+
+  const handleDateChange = (e) => {
+    const date = new Date(e.target.value);
+    const selectedDate = date.toISOString();
+    setSelectedDate(selectedDate);
+  };
+
+  useEffect(() => {
+    if (!fetched) return null;
+    dateSelector.current.value = selectedDate.split("T")[0];
+  }, [fetched]);
+
+  useEffect(() => {
+    if (!fetched) return null;
+    const filteredOrders = cvtObj2Arr(orders).filter((order) => {
+      return order.date === selectedDate && order.status === "completed";
+    });
+    setOrders(filteredOrders);
+  }, [fetched, selectedDate]);
+
+  /////////////////
+  const renderList = () => {
+    if (!orders2) return null;
+    return orders2.reverse().map((order, i) => {
       return <OrderItem key={i} order={order} page={"account"} />;
     });
   };
@@ -60,6 +83,7 @@ const AccountOrder = ({
             X
           </div>
           <h3 className="align-self-flex-start">Completed Orders</h3>
+          <input onChange={handleDateChange} ref={dateSelector} type="date" />
           <div className="order__list">{renderList()}</div>
         </div>
       </motion.div>

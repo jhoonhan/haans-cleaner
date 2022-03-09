@@ -7,7 +7,8 @@ const useShrinkMapOnScroll = (
   page,
   headerRef,
   mapClass,
-  setMapClass
+  setMapClass,
+  selectedDate
 ) => {
   const [scroll, setScroll] = useState(false);
 
