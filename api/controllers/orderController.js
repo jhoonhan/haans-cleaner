@@ -17,7 +17,6 @@ exports.update = factory.update(Order);
 exports.delete = factory.delete(Order);
 
 exports.getGeocode = controller.getGeocode();
-exports.getDistance = controller.getDistance();
 
 exports.getDriverOrder = () =>
   catchAsync(async (req, res, next) => {
@@ -67,13 +66,19 @@ exports.getDriverOrder = () =>
 
     const data = await query;
 
+    const orderArr = await controller.getDistance(data);
+    const sortedArr = orderArr.sort((a, b) => {
+      return a.distance - b.distance;
+    });
+    console.log(sortedArr);
+
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    results.data = data.slice(startIndex, endIndex);
+    results.data = sortedArr.slice(startIndex, endIndex);
 
-    if (endIndex < data.length)
+    if (endIndex < sortedArr.length)
       results.next = {
         page: page + 1,
         limit,

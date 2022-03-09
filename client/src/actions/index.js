@@ -272,3 +272,8 @@ export const getGeocode = (address, id) => async (dispatch) => {
   const res = await server.get(`/geocode/${id}`, address);
   console.log(res);
 };
+
+export const getDistance = (address, id) => async (dispatch) => {
+  const res = await server.get(`/geocode/${id}`, address);
+  console.log(res);
+};

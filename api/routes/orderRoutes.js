@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/", orderController.create);
 router.post("/geocode", orderController.getGeocode);
-router.post("/distance", orderController.getDistance);
+// router.post("/distance", orderController.getDistance);
 
 router.get("/getall", orderController.getAll);
 router.get("/driversearch/:type/:acceptId", orderController.getDriverOrder());
