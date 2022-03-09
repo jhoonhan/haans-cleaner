@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import {
   driverFetchOrder,
+  driverFetchAccepted,
   driverCompeleteOrder,
   driverClearOrder,
   driverSetCoords,
@@ -25,6 +26,7 @@ const DriverOrder = ({
   user,
   auth,
   driverFetchOrder,
+  driverFetchAccepted,
   driverCompeleteOrder,
   driverClearOrder,
   driverSetCoords,
@@ -62,8 +64,15 @@ const DriverOrder = ({
     if (!user.fetched && auth.isSignedIn) {
       fetchUser(auth.userProfile.FW);
     }
-    if (user.fetched && auth.isSignedIn) {
+    if (match.params.page === "search" && user.fetched && auth.isSignedIn) {
       setReadyForSearch(true);
+    }
+    if (match.params.page === "accepted" && user.fetched && auth.isSignedIn) {
+      driverFetchAccepted(
+        auth.userProfile.FW,
+        selectedDate,
+        driver.currentCoords
+      );
     }
   }, [auth.isSignedIn, user.fetched]);
 
@@ -84,9 +93,19 @@ const DriverOrder = ({
     }
   }, [driver.fetched]);
 
-  /////////////////////
-  /////////////////////
+  useEffect(() => {
+    if (!fetched) return;
+    if (match.params.page === "search") return;
+    driverClearOrder();
+    driverFetchAccepted(
+      auth.userProfile.FW,
+      selectedDate,
+      driver.currentCoords
+    );
+  }, [selectedDate]);
 
+  /////////////////////
+  /////////////////////
   const { loading, error, hasMore } = useOrderSearch(
     readyForSearch,
     auth.userProfile.FW,
@@ -113,8 +132,7 @@ const DriverOrder = ({
     },
     [loading, hasMore]
   );
-
-  ///
+  /////////////////////
 
   useEffect(() => {
     if (!fetched) return;
@@ -320,6 +338,7 @@ const mapStateToProps = ({ auth, user, driver, loader }) => {
 export default connect(mapStateToProps, {
   driverFetchOrder,
   driverCompeleteOrder,
+  driverFetchAccepted,
   driverClearOrder,
   driverSetCoords,
   fetchUser,

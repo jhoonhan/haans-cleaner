@@ -179,6 +179,22 @@ export const driverFetchOrder = (query) => async (dispatch) => {
   return res;
 };
 
+export const driverFetchAccepted =
+  (acceptId, selectedDate, coords) => async (dispatch) => {
+    const res = await server.get(
+      `/order/driversearch/accepted/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}`
+    );
+    if (res.status !== 200) {
+      console.error(`error`);
+      return;
+    }
+    dispatch({
+      type: D_FETCH_ACCEPTED,
+      payload: res.data.data,
+    });
+    return res;
+  };
+
 export const driverClearOrder = () => (dispatch) => {
   dispatch({ type: D_CLEAR_ORDER, payload: null });
 };

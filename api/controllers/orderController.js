@@ -76,19 +76,23 @@ exports.getDriverOrder = () =>
     const limit = parseInt(req.query.limit);
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    results.data = sortedArr.slice(startIndex, endIndex);
+    if (req.params.type === "search") {
+      results.data = sortedArr.slice(startIndex, endIndex);
 
-    if (endIndex < sortedArr.length)
-      results.next = {
-        page: page + 1,
-        limit,
-      };
-
-    if (startIndex > 0) {
-      results.prev = {
-        page: page - 1,
-        limit,
-      };
+      if (endIndex < sortedArr.length)
+        results.next = {
+          page: page + 1,
+          limit,
+        };
+      if (startIndex > 0) {
+        results.prev = {
+          page: page - 1,
+          limit,
+        };
+      }
+    }
+    if (req.params.type === "accepted") {
+      results.data = sortedArr;
     }
 
     if (!data) {

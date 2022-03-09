@@ -48,6 +48,12 @@ class PickupForm extends React.Component {
           />
         )}
         {page === 3 && (
+          <PickupFormSecondPage
+            previousPage={this.previousPage}
+            onSubmit={this.nextPage}
+          />
+        )}
+        {page === 4 && (
           <PickupFormThirdPage
             previousPage={this.previousPage}
             onSubmit={onSubmit}

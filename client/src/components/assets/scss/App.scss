@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap");
+
 $primary-color: #707070;
 $secondary-color: red;
 $divider-color: #ccc;
@@ -6,7 +8,9 @@ $background-color: rgba(255, 255, 255, 0.9);
 $dev100vw: 414px;
 $dev100vh: 896px;
 
-$font-default: "Nunito Sans", sans-serif;
+// $font-default: "Nunito Sans", sans-serif;
+// $font-default: "Raleway", sans-serif;
+$font-default: "Open Sans", sans-serif;
 
 $font-size-s: 1.2rem;
 $font-size-m: 1.4rem;
