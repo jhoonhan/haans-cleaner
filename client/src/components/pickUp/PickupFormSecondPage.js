@@ -41,6 +41,8 @@ const PickupFormSecondPage = (props) => {
           component={renderInput}
           label="street"
         />
+      </div>
+      <div className="form__form__row">
         <div className="cityzip">
           <label>City</label>
           <label>Zip</label>
@@ -50,11 +52,13 @@ const PickupFormSecondPage = (props) => {
       </div>
       <div className="form__form__row">
         <label>Saved Addresses</label>
-        <SavedAddressList
-          enableDelete={false}
-          enableDefault={false}
-          setSelected={setSelected}
-        />
+        <div className="account__saved-addresses">
+          <SavedAddressList
+            enableDelete={false}
+            enableDefault={false}
+            setSelected={setSelected}
+          />
+        </div>
       </div>
 
       <div className="form__form__row"></div>

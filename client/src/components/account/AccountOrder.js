@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import { fetchOrder, fetchUser } from "../../actions";
 import OrderItem from "../order/OrderItem";
+import PageTitle from "../PageTitle";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
@@ -75,13 +76,12 @@ const AccountOrder = ({
         exit={{ opacity: 0 }}
         transition={{ type: "spring", duration: 0.1 }}
       >
+        <PageTitle
+          title="edit address"
+          hasGoBack={true}
+          onClickHandle={() => setPage("home")}
+        />
         <div className="account-container">
-          <div
-            onClick={() => setPage("home")}
-            className="account__btn--go-back"
-          >
-            X
-          </div>
           <h3 className="align-self-flex-start">Completed Orders</h3>
           <input onChange={handleDateChange} ref={dateSelector} type="date" />
           <div className="order__list">{renderList()}</div>

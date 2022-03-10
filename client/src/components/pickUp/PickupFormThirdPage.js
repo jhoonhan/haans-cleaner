@@ -21,7 +21,7 @@ const PickupFormThirdPage = (props) => {
           className="form__clothes__selector"
           onClick={() => input.onChange(+input.value + 1)}
         >
-          {input.name}
+          <label>{input.name}</label>
         </div>
         <input
           className="form__clothes__edit"
@@ -35,32 +35,40 @@ const PickupFormThirdPage = (props) => {
   const { handleSubmit, previousPage, reset } = props;
   return (
     <form onSubmit={handleSubmit} className="form__form">
-      <div className="form__reset-form" onClick={reset}>
-        reset
+      <div className="form__form__row">
+        <label style={{ margin: "0" }}>Count your clothes</label>
       </div>
-      <label>Count your clothes</label>
-      <div className="form__selector">
-        <Field name="top" component={renderSelector} />
-        <Field name="pants" component={renderSelector} />
-        <Field name="sweater" component={renderSelector} />
-        <Field name="jacket" component={renderSelector} />
-        <Field name="coat" component={renderSelector} />
-        <Field name="skirt" component={renderSelector} />
-        <Field name="dress" component={renderSelector} />
-        <Field name="other" component={renderSelector} />
-        <Field name="error" component={renderError} />
+
+      <div className="form__form__row">
+        <div className="button--d form__reset-form" onClick={reset}>
+          reset
+        </div>
+        <div className="form__selector">
+          <Field name="top" component={renderSelector} />
+          <Field name="pants" component={renderSelector} />
+          <Field name="sweater" component={renderSelector} />
+          <Field name="jacket" component={renderSelector} />
+          <Field name="coat" component={renderSelector} />
+          <Field name="skirt" component={renderSelector} />
+          <Field name="dress" component={renderSelector} />
+          <Field name="other" component={renderSelector} />
+          <Field name="error" component={renderError} />
+        </div>
       </div>
-      <div className="form__button-holder--horizontal fixed">
-        <button
-          type="button"
-          className="previous button--l"
-          onClick={previousPage}
-        >
-          Previous
-        </button>
-        <button type="submit" className="next button--l">
-          Next
-        </button>
+
+      <div className="form__form__row">
+        <div className="form__button-holder--horizontal fixed">
+          <button
+            type="button"
+            className="previous button--l"
+            onClick={previousPage}
+          >
+            Previous
+          </button>
+          <button type="submit" className="next button--l">
+            Next
+          </button>
+        </div>
       </div>
     </form>
   );

@@ -2,6 +2,8 @@ import React from "react";
 
 import PickupSaved from "./PickupSaved";
 import PickupForm from "./PickupForm";
+import PageTitle from "../PageTitle";
+
 import { motion } from "framer-motion";
 
 class Pickup extends React.Component {
@@ -15,9 +17,8 @@ class Pickup extends React.Component {
           transition={{ type: "spring", duration: 0.1 }}
           className="motion-container"
         >
-          <header className="page-title">
-            <h2>Pick-up</h2>
-          </header>
+          <PageTitle title="Pick Up" />
+
           <div className=".pickup pickup-container">
             {/* <PickupSaved /> */}
             <PickupForm />

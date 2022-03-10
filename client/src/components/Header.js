@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import GoogleButton from "./GoogleButton";
+import GoogleButton from "../apis/GoogleButton";
 
 const Header = ({ auth, user, location }) => {
   const [curPage, setCurPage] = useState(location.pathname.slice(1));

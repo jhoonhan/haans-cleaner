@@ -5,9 +5,19 @@ h2 {
   font-size: 3rem;
 }
 h3 {
-  font-size: 1.6rem;
+  font-size: 2rem;
 }
+h4 {
+  font-size: $font-size-l;
+}
+h5 {
+  font-size: $font-size-m;
+}
+
 p {
+  font-size: $font-size-m;
+}
+span {
   font-size: $font-size-m;
 }
 li {
@@ -20,7 +30,10 @@ a {
 }
 
 label {
-  font-size: $font-size-l;
+  font-size: $font-size-m;
+  color: $primary-color;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 input {
   font-family: $font-default;
@@ -29,15 +42,17 @@ input {
 
   width: 100%;
 
-  padding: 1rem;
+  padding: 0rem 0rem 0.7rem 0.5rem;
 
-  border: 1px solid $primary-color;
+  border-width: 0 0 1px 0;
+  border-color: $divider-color;
+  border-style: solid;
   box-sizing: border-box;
   outline: none;
 }
 input:focus {
   outline: none;
-  border: 1px solid $secondary-color;
+  border-color: $secondary-color;
 }
 
 input::-webkit-outer-spin-button,
@@ -50,29 +65,37 @@ input[type="number"] {
 }
 
 textarea {
+  font-family: $font-default;
+  font-size: $font-size-m;
+
   padding: 1rem;
+  margin-top: 1.5rem;
+
   box-sizing: border-box;
-  border: 1px solid $primary-color;
+  border: 1px solid $divider-color;
+
   outline: none;
 }
 textarea:focus {
-  border: 1px solid $primary-color;
   border: 1px solid $secondary-color;
-
   outline: none;
 }
 
 button {
   font-family: $font-default;
   font-size: $font-size-m;
+  font-weight: 600;
   color: $primary-color;
+  text-transform: uppercase;
   text-align: center;
   line-height: 1.6;
 
   padding: 0rem;
 
   background-color: white;
-  border: 1px solid $primary-color;
+  border: 1px solid $divider-color;
+
+  border-radius: 0rem;
 
   box-sizing: border-box;
   cursor: pointer;
@@ -115,12 +138,24 @@ button {
 }
 
 .row {
-  display: grid;
-  grid-auto-columns: auto;
-  grid-template-columns: auto auto;
-  background-color: red;
-}
+  width: 100%;
 
+  display: flex;
+  flex-direction: column;
+
+  padding: 0rem 0;
+}
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  & label {
+    width: auto;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid $divider-color;
+    box-sizing: border-box;
+  }
+}
 .border-top--primary {
   border-top: 1px solid $primary-color;
 }
@@ -188,6 +223,7 @@ button {
 
   box-sizing: border-box;
   border: 1px solid $divider-color;
+
   overflow-y: hidden;
   & div {
     padding: 1rem;
@@ -200,12 +236,28 @@ button {
 }
 
 .page-title {
+  color: $primary-accent;
+
   width: 100%;
-  padding: 2rem 2rem 1rem 2rem;
+  max-height: 3rem;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+
+  padding: 0rem 2rem 0rem 2rem;
+  margin-top: 6rem;
   text-align: left;
-  background-origin: red;
-  border-bottom: 1px solid $divider-color;
+  text-transform: uppercase;
   box-sizing: border-box;
+}
+.center-border {
+  width: 100%;
+  padding-left: 2rem;
+  box-sizing: border-box;
+  & div:first-child {
+    border-bottom: 1px solid $accent-color;
+  }
 }
 .default {
   border: 1px solid $secondary-color;

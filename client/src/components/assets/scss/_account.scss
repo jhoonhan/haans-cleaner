@@ -5,10 +5,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  gap: 2rem;
+  align-items: flex-start;
+  gap: 4rem;
 
-  padding: 2rem 2rem;
+  padding: 4rem 2rem;
 
   box-sizing: border-box;
 }
@@ -27,14 +27,6 @@
   flex-direction: column;
 
   margin-top: 1rem;
-  &::before {
-    font-size: $font-size-s;
-    font-family: $font-default;
-    font-size: $font-size-l;
-    margin-bottom: 0.5rem;
-    box-sizing: border-box;
-    content: "New Address";
-  }
 }
 
 .account__new-address__dropdown {
@@ -47,6 +39,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 3rem;
 }
 .account__content__container {
   width: 100%;
@@ -61,5 +54,22 @@
   gap: 1rem;
 }
 .account__btn--go-back {
-  align-self: flex-start;
+  font-size: 2rem;
+  width: 6rem;
+  text-align: center;
+}
+
+.account__profile__container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 2rem;
+  align-items: center;
+}
+.account__profile__picture {
+  aspect-ratio: 1 / 1;
+  width: 4rem;
+  border: 1px solid $divider-color;
+}
+.account__saved-addresses {
+  margin-top: 1rem;
 }

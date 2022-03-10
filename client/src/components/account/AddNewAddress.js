@@ -59,6 +59,7 @@ const AddNewAddress = ({
       onBlur={() => onControlNewAddress(true)}
       className="account__new-address"
     >
+      <label>Add new address</label>
       <div ref={refNewAddressContainer} className="width--100p">
         <Field
           name="newStreet"
@@ -88,7 +89,11 @@ const AddNewAddress = ({
           />
         </div>
 
-        <button onClick={handleSubmit(onClickNewAddress)} className="button--d">
+        <button
+          onClick={handleSubmit(onClickNewAddress)}
+          className="button--d"
+          style={{ marginTop: "2rem" }}
+        >
           add
         </button>
       </div>

@@ -14,6 +14,7 @@ import GoogleMap from "../../apis/GoogleMap";
 
 import Loader from "../Loader";
 import Modal from "../Modal";
+import PageTitle from "../PageTitle";
 
 import DriverOrderItem from "./DriverOrderItem";
 import DriverDateSelector from "./DriverDateSelector";
@@ -178,9 +179,9 @@ const DriverOrder = ({
     )
       return;
     const rect = headerRef.current.getBoundingClientRect();
-    if (rect.y !== 0 && mapClass === "mapInitRatio") {
+    if (rect.y !== 60 && mapClass === "mapInitRatio") {
       setMapClass("mapStickyRatio");
-    } else if (rect.y === 0) {
+    } else if (rect.y === 60) {
       setMapClass("mapInitRatio");
     }
   };
@@ -295,11 +296,8 @@ const DriverOrder = ({
           content="You will not be able to cancel your confirmation"
           actions={modalAction()}
         />
+        <PageTitle ref={headerRef} title={match.params.page} />
         <div className="motion-container">
-          <header className="page-title" ref={headerRef}>
-            <h2>{match.params.page}</h2>
-          </header>
-
           <div ref={googleMapWrapper} className={mapClass}>
             <Wrapper
               apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}

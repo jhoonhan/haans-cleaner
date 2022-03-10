@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import PageTitle from "../PageTitle";
 
 const DriverAccountHome = ({ setPage, onSignOutClick }) => {
   const render = () => {
@@ -11,9 +12,16 @@ const DriverAccountHome = ({ setPage, onSignOutClick }) => {
         exit={{ opacity: 0 }}
         transition={{ type: "spring", duration: 0.1 }}
       >
+        <PageTitle title="account" />
+
         <div className="account-container">
           <div className="account__menu">
             <div className="form__form__row">
+              <div onClick={() => setPage("order")} className="nav__item">
+                <h3 className="align-self-flex-start margin-top--1rem">
+                  Completed Orders
+                </h3>
+              </div>
               <div onClick={() => setPage("edit")} className="nav__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   Personal Information
@@ -29,12 +37,6 @@ const DriverAccountHome = ({ setPage, onSignOutClick }) => {
               <div onClick={() => setPage("address")} className="nav__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   Statements
-                </h3>
-              </div>
-
-              <div onClick={() => setPage("order")} className="nav__item">
-                <h3 className="align-self-flex-start margin-top--1rem">
-                  Completed Orders
                 </h3>
               </div>
             </div>

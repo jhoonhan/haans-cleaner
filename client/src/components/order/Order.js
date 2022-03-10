@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import OrderItem from "./OrderItem";
 import Modal from "../Modal";
 import Loader from "../Loader";
+import PageTitle from "../PageTitle";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
@@ -86,9 +87,7 @@ const Order = ({
             actions={modalAction()}
           />
 
-          <header className="page-title">
-            <h2>Order</h2>
-          </header>
+          <PageTitle title="order" />
           <div className="order-container">
             <div className="order__list">{renderList()}</div>
           </div>

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 
+import PageTitle from "../PageTitle";
 import Modal from "../Modal";
 
 import AccountEdit from "./AccountEdit";
@@ -76,10 +77,6 @@ const Account = ({
           transition={{ type: "spring", duration: 0.1 }}
           className="motion-container"
         >
-          <header className="page-title">
-            <h2>Account</h2>
-          </header>
-
           {match.path === "/account" ? renderContent() : renderDriverContent()}
         </motion.div>
       </>

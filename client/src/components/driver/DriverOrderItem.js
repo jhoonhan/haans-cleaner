@@ -216,11 +216,11 @@ const DriverOrderItem = (props) => {
             className="driver__order__item"
           >
             <div>
-              <h3>
+              <h4>
                 {props.order.distance
                   ? `${props.order.distance} mi`
                   : "Call customer"}{" "}
-              </h3>
+              </h4>
             </div>
             <div></div>
             <div>
@@ -232,7 +232,7 @@ const DriverOrderItem = (props) => {
             </div>
             <div></div>
             <div>
-              <h3>${(props.order.total.total * 0.2).toFixed(2)}</h3>
+              <h4>${(props.order.total.total * 0.2).toFixed(2)}</h4>
             </div>
           </div>
           {renderButtons()}

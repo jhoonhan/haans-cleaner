@@ -108,18 +108,14 @@ const PickupFormFourthPage = (props) => {
     const { street, city, zip, name } = props.pickup;
     return (
       <React.Fragment>
-        <div>
-          <h3>{name}</h3>
-        </div>
-        <div>{`${street}, ${city}, ${zip}`}</div>
+        <h4>{name}</h4>
+        <p>{`${street}, ${city}, ${zip}`}</p>
       </React.Fragment>
     );
   };
   const renderCount = () => {
     if (!props.clothes) return;
-
     const clothes = cvtObj2Arr(props.clothes);
-
     return (
       <React.Fragment>
         {clothes.map((cloth) => {
@@ -132,9 +128,9 @@ const PickupFormFourthPage = (props) => {
                 </p>
               </div>
               <div>
-                <h3>
+                <label>
                   ${Math.round(price[cloth.type] * cloth.count * 100) / 100}
-                </h3>
+                </label>
               </div>
             </div>
           );
@@ -149,18 +145,13 @@ const PickupFormFourthPage = (props) => {
     return (
       <React.Fragment>
         <label>subtotal:</label>
-        <div>${total.subtotal}</div>
+        <p>${total.subtotal}</p>
 
         <label>tax: </label>
-        <div>${total.tax}</div>
+        <p>${total.tax}</p>
 
-        <label>
-          <h3>total: </h3>
-        </label>
-
-        <div>
-          <h3>${total.total}</h3>
-        </div>
+        <label>total: </label>
+        <h4>${total.total}</h4>
       </React.Fragment>
     );
   };
@@ -177,10 +168,9 @@ const PickupFormFourthPage = (props) => {
     };
     return (
       <React.Fragment>
-        <h3>
-          {date.day}, {date.month}/{date.date}
-        </h3>
-        <h3>7:00AM - 9:00AM</h3>
+        <p>
+          {date.day}, {date.month}/{date.date}, 7AM - 9AM
+        </p>
       </React.Fragment>
     );
   };
@@ -203,24 +193,29 @@ const PickupFormFourthPage = (props) => {
           className="form__form form__form--third"
         >
           <div className="form__form__row">
-            <h2>Order Detail</h2>
+            <div className="form__form__pickup-date">
+              <label>Pick-up date:</label>
+              {renderDate()}
+            </div>
           </div>
-          <div className="form__form__row">
-            <div className="form__form__info">{renderInfo()}</div>
 
-            <div className="form__form__order-count">{renderCount()}</div>
+          <div
+            className="form__form__row border-top--divider"
+            style={{ paddingTop: "3rem" }}
+          >
+            <div className="form__form__info">{renderInfo()}</div>
+            <div
+              className="form__form__order-count"
+              style={{ marginTop: "2rem" }}
+            >
+              {renderCount()}
+            </div>
           </div>
           <div
-            className="form__form__row border-top--divider border-bottom--divider"
-            style={{ padding: "3rem 0" }}
+            className="form__form__row border-bottom--divider border-top--divider"
+            style={{ paddingBottom: "1.5rem", paddingTop: "2rem" }}
           >
-            <div className="form__form__order-detail">
-              <div className="form__form__order-date">
-                <label>Pick-up time:</label>
-                <div>{renderDate()}</div>
-              </div>
-              <div className="form__form__order-total">{renderTotal()}</div>
-            </div>
+            <div className="form__form__order-total">{renderTotal()}</div>
           </div>
           <div className="form__form__row">
             <label>Delivery Instruction (optional)</label>

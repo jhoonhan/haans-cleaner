@@ -7,6 +7,7 @@ import { editUser } from "../../actions";
 import renderInput from "../helpers/renderInput";
 
 import Modal from "../Modal";
+import PageTitle from "../PageTitle";
 
 const AccountEdit = ({
   auth,
@@ -94,15 +95,13 @@ const AccountEdit = ({
           content="Are you sure?"
           actions={modalAction()}
         />
+        <PageTitle
+          title="profile"
+          hasGoBack={true}
+          onClickHandle={() => setPage("home")}
+        />
 
         <div className="account-container">
-          <div
-            onClick={() => setPage("home")}
-            className="account__btn--go-back"
-          >
-            X
-          </div>
-          <h3 className="align-self-flex-start">My Profile</h3>
           <Form onSubmit={handleSubmit} className="form__form">
             <div className="form__form__row">
               <label>First Name</label>
@@ -136,16 +135,18 @@ const AccountEdit = ({
               </button>
             </div>
 
-            <h3 className="justify-self--flex-start margin-top--1rem">
-              Account
-            </h3>
             <div className="form__form__row">
-              <button onClick={onSignOutClick} className="button--d">
+              <h3 style={{ marginBottom: "2rem", marginTop: "1rem" }}>
+                Account
+              </h3>
+
+              <button
+                onClick={onSignOutClick}
+                className="button--d"
+                style={{ marginBottom: "2rem" }}
+              >
                 Sign Out
               </button>
-            </div>
-
-            <div className="form__form__row">
               <button
                 onClick={handleSubmit(() => {
                   setShowModal(true);

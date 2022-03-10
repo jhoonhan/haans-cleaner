@@ -119,7 +119,7 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
           className="order__item"
         >
           <div>
-            <h3>{order.status}</h3>
+            <h4>{order.status.toUpperCase()}</h4>
           </div>
           <div>
             {order.status === "submitted" ? (
@@ -135,10 +135,12 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
               </button>
             ) : null}
           </div>
-          <div>#{order.ticketId}</div>
+          <div>
+            <p>#{order.ticketId}</p>
+          </div>
           <div>{renderDate()}</div>
           <div>
-            <b>${order.total.total}</b>
+            <p>${order.total.total}</p>
           </div>
         </div>
 
