@@ -17,24 +17,24 @@ const DriverAccountHome = ({ setPage, onSignOutClick }) => {
         <div className="account-container">
           <div className="account__menu">
             <div className="form__form__row">
-              <div onClick={() => setPage("order")} className="nav__item">
+              <div onClick={() => setPage("order")} className="menu__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   Completed Orders
                 </h3>
               </div>
-              <div onClick={() => setPage("edit")} className="nav__item">
+              <div onClick={() => setPage("edit")} className="menu__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   Personal Information
                 </h3>
               </div>
 
-              <div onClick={() => setPage("edit")} className="nav__item">
+              <div onClick={() => setPage("edit")} className="menu__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   Deposit Methods
                 </h3>
               </div>
 
-              <div onClick={() => setPage("address")} className="nav__item">
+              <div onClick={() => setPage("address")} className="menu__item">
                 <h3 className="align-self-flex-start margin-top--1rem">
                   Statements
                 </h3>

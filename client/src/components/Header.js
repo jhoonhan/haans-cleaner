@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import icons from "../image/ui-icons.svg";
 
 import GoogleButton from "../apis/GoogleButton";
 
@@ -34,21 +35,27 @@ const Header = ({ auth, user, location }) => {
       <header className="header">
         <nav className="nav__container">
           <Link to="/" onClick={() => onNavClick("")} className="nav__item">
-            Home
+            <svg viewBox="0 0 100 100" className="ui-icon">
+              <use href={`${icons}#home`} className="ui-icon"></use>
+            </svg>
           </Link>
           <Link
             to="/pickup"
             onClick={() => onNavClick("pickup")}
             className="nav__item"
           >
-            Request
+            <svg viewBox="0 0 100 100" className="ui-icon">
+              <use href={`${icons}#request`}></use>
+            </svg>
           </Link>
           <Link
             to="/order"
             onClick={() => onNavClick("order")}
             className="nav__item"
           >
-            Orders
+            <svg viewBox="0 0 100 100" className="ui-icon">
+              <use href={`${icons}#search`}></use>
+            </svg>
           </Link>
 
           <Link
@@ -56,7 +63,9 @@ const Header = ({ auth, user, location }) => {
             onClick={() => onNavClick("account")}
             className="nav__item"
           >
-            Account
+            <svg viewBox="0 0 100 100" className="ui-icon">
+              <use href={`${icons}#account`}></use>
+            </svg>
           </Link>
         </nav>
       </header>

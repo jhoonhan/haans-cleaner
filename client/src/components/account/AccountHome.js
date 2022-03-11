@@ -24,10 +24,10 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
             <div className="row">
               <div className="menu-container">
                 <label>Your Orders</label>
-                <div onClick={() => setPage("order")} className="nav__item">
+                <div onClick={() => setPage("order")} className="menu__item">
                   <p className="align-self-flex-start">Completed Orders</p>
                 </div>
-                <div onClick={() => setPage("order")} className="nav__item">
+                <div onClick={() => setPage("order")} className="menu__item">
                   <p className="align-self-flex-start">Cancelled Orders</p>
                 </div>
               </div>
@@ -35,13 +35,13 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
             <div className="row">
               <div className="menu-container">
                 <label>Account Setting</label>
-                <div onClick={() => setPage("edit")} className="nav__item">
+                <div onClick={() => setPage("edit")} className="menu__item">
                   <p className="align-self-flex-start">Personal Information</p>
                 </div>
-                <div onClick={() => setPage("edit")} className="nav__item">
+                <div onClick={() => setPage("edit")} className="menu__item">
                   <p className="align-self-flex-start">Payment Methods</p>
                 </div>
-                <div onClick={() => setPage("address")} className="nav__item">
+                <div onClick={() => setPage("address")} className="menu__item">
                   <p className="align-self-flex-start">Address Book</p>
                 </div>
               </div>
