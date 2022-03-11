@@ -70,10 +70,19 @@ const reducer = (
     case D_ACCEPT_ORDER:
       return {
         ...state,
-        orders: { ...state.orders, [action.payload._id]: action.payload },
+        orders: {
+          ...state.orders,
+          [action.payload._id]: {
+            ...state.orders[action.payload._id],
+            ...action.payload,
+          },
+        },
         acceptedOrders: {
           ...state.acceptedOrders,
-          [action.payload._id]: action.payload,
+          [action.payload._id]: {
+            ...state.acceptedOrders[action.payload._id],
+            ...action.payload,
+          },
         },
       };
     case D_COMPLETE_ORDER:
