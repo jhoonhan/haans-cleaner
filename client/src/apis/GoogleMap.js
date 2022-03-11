@@ -8,6 +8,7 @@ import { driverSetCoords, driverEditAcceptedOrder } from "../actions";
 import markerRed from "../image/marker-red.png";
 import markerBlue from "../image/marker-blue.png";
 import markerGreen from "../image/marker-green.png";
+import icons from "../image/ui-icons.svg";
 
 const GoogleMap = ({ orders, driver, page, mapClass }) => {
   const [loadedMap, setLoadedMap] = useState(null);
@@ -19,7 +20,9 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
   );
   const [markers, setMarkers] = useState(null);
 
+  const [showTrip, setShowTrip] = useState(false);
   const [trip, setTrip] = useState({
+    fetched: false,
     duration: null,
     distance: null,
     total: null,
@@ -34,7 +37,6 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       center: driver.currentCoords,
       zoom: 11,
       disableDefaultUI: true,
-      styles: [{ hue: "#000000" }],
     });
     console.log(`map loaded`);
     setLoadedMap(map);
@@ -64,8 +66,6 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       renderMarkers();
     }
   }, [markers]);
-
-  //////////////////////////////////////////
 
   //////////////////////////////////////////
   const loadMarkers = () => {
@@ -107,9 +107,21 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
   };
   /////////////////////////////////////////
 
+  useEffect(() => {
+    setShowTrip(false);
+    setTrip({ fetched: false, duration: null, distance: null, total: null });
+  }, [driver.acceptedOrders]);
+
+  useEffect(() => {
+    showDetailView(refTripDetail);
+  }, [showTrip]);
+
   const onClickTripDetail = () => {
-    if (!trip) toggleView(refTripDetail);
+    setShowTrip(true);
     getDirection();
+  };
+  const onClickTripClose = () => {
+    setShowTrip(false);
   };
 
   const getDirection = () => {
@@ -164,59 +176,83 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     }
 
     setTrip({
+      fetched: true,
       duration: response.routes[0].legs[0].duration.text,
       distance: response.routes[0].legs[0].distance.text,
       total,
     });
   };
-  const renderTripDetail = () => {
-    return (
-      <div className="map__trip-detail__info">
-        <div>
-          <label>Duration:</label> {trip.duration}
-        </div>
-        <div>
-          <label>Distance:</label> {trip.distance}
-        </div>
-        <div>
-          <label>Profit:</label> {trip.total ? `$${trip.total}` : ""}
-        </div>
-      </div>
-    );
-  };
 
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
-  const toggleView = (ref) => {
+  const showDetailView = (ref) => {
     const selectedRef = ref;
-    selectedRef.current.classList.toggle("height--0");
-    selectedRef.current.classList.toggle("opacity--0");
-    selectedRef.current.classList.toggle("padding--0");
-    selectedRef.current.classList.toggle("margin--0");
-    selectedRef.current.classList.toggle("overflow--hidden");
+    if (showTrip) {
+      selectedRef.current.classList.remove("height--0");
+      selectedRef.current.classList.remove("opacity--0");
+      selectedRef.current.classList.remove("padding--0");
+      selectedRef.current.classList.remove("margin--0");
+      selectedRef.current.classList.remove("overflow--hidden");
+    } else {
+      selectedRef.current.classList.add("height--0");
+      selectedRef.current.classList.add("opacity--0");
+      selectedRef.current.classList.add("padding--0");
+      selectedRef.current.classList.add("margin--0");
+      selectedRef.current.classList.add("overflow--hidden");
+    }
   };
 
+  const renderTripDetail = () => {
+    if (!showTrip) return null;
+    return (
+      <>
+        <div className="map__trip-detail__info">
+          <h4
+            style={{
+              textTransform: "uppercase",
+              borderBottom: "1px solid #ccc",
+              marginBottom: "0.5rem",
+            }}
+          >
+            trip detail
+          </h4>
+          <div></div>
+          <label style={{ paddingRight: "2rem" }}>Duration: </label>
+          <p>{trip.duration}</p>
+          <label>Distance: </label>
+          <p>{trip.distance}</p>
+          <label>Profit: </label>
+          <p>{trip.total ? `$${trip.total}` : ""}</p>
+        </div>
+        <svg onClick={onClickTripClose} viewBox="0 0 25 25" className="ui-icon">
+          <use href={`${icons}#x`} className="ui-icon"></use>
+        </svg>
+      </>
+    );
+  };
   ///
 
   const render = () => {
     return (
       <>
-        <div ref={refMap} className={`googleMap--c`}></div>
-
-        <div className="map__trip-detail__container">
+        <div className="map__container">
+          <div ref={refMap} className={`googleMap--c`}></div>
           <div
             onClick={onClickTripDetail}
-            className={`map__get-detil button--m`}
+            className="map__get-detil button--m"
+            style={
+              page === "accepted" ? { display: "flex" } : { display: "none" }
+            }
           >
             get trip detail
           </div>
+        </div>
 
-          <div
-            ref={refTripDetail}
-            className={`map__trip-detail__info ${animationClasses}`}
-          >
-            {renderTripDetail()}
-          </div>
+        <div
+          ref={refTripDetail}
+          className={`map__trip-detail__container ${animationClasses}`}
+        >
+          {renderTripDetail()}
         </div>
       </>
     );

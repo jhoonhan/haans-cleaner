@@ -24,7 +24,7 @@ const PageTitle = (props, ref) => {
             : {}
         }
       >
-        <svg viewBox="0 0 100 100" className="ui-icon">
+        <svg viewBox="0 0 25 25" className="ui-icon">
           <use href={`${icons}#${icon()}`}></use>
         </svg>
         <div>
@@ -40,10 +40,10 @@ const PageTitle = (props, ref) => {
         {props.hasGoBack ? (
           <svg
             onClick={props.onClickHandle}
-            viewBox="0 0 100 100"
+            viewBox="0 0 25 25"
             className="ui-icon btn--go-back"
           >
-            <use href={`${icons}#x`}></use>
+            <use href={`${icons}#back`}></use>
           </svg>
         ) : (
           ""

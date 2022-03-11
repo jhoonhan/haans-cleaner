@@ -94,6 +94,7 @@
   top: 0;
   min-width: 100%;
   min-height: 100%;
+  border-bottom: 1px solid $divider-color;
 }
 
 .driver__start-button {
@@ -115,24 +116,34 @@
   width: 100%;
   height: 100%;
 }
+.map__container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
 .map__get-detil {
-  width: calc(100% - 4rem);
-  margin-left: 2rem;
+  width: auto;
+  position: absolute;
+  justify-content: center;
+  margin: 0 auto;
+  bottom: 2rem;
+  box-shadow: 1px 1px 5px #b3b3b3;
 }
 .map__trip-detail__container {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  padding: 2rem;
-  background-color: $background-color;
-  border-bottom: 1px solid $divider-color;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3rem;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
 }
 .map__trip-detail__info {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  padding: 2rem;
-  box-shadow: 0px 2px 5px $divider-color;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 1rem;
+
+  background-color: $background-color;
 }
 
 .driver-account {

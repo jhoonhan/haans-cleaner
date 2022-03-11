@@ -35,7 +35,7 @@ const Header = ({ auth, user, location }) => {
       <header className="header">
         <nav className="nav__container">
           <Link to="/" onClick={() => onNavClick("")} className="nav__item">
-            <svg viewBox="0 0 100 100" className="ui-icon">
+            <svg viewBox="0 0 25 25" className="ui-icon">
               <use href={`${icons}#home`} className="ui-icon"></use>
             </svg>
           </Link>
@@ -44,7 +44,7 @@ const Header = ({ auth, user, location }) => {
             onClick={() => onNavClick("pickup")}
             className="nav__item"
           >
-            <svg viewBox="0 0 100 100" className="ui-icon">
+            <svg viewBox="0 0 25 25" className="ui-icon">
               <use href={`${icons}#pickup`}></use>
             </svg>
           </Link>
@@ -53,7 +53,7 @@ const Header = ({ auth, user, location }) => {
             onClick={() => onNavClick("order")}
             className="nav__item"
           >
-            <svg viewBox="0 0 100 100" className="ui-icon">
+            <svg viewBox="0 0 25 25" className="ui-icon">
               <use href={`${icons}#order`}></use>
             </svg>
           </Link>
@@ -63,7 +63,7 @@ const Header = ({ auth, user, location }) => {
             onClick={() => onNavClick("account")}
             className="nav__item"
           >
-            <svg viewBox="0 0 100 100" className="ui-icon">
+            <svg viewBox="0 0 25 25" className="ui-icon">
               <use href={`${icons}#account`}></use>
             </svg>
           </Link>
