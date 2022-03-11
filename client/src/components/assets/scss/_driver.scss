@@ -41,7 +41,7 @@
   }
 }
 
-.driver__order__buttton__container {
+.driver__order__button__container {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -50,13 +50,10 @@
   gap: 2rem;
 
   margin-bottom: 2rem;
-
-  & div:first-child {
-    background-color: pink;
-  }
 }
-.driver__order__buttton {
+.driver__order__button {
   width: 100%;
+  height: 4rem;
 
   display: flex;
   align-items: center;
@@ -64,10 +61,30 @@
 
   padding: 1rem;
 
-  text-transform: uppercase;
-
   box-sizing: border-box;
+  border: 1px solid $divider-color;
+
+  text-transform: uppercase;
   transition: all 0.3s;
+}
+.driver__order__button--cancel {
+  background-color: pink;
+}
+
+.google-map {
+  position: relative;
+
+  background-color: $background-color;
+
+  border-width: 1px 0rem 1px 0rem;
+  border-color: $divider-color;
+  border-style: solid;
+}
+.map__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: red;
 }
 
 .googleMap--m {
@@ -97,8 +114,20 @@
 .mapStickyRatio {
   position: sticky;
   top: 0;
-  position: sticky;
   aspect-ratio: 2 / 1;
+  box-shadow: 0px 0px 10px $divider-color;
+}
+.map__get-detil {
+  width: calc(100% - 4rem);
+  position: absolute;
+  left: 2rem;
+  bottom: 1rem;
+}
+.map__trip-detail__container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 2rem;
 }
 
 .driver-account {
@@ -114,18 +143,35 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
   box-sizing: border-box;
 
   overflow-x: scroll;
 }
 .driver__order__date-item {
-  min-width: 20%;
-  min-height: 5rem;
-  border: 1px solid red;
+  width: 100%;
+  height: 100%;
+
   display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  border: 1px solid $divider-color;
   justify-content: center;
   align-items: center;
+  & * {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  & p {
+    background-color: $background-secondary;
+  }
+}
+.driver__order__date-item--selected {
+  color: red;
+  // border-color: $secondary-color;
 }

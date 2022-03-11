@@ -83,7 +83,7 @@ const mapStateToProps = ({ auth, user }) => {
       street: user.currentUser?.defaultAddress.street,
       city: user.currentUser?.defaultAddress.city,
       zip: user.currentUser?.defaultAddress.zip,
-      date: "2022-03-09",
+      date: new Date().toISOString().split("T")[0],
     },
     auth: auth,
     user: user.currentUser,

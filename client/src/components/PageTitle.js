@@ -1,14 +1,16 @@
 import React, { forwardRef } from "react";
-import { connect } from "react-redux";
 
 import icons from "../image/ui-icons.svg";
 
 const PageTitle = (props, ref) => {
   const icon = () => {
     if (window.location.pathname.slice(1) === "pickup") return "pickup";
-    if (window.location.pathname.slice(1) === "order") return "order";
-    if (window.location.pathname.slice(1) === "account") return "account";
-    if (window.location.pathname.slice(1) === "search") return "search";
+    if (window.location.pathname.includes("order")) return "order";
+    if (window.location.pathname.includes("account")) return "account";
+    if (window.location.pathname.slice(1) === "driver/order/search")
+      return "search";
+    if (window.location.pathname.slice(1) === "driver/order/accepted")
+      return "order";
   };
 
   const render = () => {
@@ -52,4 +54,4 @@ const PageTitle = (props, ref) => {
   return render();
 };
 
-export default connect()(forwardRef(PageTitle));
+export default forwardRef(PageTitle);

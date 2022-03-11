@@ -4,6 +4,7 @@ import PickupFormFirstPage from "./PickupFormFirstPage";
 import PickupFormSecondPage from "./PickupFormSecondPage";
 import PickupFormThirdPage from "./PickupFormThirdPage";
 import PickupFormFourthPage from "./PickupFormFourthPage";
+import PageTitle from "../PageTitle";
 
 class PickupForm extends React.Component {
   constructor(props) {
@@ -35,32 +36,39 @@ class PickupForm extends React.Component {
     const { onSubmit } = this.props;
     const { page } = this.state;
     return (
-      <React.Fragment>
-        {page === 1 && (
-          <PickupFormFirstPage
-            onSubmit={this.nextPage}
-            lastPage={this.lastPage}
-          />
-        )}
-        {page === 2 && (
-          <PickupFormSecondPage
-            previousPage={this.previousPage}
-            onSubmit={this.nextPage}
-          />
-        )}
-        {page === 3 && (
-          <PickupFormThirdPage
-            previousPage={this.previousPage}
-            onSubmit={this.nextPage}
-          />
-        )}
-        {page === 4 && (
-          <PickupFormFourthPage
-            previousPage={this.previousPage}
-            onSubmit={onSubmit}
-          />
-        )}
-      </React.Fragment>
+      <>
+        <PageTitle
+          title="pick up"
+          onClickHandle={this.previousPage}
+          hasGoBack={this.state.page !== 1 ? true : false}
+        />
+        <div className=".pickup pickup-container">
+          {page === 1 && (
+            <PickupFormFirstPage
+              onSubmit={this.nextPage}
+              lastPage={this.lastPage}
+            />
+          )}
+          {page === 2 && (
+            <PickupFormSecondPage
+              previousPage={this.previousPage}
+              onSubmit={this.nextPage}
+            />
+          )}
+          {page === 3 && (
+            <PickupFormThirdPage
+              previousPage={this.previousPage}
+              onSubmit={this.nextPage}
+            />
+          )}
+          {page === 4 && (
+            <PickupFormFourthPage
+              previousPage={this.previousPage}
+              onSubmit={onSubmit}
+            />
+          )}
+        </div>
+      </>
     );
   }
 }

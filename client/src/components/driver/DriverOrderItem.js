@@ -97,11 +97,15 @@ const DriverOrderItem = (props) => {
     );
   };
 
-  const onAccept = async (id) => {
+  const onAccept = async (id, type) => {
     if (btnLoading) {
       console.log(`no double click you moron`);
       return;
     }
+
+    if (type === "cancel" && props.order.status === "submitted") return;
+    if (type === "accept" && props.order.status === "accepted") return;
+
     setBtnLoading(true);
 
     if (props.order.status === "completed") {
@@ -134,17 +138,24 @@ const DriverOrderItem = (props) => {
       if (props.order.status === "submitted") return "aquamarine";
       if (props.order.status === "accepted") return "#ccc";
     };
+    const cancelColor = () => {
+      if (props.order.status === "submitted") return "#ccc";
+      if (props.order.status === "accepted") return "pink";
+    };
     return (
-      <div className="driver__order__buttton__container">
+      <div className="driver__order__button__container">
         <div
-          onClick={() => toggleView(refBand)}
-          className="driver__order__buttton"
+          onClick={() => onAccept(props.order._id, "cancel")}
+          className="driver__order__button"
+          style={{
+            backgroundColor: cancelColor(),
+          }}
         >
-          Hide
+          cancel
         </div>
         <div
-          onClick={() => onAccept(props.order._id)}
-          className="driver__order__buttton"
+          onClick={() => onAccept(props.order._id, "accept")}
+          className="driver__order__button"
           style={{
             backgroundColor: buttonColor(),
           }}
@@ -170,14 +181,14 @@ const DriverOrderItem = (props) => {
 
   const renderAcceptButtons = () => {
     const buttonColor = () => {
-      if (props.order.status === "completed") return "red";
-      if (props.order.status === "accepted") return "#ccc";
+      if (props.order.status === "completed") return "#ccc";
+      if (props.order.status === "accepted") return "aquamarine";
     };
     return (
-      <div className="driver__order__buttton__container">
+      <div className="driver__order__button__container">
         <div
           onClick={() => onAccept(props.order._id)}
-          className="driver__order__buttton"
+          className="driver__order__button"
           style={{
             backgroundColor:
               props.order.status === "accepted" ? "pink" : "#cccccc",
@@ -187,7 +198,7 @@ const DriverOrderItem = (props) => {
         </div>
         <div
           onClick={onClickComplete}
-          className="driver__order__buttton"
+          className="driver__order__button"
           style={{ backgroundColor: buttonColor() }}
         >
           {props.order.status}

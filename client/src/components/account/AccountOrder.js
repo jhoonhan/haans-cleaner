@@ -77,13 +77,21 @@ const AccountOrder = ({
         transition={{ type: "spring", duration: 0.1 }}
       >
         <PageTitle
-          title="edit address"
+          title="my orders"
           hasGoBack={true}
           onClickHandle={() => setPage("home")}
         />
         <div className="account-container">
-          <h3 className="align-self-flex-start">Completed Orders</h3>
-          <input onChange={handleDateChange} ref={dateSelector} type="date" />
+          <div className="row">
+            <label className="align-self-flex-start">Completed Orders</label>
+
+            <input
+              onChange={handleDateChange}
+              ref={dateSelector}
+              style={{ marginTop: "1rem" }}
+              type="date"
+            />
+          </div>
           <div className="order__list">{renderList()}</div>
         </div>
       </motion.div>

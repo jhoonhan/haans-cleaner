@@ -18,18 +18,23 @@ const DriverDateSelector = ({ selectedDate, setSelectedDate, page }) => {
         <div
           onClick={() => setSelectedDate(date)}
           key={i}
-          style={
-            selectedDate === date
-              ? { backgroundColor: "red" }
-              : { backgroundColor: "blue" }
-          }
+          className={`driver__order__date-item ${
+            selectedDate === date ? "driver__order__date-item--selected " : ""
+          }`}
         >
-          {new Date(date)
-            .toISOString()
-            .split("T")[0]
-            .split("-")
-            .slice(1)
-            .join("/")}
+          <label>
+            {new Date(date)
+              .toLocaleString("default", { weekday: "short" })
+              .toUpperCase()}
+          </label>
+          <p>
+            {new Date(date)
+              .toISOString()
+              .split("T")[0]
+              .split("-")
+              .slice(1)
+              .join("/")}
+          </p>
         </div>
       );
     });

@@ -24,6 +24,7 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     distance: null,
     total: null,
   });
+  const [showTrip, setShowTrip] = useState(false);
 
   const refMap = React.useRef();
 
@@ -32,6 +33,8 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     const map = new window.google.maps.Map(refMap.current, {
       center: driver.currentCoords,
       zoom: 11,
+      disableDefaultUI: true,
+      styles: [{ hue: "#000000" }],
     });
     console.log(`map loaded`);
     setLoadedMap(map);
@@ -97,7 +100,7 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
           direcRenderer.setDirections(response);
           direcRenderer.setMap(loadedMap);
         }
-        renderTripDetail(response);
+        loadTripDetail(response);
       })
       .catch((error) => console.error(error));
   };
@@ -141,7 +144,7 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     });
   };
   /////////////////////////////////////////
-  const renderTripDetail = (response) => {
+  const loadTripDetail = (response) => {
     let total;
     const ordersArr = cvtObj2Arr(driver.acceptedOrders);
     if (ordersArr.length <= 1) {
@@ -159,7 +162,27 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       distance: response.routes[0].legs[0].distance.text,
       total,
     });
+    setShowTrip(true);
   };
+  const renderTripDetail = () => {
+    if (!showTrip) return null;
+    return (
+      <div className="map__trip-detail__info">
+        <div>
+          <label>Duration:</label> {trip.duration}
+        </div>
+        <div>
+          <label>Distance:</label> {trip.distance}
+        </div>
+        <div>
+          <label>Profit:</label> {trip.total ? `$${trip.total}` : ""}
+        </div>
+      </div>
+    );
+  };
+
+  /////
+
   const render = () => {
     const conditionalStyle = `${
       page === "accepted" && cvtObj2Arr(driver.acceptedOrders).length > 0
@@ -167,22 +190,24 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
         : "none"
     }`;
     return (
-      <>
+      <div className="map__container">
         <div ref={refMap} className={`googleMap--c ${mapClass}`}></div>
+        <button
+          onClick={() => getDirection()}
+          className={`map__get-detil button--m`}
+        >
+          get trip detail
+        </button>
+
         <div
+          className="map__trip-detail__container"
           style={{
             display: conditionalStyle,
           }}
         >
-          <button onClick={() => getDirection()} className={`button--l`}>
-            get trip detail
-          </button>
-
-          <div>{trip.duration}</div>
-          <div>{trip.distance}</div>
-          <div>{trip.total ? `$${trip.total}` : ""}</div>
+          {renderTripDetail()}
         </div>
-      </>
+      </div>
     );
   };
 

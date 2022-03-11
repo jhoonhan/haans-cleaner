@@ -298,7 +298,7 @@ const DriverOrder = ({
         />
         <PageTitle ref={headerRef} title={match.params.page} />
         <div className="motion-container">
-          <div ref={googleMapWrapper} className={mapClass}>
+          <div ref={googleMapWrapper} className={`google-map ${mapClass}`}>
             <Wrapper
               apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
               render={renderMap}
@@ -311,6 +311,7 @@ const DriverOrder = ({
                 }
                 page={match.params.page}
                 setIsMapLoaded={setIsMapLoaded}
+                mapClass={mapClass}
               />
             </Wrapper>
           </div>

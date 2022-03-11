@@ -18,7 +18,7 @@ const DriverHeader = () => {
         </Link>
         <Link to="/driver/order/accepted" className="nav__item">
           <svg viewBox="0 0 100 100" className="ui-icon">
-            <use href={`${icons}#orders`}></use>
+            <use href={`${icons}#order`}></use>
           </svg>
         </Link>
         <Link to="/driver/account" className="nav__item">
