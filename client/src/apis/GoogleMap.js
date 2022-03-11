@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { connect } from "react-redux";
 
@@ -24,9 +24,9 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     distance: null,
     total: null,
   });
-  const [showTrip, setShowTrip] = useState(false);
 
-  const refMap = React.useRef();
+  const refMap = useRef(null);
+  const refTripDetail = useRef(null);
 
   useEffect(() => {
     if (!driver.currentCoords) return;
@@ -67,44 +67,6 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
 
   //////////////////////////////////////////
 
-  const getDirection = () => {
-    direcRenderer.setMap(null);
-    const origin = driver.currentCoords;
-    const ordersArr = cvtObj2Arr(driver.acceptedOrders);
-    const waypoints = ordersArr
-      .filter((order) => order.coords.lat)
-      .map((el) => {
-        return { location: el.coords, stopover: false };
-      });
-    const destination = ordersArr
-      .filter((order) => order.coords.lat)
-      .reduce((prev, curr) => {
-        if (!prev.distance || !curr.distance) return null;
-        if (prev.distance < curr.distnace) {
-          return curr;
-        } else {
-          return prev;
-        }
-      });
-
-    direcService
-      .route({
-        origin,
-        destination: destination.coords,
-        waypoints,
-        optimizeWaypoints: true,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      })
-      .then((response) => {
-        if (response.status === "OK") {
-          direcRenderer.setDirections(response);
-          direcRenderer.setMap(loadedMap);
-        }
-        loadTripDetail(response);
-      })
-      .catch((error) => console.error(error));
-  };
-
   //////////////////////////////////////////
   const loadMarkers = () => {
     if (markers !== null) {
@@ -144,6 +106,50 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     });
   };
   /////////////////////////////////////////
+
+  const onClickTripDetail = () => {
+    if (!trip) toggleView(refTripDetail);
+    getDirection();
+  };
+
+  const getDirection = () => {
+    direcRenderer.setMap(null);
+    const origin = driver.currentCoords;
+    const ordersArr = cvtObj2Arr(driver.acceptedOrders);
+    const waypoints = ordersArr
+      .filter((order) => order.coords.lat)
+      .map((el) => {
+        return { location: el.coords, stopover: false };
+      });
+    const destination = ordersArr
+      .filter((order) => order.coords.lat)
+      .reduce((prev, curr) => {
+        if (!prev.distance || !curr.distance) return null;
+        if (prev.distance < curr.distnace) {
+          return curr;
+        } else {
+          return prev;
+        }
+      });
+
+    direcService
+      .route({
+        origin,
+        destination: destination.coords,
+        waypoints,
+        optimizeWaypoints: true,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      })
+      .then((response) => {
+        if (response.status === "OK") {
+          direcRenderer.setDirections(response);
+          direcRenderer.setMap(loadedMap);
+        }
+        loadTripDetail(response);
+      })
+      .catch((error) => console.error(error));
+  };
+
   const loadTripDetail = (response) => {
     let total;
     const ordersArr = cvtObj2Arr(driver.acceptedOrders);
@@ -162,10 +168,8 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       distance: response.routes[0].legs[0].distance.text,
       total,
     });
-    setShowTrip(true);
   };
   const renderTripDetail = () => {
-    if (!showTrip) return null;
     return (
       <div className="map__trip-detail__info">
         <div>
@@ -181,33 +185,40 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
     );
   };
 
-  /////
+  const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
+
+  const toggleView = (ref) => {
+    const selectedRef = ref;
+    selectedRef.current.classList.toggle("height--0");
+    selectedRef.current.classList.toggle("opacity--0");
+    selectedRef.current.classList.toggle("padding--0");
+    selectedRef.current.classList.toggle("margin--0");
+    selectedRef.current.classList.toggle("overflow--hidden");
+  };
+
+  ///
 
   const render = () => {
-    const conditionalStyle = `${
-      page === "accepted" && cvtObj2Arr(driver.acceptedOrders).length > 0
-        ? "block"
-        : "none"
-    }`;
     return (
-      <div className="map__container">
-        <div ref={refMap} className={`googleMap--c ${mapClass}`}></div>
-        <button
-          onClick={() => getDirection()}
-          className={`map__get-detil button--m`}
-        >
-          get trip detail
-        </button>
+      <>
+        <div ref={refMap} className={`googleMap--c`}></div>
 
-        <div
-          className="map__trip-detail__container"
-          style={{
-            display: conditionalStyle,
-          }}
-        >
-          {renderTripDetail()}
+        <div className="map__trip-detail__container">
+          <div
+            onClick={onClickTripDetail}
+            className={`map__get-detil button--m`}
+          >
+            get trip detail
+          </div>
+
+          <div
+            ref={refTripDetail}
+            className={`map__trip-detail__info ${animationClasses}`}
+          >
+            {renderTripDetail()}
+          </div>
         </div>
-      </div>
+      </>
     );
   };
 
