@@ -93,6 +93,9 @@ button {
   padding: 0rem;
 
   background-color: white;
+  // background-image: url(../../../image/brushStorke.svg);
+  // background-repeat: no-repeat;
+  // background-size: 100% 100%;
   border: 1px solid $divider-color;
 
   border-radius: 0rem;
@@ -242,8 +245,9 @@ button {
   max-height: 3rem;
 
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   align-items: center;
+  column-gap: 1.5rem;
 
   padding: 0rem 2rem 0rem 2rem;
   margin-top: 6rem;
@@ -256,9 +260,14 @@ button {
   padding-left: 2rem;
   box-sizing: border-box;
   & div:first-child {
-    border-bottom: 1px solid $accent-color;
+    // border-bottom: 1px solid $accent-color;
   }
 }
+
+.btn--go-back {
+  margin-right: 1rem;
+}
+
 .default {
   border: 1px solid $secondary-color;
   color: $secondary-color;

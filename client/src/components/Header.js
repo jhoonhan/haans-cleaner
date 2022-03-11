@@ -45,7 +45,7 @@ const Header = ({ auth, user, location }) => {
             className="nav__item"
           >
             <svg viewBox="0 0 100 100" className="ui-icon">
-              <use href={`${icons}#request`}></use>
+              <use href={`${icons}#pickup`}></use>
             </svg>
           </Link>
           <Link
@@ -54,7 +54,7 @@ const Header = ({ auth, user, location }) => {
             className="nav__item"
           >
             <svg viewBox="0 0 100 100" className="ui-icon">
-              <use href={`${icons}#search`}></use>
+              <use href={`${icons}#order`}></use>
             </svg>
           </Link>
 

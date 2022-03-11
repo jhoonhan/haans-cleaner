@@ -61,15 +61,17 @@
 }
 
 .account__profile__container {
+  width: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
-  column-gap: 2rem;
+  column-gap: 3rem;
   align-items: center;
 }
 .account__profile__picture {
   aspect-ratio: 1 / 1;
-  width: 4rem;
+  width: 10rem;
   border: 1px solid $divider-color;
+  border-radius: 10rem;
 }
 .account__saved-addresses {
   margin-top: 1rem;

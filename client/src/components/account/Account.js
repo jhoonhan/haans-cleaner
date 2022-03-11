@@ -1,14 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
-import { signOutRedux, fetchUser, deleteUser, fetchOrder } from "../../actions";
-import { Field, Form, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
+import { signOutRedux, fetchUser, deleteUser } from "../../actions";
 import { editUser } from "../../actions";
-import renderInput from "../helpers/renderInput";
-
-import PageTitle from "../PageTitle";
-import Modal from "../Modal";
 
 import AccountEdit from "./AccountEdit";
 import AccountOrder from "./AccountOrder";
@@ -50,10 +44,17 @@ const Account = ({
 
   const renderContent = () => {
     if (page === "home")
-      return <AccountHome setPage={setPage} onSignOutClick={onSignOutClick} />;
-    if (page === "edit") return <AccountEdit setPage={setPage} />;
-    if (page === "address") return <AccountAddress setPage={setPage} />;
-    if (page === "order") return <AccountOrder setPage={setPage} />;
+      return (
+        <AccountHome
+          page={page}
+          setPage={setPage}
+          onSignOutClick={onSignOutClick}
+        />
+      );
+    if (page === "edit") return <AccountEdit page={page} setPage={setPage} />;
+    if (page === "address")
+      return <AccountAddress page={page} setPage={setPage} />;
+    if (page === "order") return <AccountOrder page={page} setPage={setPage} />;
   };
 
   const renderDriverContent = () => {

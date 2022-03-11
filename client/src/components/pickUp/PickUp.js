@@ -17,7 +17,7 @@ class Pickup extends React.Component {
           transition={{ type: "spring", duration: 0.1 }}
           className="motion-container"
         >
-          <PageTitle title="Pick Up" />
+          <PageTitle title="pick up" />
 
           <div className=".pickup pickup-container">
             {/* <PickupSaved /> */}

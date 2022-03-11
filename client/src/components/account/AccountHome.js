@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import PageTitle from "../PageTitle";
+import profilePicture from "../../image/profile.jpg";
 
 const AccountHome = ({ user, setPage, onSignOutClick }) => {
   const render = () => {
@@ -17,8 +18,15 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
 
         <div className="account-container">
           <div className="account__profile__container">
-            <div className="account__profile__picture"></div>
-            <h3>{user.fullName}</h3>
+            <img
+              className="account__profile__picture"
+              alt="profile"
+              src={profilePicture}
+            />
+            <div>
+              <h3>{user.fullName}</h3>
+              <p>Customer since 2022</p>
+            </div>
           </div>
           <div className="account__menu">
             <div className="row">

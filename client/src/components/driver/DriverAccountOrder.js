@@ -49,10 +49,7 @@ const DriverAccountOrder = ({ auth, completedOrders, setPage }) => {
         transition={{ type: "spring", duration: 0.1 }}
       >
         <div className="account-container">
-          <div
-            onClick={() => setPage("home")}
-            className="account__btn--go-back"
-          >
+          <div onClick={() => setPage("home")} className="btn--go-back">
             X
           </div>
           <h3 className="align-self-flex-start">Completed Orders</h3>
