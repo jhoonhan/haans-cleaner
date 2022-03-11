@@ -135,33 +135,27 @@ const DriverOrderItem = (props) => {
 
   const renderSearchButtons = () => {
     const buttonColor = () => {
-      if (props.order.status === "submitted") return "aquamarine";
-      if (props.order.status === "accepted") return "#ccc";
+      if (props.order.status === "submitted") return "button--active";
+      if (props.order.status === "accepted") return "button--disabled";
     };
     const cancelColor = () => {
-      if (props.order.status === "submitted") return "#ccc";
-      if (props.order.status === "accepted") return "pink";
+      if (props.order.status === "submitted") return "button--disabled";
+      if (props.order.status === "accepted") return "button--cancel";
     };
     return (
       <div className="driver__order__button__container">
-        <div
+        <button
           onClick={() => onAccept(props.order._id, "cancel")}
-          className="driver__order__button"
-          style={{
-            backgroundColor: cancelColor(),
-          }}
+          className={`button--f ${cancelColor()}`}
         >
           cancel
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => onAccept(props.order._id, "accept")}
-          className="driver__order__button"
-          style={{
-            backgroundColor: buttonColor(),
-          }}
+          className={`button--f ${buttonColor()}`}
         >
           {!btnLoading ? props.order.status : "Loading"}
-        </div>
+        </button>
       </div>
     );
   };
@@ -181,28 +175,27 @@ const DriverOrderItem = (props) => {
 
   const renderAcceptButtons = () => {
     const buttonColor = () => {
-      if (props.order.status === "completed") return "#ccc";
-      if (props.order.status === "accepted") return "aquamarine";
+      if (props.order.status === "completed") return "button--disabled";
+      if (props.order.status === "accepted") return "button--active";
+    };
+    const cancelColor = () => {
+      if (props.order.status === "completed") return "button--disabled";
+      if (props.order.status === "accepted") return "button--cancel";
     };
     return (
       <div className="driver__order__button__container">
-        <div
+        <button
           onClick={() => onAccept(props.order._id)}
-          className="driver__order__button"
-          style={{
-            backgroundColor:
-              props.order.status === "accepted" ? "pink" : "#cccccc",
-          }}
+          className={`button--f ${cancelColor()}`}
         >
           Cancel
-        </div>
-        <div
+        </button>
+        <button
           onClick={onClickComplete}
-          className="driver__order__button"
-          style={{ backgroundColor: buttonColor() }}
+          className={`button--f ${buttonColor()}`}
         >
           {props.order.status}
-        </div>
+        </button>
       </div>
     );
   };
@@ -227,11 +220,11 @@ const DriverOrderItem = (props) => {
             className="driver__order__item"
           >
             <div>
-              <h4>
+              <label>
                 {props.order.distance
                   ? `${props.order.distance} mi`
                   : "Call customer"}{" "}
-              </h4>
+              </label>
             </div>
             <div></div>
             <div>
@@ -243,7 +236,7 @@ const DriverOrderItem = (props) => {
             </div>
             <div></div>
             <div>
-              <h4>${(props.order.total.total * 0.2).toFixed(2)}</h4>
+              <label>${(props.order.total.total * 0.2).toFixed(2)}</label>
             </div>
           </div>
           {renderButtons()}

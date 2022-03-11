@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import PageTitle from "../PageTitle";
 import profilePicture from "../../image/profile.jpg";
@@ -28,31 +27,32 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
               <p>Customer since 2022</p>
             </div>
           </div>
+
           <div className="account__menu">
             <div className="row">
-              <div className="menu-container">
+              <ul className="menu-container">
                 <label>Your Orders</label>
-                <div onClick={() => setPage("order")} className="menu__item">
+                <li onClick={() => setPage("order")} className="menu__item">
                   <p className="align-self-flex-start">Completed Orders</p>
-                </div>
-                <div onClick={() => setPage("order")} className="menu__item">
+                </li>
+                <li onClick={() => setPage("order")} className="menu__item">
                   <p className="align-self-flex-start">Cancelled Orders</p>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
             <div className="row">
-              <div className="menu-container">
+              <ul className="menu-container">
                 <label>Account Setting</label>
-                <div onClick={() => setPage("edit")} className="menu__item">
+                <li onClick={() => setPage("edit")} className="menu__item">
                   <p className="align-self-flex-start">Personal Information</p>
-                </div>
-                <div onClick={() => setPage("edit")} className="menu__item">
+                </li>
+                <li onClick={() => setPage("edit")} className="menu__item">
                   <p className="align-self-flex-start">Payment Methods</p>
-                </div>
-                <div onClick={() => setPage("address")} className="menu__item">
+                </li>
+                <li onClick={() => setPage("address")} className="menu__item">
                   <p className="align-self-flex-start">Address Book</p>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
 
             <div className="row" style={{ marginTop: "2rem" }}>
@@ -68,12 +68,5 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
   return render();
 };
 
-const mapStateToProps = ({ auth, user }) => {
-  return {
-    auth,
-    user: user.currentUser,
-  };
-};
-
-export default connect(mapStateToProps)(AccountHome);
+export default AccountHome;
 //

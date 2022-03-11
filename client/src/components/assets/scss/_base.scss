@@ -44,15 +44,18 @@ input {
 
   padding: 0rem 0rem 0.7rem 0.5rem;
 
+  background-color: transparent;
+
   border-width: 0 0 1px 0;
   border-color: $divider-color;
   border-style: solid;
   box-sizing: border-box;
+
   outline: none;
 }
 input:focus {
   outline: none;
-  border-color: $secondary-color;
+  border-color: $accent-color;
 }
 
 input::-webkit-outer-spin-button,
@@ -71,41 +74,44 @@ textarea {
   padding: 1rem;
   margin-top: 1.5rem;
 
+  background-color: transparent;
+
   box-sizing: border-box;
   border: 1px solid $divider-color;
 
   outline: none;
 }
 textarea:focus {
-  border: 1px solid $secondary-color;
+  border: 1px solid $accent-color;
   outline: none;
 }
 
 button {
   font-family: $font-default;
   font-size: $font-size-m;
-  font-weight: 600;
+  font-weight: 400;
   color: $primary-color;
   text-transform: uppercase;
-  text-align: center;
   line-height: 1.6;
+  letter-spacing: 1px;
+
+  display: flex;
+  justify-content: center;
 
   padding: 0rem;
 
   background-color: white;
-  // background-image: url(../../../image/brushStorke.svg);
-  // background-repeat: no-repeat;
-  // background-size: 100% 100%;
   border: 1px solid $divider-color;
-
-  border-radius: 0rem;
+  // border-radius: 1rem;
 
   box-sizing: border-box;
+  // box-shadow: 0px 1px 3px $shaodw-color;
+
   cursor: pointer;
 
   // &:hover {
-  //   color: $secondary-color;
-  //   border: 1px solid $secondary-color;
+  //   color: $accent-color;
+  //   border: 1px solid $accent-color;
   // }
 }
 .button {
@@ -121,12 +127,22 @@ button {
 }
 .button--l {
   @extend button;
-  padding: 2rem 2rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid $divider-color;
 }
 .button--f {
   @extend button;
-  padding: 2rem 2rem;
+  padding: 1rem 2rem;
   width: 100%;
+}
+.button--disabled {
+  @include disabled;
+}
+.button--cancel {
+  @include cancel;
+}
+.button--active {
+  @include active;
 }
 
 .input--double {
@@ -153,10 +169,13 @@ button {
   flex-direction: column;
   gap: 2rem;
   & label {
-    width: auto;
     padding: 0.5rem 0;
     border-bottom: 1px solid $divider-color;
     box-sizing: border-box;
+  }
+  & li {
+    width: 100%;
+    list-style: none;
   }
 }
 .border-top--primary {
@@ -174,7 +193,8 @@ button {
 }
 
 .highlighted {
-  border: 1px solid $secondary-color !important;
+  // background-color: $accent-color !important;
+  border: 1px solid $accent-color !important;
 }
 
 .w100p {
@@ -182,9 +202,9 @@ button {
 }
 
 .button--alert {
-  background-color: $secondary-color;
+  background-color: $accent-color;
   color: white;
-  border: 1px solid $secondary-color;
+  border: 1px solid $accent-color;
 }
 
 .template {
@@ -269,8 +289,8 @@ button {
 }
 
 .default {
-  border: 1px solid $secondary-color;
-  color: $secondary-color;
+  border: 1px solid $accent-color;
+  color: $accent-color;
   &::after {
     font-size: $font-size-s;
     content: "default";
@@ -303,7 +323,7 @@ button {
   width: 15rem;
   height: 7rem;
   background-color: $background-color;
-  border: 1px solid red;
+  border: 1px solid $accent-color;
 }
 .ui-icon {
   width: 2.5rem;

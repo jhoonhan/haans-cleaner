@@ -24,7 +24,7 @@ const PickupFormThirdPage = (props) => {
           <label>{input.name}</label>
         </div>
         <input
-          className="form__clothes__edit"
+          className={`form__clothes__edit `}
           onChange={input.onChange}
           value={+input.value}
           type="number"
@@ -55,7 +55,7 @@ const PickupFormThirdPage = (props) => {
           <Field name="error" component={renderError} />
         </div>
       </div>
-
+      <div className="form__form__row"></div>
       <div className="form__form__row">
         <div className="form__button-holder--horizontal fixed">
           <button

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import { fetchUser } from "../../actions";
 import OrderItem from "../order/OrderItem";
+import PageTitle from "../PageTitle";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 
@@ -48,12 +49,22 @@ const DriverAccountOrder = ({ auth, completedOrders, setPage }) => {
         exit={{ opacity: 0 }}
         transition={{ type: "spring", duration: 0.1 }}
       >
+        <PageTitle
+          title="my orders"
+          hasGoBack={true}
+          onClickHandle={() => setPage("home")}
+        />
         <div className="account-container">
-          <div onClick={() => setPage("home")} className="btn--go-back">
-            X
+          <div className="row">
+            <label className="align-self-flex-start">Completed Orders</label>
+
+            <input
+              onChange={handleDateChange}
+              ref={dateSelector}
+              style={{ marginTop: "1rem" }}
+              type="date"
+            />
           </div>
-          <h3 className="align-self-flex-start">Completed Orders</h3>
-          <input onChange={handleDateChange} ref={dateSelector} type="date" />
           <div className="order__list">{renderList()}</div>
         </div>
       </motion.div>

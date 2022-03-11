@@ -225,23 +225,25 @@ const PickupFormFourthPage = (props) => {
               placeholder="Notes"
             />
           </div>
-
-          <div className="form__button-holder--horizontal">
-            <button
-              type="button"
-              className="previous button--l"
-              onClick={previousPage}
-            >
-              Previous
-            </button>
-            {/* <button type="submit" disabled={pristine || submitting}> */}
-            <div
-              onClick={() => {
-                setShowModal(true);
-              }}
-              className="button--l"
-            >
-              Submit
+          <div className="form__form__row"></div>
+          <div className="form__form__row">
+            <div className="form__button-holder--horizontal">
+              <button
+                type="button"
+                className="previous button--l"
+                onClick={previousPage}
+              >
+                Previous
+              </button>
+              {/* <button type="submit" disabled={pristine || submitting}> */}
+              <div
+                onClick={() => {
+                  setShowModal(true);
+                }}
+                className="button--l"
+              >
+                Submit
+              </div>
             </div>
           </div>
         </form>

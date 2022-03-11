@@ -46,6 +46,7 @@ const Account = ({
     if (page === "home")
       return (
         <AccountHome
+          user={user}
           page={page}
           setPage={setPage}
           onSignOutClick={onSignOutClick}
@@ -60,7 +61,11 @@ const Account = ({
   const renderDriverContent = () => {
     if (page === "home")
       return (
-        <DriverAccountHome setPage={setPage} onSignOutClick={onSignOutClick} />
+        <DriverAccountHome
+          user={user}
+          setPage={setPage}
+          onSignOutClick={onSignOutClick}
+        />
       );
     if (page === "edit") return <AccountEdit setPage={setPage} />;
     if (page === "address") return <AccountAddress setPage={setPage} />;

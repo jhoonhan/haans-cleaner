@@ -1,12 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 
 $primary-color: #707070;
-$secondary-color: red;
-$accent-color: #5bffac;
+$accent-color: #6bcdfd;
 $primary-accent: black;
 $divider-color: #ccc;
+$shaodw-color: #e5e5e5;
+
 $background-color: rgba(255, 255, 255, 1);
 $background-secondary: #fcfcfc;
+
+$color--disabled: #f2f2f2;
+$color--cancel: #ff3d3d;
+
+@mixin active {
+  background-color: $accent-color;
+  color: white;
+}
+@mixin disabled {
+  background-color: $color--disabled;
+  color: #cccccc;
+}
+
+@mixin cancel {
+  background-color: $color--cancel;
+  color: white;
+}
 
 $dev100vw: 414px;
 $dev100vh: 896px;
@@ -33,6 +51,7 @@ $font-size-l: 1.6rem;
 
 html {
   color: $primary-color;
+  background-color: $background-secondary;
 }
 
 .container {

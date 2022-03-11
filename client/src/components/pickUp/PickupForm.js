@@ -42,7 +42,7 @@ class PickupForm extends React.Component {
           onClickHandle={this.previousPage}
           hasGoBack={this.state.page !== 1 ? true : false}
         />
-        <div className=".pickup pickup-container">
+        <div className="pickup pickup-container">
           {page === 1 && (
             <PickupFormFirstPage
               onSubmit={this.nextPage}

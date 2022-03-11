@@ -14,7 +14,7 @@
   align-items: center;
 
   box-sizing: border-box;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem 4rem 2rem;
 }
 
 .form__form {
@@ -51,7 +51,7 @@
 .form__button-holder--vertical {
   @extend .form__button-holder;
   grid-template-rows: auto auto;
-  gap: 2rem;
+  row-gap: 2rem;
 }
 .form__button-holder--horizontal {
   @extend .form__button-holder;
@@ -106,7 +106,7 @@
   border: none;
   box-sizing: border-box;
 
-  background-color: $background-secondary;
+  background-color: $color--disabled;
 }
 
 .form__form__order-count {

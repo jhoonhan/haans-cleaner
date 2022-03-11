@@ -237,15 +237,15 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       <>
         <div className="map__container">
           <div ref={refMap} className={`googleMap--c`}></div>
-          <div
+          <button
             onClick={onClickTripDetail}
-            className="map__get-detil button--m"
+            className="map__get-detail button--f"
             style={
               page === "accepted" ? { display: "flex" } : { display: "none" }
             }
           >
             get trip detail
-          </div>
+          </button>
         </div>
 
         <div
