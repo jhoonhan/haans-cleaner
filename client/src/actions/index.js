@@ -1,37 +1,28 @@
 import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
-import GoogleGeocode from "../apis/GoogleGeocode";
-import { Loader } from "@googlemaps/js-api-loader";
 
 import {
   LOADING_TOGGLE_ACTION,
   SIGN_IN,
   SIGN_OUT,
   FETCH_ORDER,
-  FETCH_ORDERS,
   CREATE_ORDER,
-  EDIT_ORDER,
   CANCEL_ORDER,
-  LOGIN_USER,
   FETCH_USER,
-  FETCH_USERS,
   CREATE_USER,
   EDIT_USER,
   DELETE_USER,
   MOUNT_USER,
-  EDIT_DADDRESS,
   D_FETCH_ORDER,
   D_CLEAR_ORDER,
   D_ACCEPT_ORDER,
   D_EDIT_ACCEPTED_ORDER,
   D_COMPLETE_ORDER,
   D_FETCH_ACCEPTED,
-  D_GET_COORDS,
   D_SET_COORDS,
   D_CANCEL_ORDER,
-  D_SET_DISTANCE,
-  D_SET_GEOCODE,
+  ERROR_HTTP,
 } from "./types";
 
 /// Helpers
@@ -76,39 +67,54 @@ export const mountUser = (user) => {
 
 export const createUser =
   (formValues, googleId) => async (dispatch, getState) => {
-    const { firstName, lastName, street, city, zip } = formValues;
-    const combinedAddress = { street, city, zip };
-    const combined = {
-      ...formValues,
-      googleId,
-      fullName: `${firstName} ${lastName}`,
-      defaultAddress: combinedAddress,
-      savedAddress: [combinedAddress],
-    };
+    try {
+      const { firstName, lastName, street, city, zip } = formValues;
+      const combinedAddress = { street, city, zip };
+      const combined = {
+        ...formValues,
+        googleId,
+        fullName: `${firstName} ${lastName}`,
+        defaultAddress: combinedAddress,
+        savedAddress: [combinedAddress],
+      };
 
-    const res = await server.post("/user", { ...combined });
+      const res = await server.post("/user", { ...combined });
 
-    dispatch({ type: CREATE_USER, payload: res.data.data.data });
-    history.push("/");
+      dispatch({ type: CREATE_USER, payload: res.data.data.data });
+      history.push("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
 export const fetchUser = (googleId) => async (dispatch, getState) => {
-  const res = await server.get(`/user/get/${googleId}`);
-  dispatch({ type: FETCH_USER, payload: res.data.data[0] });
-  // history.push("/");
-  if (res.status === 200) console.log(`user fetched`);
+  try {
+    const res = await server.get(`/user/get/${googleId}`);
+    dispatch({ type: FETCH_USER, payload: res.data.data[0] });
+    // history.push("/");
+    console.log(`user fetched`);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const editUser = (id, newValue) => async (dispatch) => {
-  const res = await server.patch(`/user/${id}`, newValue);
-
-  dispatch({ type: EDIT_USER, payload: res.data.data });
+  try {
+    const res = await server.patch(`/user/${id}`, newValue);
+    dispatch({ type: EDIT_USER, payload: res.data.data });
+  } catch (error) {
+    console.error(error);
+  }
 };
 export const deleteUser = (id) => async (dispatch) => {
-  await server.delete(`/user/${id}`);
+  try {
+    await server.delete(`/user/${id}`);
 
-  dispatch({ type: DELETE_USER, payload: id });
-  history.push("/");
+    dispatch({ type: DELETE_USER, payload: id });
+    history.push("/");
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 //
@@ -116,83 +122,92 @@ export const deleteUser = (id) => async (dispatch) => {
 //
 //////////////////// ORDER
 export const fetchOrder = (googleId) => async (dispatch) => {
-  const res = await server.get(`/order/get/${googleId}`);
+  try {
+    const res = await server.get(`/order/get/${googleId}`);
 
-  dispatch({ type: FETCH_ORDER, payload: res.data.data });
+    dispatch({ type: FETCH_ORDER, payload: res.data.data });
+  } catch (error) {
+    dispatch({ type: ERROR_HTTP, error });
+  }
 };
 
 export const createOrder = (data) => async (dispatch, getState) => {
-  const fn = async () => {
-    const res = await server.post(`/order/geocode`, {
-      ...data,
-    });
-    const res1 = await server.post("/order", { ...data, coords: res.data });
-    return res1;
-  };
+  try {
+    const fn = async () => {
+      const res = await server.post(`/order/geocode`, {
+        ...data,
+      });
+      const res1 = await server.post("/order", { ...data, coords: res.data });
+      return res1;
+    };
 
-  const res = await _loadingApiCall(fn, dispatch);
+    const res = await _loadingApiCall(fn, dispatch);
 
-  if (res.status === 201) {
     dispatch({ type: CREATE_ORDER, payload: res.data.data.data });
-  }
 
-  if (res.status !== 201) {
-    window.alert("error");
-    return;
-  }
+    dispatch(reset("clothes"));
+    dispatch(reset("pickup"));
 
-  dispatch(reset("clothes"));
-  dispatch(reset("pickup"));
-  history.push("/");
-  return res;
+    history.push("/");
+    return res;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const cancelOrder = (order, callback) => async (dispatch) => {
-  const res = await _loadingApiCall(
-    () => server.delete(`/order/delete/${order._id}`),
-    dispatch
-  );
-  if (res.status === 200) {
-    dispatch({ type: CANCEL_ORDER, payload: order._id });
+  try {
+    const res = await _loadingApiCall(
+      () => server.delete(`/order/delete/${order._id}`),
+      dispatch
+    );
+    if (res.status === 200) {
+      dispatch({ type: CANCEL_ORDER, payload: order._id });
+    }
+    if (res.status !== 200) {
+      window.alert("error");
+    }
+    callback(false);
+  } catch (error) {
+    console.error(error);
   }
-  if (res.status !== 200) {
-    window.alert("error");
-  }
-  callback(false);
 };
 
 // Driver
 export const driverFetchOrder = (query) => async (dispatch) => {
-  const { acceptId, type, coords, selectedDate, pageNumber } = query;
-  const res = await server.get(
-    `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`
-  );
-  if (res.status !== 200) {
-    console.error(`error`);
-    return;
+  try {
+    const { acceptId, type, coords, selectedDate, pageNumber } = query;
+    const res = await server.get(
+      `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`
+    );
+    dispatch({
+      type: D_FETCH_ORDER,
+      payload: res.data.data,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
-
-  dispatch({
-    type: type === "search" ? D_FETCH_ORDER : D_FETCH_ACCEPTED,
-    payload: res.data.data,
-  });
-  return res;
 };
 
 export const driverFetchAccepted =
   (acceptId, selectedDate, coords) => async (dispatch) => {
-    const res = await server.get(
-      `/order/driversearch/accepted/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}`
-    );
-    if (res.status !== 200) {
-      console.error(`error`);
-      return;
+    try {
+      const res = await server.get(
+        `/order/driversearch/accepted/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}`
+      );
+
+      dispatch({
+        type: D_FETCH_ACCEPTED,
+        payload: res.data.data,
+      });
+      return res;
+    } catch (error) {
+      console.error(error);
+      console.log(`aaang`);
+      dispatch({ type: ERROR_HTTP, payload: error });
     }
-    dispatch({
-      type: D_FETCH_ACCEPTED,
-      payload: res.data.data,
-    });
-    return res;
   };
 
 export const driverClearOrder = () => (dispatch) => {
@@ -200,82 +215,86 @@ export const driverClearOrder = () => (dispatch) => {
 };
 
 export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
-  console.log(dataObj);
-  const res = await server.patch(`/order/update/${id}`, dataObj);
-  // console.log(`edit order fired`);
-  dispatch({ type: D_EDIT_ACCEPTED_ORDER, payload: res.data.data });
+  try {
+    const res = await server.patch(`/order/update/${id}`, dataObj);
+    // console.log(`edit order fired`);
+    dispatch({ type: D_EDIT_ACCEPTED_ORDER, payload: res.data.data });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
-  const res = await server.get(`/order/${orderId}`);
+  try {
+    const res = await server.get(`/order/${orderId}`);
 
-  if (res.data.data.status === "submitted") {
-    const res = await server.patch(`/order/update/${orderId}`, data);
-    dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
-  }
+    if (res.data.data.status === "submitted") {
+      const res = await server.patch(`/order/update/${orderId}`, data);
+      dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
+    }
 
-  if (
-    res.data.data.status === "accepted" &&
-    res.data.data.acceptId === data.acceptId
-  ) {
-    const res = await server.patch(`/order/update/${orderId}`, {
-      ...data,
-      acceptId: null,
-      acceptDate: null,
-    });
+    if (
+      res.data.data.status === "accepted" &&
+      res.data.data.acceptId === data.acceptId
+    ) {
+      const res = await server.patch(`/order/update/${orderId}`, {
+        ...data,
+        acceptId: null,
+        acceptDate: null,
+      });
 
-    dispatch({
-      type: D_CANCEL_ORDER,
-      payload: { ...res.data.data, acceptId: null },
-    });
-  }
+      dispatch({
+        type: D_CANCEL_ORDER,
+        payload: { ...res.data.data, acceptId: null },
+      });
+    }
 
-  if (res.data.data.status === "completed") {
-    window.alert("error");
-  }
-  if (
-    res.data.status === "accepted" &&
-    res.data.data.acceptId !== data.acceptId
-  ) {
-    window.alert(`order is accepted by other driver`);
+    if (res.data.data.status === "completed") {
+      window.alert("error");
+    }
+    if (
+      res.data.status === "accepted" &&
+      res.data.data.acceptId !== data.acceptId
+    ) {
+      window.alert(`order is accepted by other driver`);
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
-  const { orderId, driverId, customerId } = ids;
-  const fn = async () => {
-    const res = await server.get(`/order/${orderId}`);
-    if (res.data.data.acceptId !== data.acceptId) {
-      window.alert("The order was completed or accepted by other");
-      return { status: 404 };
-    }
-    if (res.data.data.acceptId === data.acceptId) {
-      const res = await server.patch(`/order/update/${orderId}`, {
-        ...data,
-        acceptId: data.acceptId,
-      });
-      const res1 = await server.patch(
-        `/user/completed/${customerId}/${driverId}`,
-        data
-      );
-
-      if (res.status !== 200 || res1.status !== 200) {
-        console.error(`error`);
-        return null;
+  try {
+    const { orderId, driverId, customerId } = ids;
+    const fn = async () => {
+      const res = await server.get(`/order/${orderId}`);
+      if (res.data.data.acceptId !== data.acceptId) {
+        window.alert("The order was completed or accepted by other");
+        return { status: 404 };
       }
-      if (res.status === 200 && res1.status === 200) {
-        return res;
+      if (res.data.data.acceptId === data.acceptId) {
+        const res = await server.patch(`/order/update/${orderId}`, {
+          ...data,
+          acceptId: data.acceptId,
+        });
+        const res1 = await server.patch(
+          `/user/completed/${customerId}/${driverId}`,
+          data
+        );
+        if (res.status === 200 && res1.status === 200) {
+          return res;
+        }
       }
-    }
-  };
+    };
 
-  const res = await _loadingApiCall(fn, dispatch);
+    const res = await _loadingApiCall(fn, dispatch);
 
-  if (res.status === 200) {
     dispatch({
       type: D_COMPLETE_ORDER,
       payload: { ...res.data.data, acceptId: data.acceptId },
     });
+  } catch (error) {
+    console.error(error);
   }
 };
 

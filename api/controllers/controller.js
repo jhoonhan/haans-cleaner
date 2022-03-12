@@ -24,23 +24,27 @@ exports.getGeocode = () =>
   });
 
 exports.getDistance = async (orderData, [lat, lng]) => {
-  const originQuery = `${lat}%2C${lng}`;
-  const destinations = orderData.map((order) => order.coords);
-  const destinationQuery = destinations
-    .map((des) => `${des.lat}%2C${des.lng}`)
-    .join("%7C");
+  try {
+    const originQuery = `${lat}%2C${lng}`;
+    const destinations = orderData.map((order) => order.coords);
+    const destinationQuery = destinations
+      .map((des) => `${des.lat}%2C${des.lng}`)
+      .join("%7C");
 
-  const data = await axios.get(
-    `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originQuery}&destinations=${destinationQuery}&key=AIzaSyAkI-xZ8-eXhcWNDVr111EyYX84UXaGGZc`
-  );
-  const distances = data.data.rows[0].elements.map(
-    (el) => +el.distance.text.split(" ")[0]
-  );
-  const orderList = orderData.map((order, i) => {
-    return {
-      ...order._doc,
-      distance: distances[i],
-    };
-  });
-  return orderList;
+    const data = await axios.get(
+      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originQuery}&destinations=${destinationQuery}&key=AIzaSyAkI-xZ8-eXhcWNDVr111EyYX84UXaGGZc`
+    );
+    const distances = data.data.rows[0].elements.map(
+      (el) => +el.distance.text.split(" ")[0]
+    );
+    const orderList = orderData.map((order, i) => {
+      return {
+        ...order._doc,
+        distance: distances[i],
+      };
+    });
+    return orderList;
+  } catch (error) {
+    return [];
+  }
 };

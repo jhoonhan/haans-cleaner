@@ -331,3 +331,26 @@ button {
   width: 2.5rem;
   height: 2.5rem;
 }
+
+.error-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: $background-transparent;
+}
+
+.error__table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}

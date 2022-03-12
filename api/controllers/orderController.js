@@ -64,13 +64,16 @@ exports.getDriverOrder = () =>
     }
 
     const data = await query;
-    const orderArr = await controller.getDistance(data, [
-      req.query.lat,
-      req.query.lng,
-    ]);
-    const sortedArr = orderArr.sort((a, b) => {
-      return a.distance - b.distance;
-    });
+    let sortedArr = [];
+    if (data.length > 0) {
+      const orderArr = await controller.getDistance(data, [
+        req.query.lat,
+        req.query.lng,
+      ]);
+      sortedArr = orderArr.sort((a, b) => {
+        return a.distance - b.distance;
+      });
+    }
 
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
@@ -95,12 +98,10 @@ exports.getDriverOrder = () =>
       results.data = sortedArr;
     }
 
-    if (!data) {
-      return next(new AppError("No document found with that ID", 404));
-    }
     res.status(200).json({
       status: "success",
-      totlaResults: results.data.length,
+      hasResults: results.data.length > 0 ? true : false,
+      totalResults: results.data.length,
       nextPage: results.next,
       prevPage: results.prev,
       data: results.data,

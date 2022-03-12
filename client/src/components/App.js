@@ -9,6 +9,7 @@ import Landing from "./Landing";
 import Order from "./order/Order";
 import Pickup from "./pickup/PickUp";
 import Account from "./account/Account";
+import ErrorModal from "./ErrorModal";
 
 import DriverHeader from "./driver/DriverHeader";
 import Driver from "./driver/Driver";
@@ -19,6 +20,7 @@ const App = () => {
   return (
     <div className="container">
       <Route path="/" component={Header} />
+      {/* <Route path="/" component={ErrorModal} /> */}
       <Route path="/driver" component={DriverHeader} />
 
       <AnimatePresence exitBeforeEnter initial={false}>

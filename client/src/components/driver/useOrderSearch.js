@@ -13,7 +13,7 @@ const useOrderSearch = (
 ) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [hasMore, setHasMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     if (!readyForSearch || !coords) return;
@@ -29,13 +29,15 @@ const useOrderSearch = (
     };
 
     const fetchData = async () => {
+      console.log(`fetching data`);
       const res = await driverFetchOrder(query);
       return res;
     };
+
     fetchData()
       .then((res) => {
         if (res.status === 200) {
-          setHasMore(res.data.data.length > 0);
+          setHasMore(res.data.totalResults >= 5);
           setLoading(false);
         }
       })
