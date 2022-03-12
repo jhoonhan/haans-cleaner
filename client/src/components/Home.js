@@ -9,7 +9,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className="Landing__container">
+      <div className="landing__container">
         <div className="landing__container__welcome">
           <h2>Good morning</h2>
           <h1>{this.props.user.firstName}</h1>

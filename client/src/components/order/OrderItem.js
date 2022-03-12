@@ -119,7 +119,7 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
           className="order__item"
         >
           <div>
-            <h4>{order.status.toUpperCase()}</h4>
+            <label>{order.status.toUpperCase()}</label>
           </div>
           <div>
             {order.status === "submitted" ? (
@@ -129,7 +129,7 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
                   setSelectedOrder(order);
                   setShowModal(true);
                 }}
-                className="button--m"
+                className="button--m button--cancel"
               >
                 Cancel
               </button>

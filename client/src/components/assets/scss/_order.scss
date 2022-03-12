@@ -27,17 +27,20 @@
   flex-direction: column;
   gap: 2rem;
 
-  padding: 1.5rem 2rem 0rem 2rem;
+  padding: 2rem 2rem 0rem 2rem;
 
-  border: 1px solid $divider-color;
+  // border: 1px solid $divider-color;
   box-sizing: border-box;
+  box-shadow: 0px 1px 3px $shaodw-color;
+
+  background-color: $background-color;
 }
 
 .order__item {
   display: grid;
   grid-template-columns: 7rem 1fr 7rem;
   grid-template-rows: auto auto;
-  row-gap: 3rem;
+  row-gap: 2rem;
   justify-items: center;
   align-items: center;
 

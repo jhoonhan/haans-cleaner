@@ -129,16 +129,16 @@ const AccountEdit = ({
                   setShowModal(true);
                   setModalType("editAccount");
                 })}
-                className="button--l"
+                className="button--d"
               >
                 Edit Profile
               </button>
             </div>
 
             <div className="form__form__row">
-              <h3 style={{ marginBottom: "2rem", marginTop: "1rem" }}>
-                Account
-              </h3>
+              <label style={{ marginBottom: "2rem", marginTop: "1rem" }}>
+                account
+              </label>
 
               <button
                 onClick={onSignOutClick}

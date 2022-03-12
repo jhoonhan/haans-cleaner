@@ -303,7 +303,7 @@ const DriverOrder = ({
         <div className="motion-container">
           <div ref={googleMapWrapper} className={`google-map ${mapClass}`}>
             <Wrapper
-              apiKey={"AIzaSyAWOwdj0u40d-mjuGT-P4Z2JTMEgbdzfU8"}
+              apiKey={process.env.REACT_APP_GOOGLE_MAP}
               render={renderMap}
             >
               <GoogleMap
