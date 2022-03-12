@@ -15,6 +15,53 @@ const DriverOrderItem = (props) => {
   const refBand = React.useRef(null);
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
+  const onAccept = async (id, type) => {
+    if (btnLoading) {
+      console.log(`no double click you moron`);
+      return;
+    }
+
+    if (type === "cancel" && props.order.status === "submitted") return;
+    if (type === "accept" && props.order.status === "accepted") return;
+
+    setBtnLoading(true);
+
+    if (props.order.status === "completed") {
+      window.alert("this is already completed");
+    }
+
+    if (props.order.status === "submitted") {
+      // setOrderStatus("accepted");
+      await props.driverAcceptOrder(id, {
+        status: "accepted",
+        acceptId: props.auth.userProfile.FW,
+        acceptDate: new Date().toISOString().split("T")[0],
+      });
+    }
+    if (props.order.status === "accepted") {
+      // setOrderStatus("submitted");
+      await props.driverAcceptOrder(id, {
+        status: "submitted",
+        acceptId: props.auth.userProfile.FW,
+        acceptDate: null,
+      });
+    }
+    setBtnLoading(false);
+  };
+  const onClickComplete = () => {
+    if (props.order.status === "completed") return;
+    const date = new Date().toISOString().split("T")[0];
+    const today = new Date(date).toDateString();
+    const pickupDate = new Date(props.order.date).toDateString();
+
+    if (pickupDate === today) {
+      props.setShowModal(true);
+      props.setSelectedOrder(props.order);
+    } else {
+      console.log(`Wait for God's calling`);
+    }
+  };
+  //////////
   const toggleView = (ref) => {
     const selectedRef = ref;
     selectedRef.current.classList.toggle("height--0");
@@ -97,42 +144,6 @@ const DriverOrderItem = (props) => {
     );
   };
 
-  const onAccept = async (id, type) => {
-    if (btnLoading) {
-      console.log(`no double click you moron`);
-      return;
-    }
-
-    if (type === "cancel" && props.order.status === "submitted") return;
-    if (type === "accept" && props.order.status === "accepted") return;
-
-    setBtnLoading(true);
-
-    if (props.order.status === "completed") {
-      window.alert("this is already completed");
-    }
-
-    if (props.order.status === "submitted") {
-      // setOrderStatus("accepted");
-      await props.driverAcceptOrder(id, {
-        status: "accepted",
-        acceptId: props.auth.userProfile.FW,
-        acceptDate: new Date().toISOString().split("T")[0],
-      });
-    }
-    if (props.order.status === "accepted") {
-      // setOrderStatus("submitted");
-      await props.driverAcceptOrder(id, {
-        status: "submitted",
-        acceptId: props.auth.userProfile.FW,
-        acceptDate: null,
-      });
-    }
-    setBtnLoading(false);
-  };
-
-  //////////
-
   const renderSearchButtons = () => {
     const buttonColor = () => {
       if (props.order.status === "submitted") return "button--active";
@@ -159,20 +170,6 @@ const DriverOrderItem = (props) => {
       </div>
     );
   };
-  const onClickComplete = () => {
-    if (props.order.status === "completed") return;
-    const date = new Date().toISOString().split("T")[0];
-    const today = new Date(date).toDateString();
-    const pickupDate = new Date(props.order.date).toDateString();
-
-    if (pickupDate === today) {
-      props.setShowModal(true);
-      props.setSelectedOrder(props.order);
-    } else {
-      console.log(`Wait for God's calling`);
-    }
-  };
-
   const renderAcceptButtons = () => {
     const buttonColor = () => {
       if (props.order.status === "completed") return "button--disabled";

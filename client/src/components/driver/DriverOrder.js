@@ -18,6 +18,8 @@ import PageTitle from "../PageTitle";
 
 import DriverOrderItem from "./DriverOrderItem";
 import DriverDateSelector from "./DriverDateSelector";
+import NoResultFound from "../helpers/NoResultFound";
+
 import useOrderSearch from "./useOrderSearch";
 import useGeolocation from "./useGeolocation";
 
@@ -200,34 +202,35 @@ const DriverOrder = ({
         return cvtObj2Arr(driver.acceptedOrders);
       }
     };
-
-    return conditionalArr().map((order, i) => {
-      if (conditionalArr().length === i + 1) {
-        return (
-          <div ref={lastOrderElementRef} key={i}>
-            <DriverOrderItem
-              order={order}
-              page={match.params.page}
-              timestamp={order.timestamp}
-              setShowModal={setShowModal}
-              setSelectedOrder={setSelectedOrder}
-            />
-          </div>
-        );
-      } else {
-        return (
-          <div key={i}>
-            <DriverOrderItem
-              order={order}
-              page={match.params.page}
-              timestamp={order.timestamp}
-              setShowModal={setShowModal}
-              setSelectedOrder={setSelectedOrder}
-            />
-          </div>
-        );
-      }
-    });
+    if (conditionalArr().length > 0) {
+      return conditionalArr().map((order, i) => {
+        if (conditionalArr().length === i + 1) {
+          return (
+            <div ref={lastOrderElementRef} key={i} style={{ width: "100%" }}>
+              <DriverOrderItem
+                order={order}
+                page={match.params.page}
+                timestamp={order.timestamp}
+                setShowModal={setShowModal}
+                setSelectedOrder={setSelectedOrder}
+              />
+            </div>
+          );
+        } else {
+          return (
+            <div key={i} style={{ width: "100%" }}>
+              <DriverOrderItem
+                order={order}
+                page={match.params.page}
+                timestamp={order.timestamp}
+                setShowModal={setShowModal}
+                setSelectedOrder={setSelectedOrder}
+              />
+            </div>
+          );
+        }
+      });
+    }
   };
 
   const renderMap = (status) => {
@@ -321,7 +324,13 @@ const DriverOrder = ({
               setSelectedDate={setSelectedDate}
               page={match.params.page}
             />
-            <div className="driver__order__list">{rednerSearchOrders()}</div>
+            <div className="driver__order__list">
+              {rednerSearchOrders() ? (
+                rednerSearchOrders()
+              ) : (
+                <NoResultFound type="order" />
+              )}
+            </div>
           </div>
         </div>
       </>
