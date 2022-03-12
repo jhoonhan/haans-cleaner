@@ -13,10 +13,12 @@ const PickupFormThirdPage = (props) => {
   }, []);
 
   const renderSelector = ({ input }) => {
-    const style = input.value > 0 ? "highlighted" : "";
-
     return (
-      <div className={`form__clothes ${style}`}>
+      <div
+        className={`form__clothes ${
+          input.value > 0 ? "highlighted--border" : ""
+        }`}
+      >
         <div
           className="form__clothes__selector"
           onClick={() => input.onChange(+input.value + 1)}
@@ -24,7 +26,9 @@ const PickupFormThirdPage = (props) => {
           <label>{input.name}</label>
         </div>
         <input
-          className={`form__clothes__edit `}
+          className={`form__clothes__edit ${
+            input.value > 0 ? "highlighted--background" : ""
+          }`}
           onChange={input.onChange}
           value={+input.value}
           type="number"

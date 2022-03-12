@@ -8,7 +8,6 @@
   padding: 0rem 2rem;
   margin: 1rem 0;
 
-  background-color: $background-color;
   // border: 1px solid $divider-color;
   // border-top: 1px solid $shaodw-color;
   // border-radius: 1rem;
@@ -129,13 +128,12 @@
   grid-template-columns: 1fr 3rem;
   padding: 3rem 2rem;
   box-sizing: border-box;
+  background-color: $background-secondary;
 }
 .map__trip-detail__info {
   display: grid;
   grid-template-columns: auto 1fr;
   row-gap: 1rem;
-
-  background-color: $background-color;
 }
 
 .driver-account {

@@ -192,9 +192,12 @@ button {
   border-bottom: 1px solid $divider-color;
 }
 
-.highlighted {
+.highlighted--border {
   // background-color: $accent-color !important;
   border: 1px solid $accent-color !important;
+}
+.highlighted--background {
+  background-color: $accent-color !important;
 }
 
 .w100p {
