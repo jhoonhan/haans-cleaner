@@ -10,10 +10,23 @@ class Home extends React.Component {
   render() {
     return (
       <div className="landing__container">
-        <div className="landing__container__welcome">
+        <div className="landing__welcome">
           <h2>Good morning</h2>
           <h1>{this.props.user.firstName}</h1>
           <h3>It's a great day to wear a skirt</h3>
+        </div>
+        <div className="landing__order-container">
+          <div class="circle-wrap">
+            <div class="circle">
+              <div class="mask full">
+                <div class="fill"></div>
+              </div>
+              <div class="mask half">
+                <div class="fill"></div>
+              </div>
+              <div class="inside-circle"> 75% </div>
+            </div>
+          </div>
         </div>
         <div className="landing__container__buttons">
           <Link className="button--l" to={`/pickup`}>

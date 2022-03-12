@@ -7,8 +7,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 2rem;
 }
-.landing__container__welcome {
+.landing__welcome {
   width: 100%;
 
   display: grid;
@@ -34,4 +35,64 @@
   position: fixed;
   top: 20px;
   right: 20px;
+}
+
+.circle-wrap {
+  position: relative;
+  margin: 0px auto;
+  width: 200px;
+  height: 200px;
+  background: $color--disabled;
+  border-radius: 50%;
+}
+
+.circle-wrap .circle .mask,
+.circle-wrap .circle .fill {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle-wrap .circle .mask {
+  clip: rect(0px, 200px, 200px, 100px);
+}
+
+.circle-wrap .inside-circle {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: $background-secondary;
+  line-height: 170px;
+  text-align: center;
+
+  color: $accent-color;
+  position: absolute;
+  z-index: 100;
+  font-size: 2em;
+  top: 15px;
+  left: 15px;
+}
+
+/* color animation */
+
+/* 3rd progress bar */
+.mask .fill {
+  clip: rect(0px, 100px, 200px, 0px);
+  background-color: $accent-color;
+}
+
+.mask.full,
+.circle .fill {
+  animation: fill ease-in-out 3s;
+  transform: rotate(45deg);
+}
+
+@keyframes fill {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(135deg);
+  }
 }
