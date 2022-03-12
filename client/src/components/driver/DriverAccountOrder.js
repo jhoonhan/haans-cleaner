@@ -7,6 +7,7 @@ import OrderItem from "../order/OrderItem";
 import PageTitle from "../PageTitle";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
+import NoResultFound from "../helpers/NoResultFound";
 
 const DriverAccountOrder = ({ auth, completedOrders, setPage }) => {
   const now = new Date().toISOString().split("T")[0];
@@ -34,7 +35,7 @@ const DriverAccountOrder = ({ auth, completedOrders, setPage }) => {
   }, [selectedDate]);
 
   const renderList = () => {
-    if (!orders) return;
+    if (!orders) return [];
     return orders.reverse().map((order, i) => {
       return <OrderItem key={i} order={order} page={"account"} />;
     });
@@ -65,7 +66,13 @@ const DriverAccountOrder = ({ auth, completedOrders, setPage }) => {
               type="date"
             />
           </div>
-          <div className="order__list">{renderList()}</div>
+          <div className="order__list">
+            {renderList().length > 0 ? (
+              renderList()
+            ) : (
+              <NoResultFound size="m" />
+            )}
+          </div>
         </div>
       </motion.div>
     );

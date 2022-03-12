@@ -7,6 +7,7 @@ import OrderItem from "../order/OrderItem";
 import PageTitle from "../PageTitle";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
+import NoResultFound from "../helpers/NoResultFound";
 
 const AccountOrder = ({
   auth,
@@ -59,7 +60,7 @@ const AccountOrder = ({
 
   /////////////////
   const renderList = () => {
-    if (!orders2) return null;
+    if (!orders2) return [];
     return orders2.reverse().map((order, i) => {
       return <OrderItem key={i} order={order} page={"account"} />;
     });
@@ -67,7 +68,7 @@ const AccountOrder = ({
 
   const render = () => {
     if (!fetched) return null;
-
+    console.log(renderList());
     return (
       <motion.div
         className="motion-container account__content__container"
@@ -92,7 +93,13 @@ const AccountOrder = ({
               type="date"
             />
           </div>
-          <div className="order__list">{renderList()}</div>
+          <div className="order__list">
+            {renderList().length > 0 ? (
+              renderList()
+            ) : (
+              <NoResultFound size={"m"} />
+            )}
+          </div>
         </div>
       </motion.div>
     );

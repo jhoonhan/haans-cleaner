@@ -328,7 +328,7 @@ const DriverOrder = ({
               {rednerSearchOrders() ? (
                 rednerSearchOrders()
               ) : (
-                <NoResultFound type="order" />
+                <NoResultFound type="order" size="s" />
               )}
             </div>
           </div>
