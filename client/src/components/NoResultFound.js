@@ -1,5 +1,5 @@
 import React from "react";
-import noOrder from "../../image/noOrder.svg";
+import noOrder from "../image/noOrder.svg";
 
 const NoResultFound = ({ size }) => {
   return (

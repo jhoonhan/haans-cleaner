@@ -4,22 +4,11 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import SignIn from "./signIn/SingIn";
-import SignInInitial from "./signIn/RenderInitialSignIn";
-import { fetchUser, mountUser } from "../actions";
+import SignInInitial from "./signIn/SignInInitial";
 
-// import { fetchUser } from "../actions";
-
-class Landing extends React.Component {
-  componentDidMount() {}
-
-  renderInitalSignUp() {
-    return (
-      <React.Fragment>
-        <div>No more early morning stops!</div>
-      </React.Fragment>
-    );
-  }
-  render() {
+const Landing = ({ isSignedIn }) => {
+  const render = () => {
+    console.log(isSignedIn);
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -28,11 +17,12 @@ class Landing extends React.Component {
         transition={{ type: "spring", duration: 0.1 }}
         className="motion-container"
       >
-        {!this.props.isSignedIn ? <SignInInitial /> : <SignIn />}
+        {!isSignedIn ? <SignInInitial /> : <SignIn />}
       </motion.div>
     );
-  }
-}
+  };
+  return render();
+};
 
 const mapStateToProps = ({ auth, user }) => {
   return {
@@ -42,5 +32,5 @@ const mapStateToProps = ({ auth, user }) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUser, mountUser })(Landing);
+export default connect(mapStateToProps)(Landing);
 //

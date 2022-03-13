@@ -1,32 +1,27 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import StatusBar from "./StatusBar";
 
-import { fetchUser, mountUser } from "../actions";
+const Home = (props) => {
+  const progressBar = useRef(null);
+  const valueContainer = useRef(null);
 
-class Home extends React.Component {
-  componentDidMount() {}
-
-  render() {
+  const render = () => {
     return (
       <div className="landing__container">
         <div className="landing__welcome">
           <h2>Good morning</h2>
-          <h1>{this.props.user.firstName}</h1>
-          <h3>It's a great day to wear a skirt</h3>
+          <h1>{props.user.firstName}</h1>
         </div>
         <div className="landing__order-container">
-          <div class="circle-wrap">
-            <div class="circle">
-              <div class="mask full">
-                <div class="fill"></div>
-              </div>
-              <div class="mask half">
-                <div class="fill"></div>
-              </div>
-              <div class="inside-circle"> 75% </div>
-            </div>
-          </div>
+          <label>Your most recent order:</label>
+          <StatusBar
+            progressBar={progressBar}
+            valueContainer={valueContainer}
+            startVal={0}
+            endVal={25}
+          />
         </div>
         <div className="landing__container__buttons">
           <Link className="button--l" to={`/pickup`}>
@@ -38,15 +33,17 @@ class Home extends React.Component {
         </div>
       </div>
     );
-  }
-}
+  };
+  return render();
+};
 
-const mapStateToProps = ({ auth, user }) => {
+const mapStateToProps = ({ auth, user, orders }) => {
   return {
     isSignedIn: auth.isSignedIn,
     user: user.currentUser,
+    orders,
   };
 };
 
-export default connect(mapStateToProps, { fetchUser, mountUser })(Home);
+export default connect(mapStateToProps)(Home);
 //

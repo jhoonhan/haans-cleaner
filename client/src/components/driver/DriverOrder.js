@@ -18,7 +18,7 @@ import PageTitle from "../PageTitle";
 
 import DriverOrderItem from "./DriverOrderItem";
 import DriverDateSelector from "./DriverDateSelector";
-import NoResultFound from "../helpers/NoResultFound";
+import NoResultFound from "../NoResultFound";
 
 import useOrderSearch from "./useOrderSearch";
 import useGeolocation from "./useGeolocation";

@@ -10,7 +10,7 @@ import {
   D_GET_COORDS,
 } from "../actions/types";
 
-const reducer = (state = { fetched: false }, action) => {
+const reducer = (state = { fetched: false, currentUser: null }, action) => {
   switch (action.type) {
     case SIGN_OUT:
       return { ...state, currentUser: null };

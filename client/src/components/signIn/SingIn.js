@@ -5,32 +5,37 @@ import { createUser, fetchUser } from "../../actions";
 import SignInSecondPage from "./SignInSecondPage";
 import Home from "../Home";
 
-class SignIn extends React.Component {
-  componentDidMount() {
-    this.props.fetchUser(this.props.auth.userProfile.FW);
-  }
-  conditionalRender() {
-    const isSignedIn = this.props.auth.isSignedIn;
-    const loadedGoogleId = this.props.auth.userProfile.FW;
-    const userGoogleId = this.props.user?.googleId;
-    if (isSignedIn && loadedGoogleId === userGoogleId) {
-      return <Home />;
-    }
+const SignIn = ({ auth, user, fetchUser }) => {
+  const [fetched, setFetched] = useState(null);
 
-    if (isSignedIn && loadedGoogleId !== userGoogleId) {
+  useEffect(() => {
+    fetchUser(auth.userProfile.FW);
+  }, []);
+
+  useEffect(() => {
+    if (user.fetched) setFetched(true);
+  }, [user]);
+
+  const conditionalRender = () => {
+    if (!user.currentUser) {
       return <SignInSecondPage />;
     }
-  }
+    if (auth.userProfile.FW === user.currentUser.googleId) {
+      return <Home />;
+    }
+  };
 
-  render() {
-    return <div className="signIn__container">{this.conditionalRender()}</div>;
-  }
-}
+  const render = () => {
+    if (!fetched) return null;
+    return <div className="signIn__container">{conditionalRender()}</div>;
+  };
+  return render();
+};
 
 const mapStateToProps = ({ auth, user }) => {
   return {
     auth: auth,
-    user: user.currentUser,
+    user: user,
   };
 };
 

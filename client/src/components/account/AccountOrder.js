@@ -7,7 +7,7 @@ import OrderItem from "../order/OrderItem";
 import PageTitle from "../PageTitle";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
-import NoResultFound from "../helpers/NoResultFound";
+import NoResultFound from "../NoResultFound";
 
 const AccountOrder = ({
   auth,

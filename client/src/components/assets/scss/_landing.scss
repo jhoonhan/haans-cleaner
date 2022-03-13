@@ -31,68 +31,45 @@
   }
 }
 
+.landing__order-container {
+  width: 100%;
+  display: grid;
+  row-gap: 2rem;
+  place-items: center;
+}
+
 .google {
   position: fixed;
   top: 20px;
   right: 20px;
 }
 
-.circle-wrap {
+//
+
+.circular-progess {
   position: relative;
-  margin: 0px auto;
-  width: 200px;
-  height: 200px;
-  background: $color--disabled;
+  width: 50%;
+  aspect-ratio: 1 /1;
+  background-color: orange;
   border-radius: 50%;
+  display: grid;
+  place-items: center;
 }
-
-.circle-wrap .circle .mask,
-.circle-wrap .circle .fill {
-  width: 200px;
-  height: 200px;
+.circular-progess:before {
+  content: "";
   position: absolute;
+  height: 84%;
+  width: 84%;
+  background-color: white;
   border-radius: 50%;
+  top: 1rem;
+  left: 1rem;
 }
-
-.circle-wrap .circle .mask {
-  clip: rect(0px, 200px, 200px, 100px);
-}
-
-.circle-wrap .inside-circle {
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  background: $background-secondary;
-  line-height: 170px;
-  text-align: center;
-
-  color: $accent-color;
-  position: absolute;
-  z-index: 100;
-  font-size: 2em;
-  top: 15px;
-  left: 15px;
-}
-
-/* color animation */
-
-/* 3rd progress bar */
-.mask .fill {
-  clip: rect(0px, 100px, 200px, 0px);
-  background-color: $accent-color;
-}
-
-.mask.full,
-.circle .fill {
-  animation: fill ease-in-out 3s;
-  transform: rotate(45deg);
-}
-
-@keyframes fill {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(135deg);
-  }
+.value-container {
+  position: relative;
+  color: black;
+  display: grid;
+  place-items: center;
+  top: -0.5rem;
+  left: -0.5rem;
 }
