@@ -9,7 +9,7 @@ const SignIn = ({ auth, user, fetchUser }) => {
   const [fetched, setFetched] = useState(null);
 
   useEffect(() => {
-    fetchUser(auth.userProfile.FW);
+    if (!user.fetched) fetchUser(auth.userProfile.FW);
   }, []);
 
   useEffect(() => {

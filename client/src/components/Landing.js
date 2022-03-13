@@ -8,7 +8,7 @@ import SignInInitial from "./signIn/SignInInitial";
 
 const Landing = ({ isSignedIn }) => {
   const render = () => {
-    console.log(isSignedIn);
+    console.log(`landing rendered`);
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -27,8 +27,6 @@ const Landing = ({ isSignedIn }) => {
 const mapStateToProps = ({ auth, user }) => {
   return {
     isSignedIn: auth.isSignedIn,
-    userProfile: auth.userProfile,
-    user: user.currentUser,
   };
 };
 
