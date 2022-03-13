@@ -55,14 +55,15 @@ const SignInSecondPage = (props) => {
           />
         </div>
         <div className="form__form__row">
-          <label>Address</label>
+          <label>Street</label>
           <Field
             name="street"
             type="text"
             component={RenderInput}
             label="street"
           />
-
+        </div>
+        <div className="form__form__row">
           <div className="cityzip">
             <label>City</label>
             <label>Zip</label>

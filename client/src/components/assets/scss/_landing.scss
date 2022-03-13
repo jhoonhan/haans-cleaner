@@ -50,7 +50,7 @@
   position: relative;
   width: 50%;
   aspect-ratio: 1 /1;
-  background-color: orange;
+  background-color: #cadcff;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -62,14 +62,14 @@
   width: 84%;
   background-color: white;
   border-radius: 50%;
-  top: 1rem;
-  left: 1rem;
+  top: 0.8rem;
+  left: 0.8rem;
 }
 .value-container {
   position: relative;
   color: black;
   display: grid;
   place-items: center;
-  top: -0.5rem;
-  left: -0.5rem;
+  top: -0.75rem;
+  left: -0.75rem;
 }

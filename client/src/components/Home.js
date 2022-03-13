@@ -5,24 +5,27 @@ import StatusBar from "./StatusBar";
 import { fetchOrder } from "../actions";
 
 const Home = ({ user }) => {
-  const progressBar = useRef(null);
-  const valueContainer = useRef(null);
+  console.log(user.currentUser.orders[0]);
+
+  const renderStatusBar = () => {
+    if (!user.currentUser.orders[0]) return null;
+    if (user.currentUser.orders[0])
+      return (
+        <div className="landing__order-container">
+          <label>Your most recent order:</label>
+          <StatusBar order={user.currentUser.orders.slice(-1)[0]} />
+        </div>
+      );
+  };
 
   const render = () => {
     return (
       <div className="landing__container">
         <div className="landing__welcome">
           <h2>Good morning</h2>
-          <h1>{user.firstName}</h1>
+          <h1>{user.currentUser.firstName}</h1>
         </div>
-        <div className="landing__order-container">
-          <label>Your most recent order:</label>
-          <StatusBar
-            progressBar={progressBar}
-            valueContainer={valueContainer}
-            order={user.currentUser.orders.slice(-1)[0]}
-          />
-        </div>
+        <StatusBar order={user.currentUser.orders.slice(-1)[0]} />
         <div className="landing__container__buttons">
           <Link className="button--l" to={`/pickup`}>
             Request Pick-up
