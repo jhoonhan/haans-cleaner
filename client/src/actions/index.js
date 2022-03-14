@@ -84,6 +84,7 @@ export const createUser =
       history.push("/");
     } catch (error) {
       console.error(error);
+      dispatch({ type: ERROR_HTTP, error });
     }
   };
 
@@ -95,6 +96,7 @@ export const fetchUser = (googleId) => async (dispatch, getState) => {
     console.log(`user fetched`);
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 
@@ -104,6 +106,7 @@ export const editUser = (id, newValue) => async (dispatch) => {
     dispatch({ type: EDIT_USER, payload: res.data.data });
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 export const deleteUser = (id) => async (dispatch) => {
@@ -114,6 +117,7 @@ export const deleteUser = (id) => async (dispatch) => {
     history.push("/");
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 
@@ -155,6 +159,7 @@ export const createOrder = (data) => async (dispatch, getState) => {
     return res;
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 
@@ -173,6 +178,7 @@ export const cancelOrder = (order, callback) => async (dispatch) => {
     callback(false);
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 
@@ -263,6 +269,7 @@ export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
     }
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 
@@ -298,6 +305,7 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
     });
   } catch (error) {
     console.error(error);
+    dispatch({ type: ERROR_HTTP, error });
   }
 };
 
