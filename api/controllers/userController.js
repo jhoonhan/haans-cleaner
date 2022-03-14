@@ -21,7 +21,6 @@ exports.postCompleted = () =>
       { $push: { completedOrders: req.body } },
       {
         new: true,
-        // runValidators: true,
       }
     );
 
@@ -46,6 +45,8 @@ exports.updateOrders = () =>
     const query = Model.findByIdAndUpdate(
       req.params.id,
       { $push: { completedOrders: req.body } },
+      //////////////////////////////////////////
+      // 3/14 Figure out this //
       {
         new: true,
         // runValidators: true,
