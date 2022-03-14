@@ -40,7 +40,7 @@ exports.postCompleted = () =>
     return;
   });
 
-exports.updateOrders = () =>
+exports.updateOrder = () =>
   catchAsync(async (req, res, next) => {
     const query = Model.findByIdAndUpdate(
       req.params.id,
