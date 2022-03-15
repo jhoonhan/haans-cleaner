@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const {
-  orderSchema,
+  userOrderSchema,
   coordsSchema,
   totalSchema,
   clothesSchema,
@@ -78,10 +78,10 @@ const userSchema = new mongoose.Schema({
     default: Date.now(),
   },
   orders: {
-    type: [orderSchema],
+    type: [userOrderSchema],
   },
   completedOrders: {
-    type: [orderSchema],
+    type: [userOrderSchema],
   },
 });
 

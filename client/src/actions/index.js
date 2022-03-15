@@ -143,7 +143,7 @@ export const createOrder = (data) => async (dispatch, getState) => {
       });
       const res1 = await server.post("/order", { ...data, coords: res.data });
 
-      await server.patch(`/user/${data.userId}`, { orders: data });
+      await server.patch(`/user/mofo/${data.userId}`, res1.data.data.data);
 
       return res1;
     };

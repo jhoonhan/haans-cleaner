@@ -135,13 +135,83 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
+const userOrderSchema = new mongoose.Schema({
+  fullName: {
+    type: String,
+    // required: [true, "user must have a name"],
+    trim: true,
+  },
+  phone: {
+    type: String,
+    // required: [true, "user must have a name"],
+    trim: true,
+  },
+  street: {
+    type: String,
+    // required: [true, "user must have a name"],
+    trim: true,
+  },
+  city: {
+    type: String,
+    // required: [true, "you must provide an email address"],
+  },
+  date: {
+    type: Date,
+    // required: [true, "you must provide a phone number"],
+    // trim: true,
+  },
+  googleId: {
+    type: String,
+    // required: [true, "you must provide an address"],
+    trim: true,
+  },
+  userId: {
+    type: String,
+    trim: true,
+  },
+  status: {
+    type: String,
+    // required: [true, "you must provide an address"],
+    trim: true,
+  },
+  acceptId: {
+    type: String,
+    // required: [true, "you must provide a Google Id"],
+    trim: true,
+  },
+  acceptDate: {
+    type: Date,
+  },
+  completedDate: {
+    type: Date,
+  },
+  distance: {
+    type: Number,
+    // required: [true, "you must provide a Google Id"],
+    trim: true,
+  },
+  timestamp: {
+    type: Number,
+    default: Date.now(),
+  },
+  clothes: {
+    type: clothesSchema,
+  },
+  total: {
+    type: totalSchema,
+  },
+  coords: {
+    type: coordsSchema,
+  },
+});
+
 orderSchema.plugin(AutoIncrement, { inc_field: "ticketId" });
 
 const Order = mongoose.model("Order", orderSchema);
 
 module.exports = {
   Order,
-  orderSchema,
+  userOrderSchema,
   coordsSchema,
   totalSchema,
   clothesSchema,

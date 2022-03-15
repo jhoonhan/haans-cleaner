@@ -18,15 +18,15 @@ exports.postCompleted = () =>
   catchAsync(async (req, res, next) => {
     const driverQuery = User.findByIdAndUpdate(
       req.params.driverId,
-      { $push: { completedOrders: req.body } },
+      { $addToSet: { completedOrders: req.body } },
       {
         new: true,
       }
     );
 
-    const customerQuery = User.findByIdAndUpdate(
-      req.params.customerId,
-      { orders: req.body },
+    const customerQuery = User.findOneAndUpdate(
+      { _id: req.params.customerId, "orders._id": req.params.driverId },
+      { $set: { "orders.$.status": "completed" } },
       { new: true }
     );
     const driverData = await driverQuery;
@@ -44,9 +44,29 @@ exports.updateOrder = () =>
   catchAsync(async (req, res, next) => {
     const query = Model.findByIdAndUpdate(
       req.params.id,
-      { $push: { completedOrders: req.body } },
+      { $set: { completedOrders: req.body } },
       //////////////////////////////////////////
       // 3/14 Figure out this //
+      {
+        new: true,
+        // runValidators: true,
+      }
+    );
+    const data = await query;
+
+    res.status(200).json({
+      status: "success",
+      data,
+    });
+  });
+
+exports.mofo = () =>
+  catchAsync(async (req, res, next) => {
+    const query = User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { orders: req.body },
+      },
       {
         new: true,
         // runValidators: true,
