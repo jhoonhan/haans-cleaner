@@ -9,27 +9,16 @@ import PageTitle from "../PageTitle";
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
 import NoResultFound from "../NoResultFound";
 
-const AccountOrder = ({
-  auth,
-  user,
-  userFetched,
-  orders,
-  fetchUser,
-  fetchOrder,
-  setPage,
-}) => {
+const AccountOrder = ({ auth, user, userFetched, fetchUser, setPage }) => {
   useEffect(() => {
     if (!auth.isSignedIn) return;
     if (!userFetched) {
       fetchUser(auth.userProfile.FW);
     }
-    if (!orders) {
-      fetchOrder(auth.userProfile.FW);
-    }
-    if (auth.isSignedIn && userFetched && orders) {
+    if (auth.isSignedIn && userFetched) {
       setFetched(true);
     }
-  }, [auth.isSignedIn, user, orders]);
+  }, [auth.isSignedIn, user]);
 
   const now = new Date().toISOString().split("T")[0];
   const today = new Date(now);
@@ -52,7 +41,7 @@ const AccountOrder = ({
 
   useEffect(() => {
     if (!fetched) return null;
-    const filteredOrders = cvtObj2Arr(orders).filter((order) => {
+    const filteredOrders = user.orders.filter((order) => {
       return order.date === selectedDate && order.status === "completed";
     });
     setFilteredOrders(filteredOrders);
@@ -68,7 +57,6 @@ const AccountOrder = ({
 
   const render = () => {
     if (!fetched) return null;
-    console.log(renderList());
     return (
       <motion.div
         className="motion-container account__content__container"
@@ -108,12 +96,11 @@ const AccountOrder = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, orders }) => {
+const mapStateToProps = ({ auth, user }) => {
   return {
     auth,
     user: user.currentUser,
     userFetched: user.fetched,
-    orders,
   };
 };
 
