@@ -29,7 +29,9 @@ const StatusBar = ({ order }) => {
       }
     }, speed);
 
-    return clearInterval(progress);
+    return () => {
+      console.log(`status bar unmounted`);
+    };
   });
 
   const render = () => {

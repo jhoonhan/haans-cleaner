@@ -112,7 +112,7 @@ const Order = ({
             actions={modalAction()}
           />
 
-          <PageTitle title="order" />
+          <PageTitle title="orders" />
           <div className="order-container">
             <input
               onChange={handleDateChange}

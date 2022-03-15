@@ -203,6 +203,9 @@ const userOrderSchema = new mongoose.Schema({
   coords: {
     type: coordsSchema,
   },
+  ticketId: {
+    type: Number,
+  },
 });
 
 orderSchema.plugin(AutoIncrement, { inc_field: "ticketId" });
