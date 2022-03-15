@@ -15,7 +15,12 @@ const DriverOrderItem = (props) => {
   const refBand = React.useRef(null);
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
-  const onAccept = async (id, type) => {
+  const onAccept = async (type) => {
+    const ids = {
+      orderId: props.order.id,
+      driverId: props.user.id,
+      customerId: props.order.userId,
+    };
     if (btnLoading) {
       console.log(`no double click you moron`);
       return;
@@ -32,7 +37,7 @@ const DriverOrderItem = (props) => {
 
     if (props.order.status === "submitted") {
       // setOrderStatus("accepted");
-      await props.driverAcceptOrder(id, {
+      await props.driverAcceptOrder(ids, {
         status: "accepted",
         acceptId: props.auth.userProfile.FW,
         acceptDate: new Date().toISOString().split("T")[0],
@@ -40,7 +45,7 @@ const DriverOrderItem = (props) => {
     }
     if (props.order.status === "accepted") {
       // setOrderStatus("submitted");
-      await props.driverAcceptOrder(id, {
+      await props.driverAcceptOrder(ids, {
         status: "submitted",
         acceptId: props.auth.userProfile.FW,
         acceptDate: null,
@@ -157,13 +162,13 @@ const DriverOrderItem = (props) => {
     return (
       <div className="driver__order__button__container">
         <button
-          onClick={() => onAccept(props.order._id, "cancel")}
+          onClick={() => onAccept("cancel")}
           className={`button--f ${cancelColor()}`}
         >
           cancel
         </button>
         <button
-          onClick={() => onAccept(props.order._id, "accept")}
+          onClick={() => onAccept("accept")}
           className={`button--f ${buttonColor()}`}
         >
           {!btnLoading ? props.order.status : "Loading"}

@@ -143,7 +143,7 @@ export const createOrder = (data) => async (dispatch, getState) => {
       });
       const res1 = await server.post("/order", { ...data, coords: res.data });
 
-      await server.patch(`/user/mofo/${data.userId}`, res1.data.data.data);
+      await server.patch(`/user/order/${data.userId}`, res1.data.data.data);
 
       return res1;
     };
@@ -233,12 +233,17 @@ export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
   }
 };
 
-export const driverAcceptOrder = (orderId, data) => async (dispatch) => {
+export const driverAcceptOrder = (ids, data) => async (dispatch) => {
   try {
+    const { orderId, driverId, customerId } = ids;
     const res = await server.get(`/order/${orderId}`);
 
     if (res.data.data.status === "submitted") {
       const res = await server.patch(`/order/update/${orderId}`, data);
+      await server.patch(
+        `/user/update/accept/${customerId}/${driverId}/${orderId}`,
+        data
+      );
       dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
     }
 
@@ -288,7 +293,7 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
           acceptId: data.acceptId,
         });
         const res1 = await server.patch(
-          `/user/completed/${customerId}/${driverId}`,
+          `/user/update/complete/${customerId}/${driverId}/${orderId}`,
           data
         );
         if (res.status === 200 && res1.status === 200) {

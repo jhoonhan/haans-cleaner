@@ -14,22 +14,31 @@ exports.delete = factory.delete(User);
 
 exports.test = factory.test(User);
 
-exports.postCompleted = () =>
+exports.updateUserOrder = () =>
   catchAsync(async (req, res, next) => {
-    const driverQuery = User.findByIdAndUpdate(
-      req.params.driverId,
-      { $addToSet: { completedOrders: req.body } },
-      {
-        new: true,
-      }
-    );
+    let driverData = {};
+    if (req.params.type === "complete") {
+      const driverQuery = User.findByIdAndUpdate(
+        req.params.driverId,
+        { $addToSet: { completedOrders: req.body } },
+        {
+          new: true,
+        }
+      );
+      driverData = await driverQuery;
+    }
 
     const customerQuery = User.findOneAndUpdate(
-      { _id: req.params.customerId, "orders._id": req.params.driverId },
-      { $set: { "orders.$.status": "completed" } },
+      { _id: req.params.customerId, "orders._id": req.params.orderId },
+      {
+        $set: {
+          "orders.$.status": `${
+            req.params.type === "complete" ? "completed" : "accepted"
+          }`,
+        },
+      },
       { new: true }
     );
-    const driverData = await driverQuery;
     const customerData = await customerQuery;
 
     res.status(200).json({
@@ -40,27 +49,7 @@ exports.postCompleted = () =>
     return;
   });
 
-exports.updateOrder = () =>
-  catchAsync(async (req, res, next) => {
-    const query = Model.findByIdAndUpdate(
-      req.params.id,
-      { $set: { completedOrders: req.body } },
-      //////////////////////////////////////////
-      // 3/14 Figure out this //
-      {
-        new: true,
-        // runValidators: true,
-      }
-    );
-    const data = await query;
-
-    res.status(200).json({
-      status: "success",
-      data,
-    });
-  });
-
-exports.mofo = () =>
+exports.createUserOrder = () =>
   catchAsync(async (req, res, next) => {
     const query = User.findByIdAndUpdate(
       req.params.id,

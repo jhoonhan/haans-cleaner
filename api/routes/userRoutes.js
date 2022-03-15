@@ -6,16 +6,15 @@ const router = express.Router();
 
 router.post("/", userController.create);
 router.patch(
-  "/completed/:customerId/:driverId",
-  userController.postCompleted()
+  "/update/:type/:customerId/:driverId/:orderId",
+  userController.updateUserOrder()
 );
 
 router.get("/getall", userController.getAll);
 router.get("/:id", userController.getOne);
 router.get("/get/:googleId", userController.getByGoogleId);
 
-router.patch("/mofo/:id", userController.mofo());
-router.patch("/order/:id", userController.updateOrder);
+router.patch("/order/:id", userController.createUserOrder());
 router.patch("/:id", userController.update);
 
 router.delete("/:id", userController.delete);
