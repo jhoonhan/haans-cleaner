@@ -262,7 +262,7 @@ export const driverAcceptOrder = (ids, data) => async (dispatch) => {
         payload: { ...res.data.data, acceptId: null },
       });
     }
-
+    //
     if (res.data.data.status === "completed") {
       window.alert("error");
     }

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 const StatusBar = ({ order }) => {
   const progressBar = useRef(null);
@@ -16,17 +16,21 @@ const StatusBar = ({ order }) => {
     if (order.status === "completed") return 80;
   };
 
-  const progress = setInterval(() => {
-    if (!order) return;
-    progressVal++;
-    progressBar.current.style.background = `conic-gradient(
-        #4d5bf9 ${progressVal * 3.6}deg, 
-        #cadcff ${progressVal * 3.6}deg)`;
+  useEffect(() => {
+    const progress = setInterval(() => {
+      if (!order) return;
+      progressVal++;
+      progressBar.current.style.background = `conic-gradient(
+          #4d5bf9 ${progressVal * 3.6}deg, 
+          #cadcff ${progressVal * 3.6}deg)`;
 
-    if (progressVal === condtProgressVal()) {
-      clearInterval(progress);
-    }
-  }, speed);
+      if (progressVal === condtProgressVal()) {
+        clearInterval(progress);
+      }
+    }, speed);
+
+    return clearInterval(progress);
+  });
 
   const render = () => {
     if (order) {

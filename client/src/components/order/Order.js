@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { cancelOrder, fetchOrder, fetchUser } from "../../actions";
 import { motion } from "framer-motion";
@@ -19,17 +19,46 @@ const Order = ({
   cancelOrder,
   fetchOrder,
 }) => {
+  const now = new Date().toISOString().split("T")[0];
+  const today = new Date(now);
+
+  const [fetched, setFetched] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(today.toISOString());
+  const [filteredOrders, setFilteredOrders] = useState(null);
+  const dateSelector = useRef(null);
+
+  const handleDateChange = (e) => {
+    const date = new Date(e.target.value);
+    const selectedDate = date.toISOString();
+    setSelectedDate(selectedDate);
+  };
 
   useEffect(() => {
-    if (auth.isSignedIn && !user) {
+    if (auth.isSignedIn) {
       fetchUser(auth.userProfile.FW);
     }
-    if (user) {
-      fetchOrder(auth.userProfile.FW);
+  }, [auth.isSignedIn]);
+
+  useEffect(() => {
+    if (user.fetched) {
+      setFetched(true);
     }
-  }, [auth.isSignedIn, user]);
+  }, [user.fetched]);
+
+  useEffect(() => {
+    if (fetched) {
+      dateSelector.current.value = selectedDate.split("T")[0];
+    }
+  });
+  useEffect(() => {
+    if (!fetched) return null;
+    const filteredOrders = user.currentUser.orders.filter((order) => {
+      return order.date === selectedDate;
+    });
+    setFilteredOrders(filteredOrders);
+  }, [fetched, selectedDate]);
 
   const modalAction = () => {
     return (
@@ -48,26 +77,22 @@ const Order = ({
   };
 
   const renderList = () => {
-    if (!orders) return;
+    if (!filteredOrders) return [];
 
-    const orderArr = cvtObj2Arr(orders);
-
-    return orderArr
-      .reverse()
-      .filter((order) => order.status !== "completed")
-      .map((order, i) => {
-        return (
-          <OrderItem
-            order={order}
-            key={i}
-            setShowModal={setShowModal}
-            setSelectedOrder={setSelectedOrder}
-          />
-        );
-      });
+    return filteredOrders.reverse().map((order, i) => {
+      return (
+        <OrderItem
+          order={order}
+          key={i}
+          setShowModal={setShowModal}
+          setSelectedOrder={setSelectedOrder}
+        />
+      );
+    });
   };
 
   const render = () => {
+    if (!fetched) return null;
     return (
       <>
         <motion.div
@@ -89,6 +114,12 @@ const Order = ({
 
           <PageTitle title="order" />
           <div className="order-container">
+            <input
+              onChange={handleDateChange}
+              ref={dateSelector}
+              style={{ marginTop: "1rem" }}
+              type="date"
+            />
             <div className="order__list">{renderList()}</div>
           </div>
         </motion.div>
@@ -98,11 +129,10 @@ const Order = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, orders, loader }) => {
+const mapStateToProps = ({ auth, user, loader }) => {
   return {
     auth,
-    user: user.currentUser,
-    orders,
+    user,
     loader,
   };
 };

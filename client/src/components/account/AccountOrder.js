@@ -36,7 +36,7 @@ const AccountOrder = ({
 
   const [fetched, setFetched] = useState(false);
   const [selectedDate, setSelectedDate] = useState(today.toISOString());
-  const [orders2, setOrders] = useState(null);
+  const [filteredOrders, setFilteredOrders] = useState(null);
   const dateSelector = useRef(null);
 
   const handleDateChange = (e) => {
@@ -55,13 +55,13 @@ const AccountOrder = ({
     const filteredOrders = cvtObj2Arr(orders).filter((order) => {
       return order.date === selectedDate && order.status === "completed";
     });
-    setOrders(filteredOrders);
+    setFilteredOrders(filteredOrders);
   }, [fetched, selectedDate]);
 
   /////////////////
   const renderList = () => {
-    if (!orders2) return [];
-    return orders2.reverse().map((order, i) => {
+    if (!filteredOrders) return [];
+    return filteredOrders.reverse().map((order, i) => {
       return <OrderItem key={i} order={order} page={"account"} />;
     });
   };
