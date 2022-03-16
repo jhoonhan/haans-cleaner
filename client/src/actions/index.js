@@ -232,15 +232,15 @@ export const driverClearOrder = () => (dispatch) => {
   dispatch({ type: D_CLEAR_ORDER, payload: null });
 };
 
-export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
-  try {
-    const res = await server.patch(`/order/update/${id}`, dataObj);
-    // console.log(`edit order fired`);
-    dispatch({ type: D_EDIT_ACCEPTED_ORDER, payload: res.data.data });
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
+//   try {
+//     const res = await server.patch(`/order/update/${id}`, dataObj);
+//     // console.log(`edit order fired`);
+//     dispatch({ type: D_EDIT_ACCEPTED_ORDER, payload: res.data.data });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 export const driverAcceptOrder = (ids, data) => async (dispatch) => {
   try {

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
 import cvtObj2Arr from "../components/helpers/cvtObj2Arr";
-import { driverSetCoords, driverEditAcceptedOrder } from "../actions";
+import { driverSetCoords } from "../actions";
 
 import markerRed from "../image/marker-red.png";
 import markerBlue from "../image/marker-blue.png";
@@ -267,5 +267,4 @@ const mapStateToProps = ({ auth, user, driver }) => {
 
 export default connect(mapStateToProps, {
   driverSetCoords,
-  driverEditAcceptedOrder,
 })(GoogleMap);

@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { connect } from "react-redux";
 import { motion } from "framer-motion";
-import { signOutRedux, fetchUser, deleteUser } from "../../actions";
-import { editUser } from "../../actions";
 import SavedAddressList from "./SavedAddressList";
 import AddNewAddress from "./AddNewAddress";
 import PageTitle from "../PageTitle";

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 import { signOutRedux, fetchUser, deleteUser } from "../../actions";
-import { editUser } from "../../actions";
 
 import AccountEdit from "./AccountEdit";
 import AccountOrder from "./AccountOrder";
@@ -104,7 +103,6 @@ const mapStateToProps = ({ auth, order, user, form }) => {
 export default connect(mapStateToProps, {
   signOutRedux,
   fetchUser,
-  editUser,
   deleteUser,
 })(Account);
 
