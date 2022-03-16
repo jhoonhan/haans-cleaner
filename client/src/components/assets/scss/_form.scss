@@ -79,6 +79,8 @@
   grid-template-rows: 1fr auto;
   justify-items: center;
 
+  background-color: $background-color;
+
   box-sizing: border-box;
   border: 1px solid $divider-color;
   border-radius: 0rem;

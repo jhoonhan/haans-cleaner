@@ -56,7 +56,7 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
             </div>
 
             <div className="row" style={{ marginTop: "2rem" }}>
-              <button onClick={onSignOutClick} className="button--d">
+              <button onClick={onSignOutClick} className="button--l">
                 Sign Out
               </button>
             </div>

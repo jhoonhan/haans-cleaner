@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const StatusBar = ({ order }) => {
   const progressBar = useRef(null);
@@ -21,8 +22,8 @@ const StatusBar = ({ order }) => {
       if (!order) return;
       progressVal++;
       progressBar.current.style.background = `conic-gradient(
-          #4d5bf9 ${progressVal * 3.6}deg, 
-          #cadcff ${progressVal * 3.6}deg)`;
+          #ffe7b6 ${progressVal * 3.6}deg, 
+          #f0f2e9 ${progressVal * 3.6}deg)`;
 
       if (progressVal === condtProgressVal()) {
         clearInterval(progress);
@@ -42,13 +43,13 @@ const StatusBar = ({ order }) => {
         weekday: "long",
       });
       return (
-        <div ref={progressBar} className="circular-progess">
+        <Link ref={progressBar} to="/order" className="circular-progess">
           <div ref={valueContainer} className="value-container">
             <h4 style={{ textTransform: "uppercase" }}>{order.status}</h4>
             <label>pickup date:</label>
             <p>{date}</p>
           </div>
-        </div>
+        </Link>
       );
     }
     if (!order) {

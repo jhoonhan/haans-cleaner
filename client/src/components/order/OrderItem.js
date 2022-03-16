@@ -98,11 +98,7 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
       return <div>{new Date(order.date).toISOString().split("T")[0]}</div>;
       // return null;
     } else {
-      return (
-        <div>
-          Pick-up Date: {new Date(order.timestamp).toISOString().split("T")[0]}
-        </div>
-      );
+      return <div>{new Date(order.timestamp).toISOString().split("T")[0]}</div>;
     }
   };
 

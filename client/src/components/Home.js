@@ -1,22 +1,76 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import StatusBar from "./StatusBar";
 import OrderItem from "./order/OrderItem";
 import landingBackground from "../image/landingBackground.svg";
+import sunBackground from "../image/sunBackground.svg";
 
 const Home = ({ user }) => {
-  console.log(user.currentUser.orders[0]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const renderStatusBar = () => {
-    if (!user.currentUser.orders[0]) return null;
-    if (user.currentUser.orders[0])
-      return (
-        <div className="landing__order-container">
-          <label>Your most recent order:</label>
-          <StatusBar order={user.currentUser.orders.slice(-1)[0]} />
+  const background = useRef(null);
+  const cloud1 = useRef(null);
+  const cloud2 = useRef(null);
+  const cloud3 = useRef(null);
+  const cloud4 = useRef(null);
+  const sun = useRef(null);
+
+  const handleScroll = () => {
+    const rect = window.scrollY;
+    cloud1.current.style.transform = `translateX(${-rect / 10}px)`;
+    cloud2.current.style.transform = `translateX(${-rect / 7}px)`;
+    cloud3.current.style.transform = `translateX(${rect / 7}px)`;
+    cloud4.current.style.transform = `translateX(${rect / 12}px)`;
+    // sun.current.style.transform = `scale(${rect / 3 + 100}%, ${
+    //   rect / 3 + 100
+    // }%)`;
+    sun.current.style.transform = `translate(-${rect / 5}px, ${rect / 2}px)`;
+  };
+
+  const renderBackground = () => {
+    return (
+      <>
+        <div ref={background} className="background--1">
+          <svg ref={sun} viewBox="0 0 100 100" className="bg__sun bg__element ">
+            <use href={`${sunBackground}#sun--6`}></use>
+            <use href={`${sunBackground}#sun--5`}></use>
+            <use href={`${sunBackground}#sun--4`}></use>
+            <use href={`${sunBackground}#sun--3`}></use>
+            <use href={`${sunBackground}#sun--2`}></use>
+            <use href={`${sunBackground}#sun--1`}></use>
+          </svg>
+          <svg viewBox="0 0 800 400" className="bg__element">
+            <use href={`${landingBackground}#mountain--2`}></use>
+            <use href={`${landingBackground}#mountain--1`}></use>
+          </svg>
+          <svg ref={cloud4} viewBox="0 0 800 400" className="bg__element">
+            <use href={`${landingBackground}#cloud--4`}></use>
+          </svg>
+          <svg ref={cloud3} viewBox="0 0 800 400" className="bg__element">
+            <use href={`${landingBackground}#cloud--3`}></use>
+          </svg>
+          <svg ref={cloud2} viewBox="0 0 800 400" className="bg__element">
+            <use href={`${landingBackground}#cloud--2`}></use>
+          </svg>
+          <svg ref={cloud1} viewBox="0 0 800 400" className="bg__element">
+            <use href={`${landingBackground}#cloud--1`}></use>
+          </svg>
         </div>
-      );
+        <div className="bg__background"></div>
+
+        {/* <div ref={background} className="background--2">
+          <svg viewBox="0 0 800 400" className="bg__element background--2">
+            <use href={`${landingBackground}#lake`}></use>
+            <use href={`${landingBackground}#tree--2`}></use>
+            <use href={`${landingBackground}#tree--1`}></use>
+          </svg>
+        </div> */}
+      </>
+    );
   };
 
   const renderList = () => {
@@ -27,28 +81,8 @@ const Home = ({ user }) => {
   const render = () => {
     return (
       <>
-        <div className="landing__background">
-          <svg viewBox="0 0 800 370" className="background--1">
-            <use href={`${landingBackground}#sun--6`}></use>
-            <use href={`${landingBackground}#sun--5`}></use>
-            <use href={`${landingBackground}#sun--4`}></use>
-            <use href={`${landingBackground}#sun--3`}></use>
-            <use href={`${landingBackground}#sun--2`}></use>
-            <use href={`${landingBackground}#sun--1`}></use>
-            <use href={`${landingBackground}#mountain--2`}></use>
-            <use href={`${landingBackground}#mountain--1`}></use>
-            <use href={`${landingBackground}#cloud--4`}></use>
-            <use href={`${landingBackground}#cloud--3`}></use>
-            <use href={`${landingBackground}#cloud--2`}></use>
-            <use href={`${landingBackground}#cloud--1`}></use>
-          </svg>
+        <div className="landing__background">{renderBackground()}</div>
 
-          <svg viewBox="0 0 800 370" className="background--2">
-            <use href={`${landingBackground}#lake`}></use>
-            <use href={`${landingBackground}#tree--2`}></use>
-            <use href={`${landingBackground}#tree--1`}></use>
-          </svg>
-        </div>
         <div className="landing__container">
           <div className="landing__welcome">
             <h2>Good morning</h2>
@@ -68,9 +102,11 @@ const Home = ({ user }) => {
           <div className="landing__orders">
             <label>your recent orders</label>
             <div className="order__list">{renderList()}</div>
-            <Link className="button--l" to={`/order`}>
-              Your orders
-            </Link>
+            <div className="landing__container__buttons">
+              <Link className="button--l" to={`/order`}>
+                Your orders
+              </Link>
+            </div>
           </div>
         </div>
       </>

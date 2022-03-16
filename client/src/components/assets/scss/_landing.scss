@@ -9,7 +9,7 @@
   align-items: center;
   gap: 2rem;
 
-  margin-top: 15vh;
+  margin-top: 20vh;
   margin-bottom: 4rem;
 
   z-index: 1;
@@ -28,10 +28,10 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 .landing__container__buttons {
-  width: 100%;
+  // width: 100%;
 
   display: flex;
   flex-direction: column;
@@ -63,10 +63,11 @@
   position: relative;
   width: 60%;
   aspect-ratio: 1 /1;
-  background-color: #cadcff;
+  // background-color: #c6e5f0;
   border-radius: 50%;
   display: grid;
   place-items: center;
+  box-shadow: 0px 7px 5px $shaodw-color;
 }
 .circular-progess:before {
   content: "";
@@ -75,6 +76,7 @@
   width: 84%;
   background-color: white;
   border-radius: 50%;
+  box-shadow: 0px 0px 10px $shaodw-color;
   // top: 0.8rem;
   // left: 0.8rem;
 }
@@ -109,12 +111,33 @@
 }
 
 .background--1 {
-  position: absolute;
+  position: relative;
+  width: 100%;
   top: 0;
   left: 0;
+  aspect-ratio: 2/1;
+
+  background-color: $accent-color;
 }
 .background--2 {
   position: absolute;
-  bottom: 15vh;
+  width: 100%;
+  bottom: 5vh;
+  left: 0;
+}
+
+.bg__element {
+  position: absolute;
+}
+.bg__background {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: -2rem;
+  background-color: $background-secondary;
+}
+.bg__sun {
+  width: 150%;
+  top: -100%;
   left: 0;
 }
