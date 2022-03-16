@@ -128,7 +128,8 @@ export const deleteUser = (id) => async (dispatch) => {
 //////////////////// ORDER
 export const fetchOrder = (googleId) => async (dispatch) => {
   try {
-    const res = await server.get(`/order/get/${googleId}`);
+    const res = await server.get(`/user/order/${googleId}`);
+    console.log(res.data.data);
 
     dispatch({ type: FETCH_ORDER, payload: res.data.data });
   } catch (error) {
@@ -250,7 +251,7 @@ export const driverAcceptOrder = (ids, data) => async (dispatch) => {
     if (res.data.data.status === "submitted") {
       const res = await server.patch(`/order/update/${orderId}`, data);
       await server.patch(
-        `/user/update/accept/${customerId}/${driverId}/${orderId}`,
+        `/user/update/accepted/${customerId}/${driverId}/${orderId}`,
         data
       );
       dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
@@ -265,7 +266,10 @@ export const driverAcceptOrder = (ids, data) => async (dispatch) => {
         acceptId: null,
         acceptDate: null,
       });
-
+      await server.patch(
+        `/user/update/submitted/${customerId}/${driverId}/${orderId}`,
+        data
+      );
       dispatch({
         type: D_CANCEL_ORDER,
         payload: { ...res.data.data, acceptId: null },
@@ -302,7 +306,7 @@ export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
           acceptId: data.acceptId,
         });
         const res1 = await server.patch(
-          `/user/update/complete/${customerId}/${driverId}/${orderId}`,
+          `/user/update/completed/${customerId}/${driverId}/${orderId}`,
           data
         );
         if (res.status === 200 && res1.status === 200) {

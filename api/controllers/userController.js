@@ -17,6 +17,7 @@ exports.test = factory.test(User);
 exports.updateUserOrder = () =>
   catchAsync(async (req, res, next) => {
     let driverData = {};
+
     if (req.params.type === "complete") {
       const driverQuery = User.findByIdAndUpdate(
         req.params.driverId,
@@ -32,9 +33,7 @@ exports.updateUserOrder = () =>
       { _id: req.params.customerId, "orders._id": req.params.orderId },
       {
         $set: {
-          "orders.$.status": `${
-            req.params.type === "complete" ? "completed" : "accepted"
-          }`,
+          "orders.$.status": req.params.type,
         },
       },
       { new: true }
@@ -87,4 +86,15 @@ exports.deleteUserOrder = () =>
       customerData,
     });
     return;
+  });
+
+exports.getUserOrders = () =>
+  catchAsync(async (req, res, next) => {
+    const query = User.findOne({ googleId: req.params.googleId });
+    const data = await query;
+
+    res.status(200).json({
+      status: "success",
+      data: data.orders,
+    });
   });

@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import StatusBar from "./StatusBar";
-import { fetchOrder } from "../actions";
 
 const Home = ({ user }) => {
   console.log(user.currentUser.orders[0]);
@@ -46,5 +45,5 @@ const mapStateToProps = ({ auth, user }) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchOrder })(Home);
+export default connect(mapStateToProps)(Home);
 //

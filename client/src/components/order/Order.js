@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { cancelOrder, fetchOrder, fetchUser } from "../../actions";
+import { cancelOrder, fetchUser, fetchOrder } from "../../actions";
 import { motion } from "framer-motion";
 
 import OrderItem from "./OrderItem";
@@ -38,6 +38,7 @@ const Order = ({
   useEffect(() => {
     if (auth.isSignedIn) {
       fetchUser(auth.userProfile.FW);
+      fetchOrder(auth.userProfile.FW);
     }
   }, [auth.isSignedIn]);
 
@@ -54,11 +55,12 @@ const Order = ({
   });
   useEffect(() => {
     if (!fetched) return null;
-    const filteredOrders = orders.filter((order) => {
+    const orderArr = cvtObj2Arr(orders);
+    const filteredOrders = orderArr.filter((order) => {
       return order.date === selectedDate;
     });
     setFilteredOrders(filteredOrders);
-  }, [fetched, selectedDate]);
+  }, [fetched, orders, selectedDate]);
 
   const modalAction = () => {
     return (
@@ -129,15 +131,15 @@ const Order = ({
   return render();
 };
 
-const mapStateToProps = ({ auth, user, loader }) => {
+const mapStateToProps = ({ auth, user, orders, loader }) => {
   return {
     auth,
     user,
     loader,
-    orders: user.currentUser?.orders,
+    orders,
   };
 };
 
-export default connect(mapStateToProps, { fetchOrder, fetchUser, cancelOrder })(
+export default connect(mapStateToProps, { fetchUser, cancelOrder, fetchOrder })(
   Order
 );

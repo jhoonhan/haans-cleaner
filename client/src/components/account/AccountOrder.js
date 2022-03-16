@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
 
-import { fetchOrder, fetchUser } from "../../actions";
+import { fetchUser } from "../../actions";
 import OrderItem from "../order/OrderItem";
 import PageTitle from "../PageTitle";
 
@@ -104,6 +104,4 @@ const mapStateToProps = ({ auth, user }) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUser, fetchOrder })(
-  AccountOrder
-);
+export default connect(mapStateToProps, { fetchUser })(AccountOrder);

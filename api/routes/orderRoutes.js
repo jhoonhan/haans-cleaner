@@ -12,7 +12,6 @@ router.post("/geocode", orderController.getGeocode);
 router.get("/getall", orderController.getAll);
 router.get("/driversearch/:type/:acceptId", orderController.getDriverOrder());
 router.get("/:id", orderController.getOne);
-router.get("/get/:googleId", orderController.getByGoogleId);
 
 router.patch("/update/:id", orderController.update);
 // router.patch("/accept/:id", orderController.acceptOrder());
