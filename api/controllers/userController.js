@@ -18,7 +18,7 @@ exports.updateUserOrder = () =>
   catchAsync(async (req, res, next) => {
     let driverData = {};
 
-    if (req.params.type === "complete") {
+    if (req.params.type === "completed") {
       const driverQuery = User.findByIdAndUpdate(
         req.params.driverId,
         { $addToSet: { completedOrders: req.body } },

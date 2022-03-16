@@ -180,7 +180,6 @@ export const cancelOrder = (order, callback) => async (dispatch, getState) => {
     const res = await _loadingApiCall(fn, dispatch);
 
     if (res[0].status === 200 && res[1].status === 200) {
-      console.log(`aaang`);
       dispatch({ type: CANCEL_USER_ORDER, payload: orders });
       dispatch({ type: CANCEL_ORDER, payload: order._id });
     }
