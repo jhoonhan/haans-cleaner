@@ -22,7 +22,6 @@ const DriverOrderItem = (props) => {
       customerId: props.order.userId,
     };
     if (btnLoading) {
-      console.log(`no double click you moron`);
       return;
     }
 
@@ -64,7 +63,7 @@ const DriverOrderItem = (props) => {
       props.setShowModal(true);
       props.setSelectedOrder(props.order);
     } else {
-      console.log(`Wait for God's calling`);
+      return;
     }
   };
   //////////
@@ -176,57 +175,7 @@ const DriverOrderItem = (props) => {
       </div>
     );
   };
-  // const onAccept2 = async (id, type) => {
-  //   if (btnLoading) {
-  //     console.log(`no double click you moron`);
-  //     return;
-  //   }
-  //   setBtnLoading(true);
 
-  //   if (props.order.status === "completed") {
-  //     window.alert("this is already completed");
-  //   }
-
-  //   if (props.order.status === "submitted") {
-  //     // setOrderStatus("accepted");
-  //     await props.driverAcceptOrder(id, {
-  //       status: "accepted",
-  //       acceptId: props.auth.userProfile.FW,
-  //       acceptDate: new Date().toISOString().split("T")[0],
-  //     });
-  //   }
-  //   if (props.order.status === "accepted") {
-  //     // setOrderStatus("submitted");
-  //     await props.driverAcceptOrder(id, {
-  //       status: "submitted",
-  //       acceptId: props.auth.userProfile.FW,
-  //       acceptDate: null,
-  //     });
-  //   }
-  //   setBtnLoading(false);
-  // };
-  // const renderSearchButtons2 = () => {
-  //   const buttonColor = () => {
-  //     if (btnLoading) return "button--disabled";
-  //     if (props.order.status === "submitted") return "button--active";
-  //     if (props.order.status === "accepted") return "button--cancel";
-  //   };
-  //   const statusMessage = () => {
-  //     if (btnLoading) return "loading";
-  //     if (props.order.status === "submitted") return "accept";
-  //     if (props.order.status === "accepted") return "cancel";
-  //   };
-  //   return (
-  //     <div className="driver__order__button__container2">
-  //       <button
-  //         onClick={() => onAccept2(props.order._id)}
-  //         className={`button--f ${buttonColor()}`}
-  //       >
-  //         {statusMessage()}
-  //       </button>
-  //     </div>
-  //   );
-  // };
   const renderAcceptButtons = () => {
     const buttonColor = () => {
       if (props.order.status === "completed") return "button--disabled";

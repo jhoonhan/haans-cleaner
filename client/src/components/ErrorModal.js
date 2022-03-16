@@ -7,7 +7,6 @@ const ErrorModal = () => {
 
   const render = () => {
     if (!errorData.hasError) return null;
-    console.log(errorData);
 
     return ReactDOM.createPortal(
       <div className="error-container">

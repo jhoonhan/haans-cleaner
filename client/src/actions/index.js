@@ -94,7 +94,6 @@ export const fetchUser = (googleId) => async (dispatch, getState) => {
     const res = await server.get(`/user/get/${googleId}`);
     dispatch({ type: FETCH_USER, payload: res.data.data[0] });
     // history.push("/");
-    console.log(`user fetched`);
   } catch (error) {
     console.error(error);
     dispatch({ type: ERROR_HTTP, error });
@@ -126,7 +125,6 @@ export const deleteUser = (id) => async (dispatch) => {
 export const fetchOrder = (googleId) => async (dispatch) => {
   try {
     const res = await server.get(`/user/order/${googleId}`);
-    console.log(res.data.data);
 
     dispatch({ type: FETCH_ORDER, payload: res.data.data });
   } catch (error) {
@@ -201,7 +199,7 @@ export const driverFetchOrder = (query) => async (dispatch) => {
     });
     return res;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     dispatch({ type: ERROR_HTTP, error });
   }
 };
@@ -220,7 +218,6 @@ export const driverFetchAccepted =
       return res;
     } catch (error) {
       console.error(error);
-      console.log(`aaang`);
       dispatch({ type: ERROR_HTTP, payload: error });
     }
   };
@@ -228,16 +225,6 @@ export const driverFetchAccepted =
 export const driverClearOrder = () => (dispatch) => {
   dispatch({ type: D_CLEAR_ORDER, payload: null });
 };
-
-// export const driverEditAcceptedOrder = (dataObj, id) => async (dispatch) => {
-//   try {
-//     const res = await server.patch(`/order/update/${id}`, dataObj);
-//     // console.log(`edit order fired`);
-//     dispatch({ type: D_EDIT_ACCEPTED_ORDER, payload: res.data.data });
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 
 export const driverAcceptOrder = (ids, data) => async (dispatch) => {
   try {
@@ -328,11 +315,9 @@ export const driverSetCoords = (coords) => (dispatch) => {
 };
 
 export const getGeocode = (address, id) => async (dispatch) => {
-  const res = await server.get(`/geocode/${id}`, address);
-  console.log(res);
+  await server.get(`/geocode/${id}`, address);
 };
 
 export const getDistance = (address, id) => async (dispatch) => {
-  const res = await server.get(`/geocode/${id}`, address);
-  console.log(res);
+  await server.get(`/geocode/${id}`, address);
 };

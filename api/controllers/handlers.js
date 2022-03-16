@@ -79,8 +79,3 @@ exports.delete = (Model) =>
       data,
     });
   });
-
-exports.test = (Model) =>
-  catchAsync(async (req, res, next) => {
-    console.log(`aaang`);
-  });

@@ -29,7 +29,6 @@ const useOrderSearch = (
     };
 
     const fetchData = async () => {
-      console.log(`fetching data`);
       const res = await driverFetchOrder(query);
       return res;
     };
@@ -43,7 +42,6 @@ const useOrderSearch = (
       })
       .catch((e) => {
         setError(true);
-        console.log(e);
       });
   }, [readyForSearch, coords, selectedDate, pageNumber]);
 

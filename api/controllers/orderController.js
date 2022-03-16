@@ -25,7 +25,6 @@ exports.getDriverOrder = () =>
 
     const results = {};
 
-    // console.log(startDate);
     if (req.params.type === "search") {
       query = Order.find({
         $or: [

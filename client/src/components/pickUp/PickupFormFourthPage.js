@@ -98,7 +98,6 @@ const PickupFormFourthPage = (props) => {
     const totalCalculated = Number(
       Math.round((preSubtotal + +tax) * 100) / 100
     ).toFixed(2);
-    console.log(totalCalculated);
     setTotal({ subtotal, total: totalCalculated, tax });
   };
 

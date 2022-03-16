@@ -12,8 +12,6 @@ exports.update = factory.update(User);
 
 exports.delete = factory.delete(User);
 
-exports.test = factory.test(User);
-
 exports.updateUserOrder = () =>
   catchAsync(async (req, res, next) => {
     let driverData = {};

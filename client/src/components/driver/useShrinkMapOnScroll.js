@@ -13,17 +13,14 @@ const useShrinkMapOnScroll = (
   const [scroll, setScroll] = useState(false);
 
   useEffect(() => {
-    console.log(`UE 1`);
     if (!fetched) return;
     if (
       page === "search" &&
       cvtObj2Arr(driver.orders).filter((order) => order.status !== "completed")
         .length < 3
     ) {
-      console.log(`set event FALSE`);
       setScroll(false);
     } else {
-      console.log(`set event TRUE`);
       setScroll(true);
     }
     if (page === "accepted" && cvtObj2Arr(driver.acceptedOrders).length < 3) {
@@ -32,7 +29,6 @@ const useShrinkMapOnScroll = (
   }, [fetched, driver.orders, driver.acceptedOrders]);
 
   useEffect(() => {
-    console.log(`UE 2`);
     if (!fetched) return;
 
     if (scroll) {
@@ -43,7 +39,6 @@ const useShrinkMapOnScroll = (
       setMapClass("mapInitRatio");
     }
     return () => {
-      console.log(`unmounted`);
       window.removeEventListener("scroll", handleScroll);
     };
   }, [scroll]);

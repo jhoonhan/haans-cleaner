@@ -5,7 +5,7 @@ const StatusBar = ({ order }) => {
   const progressBar = useRef(null);
   const valueContainer = useRef(null);
   let progressVal = 0;
-  const speed = 7;
+  const speed = 20;
 
   const condtProgressVal = () => {
     if (!order) return 0;
@@ -31,7 +31,7 @@ const StatusBar = ({ order }) => {
     }, speed);
 
     return () => {
-      console.log(`status bar unmounted`);
+      clearInterval(progress);
     };
   });
 

@@ -38,7 +38,6 @@ const GoogleMap = ({ orders, driver, page, mapClass }) => {
       zoom: 11,
       disableDefaultUI: true,
     });
-    console.log(`map loaded`);
     setLoadedMap(map);
 
     const currentLocation = new window.google.maps.Marker({

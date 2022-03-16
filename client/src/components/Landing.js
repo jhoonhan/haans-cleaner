@@ -8,7 +8,6 @@ import SignInInitial from "./signIn/SignInInitial";
 
 const Landing = ({ isSignedIn }) => {
   const render = () => {
-    console.log(`landing rendered`);
     return (
       <motion.div
         initial={{ opacity: 0 }}
