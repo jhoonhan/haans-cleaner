@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { motion } from "framer-motion";
-import { signOutRedux, fetchUser, deleteUser } from "../../actions";
+import { signOutRedux, fetchUser } from "../../actions";
 
 import AccountEdit from "./AccountEdit";
 import AccountOrder from "./AccountOrder";
@@ -103,7 +103,6 @@ const mapStateToProps = ({ auth, order, user, form }) => {
 export default connect(mapStateToProps, {
   signOutRedux,
   fetchUser,
-  deleteUser,
 })(Account);
 
 // class Morpheus extends Component {

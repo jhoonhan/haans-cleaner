@@ -122,9 +122,6 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 };
 
-//
-//
-//
 //////////////////// ORDER
 export const fetchOrder = (googleId) => async (dispatch) => {
   try {
