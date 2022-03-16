@@ -13,6 +13,7 @@ import {
   CREATE_USER,
   EDIT_USER,
   DELETE_USER,
+  CANCEL_USER_ORDER,
   MOUNT_USER,
   D_FETCH_ORDER,
   D_CLEAR_ORDER,
@@ -151,7 +152,6 @@ export const createOrder = (data) => async (dispatch, getState) => {
     const res = await _loadingApiCall(fn, dispatch);
 
     dispatch({ type: CREATE_ORDER, payload: res.data.data.data });
-
     dispatch(reset("clothes"));
     dispatch(reset("pickup"));
 
@@ -163,18 +163,27 @@ export const createOrder = (data) => async (dispatch, getState) => {
   }
 };
 
-export const cancelOrder = (order, callback) => async (dispatch) => {
+export const cancelOrder = (order, callback) => async (dispatch, getState) => {
   try {
-    const res = await _loadingApiCall(
-      () => server.delete(`/order/delete/${order._id}`),
-      dispatch
+    const fn = async () => {
+      const res = await server.delete(`/order/delete/${order._id}`);
+      const res1 = await server.patch(
+        `user/delete/${order.userId}/${order._id}`
+      );
+      return [res, res1];
+    };
+
+    const orders = getState().user.currentUser.orders.filter(
+      (orderEl) => orderEl._id !== order._id
     );
-    if (res.status === 200) {
+    const res = await _loadingApiCall(fn, dispatch);
+
+    if (res[0].status === 200 && res[1].status === 200) {
+      console.log(`aaang`);
+      dispatch({ type: CANCEL_USER_ORDER, payload: orders });
       dispatch({ type: CANCEL_ORDER, payload: order._id });
     }
-    if (res.status !== 200) {
-      window.alert("error");
-    }
+
     callback(false);
   } catch (error) {
     console.error(error);

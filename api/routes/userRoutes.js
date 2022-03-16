@@ -9,6 +9,7 @@ router.patch(
   "/update/:type/:customerId/:driverId/:orderId",
   userController.updateUserOrder()
 );
+router.patch("/delete/:customerId/:orderId", userController.deleteUserOrder());
 
 router.get("/getall", userController.getAll);
 router.get("/:id", userController.getOne);

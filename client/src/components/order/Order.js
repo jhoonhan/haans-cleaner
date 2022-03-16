@@ -54,7 +54,7 @@ const Order = ({
   });
   useEffect(() => {
     if (!fetched) return null;
-    const filteredOrders = user.currentUser.orders.filter((order) => {
+    const filteredOrders = orders.filter((order) => {
       return order.date === selectedDate;
     });
     setFilteredOrders(filteredOrders);
@@ -134,6 +134,7 @@ const mapStateToProps = ({ auth, user, loader }) => {
     auth,
     user,
     loader,
+    orders: user.currentUser?.orders,
   };
 };
 

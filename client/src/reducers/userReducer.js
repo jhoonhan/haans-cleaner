@@ -8,6 +8,8 @@ import {
   DELETE_USER,
   MOUNT_USER,
   D_GET_COORDS,
+  CREATE_ORDER,
+  CANCEL_USER_ORDER,
 } from "../actions/types";
 
 const reducer = (state = { fetched: false, currentUser: null }, action) => {
@@ -35,6 +37,22 @@ const reducer = (state = { fetched: false, currentUser: null }, action) => {
             ...state.currentUser.defaultAddress,
             coords: action.payload,
           },
+        },
+      };
+    case CREATE_ORDER:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          orders: [...state.currentUser.orders, action.payload],
+        },
+      };
+    case CANCEL_USER_ORDER:
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          orders: action.payload,
         },
       };
     default:

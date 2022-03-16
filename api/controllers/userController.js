@@ -68,3 +68,23 @@ exports.createUserOrder = () =>
       data,
     });
   });
+
+exports.deleteUserOrder = () =>
+  catchAsync(async (req, res, next) => {
+    const customerQuery = User.findOneAndUpdate(
+      { _id: req.params.customerId },
+      {
+        $pull: {
+          orders: { _id: req.params.orderId },
+        },
+      },
+      { new: true }
+    );
+    const customerData = await customerQuery;
+
+    res.status(200).json({
+      status: "success",
+      customerData,
+    });
+    return;
+  });
