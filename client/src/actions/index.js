@@ -226,10 +226,12 @@ export const driverClearOrder = () => (dispatch) => {
   dispatch({ type: D_CLEAR_ORDER, payload: null });
 };
 
-export const driverAcceptOrder = (ids, data) => async (dispatch) => {
+export const driverAcceptOrder = (ids, data, source) => async (dispatch) => {
   try {
     const { orderId, driverId, customerId } = ids;
-    const res = await server.get(`/order/${orderId}`);
+    const res = await server.get(`/order/${orderId}`, {
+      cancelToken: source.token,
+    });
 
     if (res.data.data.status === "submitted") {
       const res = await server.patch(`/order/update/${orderId}`, data);

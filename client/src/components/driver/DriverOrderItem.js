@@ -1,5 +1,6 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Loader } from "@googlemaps/js-api-loader";
 import Modal from "../Modal";
@@ -14,6 +15,14 @@ const DriverOrderItem = (props) => {
   const refDetail = React.useRef(null);
   const refBand = React.useRef(null);
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
+  const source = axios.CancelToken.source();
+
+  useEffect(() => {
+    return () => {
+      console.log(`order item unmounted`);
+      source.cancel();
+    };
+  }, []);
 
   const onAccept = async (type) => {
     const ids = {
@@ -36,11 +45,15 @@ const DriverOrderItem = (props) => {
 
     if (props.order.status === "submitted") {
       // setOrderStatus("accepted");
-      await props.driverAcceptOrder(ids, {
-        status: "accepted",
-        acceptId: props.auth.userProfile.FW,
-        acceptDate: new Date().toISOString().split("T")[0],
-      });
+      await props.driverAcceptOrder(
+        ids,
+        {
+          status: "accepted",
+          acceptId: props.auth.userProfile.FW,
+          acceptDate: new Date().toISOString().split("T")[0],
+        },
+        source
+      );
     }
     if (props.order.status === "accepted") {
       // setOrderStatus("submitted");
