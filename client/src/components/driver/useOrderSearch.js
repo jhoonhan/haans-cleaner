@@ -35,7 +35,7 @@ const useOrderSearch = (
 
     fetchData()
       .then((res) => {
-        if (res.status === 200) {
+        if (res.status === 200 && loading) {
           setHasMore(res.data.totalResults >= 5);
           setLoading(false);
         }
@@ -43,6 +43,7 @@ const useOrderSearch = (
       .catch((e) => {
         setError(true);
       });
+    return () => setLoading(false);
   }, [readyForSearch, coords, selectedDate, pageNumber]);
 
   useEffect(() => {

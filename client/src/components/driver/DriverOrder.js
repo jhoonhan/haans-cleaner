@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 import {
   driverFetchOrder,
   driverFetchAccepted,
@@ -42,6 +43,7 @@ const DriverOrder = ({
   loader,
 }) => {
   const [fetched, setFetched] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [readyForSearch, setReadyForSearch] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
@@ -56,14 +58,17 @@ const DriverOrder = ({
   );
   const [pageNumber, setPageNumber] = useState(1);
 
+  const cancelToken = axios.CancelToken.source();
   ////////////////
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
   ////////
+
   useGeolocation(driver, driverSetCoords);
 
   ///
   useEffect(() => {
+    let mounted = true;
     if (!user.fetched && auth.isSignedIn) {
       fetchUser(auth.userProfile.FW);
     }
@@ -77,6 +82,7 @@ const DriverOrder = ({
         driver.currentCoords
       );
     }
+    return () => (mounted = false);
   }, [auth.isSignedIn, user.fetched]);
 
   useEffect(() => {
