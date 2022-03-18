@@ -32,6 +32,7 @@ const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
 
 export const cancelCall = () => async () => source.cancel;
+// Cancel token!?!?
 
 /// Helpers
 const _loadingApiCall = async (fn, dispatch) => {
