@@ -1,6 +1,7 @@
 import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
+import { Axios } from "axios";
 
 import {
   LOADING_TOGGLE_ACTION,
@@ -25,6 +26,9 @@ import {
   D_CANCEL_ORDER,
   ERROR_HTTP,
 } from "./types";
+
+// Cancel token
+const cancelToken = Axios.CancelToken.source();
 
 /// Helpers
 const _loadingApiCall = async (fn, dispatch) => {
