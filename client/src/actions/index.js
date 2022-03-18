@@ -1,7 +1,7 @@
 import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
-import { Axios } from "axios";
+import axios from "axios";
 
 import {
   LOADING_TOGGLE_ACTION,
@@ -28,7 +28,10 @@ import {
 } from "./types";
 
 // Cancel token
-const cancelToken = Axios.CancelToken.source();
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
+
+export const cancelCall = () => async () => source.cancel;
 
 /// Helpers
 const _loadingApiCall = async (fn, dispatch) => {
@@ -195,7 +198,8 @@ export const driverFetchOrder = (query) => async (dispatch) => {
   try {
     const { acceptId, type, coords, selectedDate, pageNumber } = query;
     const res = await server.get(
-      `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`
+      `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`,
+      { cancelToken: source.token }
     );
     dispatch({
       type: D_FETCH_ORDER,
@@ -233,9 +237,7 @@ export const driverClearOrder = () => (dispatch) => {
 export const driverAcceptOrder = (ids, data, source) => async (dispatch) => {
   try {
     const { orderId, driverId, customerId } = ids;
-    const res = await server.get(`/order/${orderId}`, {
-      cancelToken: source.token,
-    });
+    const res = await server.get(`/order/${orderId}`);
 
     if (res.data.data.status === "submitted") {
       const res = await server.patch(`/order/update/${orderId}`, data);
