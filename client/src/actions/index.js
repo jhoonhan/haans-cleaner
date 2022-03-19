@@ -29,10 +29,14 @@ import {
 } from "./types";
 
 // Cancel token
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+const source = axios.CancelToken.source();
+const cancelController = new AbortController();
+const cancelSignal = cancelController.signal;
 
-export const cancelCall = () => async () => source.cancel;
+export const cancelCall = () => {
+  console.log(`cancel fired`);
+  return {};
+};
 // Cancel token!?!?
 
 /// Helpers
@@ -200,8 +204,7 @@ export const driverFetchOrder = (query) => async (dispatch) => {
   try {
     const { acceptId, type, coords, selectedDate, pageNumber } = query;
     const res = await server.get(
-      `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`,
-      { cancelToken: source.token }
+      `/order/driversearch/${type}/${acceptId}?lat=${coords.lat}&lng=${coords.lng}&date=${selectedDate}&page=${pageNumber}&limit=5`
     );
     dispatch({
       type: D_FETCH_ORDER,
@@ -236,53 +239,59 @@ export const driverClearOrder = () => (dispatch) => {
   dispatch({ type: D_CLEAR_ORDER, payload: null });
 };
 
-export const driverAcceptOrder = (ids, data, source) => async (dispatch) => {
-  try {
-    const { orderId, driverId, customerId } = ids;
-    const res = await server.get(`/order/${orderId}`);
-
-    if (res.data.data.status === "submitted") {
-      const res = await server.patch(`/order/update/${orderId}`, data);
-      await server.patch(
-        `/user/update/accepted/${customerId}/${driverId}/${orderId}`,
-        data
-      );
-      dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
-    }
-
-    if (
-      res.data.data.status === "accepted" &&
-      res.data.data.acceptId === data.acceptId
-    ) {
-      const res = await server.patch(`/order/update/${orderId}`, {
-        ...data,
-        acceptId: null,
-        acceptDate: null,
+export const driverAcceptOrder =
+  (ids, data, source) => async (dispatch, getState) => {
+    try {
+      const { orderId, driverId, customerId } = ids;
+      const res = await server.get(`/order/${orderId}`, {
+        signal: cancelSignal,
       });
-      await server.patch(
-        `/user/update/submitted/${customerId}/${driverId}/${orderId}`,
-        data
-      );
-      dispatch({
-        type: D_CANCEL_ORDER,
-        payload: { ...res.data.data, acceptId: null },
-      });
+
+      if (res.data.data.status === "submitted") {
+        const res = await server.patch(`/order/update/${orderId}`, data, {
+          signal: cancelSignal,
+        });
+        await server.patch(
+          `/user/update/accepted/${customerId}/${driverId}/${orderId}`,
+          data
+        );
+
+        dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
+      }
+
+      if (
+        res.data.data.status === "accepted" &&
+        res.data.data.acceptId === data.acceptId
+      ) {
+        const res = await server.patch(`/order/update/${orderId}`, {
+          ...data,
+          acceptId: null,
+          acceptDate: null,
+        });
+        await server.patch(
+          `/user/update/submitted/${customerId}/${driverId}/${orderId}`,
+          data
+        );
+        dispatch({
+          type: D_CANCEL_ORDER,
+          payload: { ...res.data.data, acceptId: null },
+        });
+      }
+      //
+      if (res.data.data.status === "completed") {
+        window.alert("error");
+      }
+      if (
+        res.data.status === "accepted" &&
+        res.data.data.acceptId !== data.acceptId
+      ) {
+        window.alert(`order is accepted by other driver`);
+      }
+    } catch (error) {
+      console.error(error);
+      dispatch({ type: ERROR_HTTP, error });
     }
-    //
-    if (res.data.data.status === "completed") {
-      window.alert("error");
-    }
-    if (
-      res.data.status === "accepted" &&
-      res.data.data.acceptId !== data.acceptId
-    ) {
-      window.alert(`order is accepted by other driver`);
-    }
-  } catch (error) {
-    console.error(error);
-    dispatch({ type: ERROR_HTTP, error });
-  }
-};
+  };
 
 export const driverCompeleteOrder = (ids, data) => async (dispatch) => {
   try {

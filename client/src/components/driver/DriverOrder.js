@@ -9,7 +9,9 @@ import {
   driverSetCoords,
   fetchUser,
   cancelOrder,
+  cancelCall,
 } from "../../actions";
+import { LEAK } from "../../actions/types";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "../../apis/GoogleMap";
 
@@ -34,6 +36,7 @@ const DriverOrder = ({
   driverCompeleteOrder,
   driverClearOrder,
   driverSetCoords,
+
   driver,
   fetchUser,
   cancelOrder,
@@ -41,6 +44,7 @@ const DriverOrder = ({
   zoom,
   match,
   loader,
+  cancelCall,
 }) => {
   const [fetched, setFetched] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -66,9 +70,12 @@ const DriverOrder = ({
 
   useGeolocation(driver, driverSetCoords);
 
+  const abortCalls = () => {
+    cancelCall();
+  };
+
   ///
   useEffect(() => {
-    let mounted = true;
     if (!user.fetched && auth.isSignedIn) {
       fetchUser(auth.userProfile.FW);
     }
@@ -82,7 +89,7 @@ const DriverOrder = ({
         driver.currentCoords
       );
     }
-    return () => (mounted = false);
+    return () => console.log(`item unmounted`);
   }, [auth.isSignedIn, user.fetched]);
 
   useEffect(() => {
@@ -325,6 +332,7 @@ const DriverOrder = ({
             </Wrapper>
           </div>
           <div className="order-container">
+            <button onClick={abortCalls}>aaang</button>
             <DriverDateSelector
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
@@ -357,4 +365,5 @@ export default connect(mapStateToProps, {
   driverSetCoords,
   fetchUser,
   cancelOrder,
+  cancelCall,
 })(DriverOrder);

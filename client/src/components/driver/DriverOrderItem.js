@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-import {
-  driverAcceptOrder,
-  driverCompeleteOrder,
-  cancelCall,
-} from "../../actions";
+import { driverAcceptOrder, driverCompeleteOrder } from "../../actions";
 
 import price from "../price";
 
@@ -15,13 +11,6 @@ const DriverOrderItem = (props) => {
   const refDetail = React.useRef(null);
   const refBand = React.useRef(null);
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
-
-  useEffect(() => {
-    return () => {
-      console.log(`order item unmounted`);
-      props.cancelCall();
-    };
-  }, []);
 
   const onAccept = async (type) => {
     const ids = {
@@ -273,5 +262,4 @@ const mapStateToProps = ({ auth, user, driver }) => {
 export default connect(mapStateToProps, {
   driverAcceptOrder,
   driverCompeleteOrder,
-  cancelCall,
 })(DriverOrderItem);
