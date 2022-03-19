@@ -25,6 +25,7 @@ import {
   D_SET_COORDS,
   D_CANCEL_ORDER,
   ERROR_HTTP,
+  LEAK,
 } from "./types";
 
 // Cancel token

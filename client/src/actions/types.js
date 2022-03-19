@@ -36,3 +36,4 @@ export const D_COMPLETE_ORDER = "D_COMPLETE_ORDER";
 export const D_CLEAR_ORDER = "D_CLEAR_ORDER";
 
 export const ERROR_HTTP = "ERROR_HTTP";
+export const LEAK = "LEAK";
