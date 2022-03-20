@@ -76,6 +76,13 @@ const DriverOrder = ({
 
   ///
   useEffect(() => {
+    return () => {
+      console.log(`cancelling`);
+      cancelCall();
+    };
+  }, []);
+
+  useEffect(() => {
     if (!user.fetched && auth.isSignedIn) {
       fetchUser(auth.userProfile.FW);
     }
