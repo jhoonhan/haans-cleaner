@@ -68,14 +68,8 @@ const DriverOrder = ({
 
   useGeolocation(driver, driverSetCoords);
 
-  const abortCalls = () => {
-    cancelCall();
-  };
-  //
-  ///
   useEffect(() => {
     return () => {
-      console.log(`cancelling`);
       cancelCall();
     };
   }, []);
@@ -94,7 +88,6 @@ const DriverOrder = ({
         driver.currentCoords
       );
     }
-    return () => console.log(`item unmounted`);
   }, [auth.isSignedIn, user.fetched]);
 
   useEffect(() => {
@@ -337,7 +330,6 @@ const DriverOrder = ({
             </Wrapper>
           </div>
           <div className="order-container">
-            <button onClick={abortCalls}>aaang</button>
             <DriverDateSelector
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
