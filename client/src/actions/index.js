@@ -28,15 +28,15 @@ import {
   LEAK,
 } from "./types";
 
-// Cancel token
+// Abort
 let cancelController;
 
 export const cancelCall = () => (dispatch) => {
+  if (!cancelController) return;
   cancelController.abort();
   dispatch({ type: LEAK, payload: true });
   return;
 };
-// Cancel token!?!?
 
 /// Helpers
 const _loadingApiCall = async (fn, dispatch) => {

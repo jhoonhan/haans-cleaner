@@ -47,7 +47,6 @@ const DriverOrder = ({
   cancelCall,
 }) => {
   const [fetched, setFetched] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [readyForSearch, setReadyForSearch] = useState(false);
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
@@ -62,7 +61,6 @@ const DriverOrder = ({
   );
   const [pageNumber, setPageNumber] = useState(1);
 
-  const cancelToken = axios.CancelToken.source();
   ////////////////
   const googleMapWrapper = useRef(null);
   const headerRef = useRef(null);
