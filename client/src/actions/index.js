@@ -240,24 +240,21 @@ export const driverClearOrder = () => (dispatch) => {
 
 export const driverAcceptOrder = (ids, data) => async (dispatch) => {
   try {
-    const { orderId, driverId, customerId } = ids;
     cancelController = new AbortController();
+    const { orderId, driverId, customerId } = ids;
     const signal = cancelController.signal;
     const res = await server.get(`/order/${orderId}`, {
       signal,
     });
 
     if (res.data.data.status === "submitted") {
-      const res = await server.patch(`/order/update/${orderId}`, data, {
-        signal,
-      });
-      const res1 = await server.patch(
-        `/user/update/accepted/${customerId}/${driverId}/${orderId}`,
+      const res = await server.patch(
+        `/order/aaang/accepted/${customerId}/${driverId}/${orderId}`,
         data,
         { signal }
       );
-      if (res1.status === 200) {
-        dispatch({ type: D_ACCEPT_ORDER, payload: res.data.data });
+      if (res.status === 200) {
+        dispatch({ type: D_ACCEPT_ORDER, payload: res.data.orderData });
       }
     }
 
@@ -266,23 +263,14 @@ export const driverAcceptOrder = (ids, data) => async (dispatch) => {
       res.data.data.acceptId === data.acceptId
     ) {
       const res = await server.patch(
-        `/order/update/${orderId}`,
-        {
-          ...data,
-          acceptId: null,
-          acceptDate: null,
-        },
-        { signal }
-      );
-      const res1 = await server.patch(
-        `/user/update/submitted/${customerId}/${driverId}/${orderId}`,
+        `/order/aaang/submitted/${customerId}/${driverId}/${orderId}`,
         data,
         { signal }
       );
-      if (res1.status === 200) {
+      if (res.status === 200) {
         dispatch({
           type: D_CANCEL_ORDER,
-          payload: { ...res.data.data, acceptId: null },
+          payload: { ...res.data.orderData, acceptId: null },
         });
       }
     }

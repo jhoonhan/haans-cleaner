@@ -2,6 +2,7 @@ const endOfDay = require("date-fns/endOfDay");
 const startOfDay = require("date-fns/startOfDay");
 
 const { Order } = require("../models/orderModel");
+const User = require("../models/userModel");
 const factory = require("./handlers");
 const controller = require("./controller");
 const catchAsync = require("../utils/catchAsync");
@@ -105,4 +106,44 @@ exports.getDriverOrder = () =>
       prevPage: results.prev,
       data: results.data,
     });
+  });
+
+exports.acceptOrder = () =>
+  catchAsync(async (req, res, next) => {
+    const query = Order.findByIdAndUpdate(req.params.orderId, req.body, {
+      new: true,
+      // runValidators: true,
+    });
+    const orderData = await query;
+
+    ///////////////// user side
+    let driverData = {};
+    if (req.params.type === "completed") {
+      const driverQuery = User.findByIdAndUpdate(
+        req.params.driverId,
+        { $addToSet: { completedOrders: req.body } },
+        {
+          new: true,
+        }
+      );
+      driverData = await driverQuery;
+    }
+    const customerQuery = User.findOneAndUpdate(
+      { _id: req.params.customerId, "orders._id": req.params.orderId },
+      {
+        $set: {
+          "orders.$.status": req.params.type,
+        },
+      },
+      { new: true }
+    );
+    const customerData = await customerQuery;
+
+    res.status(200).json({
+      status: "success",
+      driverData,
+      customerData,
+      orderData,
+    });
+    return;
   });

@@ -14,6 +14,10 @@ router.get("/driversearch/:type/:acceptId", orderController.getDriverOrder());
 router.get("/:id", orderController.getOne);
 
 router.patch("/update/:id", orderController.update);
+router.patch(
+  "/aaang/:type/:customerId/:driverId/:orderId",
+  orderController.acceptOrder()
+);
 // router.patch("/accept/:id", orderController.acceptOrder());
 router.delete("/delete/:id", orderController.delete);
 
