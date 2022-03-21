@@ -27,6 +27,7 @@ import useOrderSearch from "./useOrderSearch";
 import useGeolocation from "./useGeolocation";
 
 import cvtObj2Arr from "../helpers/cvtObj2Arr";
+import Spinner from "../Spinner";
 
 const DriverOrder = ({
   user,
@@ -247,13 +248,17 @@ const DriverOrder = ({
   const renderMap = (status) => {
     switch (status) {
       case Status.LOADING:
-        return <div>aaang</div>;
+        return (
+          <div className="map-loader">
+            <Spinner />
+          </div>
+        );
       case Status.FAILURE:
-        return <div>aaang</div>;
+        return <div>Map load failed</div>;
       case Status.SUCCESS:
-        return <div>aaang</div>;
+        return <div>Map load successful</div>;
       default:
-        return <div>aaang</div>;
+        return <div>Map Loading</div>;
     }
   };
 
