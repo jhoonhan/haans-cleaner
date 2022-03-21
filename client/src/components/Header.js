@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import icons from "../image/ui-icons.svg";
 
-import GoogleButton from "../apis/GoogleButton";
+import SignInGoogle from "./signIn/SignInGoogle";
 
 const Header = ({ auth, user, location }) => {
   const [curPage, setCurPage] = useState(location.pathname.slice(1));
@@ -72,12 +72,16 @@ const Header = ({ auth, user, location }) => {
     );
   };
 
-  return (
-    <>
-      <GoogleButton />
-      {renderNavigation()}
-    </>
-  );
+  const render = () => {
+    return (
+      <>
+        <SignInGoogle />
+        {renderNavigation()}
+      </>
+    );
+  };
+
+  return render();
 };
 
 const mapStateToProps = ({ auth, user }) => {

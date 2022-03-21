@@ -17,7 +17,7 @@ const SignInSecondPage = (props) => {
   const renderSignUp = () => {
     return (
       <form onSubmit={handleSubmit(onFinalSubmit)} className="form__form">
-        {/* <GoogleButton /> */}
+        {/* <SignInGoogle /> */}
         <div className="form__form__row">
           <label>First Name</label>
           <Field
