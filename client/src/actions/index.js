@@ -57,6 +57,7 @@ export const loadingToggleAction = (status) => {
 
 //////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {
+  console.log(`signin`);
   return {
     type: isSignedIn ? SIGN_IN : SIGN_OUT,
     payload: isSignedIn ? userProfile : {},
@@ -65,6 +66,7 @@ export const signIn = ({ isSignedIn, userProfile }) => {
 
 export const signOutRedux = () => {
   history.push("/");
+  console.log(`aaang`);
   return {
     type: SIGN_OUT,
     payload: {},

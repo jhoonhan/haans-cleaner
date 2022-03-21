@@ -23,7 +23,7 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
               src={profilePicture}
             />
             <div>
-              <h3>{user.fullName}</h3>
+              {/* <h3>{user.fullName}</h3> */}
               <p>Customer since 2022</p>
             </div>
           </div>
