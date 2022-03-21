@@ -57,7 +57,6 @@ export const loadingToggleAction = (status) => {
 
 //////////////// USER
 export const signIn = ({ isSignedIn, userProfile }) => {
-  console.log(`signin`);
   return {
     type: isSignedIn ? SIGN_IN : SIGN_OUT,
     payload: isSignedIn ? userProfile : {},
