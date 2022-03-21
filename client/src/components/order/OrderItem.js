@@ -116,7 +116,7 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
             <label>{order.status.toUpperCase()}</label>
           </div>
           <div>
-            {order.status === "submitted" ? (
+            {order.status === "submitted" && page !== "home" ? (
               <button
                 onClick={(e) => {
                   e.stopPropagation();

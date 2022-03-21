@@ -101,7 +101,7 @@ const Home = ({ user }) => {
 
   const renderList = () => {
     return user.currentUser.orders.slice(-5).map((order, i) => {
-      return <OrderItem order={order} key={i} />;
+      return <OrderItem order={order} page="home" key={i} />;
     });
   };
   const render = () => {

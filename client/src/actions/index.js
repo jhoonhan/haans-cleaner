@@ -240,6 +240,8 @@ export const driverClearOrder = () => (dispatch) => {
 
 export const driverAcceptOrder = (ids, data) => async (dispatch) => {
   try {
+    dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
+
     cancelController = new AbortController();
     const { orderId, driverId, customerId } = ids;
     const signal = cancelController.signal;
@@ -287,6 +289,8 @@ export const driverAcceptOrder = (ids, data) => async (dispatch) => {
   } catch (error) {
     console.error(error);
     dispatch({ type: ERROR_HTTP, error });
+  } finally {
+    dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
   }
 };
 
