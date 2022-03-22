@@ -27,13 +27,44 @@
 }
 
 .signIn__initial {
-  width: 100%;
-  height: 100vh;
+  top: 50%;
   position: absolute;
-  top: 0;
+  width: 100%;
+  height: 50vh;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  // background-color: $background-secondary;
+  gap: 1rem;
+
+  padding: 4rem 2rem 0rem 2rem;
+
+  text-align: center;
+  box-sizing: border-box;
+}
+.signIn__init__container {
+  width: 100%;
+}
+.signIn__background {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.signIn__background--1 {
+  position: absolute;
+  top: 0px;
+}
+
+.signIn__background--2 {
+  position: absolute;
+  bottom: 50%;
+}
+
+.singIn__background--sun {
+  position: absolute;
+  top: 0;
 }
