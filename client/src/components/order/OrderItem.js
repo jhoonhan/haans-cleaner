@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -9,9 +9,30 @@ import Loader from "../Loader";
 import price from "../price";
 
 const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
-  // const [showModal, setShowModal] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const refDetail = useRef(null);
   const refBand = useRef(null);
+  const refOrder = useRef(null);
+
+  const visibleCallback = (entries) => {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(visibleCallback, {
+      threshold: 0.9,
+    });
+    const node = refOrder.current;
+
+    if (refOrder.current) {
+      observer.observe(refOrder.current);
+    }
+
+    return () => {
+      if (node) observer.unobserve(node);
+    };
+  }, [refOrder]);
 
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
@@ -104,7 +125,15 @@ const OrderItem = ({ order, page, setShowModal, setSelectedOrder }) => {
 
   const render = () => {
     return (
-      <div className="order__row">
+      <div
+        ref={refOrder}
+        className="order__row"
+        style={
+          !isVisible
+            ? { transform: "translateX(-5rem)" }
+            : { transform: "translateX(0rem)" }
+        }
+      >
         <div
           ref={refBand}
           onClick={() => {

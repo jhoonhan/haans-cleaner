@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import {
   driverFetchOrder,
   driverFetchAccepted,
@@ -11,7 +10,6 @@ import {
   cancelOrder,
   cancelCall,
 } from "../../actions";
-import { LEAK } from "../../actions/types";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import GoogleMap from "../../apis/GoogleMap";
 
