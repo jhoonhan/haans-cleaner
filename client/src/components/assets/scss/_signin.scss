@@ -34,11 +34,12 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
 
-  padding: 4rem 2rem 0rem 2rem;
+  margin-top: -10%;
+  padding: 0rem 2rem 0rem 2rem;
 
   text-align: center;
   box-sizing: border-box;
@@ -65,6 +66,35 @@
 }
 
 .singIn__background--sun {
-  position: absolute;
-  top: 0;
+  animation-duration: 10s;
+  animation-name: aniSun;
+  animation-iteration-count: infinite;
+}
+@keyframes aniSun {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.singIn__background--van {
+  animation-duration: 8s;
+  animation-name: aniVan;
+  animation-iteration-count: infinite;
+}
+@keyframes aniVan {
+  0% {
+    transform: translateX(-100vw);
+  }
+  50% {
+    transform: translateX(0vw);
+  }
+  100% {
+    transform: translateX(50vw);
+  }
 }
