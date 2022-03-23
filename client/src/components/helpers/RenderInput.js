@@ -7,7 +7,7 @@ const renderInput = ({ input, type, placeholder, reference, meta }) => {
         onChange={input.onChange}
         value={input.value}
         type={type}
-        placeholder={meta.touched ? meta.error : ""}
+        placeholder={meta.touched ? meta.error : placeholder}
         ref={reference}
       />
     </React.Fragment>

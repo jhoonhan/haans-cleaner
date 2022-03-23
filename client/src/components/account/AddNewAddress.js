@@ -24,85 +24,67 @@ const AddNewAddress = ({
     };
     editUser(user?._id, { savedAddress: [...user.savedAddress, newAddress] });
 
-    onControlNewAddress(true);
+    setShow(true);
 
     reset();
   };
 
   const animationClasses = `height--0 opacity--0 padding--0 margin--0 overflow--hidden`;
 
-  const onControlNewAddress = (type) => {
-    if (type === true) {
-      refNewAddressContainer.current.classList.remove(
-        "account__new-address--focused"
-      );
-      refNewAddressDropDown.current.classList.add("height--0");
-      refNewAddressDropDown.current.classList.add("opacity--0");
-      refNewAddressDropDown.current.classList.add("padding--0");
-      refNewAddressDropDown.current.classList.add("margin--0");
-      refNewAddressDropDown.current.classList.add("overflow--hidden");
-    }
-    if (!type) {
-      refNewAddressContainer.current.classList.add(
-        "account__new-address--focused"
-      );
-      refNewAddressDropDown.current.classList.remove("height--0");
-      refNewAddressDropDown.current.classList.remove("opacity--0");
-      refNewAddressDropDown.current.classList.remove("padding--0");
-      refNewAddressDropDown.current.classList.remove("margin--0");
-      refNewAddressDropDown.current.classList.remove("overflow--hidden");
-    }
-  };
-
-  return (
-    <div
-      onFocus={() => onControlNewAddress(false)}
-      onBlur={() => onControlNewAddress(true)}
-      className="account__new-address"
-    >
-      <label>Add new address</label>
-      <div ref={refNewAddressContainer} className="width--100p">
-        <Field
-          name="newStreet"
-          placeholder="Add a new address"
-          type="text"
-          component={renderInput}
-        />
-      </div>
-
+  const render = () => {
+    return (
       <div
-        ref={refNewAddressDropDown}
-        // className={`account__new-address__dropdown width--100p`}
-        className={`account__new-address__dropdown width--100p ${animationClasses}`}
+        onFocus={() => setShow(true)}
+        onBlur={() => setShow(false)}
+        className="account__new-address"
       >
-        <div className="cityzip">
-          <label>city</label>
-          <label>zip</label>
-
+        <label>add new address</label>
+        <div
+          ref={refNewAddressContainer}
+          className="width--100p"
+          style={{ marginTop: "0.5rem" }}
+        >
           <Field
-            name="newCity"
-            placeholder="City"
-            type="text"
-            component={renderInput}
-          />
-          <Field
-            name="newZip"
-            placeholder="Zip Code"
+            name="newStreet"
+            placeholder="Add a new address"
             type="text"
             component={renderInput}
           />
         </div>
 
-        <button
-          onClick={handleSubmit(onClickNewAddress)}
-          className="button--d"
-          style={{ marginTop: "2rem" }}
+        <div
+          ref={refNewAddressDropDown}
+          className={`account__new-address__dropdown width--100p ${
+            !show ? animationClasses : ""
+          }`}
         >
-          add
-        </button>
+          <div className="cityzip">
+            <Field
+              name="newCity"
+              placeholder="City"
+              type="text"
+              component={renderInput}
+            />
+            <Field
+              name="newZip"
+              placeholder="Zip Code"
+              type="text"
+              component={renderInput}
+            />
+          </div>
+
+          <button
+            onClick={handleSubmit(onClickNewAddress)}
+            className="button--d"
+            style={{ marginTop: "2rem" }}
+          >
+            add
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
+  return render();
 };
 
 const mapStateToProps = ({ auth, user, form }) => {
