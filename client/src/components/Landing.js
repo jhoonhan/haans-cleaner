@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import SignIn from "./signIn/SingIn";
-import SignInInitial from "./signIn/SignInInitial";
 
 const Landing = ({ auth }) => {
   const render = () => {
@@ -16,7 +14,7 @@ const Landing = ({ auth }) => {
         transition={{ type: "spring", duration: 0.1 }}
         className="motion-container"
       >
-        {!auth.isSignedIn ? <SignInInitial /> : <SignIn />}
+        {!auth.isSignedIn ? null : <SignIn />}
       </motion.div>
     );
   };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createUser, fetchUser } from "../../actions";
+import { motion } from "framer-motion";
 
 import SignInSecondPage from "./SignInSecondPage";
 import Home from "../Home";
@@ -27,7 +28,15 @@ const SignIn = ({ auth, user, fetchUser }) => {
 
   const render = () => {
     if (!fetched) return null;
-    return <div className="signIn__container">{conditionalRender()}</div>;
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ type: "spring", duration: 0.1, delay: 0.1 }}
+      >
+        <div className="signIn__container">{conditionalRender()}</div>;
+      </motion.div>
+    );
   };
   return render();
 };

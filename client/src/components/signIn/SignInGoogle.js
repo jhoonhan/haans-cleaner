@@ -54,20 +54,26 @@ const SignInGoogle = ({ auth }) => {
             </svg>
           </motion.div>
         </div>
-        <div className="signIn__initial">
-          <div className="signIn__row">
-            <h2>
-              Easy & Modern <br />
-              Dry Cleaning
-            </h2>
+        <motion.div
+          initial={{ y: "100vh" }}
+          animate={{ y: "50vh" }}
+          transition={{ duration: 0.2, delay: 0.5 }}
+        >
+          <div className="signIn__initial">
+            <div className="signIn__row">
+              <h2>
+                Easy & Modern <br />
+                Dry Cleaning
+              </h2>
+            </div>
+            <div className="signIn__row">
+              <p>Join now and your first order is on us!</p>
+            </div>
+            <div className="signIn__row" style={{ marginTop: "3rem" }}>
+              <GoogleButton />
+            </div>
           </div>
-          <div className="signIn__row">
-            <p>Join now and your first order is on us!</p>
-          </div>
-          <div className="signIn__row" style={{ marginTop: "3rem" }}>
-            <GoogleButton />
-          </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

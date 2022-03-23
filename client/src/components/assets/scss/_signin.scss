@@ -66,7 +66,7 @@
 }
 
 .singIn__background--sun {
-  animation-duration: 10s;
+  animation-duration: 6s;
   animation-name: aniSun;
   animation-iteration-count: infinite;
 }
@@ -95,6 +95,6 @@
     transform: translateX(0vw);
   }
   100% {
-    transform: translateX(50vw);
+    transform: translateX(100vw);
   }
 }

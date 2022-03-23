@@ -65,10 +65,18 @@ const Home = ({ user }) => {
             animate={{ translateX: 0 }}
             transition={{ type: "spring", duration: 0.1, delay: 0.4 }}
           >
-            <svg ref={cloud4} viewBox="0 0 800 400" className="bg__element">
+            <svg
+              ref={cloud4}
+              viewBox="0 0 800 400"
+              className="bg__element bg__home__cloud"
+            >
               <use href={`${landingBackground}#cloud--4`}></use>
             </svg>
-            <svg ref={cloud3} viewBox="0 0 800 400" className="bg__element">
+            <svg
+              ref={cloud3}
+              viewBox="0 0 800 400"
+              className="bg__element bg__home__cloud"
+            >
               <use href={`${landingBackground}#cloud--3`}></use>
             </svg>
           </motion.div>
