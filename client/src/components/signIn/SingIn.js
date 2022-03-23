@@ -34,7 +34,7 @@ const SignIn = ({ auth, user, fetchUser }) => {
         animate={{ opacity: 1 }}
         transition={{ type: "spring", duration: 0.1, delay: 0.1 }}
       >
-        <div className="signIn__container">{conditionalRender()}</div>;
+        <div className="signIn__container">{conditionalRender()}</div>
       </motion.div>
     );
   };

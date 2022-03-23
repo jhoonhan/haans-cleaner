@@ -57,6 +57,7 @@ $font-size-l: 1.6rem;
 @import "driver";
 @import "spinner";
 @import "animation";
+@import "queries";
 
 html {
   color: $primary-color;
@@ -83,4 +84,7 @@ html {
   padding-bottom: 8rem;
 
   box-sizing: border-box;
+  box-shadow: 0 0 30px 30px rgba(0, 0, 0, 0.1);
+
+  // overflow: hidden;
 }

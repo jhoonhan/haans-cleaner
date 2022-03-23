@@ -49,6 +49,7 @@ input {
   border-width: 0 0 1px 0;
   border-color: $divider-color;
   border-style: solid;
+  border-radius: 0px;
   box-sizing: border-box;
 
   outline: none;
@@ -78,6 +79,7 @@ textarea {
 
   box-sizing: border-box;
   border: 1px solid $divider-color;
+  border-radius: 0px;
 
   outline: none;
 }

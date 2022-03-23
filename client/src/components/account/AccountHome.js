@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import PageTitle from "../PageTitle";
 import profilePicture from "../../image/profile.jpg";
 
@@ -52,6 +53,9 @@ const AccountHome = ({ user, setPage, onSignOutClick }) => {
                 <li onClick={() => setPage("address")} className="menu__item">
                   <p className="align-self-flex-start">Address Book</p>
                 </li>
+                <Link to="/driver" className="menu__item">
+                  <p className="align-self-flex-start">Driver Account</p>
+                </Link>
               </ul>
             </div>
 

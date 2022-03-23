@@ -1,7 +1,6 @@
 import { formValues, reset } from "redux-form";
 import history from "../history";
 import server from "../apis/server";
-import axios from "axios";
 
 import {
   LOADING_TOGGLE_ACTION,
@@ -19,7 +18,6 @@ import {
   D_FETCH_ORDER,
   D_CLEAR_ORDER,
   D_ACCEPT_ORDER,
-  D_EDIT_ACCEPTED_ORDER,
   D_COMPLETE_ORDER,
   D_FETCH_ACCEPTED,
   D_SET_COORDS,

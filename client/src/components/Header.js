@@ -15,18 +15,33 @@ const Header = ({ auth, user, location }) => {
     }
   }, [curPage, auth]);
 
+  useEffect(() => {
+    console.log(`aang`);
+    document.addEventListener("touchmove", pinchZoom, false);
+    document.addEventListener("touchend", tapZoom, false);
+    return () => {
+      document.removeEventListener("touchmove", pinchZoom);
+      document.removeEventListener("touchend", tapZoom);
+    };
+  }, []);
+
+  const pinchZoom = (event) => {
+    if (event.scale !== 1) {
+      event.preventDefault();
+    }
+  };
+  let lastTouchEnd = 0;
+  const tapZoom = (event) => {
+    const now = new Date().getTime();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  };
+
   const onNavClick = (pageTitle) => {
     setCurPage(pageTitle);
   };
-
-  // const renderPageTitle = (title) => {
-  //   if (title === "" || title === null) return null;
-  //   return (
-  //     <header className="page-title">
-  //       <h2>{title}</h2>
-  //     </header>
-  //   );
-  // };
 
   const renderNavigation = () => {
     if (!auth.isSignedIn || !user) return null;
