@@ -15,7 +15,7 @@ exports.getGeocode = () =>
     const queryZip = zip;
 
     const data = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=AIzaSyAkI-xZ8-eXhcWNDVr111EyYX84UXaGGZc`
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.GOOGLE_KEY}`
     );
 
     res.status(200).send(data.data.results[0].geometry.location);
@@ -32,7 +32,7 @@ exports.getDistance = async (orderData, [lat, lng]) => {
       .join("%7C");
 
     const data = await axios.get(
-      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originQuery}&destinations=${destinationQuery}&key=AIzaSyAkI-xZ8-eXhcWNDVr111EyYX84UXaGGZc`
+      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originQuery}&destinations=${destinationQuery}&key=${process.env.GOOGLE_KEY}`
     );
     const distances = data.data.rows[0].elements.map(
       (el) => +el.distance.text.split(" ")[0]

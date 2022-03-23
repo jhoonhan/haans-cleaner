@@ -12,7 +12,7 @@ router.patch(
 router.patch("/delete/:customerId/:orderId", userController.deleteUserOrder());
 
 router.get("/getall", userController.getAll);
-router.get("/:id", userController.getOne);
+// router.get("/:id", userController.getOne);
 router.get("/get/:googleId", userController.getByGoogleId);
 router.get("/order/:googleId", userController.getUserOrders());
 

@@ -65,7 +65,6 @@ export const signIn = ({ isSignedIn, userProfile }) => {
 
 export const signOutRedux = () => {
   history.push("/");
-  console.log(`aaang`);
   return {
     type: SIGN_OUT,
     payload: {},
