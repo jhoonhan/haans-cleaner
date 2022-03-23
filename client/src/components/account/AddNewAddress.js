@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 
 import { Field, reduxForm } from "redux-form";
@@ -12,6 +12,7 @@ const AddNewAddress = ({
   reset,
   handleSubmit,
 }) => {
+  const [show, setShow] = useState(false);
   const refNewAddressContainer = useRef(null);
   const refNewAddressDropDown = useRef(null);
 
@@ -75,6 +76,9 @@ const AddNewAddress = ({
         className={`account__new-address__dropdown width--100p ${animationClasses}`}
       >
         <div className="cityzip">
+          <label>city</label>
+          <label>zip</label>
+
           <Field
             name="newCity"
             placeholder="City"

@@ -65,7 +65,7 @@ const SavedAddressList = ({
     return result;
   };
 
-  const renderList = () => {
+  const render = () => {
     if (!user) return null;
     const result = filteredArr().map((address, i) => {
       const defaultCss =
@@ -98,7 +98,7 @@ const SavedAddressList = ({
     return result;
   };
 
-  return <>{renderList()}</>;
+  return render();
 };
 
 const mapStateToProps = ({ auth, user }) => {
