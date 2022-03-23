@@ -99,7 +99,7 @@ const wrappedForm = reduxForm({
   forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
   enableReinitialize: false,
   keepDirtyOnReinitialize: true,
-  // validate,
+  validate,
 })(PickupFormSecondPage);
 
 export default connect(mapStateToProps, { fetchUser, change })(wrappedForm);
