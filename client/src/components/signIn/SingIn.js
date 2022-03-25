@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import SignInSecondPage from "./SignInSecondPage";
 import Home from "../Home";
+import Loader from "../Loader";
 
 const SignIn = ({ auth, user, fetchUser }) => {
   const [fetched, setFetched] = useState(null);
@@ -27,7 +28,7 @@ const SignIn = ({ auth, user, fetchUser }) => {
   };
 
   const render = () => {
-    if (!fetched) return null;
+    if (!fetched) return <Loader show={true} />;
     return (
       <motion.div
         initial={{ opacity: 0 }}
