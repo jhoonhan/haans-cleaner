@@ -15,7 +15,7 @@ import {
 const reducer = (state = { fetched: false, currentUser: null }, action) => {
   switch (action.type) {
     case SIGN_OUT:
-      return { ...state, currentUser: null };
+      return { ...state, fetched: false, currentUser: null };
     case FETCH_USER:
       return { ...state, currentUser: action.payload, fetched: true };
     case MOUNT_USER:

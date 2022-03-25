@@ -18,10 +18,10 @@ const SignIn = ({ auth, user, fetchUser }) => {
   }, [user]);
 
   const conditionalRender = () => {
-    if (!user.currentUser) {
+    if (user.fetched && !user.currentUser) {
       return <SignInSecondPage />;
     }
-    if (auth.userProfile.FW === user.currentUser.googleId) {
+    if (user.fetched && auth.userProfile.FW === user.currentUser.googleId) {
       return <Home />;
     }
   };

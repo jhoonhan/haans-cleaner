@@ -101,12 +101,16 @@ export const createUser =
 
 export const fetchUser = (googleId) => async (dispatch, getState) => {
   try {
+    dispatch({ type: LOADING_TOGGLE_ACTION, payload: true });
+
     const res = await server.get(`/user/get/${googleId}`);
     dispatch({ type: FETCH_USER, payload: res.data.data[0] });
     // history.push("/");
   } catch (error) {
     console.error(error);
     dispatch({ type: ERROR_HTTP, error });
+  } finally {
+    dispatch({ type: LOADING_TOGGLE_ACTION, payload: false });
   }
 };
 
