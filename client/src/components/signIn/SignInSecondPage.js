@@ -16,7 +16,6 @@ const SignInSecondPage = (props) => {
   };
 
   const render = () => {
-    console.log(`second pag efired`);
     return (
       <motion.div
         initial={{ opacity: 0 }}
