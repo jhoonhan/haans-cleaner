@@ -8,7 +8,7 @@ import validate from "./validate";
 import SavedAddressList from "../account/SavedAddressList";
 
 import renderField from "../helpers/renderField";
-import renderInput from "../helpers/renderInput";
+import RenderInput from "../helpers/RenderInput";
 
 const PickupFormFirstPage = (props) => {
   const [selected, setSelected] = useState(
@@ -17,7 +17,7 @@ const PickupFormFirstPage = (props) => {
 
   useEffect(() => {
     if (props.auth.isSignedIn && !props.user) {
-      props.fetchUser(props.auth.userProfile.FW);
+      props.fetchUser(props.auth.userProfile.TW);
     }
   }, [props.auth.isSignedIn]);
 

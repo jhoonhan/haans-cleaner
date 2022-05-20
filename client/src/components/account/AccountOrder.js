@@ -13,7 +13,7 @@ const AccountOrder = ({ auth, user, userFetched, fetchUser, setPage }) => {
   useEffect(() => {
     if (!auth.isSignedIn) return;
     if (!userFetched) {
-      fetchUser(auth.userProfile.FW);
+      fetchUser(auth.userProfile.TW);
     }
     if (auth.isSignedIn && userFetched) {
       setFetched(true);

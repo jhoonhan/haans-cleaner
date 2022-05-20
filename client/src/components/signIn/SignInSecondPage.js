@@ -5,13 +5,13 @@ import { Field, reduxForm } from "redux-form";
 import { motion } from "framer-motion";
 import validate from "./validate";
 
-import RenderInput from "../helpers/renderInput";
+import RenderInput from "../helpers/RenderInput";
 
 const SignInSecondPage = (props) => {
   const { handleSubmit } = props;
 
   const onFinalSubmit = (formValues) => {
-    const googleId = props.auth.userProfile.FW;
+    const googleId = props.auth.userProfile.TW;
     props.createUser(formValues, googleId);
   };
 

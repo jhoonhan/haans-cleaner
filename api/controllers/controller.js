@@ -17,8 +17,10 @@ exports.getGeocode = () =>
     const data = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${queryStreet},+${queryCity},+${queryZip}&key=${process.env.GOOGLE_KEY}`
     );
-
-    res.status(200).send(data.data.results[0].geometry.location);
+    console.log(data.data);
+    if (data.data.results[0]) {
+      res.status(200).send(data.data.results[0].geometry.location);
+    }
 
     return;
   });

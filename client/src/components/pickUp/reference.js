@@ -15,7 +15,7 @@ class PickUp extends React.Component {
       );
     }
   }
-  renderInput = ({ input, label, meta }) => {
+  RenderInput = ({ input, label, meta }) => {
     return (
       <div className="field">
         <label>{label}</label>
@@ -33,10 +33,10 @@ class PickUp extends React.Component {
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <Field
           name="address"
-          component={this.renderInput}
+          component={this.RenderInput}
           label="Enter Title"
         />
-        <Field name="sex" component={this.renderInput} label="Enter sex" />
+        <Field name="sex" component={this.RenderInput} label="Enter sex" />
         <button>Next</button>
       </form>
     );

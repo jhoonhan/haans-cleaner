@@ -10,7 +10,7 @@ const Driver = ({ auth, user, driver, driverFetchOrder, fetchUser }) => {
   useEffect(() => {
     if (!auth.isSignedIn) return;
     if (!user) {
-      fetchUser(auth.userProfile.FW);
+      fetchUser(auth.userProfile.TW);
     }
   }, [auth.isSignedIn]);
 

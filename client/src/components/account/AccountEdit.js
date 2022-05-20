@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { signOutRedux, fetchUser, deleteUser } from "../../actions";
 import { Field, Form, reduxForm } from "redux-form";
 import { editUser } from "../../actions";
-import renderInput from "../helpers/renderInput";
+import RenderInput from "../helpers/RenderInput";
 
 import Modal from "../Modal";
 import PageTitle from "../PageTitle";
@@ -105,22 +105,22 @@ const AccountEdit = ({
           <Form onSubmit={handleSubmit} className="form__form">
             <div className="form__form__row">
               <label>First Name</label>
-              <Field name="firstName" type="text" component={renderInput} />
+              <Field name="firstName" type="text" component={RenderInput} />
             </div>
 
             <div className="form__form__row">
               <label>Last Name</label>
-              <Field name="lastName" type="text" component={renderInput} />
+              <Field name="lastName" type="text" component={RenderInput} />
             </div>
 
             <div className="form__form__row">
               <label>Email</label>
-              <Field name="email" type="text" component={renderInput} />
+              <Field name="email" type="text" component={RenderInput} />
             </div>
 
             <div className="form__form__row">
               <label>Phone Number</label>
-              <Field name="phone" type="text" component={renderInput} />
+              <Field name="phone" type="text" component={RenderInput} />
             </div>
 
             <div className="form__form__row">

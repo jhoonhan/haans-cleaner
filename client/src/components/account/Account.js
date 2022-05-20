@@ -25,7 +25,7 @@ const Account = ({
   useEffect(() => {
     if (!auth.isSignedIn) return;
     if (auth.isSignedIn && !fetched) {
-      fetchUser(auth.userProfile.FW);
+      fetchUser(auth.userProfile.TW);
     }
 
     if (auth.isSignedIn && userFetched) {

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
 
 import { Field, reduxForm } from "redux-form";
-import renderInput from "../helpers/renderInput";
+import RenderInput from "../helpers/RenderInput";
 import { editUser } from "../../actions";
 
 const AddNewAddress = ({
@@ -48,7 +48,7 @@ const AddNewAddress = ({
             name="newStreet"
             placeholder="Add a new address"
             type="text"
-            component={renderInput}
+            component={RenderInput}
           />
         </div>
 
@@ -63,13 +63,13 @@ const AddNewAddress = ({
               name="newCity"
               placeholder="City"
               type="text"
-              component={renderInput}
+              component={RenderInput}
             />
             <Field
               name="newZip"
               placeholder="Zip Code"
               type="text"
-              component={renderInput}
+              component={RenderInput}
             />
           </div>
 

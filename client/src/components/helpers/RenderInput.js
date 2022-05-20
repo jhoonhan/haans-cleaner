@@ -1,6 +1,6 @@
 import React from "react";
 
-const renderInput = ({ input, type, placeholder, reference, meta }) => {
+const RenderInput = ({ input, type, placeholder, reference, meta }) => {
   return (
     <React.Fragment>
       <input
@@ -14,4 +14,4 @@ const renderInput = ({ input, type, placeholder, reference, meta }) => {
   );
 };
 
-export default renderInput;
+export default RenderInput;

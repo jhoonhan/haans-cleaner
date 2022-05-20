@@ -37,8 +37,8 @@ const Order = ({
 
   useEffect(() => {
     if (auth.isSignedIn) {
-      fetchUser(auth.userProfile.FW);
-      fetchOrder(auth.userProfile.FW);
+      fetchUser(auth.userProfile.TW);
+      fetchOrder(auth.userProfile.TW);
     }
   }, [auth.isSignedIn]);
 
@@ -108,7 +108,7 @@ const Order = ({
           <Modal
             show={showModal}
             handleClose={setShowModal}
-            id={auth.userProfile.FW}
+            id={auth.userProfile.TW}
             title={"Cancel Order"}
             content="You cannot undeo your cancellation"
             actions={modalAction()}

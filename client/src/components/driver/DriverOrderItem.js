@@ -35,7 +35,7 @@ const DriverOrderItem = (props) => {
       // setOrderStatus("accepted");
       await props.driverAcceptOrder(ids, {
         status: "accepted",
-        acceptId: props.auth.userProfile.FW,
+        acceptId: props.auth.userProfile.TW,
         acceptDate: new Date().toISOString().split("T")[0],
       });
     }
@@ -43,7 +43,7 @@ const DriverOrderItem = (props) => {
       // setOrderStatus("submitted");
       await props.driverAcceptOrder(ids, {
         status: "submitted",
-        acceptId: props.auth.userProfile.FW,
+        acceptId: props.auth.userProfile.TW,
         acceptDate: null,
       });
     }

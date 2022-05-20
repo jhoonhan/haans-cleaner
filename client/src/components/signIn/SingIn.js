@@ -11,7 +11,7 @@ const SignIn = ({ auth, user, fetchUser }) => {
   const [fetched, setFetched] = useState(null);
 
   useEffect(() => {
-    fetchUser(auth.userProfile.FW);
+    fetchUser(auth.userProfile.TW);
   }, []);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const SignIn = ({ auth, user, fetchUser }) => {
     if (user.fetched && !user.currentUser) {
       return <SignInSecondPage />;
     }
-    if (user.fetched && auth.userProfile.FW === user.currentUser.googleId) {
+    if (user.fetched && auth.userProfile.TW === user.currentUser.googleId) {
       return <Home />;
     }
   };

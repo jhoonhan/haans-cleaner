@@ -30,14 +30,14 @@ const PickupFormFourthPage = (props) => {
   //   window.scrollTo(0, 0);
 
   //   if (props.auth.isSignedIn && !props.user) {
-  //     props.fetchUser(props.auth.userProfile.FW);
+  //     props.fetchUser(props.auth.userProfile.TW);
   //   }
   // }
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (props.auth.isSignedIn && !props.user) {
-      props.fetchUser(props.auth.userProfile.FW);
+      props.fetchUser(props.auth.userProfile.TW);
     }
     if (props.clothes) getTotalPrice(cvtObj2Arr(props.clothes));
   }, []);
@@ -58,7 +58,7 @@ const PickupFormFourthPage = (props) => {
     const combined = {
       ...formValues,
       clothes,
-      googleId: props.auth.userProfile.FW,
+      googleId: props.auth.userProfile.TW,
       userId: props.user._id,
       total,
       timestamp: Date.now(),

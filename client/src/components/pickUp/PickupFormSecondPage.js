@@ -8,7 +8,7 @@ import validate from "./validate";
 import SavedAddressList from "../account/SavedAddressList";
 
 import renderField from "../helpers/renderField";
-import renderInput from "../helpers/renderInput";
+import RenderInput from "../helpers/RenderInput";
 
 const PickupFormSecondPage = (props) => {
   const [selected, setSelected] = useState(
@@ -17,7 +17,7 @@ const PickupFormSecondPage = (props) => {
 
   useEffect(() => {
     if (props.auth.isSignedIn && !props.user) {
-      props.fetchUser(props.auth.userProfile.FW);
+      props.fetchUser(props.auth.userProfile.TW);
     }
   }, [props.auth.isSignedIn]);
 
@@ -38,7 +38,7 @@ const PickupFormSecondPage = (props) => {
         <Field
           name="street"
           type="text"
-          component={renderInput}
+          component={RenderInput}
           label="street"
         />
       </div>
@@ -46,8 +46,8 @@ const PickupFormSecondPage = (props) => {
         <div className="cityzip">
           <label>City</label>
           <label>Zip</label>
-          <Field name="city" type="text" component={renderInput} label="city" />
-          <Field name="zip" type="number" component={renderInput} label="zip" />
+          <Field name="city" type="text" component={RenderInput} label="city" />
+          <Field name="zip" type="number" component={RenderInput} label="zip" />
         </div>
       </div>
       <div className="form__form__row">
