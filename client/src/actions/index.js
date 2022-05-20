@@ -90,6 +90,7 @@ export const createUser =
       };
 
       const res = await server.post("/user", { ...combined });
+      console.log(res);
 
       dispatch({ type: CREATE_USER, payload: res.data.data.data });
       history.push("/");

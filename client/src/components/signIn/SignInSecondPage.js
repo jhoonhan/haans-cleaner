@@ -106,9 +106,9 @@ const SignInSecondPage = (props) => {
 const mapStateToProps = ({ auth, user }) => {
   return {
     initialValues: {
-      firstName: auth.userProfile.VX,
-      lastName: auth.userProfile.iW,
-      email: auth.userProfile.tv,
+      firstName: auth.userProfile.iY,
+      lastName: auth.userProfile.wW,
+      email: auth.userProfile.Bv,
     },
     auth: auth,
     user: user.currentUser,
