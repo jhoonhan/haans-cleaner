@@ -16,7 +16,6 @@ const Header = ({ auth, user, location }) => {
   }, [curPage, auth]);
 
   useEffect(() => {
-    console.log(`aang`);
     document.addEventListener("touchmove", pinchZoom, false);
     document.addEventListener("touchend", tapZoom, false);
     return () => {

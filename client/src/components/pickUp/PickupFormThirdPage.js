@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { Field, reduxForm, resetForm, isPristine } from "redux-form";
 import validate from "./validate";
+import clothesIcons from "../../image/clothesIcons.svg";
 
 const renderError = ({ meta: { touched, error } }) =>
   touched && error ? <span>{error}</span> : false;
@@ -13,6 +14,7 @@ const PickupFormThirdPage = (props) => {
   }, []);
 
   const renderSelector = ({ input }) => {
+    console.log(input.name);
     return (
       <div
         className={`form__clothes ${
@@ -24,6 +26,9 @@ const PickupFormThirdPage = (props) => {
           onClick={() => input.onChange(+input.value + 1)}
         >
           <label>{input.name}</label>
+          <svg viewBox="0 0 200 200" className="clothes-icon">
+            <use href={`${clothesIcons}#${input.name}`} />
+          </svg>
         </div>
         <input
           className={`form__clothes__edit ${

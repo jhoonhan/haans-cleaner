@@ -9,6 +9,7 @@ import validate from "./validate";
 import price from "../price";
 import Modal from "../Modal";
 import Loader from "../Loader";
+import clothesIcons from "../../image/clothesIcons.svg";
 
 const PickupFormFourthPage = (props) => {
   // constructor(props) {
@@ -120,7 +121,14 @@ const PickupFormFourthPage = (props) => {
         {clothes.map((cloth) => {
           return (
             <div key={cloth.type} className="form__form__order-count__row">
-              <div className="form__clothes">{cloth.type}</div>
+              <div className="form__clothes">
+                <div className="form__clothes__review">
+                  <svg viewBox="0 0 200 200" className="clothes-icon">
+                    <use href={`${clothesIcons}#${cloth.type}`} />
+                  </svg>
+                  <p>{cloth.type}</p>
+                </div>
+              </div>
               <div>
                 <p>
                   ${price[cloth.type]} x {cloth.count}

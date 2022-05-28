@@ -16,6 +16,7 @@ const SignIn = ({ auth, user, fetchUser }) => {
 
   useEffect(() => {
     if (user.fetched) setFetched(true);
+    console.log(auth.userProfile);
   }, [user]);
 
   const conditionalRender = () => {
